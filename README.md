@@ -298,15 +298,3 @@ python3 scripts/check_integrations.py --all
 ```
 
 토큰 값은 출력하지 않고, Discord 봇 토큰, `broadcasting` 채널 접근, Discord Webhook 보고, OpenAI Responses API 호출만 검증합니다.
-
-## GitHub 자동 업로드
-
-작업 내용을 경로 기준으로 태스크별 커밋으로 나누고 GitHub에 push하려면 아래 명령을 사용합니다.
-
-```bash
-.venv/bin/python scripts/git_task_push.py
-```
-
-이 스크립트는 비밀값 패턴 검사, Python 문법 검사, 태스크별 커밋, `origin` push를 순서대로 실행합니다.
-
-Raycast 단축키로 실행하려면 Raycast의 Script Commands 폴더에 `scripts/raycast_git_task_push.sh`를 추가하고 원하는 단축키를 연결합니다.
