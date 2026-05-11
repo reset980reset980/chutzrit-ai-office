@@ -579,3 +579,17 @@ n8n과 코드 중 무엇을 쓸지 애매하면:
 - 유튜브전략팀 분석
 - 강의운영팀 자료 제작
 - 개발팀 배포 모니터링
+
+## GitHub 업로드 자동화
+
+작업 내용을 GitHub에 올릴 때는 `scripts/git_task_push.py`를 사용합니다.
+
+이 스크립트는 다음 순서를 따릅니다.
+
+1. 변경 파일 수집
+2. 비밀값 패턴 검사
+3. Python 문법 검사
+4. 경로 기준 태스크별 커밋
+5. 현재 브랜치를 `origin`에 push
+
+단축키 실행은 `scripts/raycast_git_task_push.sh`를 Raycast Script Command로 등록해서 사용합니다.
