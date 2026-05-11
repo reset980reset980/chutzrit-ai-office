@@ -18,6 +18,7 @@ Discord `broadcasting` 팀 채널 메시지 수신
 -> Discord 기본 typing 표시와 봇 작업 상태 표시
 -> URL 포함 여부 자동 감지
 -> 원문/링크/사용자 생각 정리
+-> 링크 입력이면 핵심 내용 간략 요약
 -> Input Parser 결과 요약 메시지
 -> 콘텐츠 전략 Agent가 방향 설계
 -> 콘텐츠 전략 결과 요약 메시지

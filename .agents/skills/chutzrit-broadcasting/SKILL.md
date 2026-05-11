@@ -7,6 +7,15 @@ description: Use when generating, revising, evaluating, or implementing Chutzrit
 
 Use this skill for 콘텐츠배포팀 work: source memo/link intake, blog/LinkedIn/Discord draft generation, revision, quality scoring, and pipeline changes that affect those outputs.
 
+## Input Parser Rules
+
+- Treat every normal Discord message in the `broadcasting` channel as a content request.
+- If URLs are present, detect them automatically and fetch lightweight metadata.
+- For each link, summarize title, description, and a short 핵심 내용 before generation.
+- Send the Input Parser Discord progress message with a `링크 핵심 내용` section when links are present.
+- Preserve the user's own note/thought as the primary angle when a link and user comment appear together.
+- Do not present link metadata as final insight; use it as source context for Strategy and Insight Agents.
+
 ## Required References
 
 Before changing generation behavior or judging quality, read the relevant files:

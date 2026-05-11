@@ -91,7 +91,40 @@ def format_source_progress(source_payload: dict[str, Any]) -> str:
         f"감지한 링크 {len(urls)}개\n"
         f"링크 메타데이터 {summary_status}\n"
         f"입력 미리보기 {compact_text(raw_text, 180)}"
+        f"{format_link_summary_progress(link_summaries)}"
     )
+
+
+def format_link_summary_progress(link_summaries: Any) -> str:
+    """Format fetched link summaries for the Input Parser Discord message."""
+    if not isinstance(link_summaries, list) or not link_summaries:
+        return ""
+
+    lines = ["\n\n링크 핵심 내용"]
+    for index, summary in enumerate(link_summaries[:3], start=1):
+        parsed = parse_link_summary(str(summary))
+        title = parsed.get("제목") or "제목 없음"
+        core = parsed.get("핵심 내용") or parsed.get("설명") or "핵심 내용 추출 실패"
+        url = parsed.get("url") or ""
+        lines.append(f"{index}. {compact_text(title, 90)}")
+        lines.append(f"   - {compact_text(core, 220)}")
+        if url:
+            lines.append(f"   - {url}")
+    return "\n".join(lines)
+
+
+def parse_link_summary(summary: str) -> dict[str, str]:
+    """Parse link summary text into display fields."""
+    result: dict[str, str] = {}
+    lines = [line.strip() for line in summary.splitlines() if line.strip()]
+    if lines:
+        result["url"] = lines[0]
+    for line in lines[1:]:
+        if ":" not in line:
+            continue
+        key, value = line.split(":", 1)
+        result[key.strip()] = value.strip()
+    return result
 
 
 def format_strategy_progress(package: dict[str, Any]) -> str:
