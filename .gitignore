@@ -1,0 +1,56 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+*.secret.*
+*.token
+cookies.json
+storage-state*.json
+
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+node_modules/
+dist/
+build/
+.next/
+.turbo/
+
+*.log
+tmp/
+temp/
+
+# Local configuration
+configs/*.local.yaml
+configs/*.local.yml
+configs/*.local.json
+
+# Generated broadcasting outputs
+outputs/broadcasting/drafts/*
+!outputs/broadcasting/drafts/.gitkeep
+outputs/broadcasting/final/*
+!outputs/broadcasting/final/.gitkeep
+outputs/broadcasting/approvals/*
+!outputs/broadcasting/approvals/.gitkeep
+outputs/broadcasting/logs/*
+!outputs/broadcasting/logs/.gitkeep
+outputs/broadcasting/session/
+outputs/broadcasting/screenshots/
+outputs/broadcasting/traces/
+
+# Browser automation artifacts
+playwright-report/
+test-results/
+**/.auth/
+*.webm
+*.har
+*.trace.zip
+
+# Local databases and caches
+*.sqlite
+*.sqlite3
+*.db
