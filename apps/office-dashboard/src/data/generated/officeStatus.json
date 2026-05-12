@@ -1,0 +1,623 @@
+{
+  "generatedAt": "2026-05-12T09:49:42.742Z",
+  "today": "2026-05-12",
+  "dataSource": {
+    "broadcastingRoot": "outputs/broadcasting",
+    "liveStatusFile": "outputs/broadcasting/logs/current-status.json",
+    "liveStatusAvailable": false,
+    "codexUsageAvailable": false,
+    "codexUsageReason": "오늘 산출물 기준 사용량 추정치를 표시한다."
+  },
+  "tokenUsage": {
+    "status": "available",
+    "used": 65800,
+    "limit": 200000,
+    "percentage": 33,
+    "label": "Codex 사용량",
+    "reason": "오늘 산출물 기준 사용량 추정"
+  },
+  "metrics": {
+    "todayInputs": 5,
+    "completedContents": 5,
+    "reviewQueue": 2,
+    "published": 3,
+    "overallProgress": 100,
+    "systemStatus": "오늘 산출물 기준 · 자동화 대기 중"
+  },
+  "metricDetails": {
+    "inputs": {
+      "title": "오늘 입력",
+      "description": "outputs/broadcasting/drafts에서 오늘 생성된 입력 패키지",
+      "records": [
+        {
+          "id": "2026-05-12-망설임이-신뢰를-만든다-bd5c312e",
+          "scope": "drafts",
+          "title": "망설임이 신뢰를 만든다",
+          "generatedAt": "2026-05-12T14:25:06.790284",
+          "inputType": "memo",
+          "sourceSummary": "AI는 빠르게 답을 내지만 사람은 망설임을 통해 신중함과 책임감을 느낀다는 관점의 글이다. 열쇠공 사례를 통해 효율이 아니라 망설임이 신뢰와 정성을 만든다는 문제의식을 제시한다.",
+          "targetPersona": "AI 활용과 AI 의존의 차이에 관심 있는 AI 시대 커리어 고민형 독자와, 실무에서 AI를 쓰지만 결과의 신뢰성과 책임감을 중요하게 보는 실무형 학습자",
+          "qualityScore": 92,
+          "qualityPassed": true,
+          "revisionCount": 1,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "published",
+            "linkedin": "published",
+            "discord": "published"
+          },
+          "publishedUrls": {
+            "blog": "https://chutzrit.tistory.com/21",
+            "linkedin": "https://www.linkedin.com/feed/update/urn:li:share:7459836066192314368/",
+            "discord": "https://discord.com/channels/1503320400526966814/1503332020842004551/1503629128644169849"
+          },
+          "externalApiStatus": "published",
+          "path": "outputs/broadcasting/drafts/2026-05-12-망설임이-신뢰를-만든다-bd5c312e",
+          "statusReason": "Tistory 공개 발행이 완료됐다.",
+          "packageStatus": "published"
+        },
+        {
+          "id": "2026-05-12-사람을-더-신뢰하게-만드는-ai의-빈칸은-망설임이다-ae90e7d6",
+          "scope": "drafts",
+          "title": "사람을 더 신뢰하게 만드는 AI의 빈칸은 망설임이다",
+          "generatedAt": "2026-05-12T14:10:59.548537",
+          "inputType": "memo",
+          "sourceSummary": "사람은 틀릴 수 있다는 감각 때문에 망설이고, 그 망설임이 신뢰와 배려의 신호가 될 수 있다는 주장이다. AI는 효율적으로 빠르게 답하지만, 그 속도와 확신이 오히려 무게감과 신뢰를 약하게 만들 수 있다는 관점이다. 열쇠공 사례를 통해 ‘빠름’보다 ‘정성으로 보이는 느림’이 사람의 신뢰를 얻는다는 문제의식을 담고 있다.",
+          "targetPersona": "AI와 개발 도구로 실행력을 키우고 싶은 실무형 학습자, 특히 AI 자동화 실무자와 1인 창업자",
+          "qualityScore": 84,
+          "qualityPassed": false,
+          "revisionCount": 3,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "published",
+            "linkedin": "published",
+            "discord": "published"
+          },
+          "publishedUrls": {
+            "blog": "https://chutzrit.tistory.com/20",
+            "linkedin": "https://www.linkedin.com/feed/update/urn:li:share:7459832521585836032/",
+            "discord": "https://discord.com/channels/1503320400526966814/1503332020842004551/1503625578115371132"
+          },
+          "externalApiStatus": "published",
+          "path": "outputs/broadcasting/drafts/2026-05-12-사람을-더-신뢰하게-만드는-ai의-빈칸은-망설임이다-ae90e7d6",
+          "statusReason": "Tistory 공개 발행이 완료됐다.",
+          "packageStatus": "published"
+        },
+        {
+          "id": "2026-05-12-사람은-왜-망설임을-신뢰하는가-79b5f330",
+          "scope": "drafts",
+          "title": "사람은 왜 망설임을 신뢰하는가",
+          "generatedAt": "2026-05-12T13:45:22.611574",
+          "inputType": "memo",
+          "sourceSummary": "AI는 빠르지만 망설임이 없고, 사람은 틀릴 수 있다는 인식과 감정 때문에 위로와 판단에서 신중함을 보인다. 사용자는 이 차이가 결국 사람의 신뢰를 만드는 요소이며, 효율보다 검증하고 생각하는 망설임이 중요하다고 본다.",
+          "targetPersona": "AI 활용과 AI 의존의 차이에 관심 있는 실무형 학습자와 AI 시대 커리어 고민형 독자",
+          "qualityScore": 92,
+          "qualityPassed": true,
+          "revisionCount": 0,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "failed",
+            "linkedin": "blocked_until_blog_url",
+            "discord": "published"
+          },
+          "publishedUrls": {
+            "blog": "",
+            "linkedin": "",
+            "discord": "https://discord.com/channels/1503320400526966814/1503332020842004551/1503619123916312676"
+          },
+          "externalApiStatus": "failed",
+          "path": "outputs/broadcasting/drafts/2026-05-12-사람은-왜-망설임을-신뢰하는가-79b5f330",
+          "statusReason": "Tistory 발행 중 오류가 발생했다: RuntimeError: 입력 가능한 Tistory 제목/본문 영역을 찾지 못했다.",
+          "packageStatus": "failed"
+        },
+        {
+          "id": "2026-05-12-사람은-왜-망설임이-있는-ai를-더-신뢰하는가-037ee953",
+          "scope": "drafts",
+          "title": "사람은 왜 망설임이 있는 AI를 더 신뢰하는가",
+          "generatedAt": "2026-05-12T12:35:53.810257",
+          "inputType": "memo",
+          "sourceSummary": "사용자는 AI가 사람을 따라하지 못하는 유일한 것으로 '망설임'을 제시했다. 사람은 감정과 잘못된 판단에 대한 인지 때문에 위로와 의사결정에서 망설이지만, AI는 효율성을 우선해 빠르게 답을 내놓는다고 봤다. 또한 수리 시간이 긴 열쇠공을 더 신뢰하게 되는 사례를 들어, 사람의 신뢰는 효율보다 정성과 망설임에서 생긴다는 관점을 제기했다.",
+          "targetPersona": "AI를 실무에 쓰는 사람, AI 활용과 AI 의존의 차이를 고민하는 실무형 학습자, AI가 인간의 판단과 신뢰를 어떻게 바꾸는지 궁금한 독자",
+          "qualityScore": 88,
+          "qualityPassed": false,
+          "revisionCount": 3,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "approval_required",
+            "linkedin": "approval_required",
+            "discord": "auto_dispatch_pending"
+          },
+          "publishedUrls": {
+            "blog": "",
+            "linkedin": "",
+            "discord": ""
+          },
+          "externalApiStatus": "approval_required",
+          "path": "outputs/broadcasting/drafts/2026-05-12-사람은-왜-망설임이-있는-ai를-더-신뢰하는가-037ee953",
+          "statusReason": "공개 게시 전 사용자 승인이 필요하다.",
+          "packageStatus": "review"
+        },
+        {
+          "id": "2026-05-12-ai-자동화는-프롬프트가-아니라-운영-구조다-11969f9e",
+          "scope": "drafts",
+          "title": "AI 자동화는 프롬프트가 아니라 운영 구조다",
+          "generatedAt": "2026-05-12T12:25:30.015017",
+          "inputType": "memo",
+          "sourceSummary": "사용자는 AI 자동화에서 프롬프트보다 운영 구조가 더 중요하며, 실패해도 복구되는 흐름을 설계해야 한다는 관점을 제시했다. 참고 링크는 없다.",
+          "targetPersona": "AI 자동화 실무자와 1인 창업자, 그리고 AI 도구를 실제 업무 흐름에 붙여보려는 실무형 학습자",
+          "qualityScore": 89,
+          "qualityPassed": false,
+          "revisionCount": 3,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "approval_required",
+            "linkedin": "approval_required",
+            "discord": "auto_dispatch_pending"
+          },
+          "publishedUrls": {
+            "blog": "",
+            "linkedin": "",
+            "discord": ""
+          },
+          "externalApiStatus": "approval_required",
+          "path": "outputs/broadcasting/drafts/2026-05-12-ai-자동화는-프롬프트가-아니라-운영-구조다-11969f9e",
+          "statusReason": "공개 게시 전 사용자 승인이 필요하다.",
+          "packageStatus": "review"
+        }
+      ]
+    },
+    "completed": {
+      "title": "작성 완료",
+      "description": "outputs/broadcasting/final에 저장된 오늘 최종본",
+      "records": [
+        {
+          "id": "2026-05-12-망설임이-신뢰를-만든다-bd5c312e",
+          "scope": "final",
+          "title": "망설임이 신뢰를 만든다",
+          "generatedAt": "2026-05-12T14:25:06.790284",
+          "inputType": "memo",
+          "sourceSummary": "AI는 빠르게 답을 내지만 사람은 망설임을 통해 신중함과 책임감을 느낀다는 관점의 글이다. 열쇠공 사례를 통해 효율이 아니라 망설임이 신뢰와 정성을 만든다는 문제의식을 제시한다.",
+          "targetPersona": "AI 활용과 AI 의존의 차이에 관심 있는 AI 시대 커리어 고민형 독자와, 실무에서 AI를 쓰지만 결과의 신뢰성과 책임감을 중요하게 보는 실무형 학습자",
+          "qualityScore": 92,
+          "qualityPassed": true,
+          "revisionCount": 1,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "published",
+            "linkedin": "published",
+            "discord": "published"
+          },
+          "publishedUrls": {
+            "blog": "https://chutzrit.tistory.com/21",
+            "linkedin": "https://www.linkedin.com/feed/update/urn:li:share:7459836066192314368/",
+            "discord": "https://discord.com/channels/1503320400526966814/1503332020842004551/1503629128644169849"
+          },
+          "externalApiStatus": "published",
+          "path": "outputs/broadcasting/final/2026-05-12-망설임이-신뢰를-만든다-bd5c312e",
+          "statusReason": "Tistory 공개 발행이 완료됐다.",
+          "packageStatus": "published"
+        },
+        {
+          "id": "2026-05-12-사람을-더-신뢰하게-만드는-ai의-빈칸은-망설임이다-ae90e7d6",
+          "scope": "final",
+          "title": "사람을 더 신뢰하게 만드는 AI의 빈칸은 망설임이다",
+          "generatedAt": "2026-05-12T14:10:59.548537",
+          "inputType": "memo",
+          "sourceSummary": "사람은 틀릴 수 있다는 감각 때문에 망설이고, 그 망설임이 신뢰와 배려의 신호가 될 수 있다는 주장이다. AI는 효율적으로 빠르게 답하지만, 그 속도와 확신이 오히려 무게감과 신뢰를 약하게 만들 수 있다는 관점이다. 열쇠공 사례를 통해 ‘빠름’보다 ‘정성으로 보이는 느림’이 사람의 신뢰를 얻는다는 문제의식을 담고 있다.",
+          "targetPersona": "AI와 개발 도구로 실행력을 키우고 싶은 실무형 학습자, 특히 AI 자동화 실무자와 1인 창업자",
+          "qualityScore": 84,
+          "qualityPassed": false,
+          "revisionCount": 3,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "published",
+            "linkedin": "published",
+            "discord": "published"
+          },
+          "publishedUrls": {
+            "blog": "https://chutzrit.tistory.com/20",
+            "linkedin": "https://www.linkedin.com/feed/update/urn:li:share:7459832521585836032/",
+            "discord": "https://discord.com/channels/1503320400526966814/1503332020842004551/1503625578115371132"
+          },
+          "externalApiStatus": "published",
+          "path": "outputs/broadcasting/final/2026-05-12-사람을-더-신뢰하게-만드는-ai의-빈칸은-망설임이다-ae90e7d6",
+          "statusReason": "Tistory 공개 발행이 완료됐다.",
+          "packageStatus": "published"
+        },
+        {
+          "id": "2026-05-12-사람은-왜-망설임을-신뢰하는가-79b5f330",
+          "scope": "final",
+          "title": "사람은 왜 망설임을 신뢰하는가",
+          "generatedAt": "2026-05-12T13:45:22.611574",
+          "inputType": "memo",
+          "sourceSummary": "AI는 빠르지만 망설임이 없고, 사람은 틀릴 수 있다는 인식과 감정 때문에 위로와 판단에서 신중함을 보인다. 사용자는 이 차이가 결국 사람의 신뢰를 만드는 요소이며, 효율보다 검증하고 생각하는 망설임이 중요하다고 본다.",
+          "targetPersona": "AI 활용과 AI 의존의 차이에 관심 있는 실무형 학습자와 AI 시대 커리어 고민형 독자",
+          "qualityScore": 92,
+          "qualityPassed": true,
+          "revisionCount": 0,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "failed",
+            "linkedin": "blocked_until_blog_url",
+            "discord": "published"
+          },
+          "publishedUrls": {
+            "blog": "",
+            "linkedin": "",
+            "discord": "https://discord.com/channels/1503320400526966814/1503332020842004551/1503619123916312676"
+          },
+          "externalApiStatus": "failed",
+          "path": "outputs/broadcasting/final/2026-05-12-사람은-왜-망설임을-신뢰하는가-79b5f330",
+          "statusReason": "Tistory 발행 중 오류가 발생했다: RuntimeError: 입력 가능한 Tistory 제목/본문 영역을 찾지 못했다.",
+          "packageStatus": "failed"
+        },
+        {
+          "id": "2026-05-12-사람은-왜-망설임이-있는-ai를-더-신뢰하는가-037ee953",
+          "scope": "final",
+          "title": "사람은 왜 망설임이 있는 AI를 더 신뢰하는가",
+          "generatedAt": "2026-05-12T12:35:53.810257",
+          "inputType": "memo",
+          "sourceSummary": "사용자는 AI가 사람을 따라하지 못하는 유일한 것으로 '망설임'을 제시했다. 사람은 감정과 잘못된 판단에 대한 인지 때문에 위로와 의사결정에서 망설이지만, AI는 효율성을 우선해 빠르게 답을 내놓는다고 봤다. 또한 수리 시간이 긴 열쇠공을 더 신뢰하게 되는 사례를 들어, 사람의 신뢰는 효율보다 정성과 망설임에서 생긴다는 관점을 제기했다.",
+          "targetPersona": "AI를 실무에 쓰는 사람, AI 활용과 AI 의존의 차이를 고민하는 실무형 학습자, AI가 인간의 판단과 신뢰를 어떻게 바꾸는지 궁금한 독자",
+          "qualityScore": 88,
+          "qualityPassed": false,
+          "revisionCount": 3,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "approval_required",
+            "linkedin": "approval_required",
+            "discord": "auto_dispatch_pending"
+          },
+          "publishedUrls": {
+            "blog": "",
+            "linkedin": "",
+            "discord": ""
+          },
+          "externalApiStatus": "approval_required",
+          "path": "outputs/broadcasting/final/2026-05-12-사람은-왜-망설임이-있는-ai를-더-신뢰하는가-037ee953",
+          "statusReason": "공개 게시 전 사용자 승인이 필요하다.",
+          "packageStatus": "review"
+        },
+        {
+          "id": "2026-05-12-ai-자동화는-프롬프트가-아니라-운영-구조다-11969f9e",
+          "scope": "final",
+          "title": "AI 자동화는 프롬프트가 아니라 운영 구조다",
+          "generatedAt": "2026-05-12T12:25:30.015017",
+          "inputType": "memo",
+          "sourceSummary": "사용자는 AI 자동화에서 프롬프트보다 운영 구조가 더 중요하며, 실패해도 복구되는 흐름을 설계해야 한다는 관점을 제시했다. 참고 링크는 없다.",
+          "targetPersona": "AI 자동화 실무자와 1인 창업자, 그리고 AI 도구를 실제 업무 흐름에 붙여보려는 실무형 학습자",
+          "qualityScore": 89,
+          "qualityPassed": false,
+          "revisionCount": 3,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "approval_required",
+            "linkedin": "approval_required",
+            "discord": "auto_dispatch_pending"
+          },
+          "publishedUrls": {
+            "blog": "",
+            "linkedin": "",
+            "discord": ""
+          },
+          "externalApiStatus": "approval_required",
+          "path": "outputs/broadcasting/final/2026-05-12-ai-자동화는-프롬프트가-아니라-운영-구조다-11969f9e",
+          "statusReason": "공개 게시 전 사용자 승인이 필요하다.",
+          "packageStatus": "review"
+        }
+      ]
+    },
+    "review": {
+      "title": "검토 대기",
+      "description": "최종본이 없거나 품질 통과 전 상태인 오늘 패키지",
+      "records": [
+        {
+          "id": "2026-05-12-사람은-왜-망설임이-있는-ai를-더-신뢰하는가-037ee953",
+          "scope": "drafts",
+          "title": "사람은 왜 망설임이 있는 AI를 더 신뢰하는가",
+          "generatedAt": "2026-05-12T12:35:53.810257",
+          "inputType": "memo",
+          "sourceSummary": "사용자는 AI가 사람을 따라하지 못하는 유일한 것으로 '망설임'을 제시했다. 사람은 감정과 잘못된 판단에 대한 인지 때문에 위로와 의사결정에서 망설이지만, AI는 효율성을 우선해 빠르게 답을 내놓는다고 봤다. 또한 수리 시간이 긴 열쇠공을 더 신뢰하게 되는 사례를 들어, 사람의 신뢰는 효율보다 정성과 망설임에서 생긴다는 관점을 제기했다.",
+          "targetPersona": "AI를 실무에 쓰는 사람, AI 활용과 AI 의존의 차이를 고민하는 실무형 학습자, AI가 인간의 판단과 신뢰를 어떻게 바꾸는지 궁금한 독자",
+          "qualityScore": 88,
+          "qualityPassed": false,
+          "revisionCount": 3,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "approval_required",
+            "linkedin": "approval_required",
+            "discord": "auto_dispatch_pending"
+          },
+          "publishedUrls": {
+            "blog": "",
+            "linkedin": "",
+            "discord": ""
+          },
+          "externalApiStatus": "approval_required",
+          "path": "outputs/broadcasting/drafts/2026-05-12-사람은-왜-망설임이-있는-ai를-더-신뢰하는가-037ee953",
+          "statusReason": "공개 게시 전 사용자 승인이 필요하다.",
+          "packageStatus": "review"
+        },
+        {
+          "id": "2026-05-12-ai-자동화는-프롬프트가-아니라-운영-구조다-11969f9e",
+          "scope": "drafts",
+          "title": "AI 자동화는 프롬프트가 아니라 운영 구조다",
+          "generatedAt": "2026-05-12T12:25:30.015017",
+          "inputType": "memo",
+          "sourceSummary": "사용자는 AI 자동화에서 프롬프트보다 운영 구조가 더 중요하며, 실패해도 복구되는 흐름을 설계해야 한다는 관점을 제시했다. 참고 링크는 없다.",
+          "targetPersona": "AI 자동화 실무자와 1인 창업자, 그리고 AI 도구를 실제 업무 흐름에 붙여보려는 실무형 학습자",
+          "qualityScore": 89,
+          "qualityPassed": false,
+          "revisionCount": 3,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "approval_required",
+            "linkedin": "approval_required",
+            "discord": "auto_dispatch_pending"
+          },
+          "publishedUrls": {
+            "blog": "",
+            "linkedin": "",
+            "discord": ""
+          },
+          "externalApiStatus": "approval_required",
+          "path": "outputs/broadcasting/drafts/2026-05-12-ai-자동화는-프롬프트가-아니라-운영-구조다-11969f9e",
+          "statusReason": "공개 게시 전 사용자 승인이 필요하다.",
+          "packageStatus": "review"
+        }
+      ]
+    },
+    "published": {
+      "title": "배포 완료",
+      "description": "오늘 최종본 중 하나 이상의 채널에 published URL 또는 published 상태가 있는 패키지",
+      "records": [
+        {
+          "id": "2026-05-12-망설임이-신뢰를-만든다-bd5c312e",
+          "scope": "final",
+          "title": "망설임이 신뢰를 만든다",
+          "generatedAt": "2026-05-12T14:25:06.790284",
+          "inputType": "memo",
+          "sourceSummary": "AI는 빠르게 답을 내지만 사람은 망설임을 통해 신중함과 책임감을 느낀다는 관점의 글이다. 열쇠공 사례를 통해 효율이 아니라 망설임이 신뢰와 정성을 만든다는 문제의식을 제시한다.",
+          "targetPersona": "AI 활용과 AI 의존의 차이에 관심 있는 AI 시대 커리어 고민형 독자와, 실무에서 AI를 쓰지만 결과의 신뢰성과 책임감을 중요하게 보는 실무형 학습자",
+          "qualityScore": 92,
+          "qualityPassed": true,
+          "revisionCount": 1,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "published",
+            "linkedin": "published",
+            "discord": "published"
+          },
+          "publishedUrls": {
+            "blog": "https://chutzrit.tistory.com/21",
+            "linkedin": "https://www.linkedin.com/feed/update/urn:li:share:7459836066192314368/",
+            "discord": "https://discord.com/channels/1503320400526966814/1503332020842004551/1503629128644169849"
+          },
+          "externalApiStatus": "published",
+          "path": "outputs/broadcasting/final/2026-05-12-망설임이-신뢰를-만든다-bd5c312e",
+          "statusReason": "Tistory 공개 발행이 완료됐다.",
+          "packageStatus": "published"
+        },
+        {
+          "id": "2026-05-12-사람을-더-신뢰하게-만드는-ai의-빈칸은-망설임이다-ae90e7d6",
+          "scope": "final",
+          "title": "사람을 더 신뢰하게 만드는 AI의 빈칸은 망설임이다",
+          "generatedAt": "2026-05-12T14:10:59.548537",
+          "inputType": "memo",
+          "sourceSummary": "사람은 틀릴 수 있다는 감각 때문에 망설이고, 그 망설임이 신뢰와 배려의 신호가 될 수 있다는 주장이다. AI는 효율적으로 빠르게 답하지만, 그 속도와 확신이 오히려 무게감과 신뢰를 약하게 만들 수 있다는 관점이다. 열쇠공 사례를 통해 ‘빠름’보다 ‘정성으로 보이는 느림’이 사람의 신뢰를 얻는다는 문제의식을 담고 있다.",
+          "targetPersona": "AI와 개발 도구로 실행력을 키우고 싶은 실무형 학습자, 특히 AI 자동화 실무자와 1인 창업자",
+          "qualityScore": 84,
+          "qualityPassed": false,
+          "revisionCount": 3,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "published",
+            "linkedin": "published",
+            "discord": "published"
+          },
+          "publishedUrls": {
+            "blog": "https://chutzrit.tistory.com/20",
+            "linkedin": "https://www.linkedin.com/feed/update/urn:li:share:7459832521585836032/",
+            "discord": "https://discord.com/channels/1503320400526966814/1503332020842004551/1503625578115371132"
+          },
+          "externalApiStatus": "published",
+          "path": "outputs/broadcasting/final/2026-05-12-사람을-더-신뢰하게-만드는-ai의-빈칸은-망설임이다-ae90e7d6",
+          "statusReason": "Tistory 공개 발행이 완료됐다.",
+          "packageStatus": "published"
+        },
+        {
+          "id": "2026-05-12-사람은-왜-망설임을-신뢰하는가-79b5f330",
+          "scope": "final",
+          "title": "사람은 왜 망설임을 신뢰하는가",
+          "generatedAt": "2026-05-12T13:45:22.611574",
+          "inputType": "memo",
+          "sourceSummary": "AI는 빠르지만 망설임이 없고, 사람은 틀릴 수 있다는 인식과 감정 때문에 위로와 판단에서 신중함을 보인다. 사용자는 이 차이가 결국 사람의 신뢰를 만드는 요소이며, 효율보다 검증하고 생각하는 망설임이 중요하다고 본다.",
+          "targetPersona": "AI 활용과 AI 의존의 차이에 관심 있는 실무형 학습자와 AI 시대 커리어 고민형 독자",
+          "qualityScore": 92,
+          "qualityPassed": true,
+          "revisionCount": 0,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "failed",
+            "linkedin": "blocked_until_blog_url",
+            "discord": "published"
+          },
+          "publishedUrls": {
+            "blog": "",
+            "linkedin": "",
+            "discord": "https://discord.com/channels/1503320400526966814/1503332020842004551/1503619123916312676"
+          },
+          "externalApiStatus": "failed",
+          "path": "outputs/broadcasting/final/2026-05-12-사람은-왜-망설임을-신뢰하는가-79b5f330",
+          "statusReason": "Tistory 발행 중 오류가 발생했다: RuntimeError: 입력 가능한 Tistory 제목/본문 영역을 찾지 못했다.",
+          "packageStatus": "failed"
+        }
+      ]
+    }
+  },
+  "latestPackage": {
+    "id": "2026-05-12-망설임이-신뢰를-만든다-bd5c312e",
+    "scope": "drafts",
+    "title": "망설임이 신뢰를 만든다",
+    "generatedAt": "2026-05-12T14:25:06.790284",
+    "inputType": "memo",
+    "sourceSummary": "AI는 빠르게 답을 내지만 사람은 망설임을 통해 신중함과 책임감을 느낀다는 관점의 글이다. 열쇠공 사례를 통해 효율이 아니라 망설임이 신뢰와 정성을 만든다는 문제의식을 제시한다.",
+    "targetPersona": "AI 활용과 AI 의존의 차이에 관심 있는 AI 시대 커리어 고민형 독자와, 실무에서 AI를 쓰지만 결과의 신뢰성과 책임감을 중요하게 보는 실무형 학습자",
+    "qualityScore": 92,
+    "qualityPassed": true,
+    "revisionCount": 1,
+    "channelProcessingStatus": {
+      "blog": "generated",
+      "linkedin": "generated",
+      "discord": "generated"
+    },
+    "channelPublishStatus": {
+      "blog": "published",
+      "linkedin": "published",
+      "discord": "published"
+    },
+    "publishedUrls": {
+      "blog": "https://chutzrit.tistory.com/21",
+      "linkedin": "https://www.linkedin.com/feed/update/urn:li:share:7459836066192314368/",
+      "discord": "https://discord.com/channels/1503320400526966814/1503332020842004551/1503629128644169849"
+    },
+    "externalApiStatus": "published",
+    "path": "outputs/broadcasting/drafts/2026-05-12-망설임이-신뢰를-만든다-bd5c312e",
+    "statusReason": "Tistory 공개 발행이 완료됐다.",
+    "packageStatus": "published"
+  },
+  "derivedAgents": {
+    "input-parser": {
+      "status": "IDLE",
+      "statusSource": "오늘 산출물 스냅샷",
+      "currentTask": "휴식 중이다. 다음 입력이 들어오면 자동으로 재개한다.",
+      "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
+      "updatedAt": "2026-05-12T14:25:06.790284",
+      "recentOutput": "최근 입력 타입 memo: AI는 빠르게 답을 내지만 사람은 망설임을 통해 신중함과 책임감을 느낀다는 관점의 글이다. 열쇠공 사례를 통해 효율이 아니라 망설임이 신뢰와 정성을 만든다는 문제의식을 제시한다."
+    },
+    "content-strategy": {
+      "status": "IDLE",
+      "statusSource": "오늘 산출물 스냅샷",
+      "currentTask": "휴식 중이다. 다음 입력이 들어오면 자동으로 재개한다.",
+      "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
+      "updatedAt": "2026-05-12T14:25:06.790284",
+      "recentOutput": "최근 타깃 독자: AI 활용과 AI 의존의 차이에 관심 있는 AI 시대 커리어 고민형 독자와, 실무에서 AI를 쓰지만 결과의 신뢰성과 책임감을 중요하게 보는 실무형 학습자"
+    },
+    "insight": {
+      "status": "IDLE",
+      "statusSource": "오늘 산출물 스냅샷",
+      "currentTask": "휴식 중이다. 다음 입력이 들어오면 자동으로 재개한다.",
+      "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
+      "updatedAt": "2026-05-12T14:25:06.790284",
+      "recentOutput": "최근 핵심 맥락: AI는 빠르게 답을 내지만 사람은 망설임을 통해 신중함과 책임감을 느낀다는 관점의 글이다. 열쇠공 사례를 통해 효율이 아니라 망설임이 신뢰와 정성을 만든다는 문제의식을 제시한다."
+    },
+    "blog-writer": {
+      "status": "WORKING",
+      "statusSource": "오늘 산출물 스냅샷",
+      "currentTask": "검토 대기 패키지의 블로그 원고 상태를 확인 중이다.",
+      "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
+      "updatedAt": "2026-05-12T14:25:06.790284",
+      "recentOutput": "블로그 채널 상태: generated"
+    },
+    "linkedin-writer": {
+      "status": "WORKING",
+      "statusSource": "오늘 산출물 스냅샷",
+      "currentTask": "검토 대기 패키지의 LinkedIn 원고 상태를 확인 중이다.",
+      "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
+      "updatedAt": "2026-05-12T14:25:06.790284",
+      "recentOutput": "LinkedIn 채널 상태: generated"
+    },
+    "discord-newsletter": {
+      "status": "IDLE",
+      "statusSource": "오늘 산출물 스냅샷",
+      "currentTask": "휴식 중이다. 다음 입력이 들어오면 자동으로 재개한다.",
+      "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
+      "updatedAt": "2026-05-12T14:25:06.790284",
+      "recentOutput": "Discord 뉴스레터 상태: published"
+    },
+    "self-reflection": {
+      "status": "WORKING",
+      "statusSource": "오늘 산출물 스냅샷",
+      "currentTask": "검토 대기 패키지의 품질 점수를 점검 중이다.",
+      "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
+      "updatedAt": "2026-05-12T14:25:06.790284",
+      "recentOutput": "최근 품질 점수 92점, 통과 여부 통과"
+    },
+    "revision": {
+      "status": "WORKING",
+      "statusSource": "오늘 산출물 스냅샷",
+      "currentTask": "기준 미달 또는 승인 대기 패키지의 수정 포인트를 확인 중이다.",
+      "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
+      "updatedAt": "2026-05-12T14:25:06.790284",
+      "recentOutput": "최근 수정 루프 1회"
+    },
+    "publish": {
+      "status": "IDLE",
+      "statusSource": "오늘 산출물 스냅샷",
+      "currentTask": "휴식 중이다. 다음 입력이 들어오면 자동으로 재개한다.",
+      "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
+      "updatedAt": "2026-05-12T14:25:06.790284",
+      "recentOutput": "최근 배포 상태: {\"blog\":\"published\",\"linkedin\":\"published\",\"discord\":\"published\"}"
+    }
+  }
+}

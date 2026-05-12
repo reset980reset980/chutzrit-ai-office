@@ -1,0 +1,28 @@
+{
+  "name": "@chutzrit/office-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate:avatars": "node scripts/create-avatar-assets.mjs",
+    "generate:data": "node scripts/generate-office-status.mjs",
+    "predev": "npm run generate:data",
+    "dev": "vite --host 127.0.0.1",
+    "prebuild": "npm run generate:data",
+    "build": "tsc --noEmit -p tsconfig.json && vite build",
+    "preview": "vite preview --host 127.0.0.1"
+  },
+  "dependencies": {
+    "lucide-react": "^0.468.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "sharp": "^0.34.5",
+    "typescript": "^5.9.0",
+    "vite": "^7.2.0"
+  }
+}

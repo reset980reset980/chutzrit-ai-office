@@ -34,6 +34,7 @@
 - `agents/broadcasting/SKILL.md`처럼 임의의 구현 폴더에 둔 `SKILL.md`는 Codex Skill로 자동 발견되는 위치가 아니다.
 - 프로젝트 내부 런타임 에이전트나 파이프라인 단계의 규칙은 기본적으로 `AGENTS.md`, 해당 모듈 `README.md`, `prompts/`, `schemas/`에 나누어 기록한다.
 - 후츠릿 콘텐츠 작업을 Codex의 재사용 Skill로 만들 때는 `.agents/skills/chutzrit-broadcasting/SKILL.md`를 만든다.
+- 후츠릿 오피스 대시보드 작업을 Codex의 재사용 Skill로 만들 때는 `.agents/skills/chutzrit-office-dashboard/SKILL.md`를 만든다.
 
 ## 현재 MVP 우선순위
 
@@ -266,6 +267,7 @@ Publish Agent 실행 규칙:
 - 슬라이드 산출물은 `.pptx`가 아니라 단일 HTML/CSS/JavaScript 웹 프레젠테이션으로 만든다.
 - `agents/education/slide-maker/assets/base-template.html`을 베이스 템플릿으로 사용한다.
 - `agents/education/slide-maker/references/design-rules.md`와 `agents/education/slide-maker/references/patterns.md`의 코드, 디자인 규칙, 14개 슬라이드 패턴을 유지한다.
+- 웹 PPT 작성 전 `agents/education/slide-maker/references/template-source/`의 템플릿 예시 HTML과 참고 이미지를 확인한다.
 - 강의 슬라이드 작업용 Codex Skill은 `.agents/skills/chutzrit-education-slides/SKILL.md`에 둔다.
 - 강의 원본 자료는 필요할 때 `outputs/education/sources/`에 로컬 보관하되 Git에 올리지 않는다.
 - 완성된 슬라이드는 `outputs/education/slides/`에 저장한다.
@@ -277,6 +279,65 @@ Publish Agent 실행 규칙:
 ```text
 기술 발굴 -> 강의 원본 분석 -> 슬라이드 구성안 작성 -> HTML 슬라이드 제작 -> 실습 코드 검증 -> Discord 보고
 ```
+
+### 오피스 대시보드 에이전트
+
+목표: 후츠릿 AI 오피스가 실제로 돌아가고 있다는 것을 라이브 강의용 웹 대시보드로 시각화한다.
+
+역할:
+
+- 후츠릿 AI 오피스 운영 대시보드 설계
+- 콘텐츠배포팀 서브에이전트 상태 시각화
+- 에이전트별 아바타, 상태 배지, 클릭 상세 패널 구성
+- Codex 토큰 사용량 실제 소스 연결 여부 표시
+- 하단 상태바, 전체 진행률, 클릭 가능한 산출물 상세 패널 구성
+- `outputs/broadcasting/` 산출물 스냅샷과 `outputs/broadcasting/logs/current-status.json` 연동 구조 분리
+
+현재 범위:
+
+- 첫 버전은 실제 구현 완료된 `broadcasting` 콘텐츠배포팀만 표시한다.
+- 다른 팀은 해당 팀 런타임 구현이 완료된 뒤 추가한다.
+
+구현 위치:
+
+- 대시보드 에이전트 기준 문서: `agents/office-dashboard/`
+- 실제 웹앱: `apps/office-dashboard/`
+- 설계 문서와 참고 이미지: `docs/dashboard/`
+- Codex Skill: `.agents/skills/chutzrit-office-dashboard/SKILL.md`
+
+참고 이미지:
+
+- 전체 오피스 콘셉트: `docs/dashboard/references/office-concept.png`
+- 에이전트 아바타 방향: `docs/dashboard/references/agent-avatars.png`
+
+기본 화면 기준:
+
+- 랜딩페이지가 아니라 실제 운영 대시보드로 만든다.
+- 하나의 큰 오피스 공간 안에 접수 데스크, 전략 회의 테이블, 작성 책상, 검수 책상, 수정 책상, 배포 보드를 자연스럽게 배치한다.
+- 상태는 `WORKING`, `IDLE`, `REVIEW`, `ERROR` 네 가지만 사용한다.
+- `IDLE`은 휴식 상태로 보고 빨강 계열로 표시한다.
+- `outputs/broadcasting/logs/current-status.json`이 없을 때는 강의 화면용 `WORKING`/`IDLE` fallback을 표시한다.
+- `WORKING` 상태 캐릭터는 은은한 pulse 애니메이션을 사용한다.
+- 캐릭터는 실제로 일하거나 쉬는 것처럼 보여야 하며, 상태별로 typing, thinking, reading, reviewing, revising, publishing, resting 같은 자연스러운 반복 모션을 사용한다.
+- 각 캐릭터의 아바타는 투명 배경 PNG로 만들고, 이미지 안에 텍스트를 넣지 않는다.
+- 직원명, 역할, 상태 설명은 HTML 텍스트로 표시한다.
+- 메인 화면에는 아바타, 직원명, 상태 배지만 표시하고, 역할과 상세 상태는 클릭 상세 패널에서 보여준다.
+- 메인 화면에는 작업 진행률이나 에너지 퍼센트를 표시하지 않는다.
+- 에너지 잔량은 직원 상세 패널에만 표시하며, 실제 런타임 값이 없으면 상태 기반 고정 fallback 값을 사용한다.
+- 애니메이션은 라이브 강의 화면에 맞게 차분해야 하며, `prefers-reduced-motion` 환경에서는 정적 강조로 축소한다.
+- 캐릭터를 클릭하면 오른쪽 상세 패널 또는 모달에 현재 작업, 최근 완료 작업, 다음 작업, 업데이트 시간, 상태 기준을 보여준다.
+- 상단에는 `후츠릿 AI 오피스`, `24시간 무인 AI 콘텐츠 제작 파이프라인`, Codex token 실제 사용량 또는 시연용 계산값을 표시한다.
+- 하단에는 오늘 처리 입력 수, 작성 완료 수, 검토 대기 수, 배포 완료 수, 전체 진행률, 시스템 상태, 현재 시간을 표시한다.
+- 하단 지표를 클릭하면 `outputs/broadcasting/`에서 읽은 실제 입력, 최종본, 검토 대기, 배포 완료 패키지 목록을 보여준다.
+
+금지:
+
+- 랜딩페이지처럼 만들지 않는다.
+- 단순 카드 나열 UI로 만들지 않는다.
+- 참고 이미지를 그대로 복제하지 않는다.
+- 여러 박스의 나열처럼 보이게 만들지 않는다.
+- SVG 장식만으로 대충 만들지 않는다.
+- 텍스트, 배지, 아바타, 패널이 겹치게 만들지 않는다.
 
 ### 유튜브전략팀
 
@@ -413,6 +474,7 @@ Discord는 팀별 채널을 기준으로 보고, 수정 요청, 명령 입력을
 ├── .agents/
 │   └── skills/
 │       ├── chutzrit-broadcasting/
+│       ├── chutzrit-office-dashboard/
 │       └── chutzrit-education-slides/
 ├── configs/
 ├── agents/
@@ -420,16 +482,19 @@ Discord는 팀별 채널을 기준으로 보고, 수정 요청, 명령 입력을
 │   ├── chief-of-staff/
 │   ├── research/
 │   ├── dev/
+│   ├── office-dashboard/
 │   ├── education/
 │   │   └── slide-maker/
 │   └── youtube/
 ├── apps/
-│   └── discord-bot/
+│   ├── discord-bot/
+│   └── office-dashboard/
 ├── automations/
 │   └── n8n/
 ├── docs/
 │   ├── architecture/
 │   ├── content/
+│   ├── dashboard/
 │   ├── education/
 │   ├── operations/
 │   ├── reports/

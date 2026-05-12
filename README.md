@@ -58,6 +58,7 @@ Discord `broadcasting` 팀 채널 메시지 수신
 - [docs/strategy/content-positioning.md](./docs/strategy/content-positioning.md): 콘텐츠 포지셔닝
 - [docs/strategy/channel-style-guide.md](./docs/strategy/channel-style-guide.md): 채널별 글쓰기 스타일
 - [docs/content/references/source-materials.md](./docs/content/references/source-materials.md): 참고자료 목록
+- [docs/dashboard/office-dashboard.md](./docs/dashboard/office-dashboard.md): 후츠릿 오피스 대시보드 설계
 - [docs/education/slide-maker.md](./docs/education/slide-maker.md): 강의운영팀 슬라이드 제작 시스템
 - [configs/channels.example.yaml](./configs/channels.example.yaml): 채널별 배포/승인 설정 예시
 - [.env.example](./.env.example): 필요한 환경변수 예시
@@ -79,6 +80,8 @@ Discord `broadcasting` 팀 채널 메시지 수신
 │   └── skills/
 │       ├── chutzrit-broadcasting/
 │       │   └── SKILL.md              # Codex용 콘텐츠배포팀 작업 Skill
+│       ├── chutzrit-office-dashboard/
+│       │   └── SKILL.md              # Codex용 오피스 대시보드 Skill
 │       └── chutzrit-education-slides/
 │           └── SKILL.md              # Codex용 강의운영팀 슬라이드 Skill
 ├── configs/
@@ -92,16 +95,19 @@ Discord `broadcasting` 팀 채널 메시지 수신
 │   ├── chief-of-staff/
 │   ├── research/
 │   ├── dev/
+│   ├── office-dashboard/
 │   ├── education/
 │   │   └── slide-maker/              # 강의 슬라이드 템플릿과 패턴 규칙
 │   └── youtube/
 ├── apps/
-│   └── discord-bot/
+│   ├── discord-bot/
+│   └── office-dashboard/
 ├── automations/
 │   └── n8n/
 ├── docs/
 │   ├── architecture/
 │   ├── content/
+│   ├── dashboard/
 │   ├── education/
 │   ├── operations/
 │   ├── reports/
@@ -134,6 +140,7 @@ Codex 공식 Agent Skills를 저장하는 위치입니다.
 
 ```text
 .agents/skills/chutzrit-broadcasting/SKILL.md
+.agents/skills/chutzrit-office-dashboard/SKILL.md
 .agents/skills/chutzrit-education-slides/SKILL.md
 ```
 
@@ -159,14 +166,25 @@ Codex 공식 Agent Skills를 저장하는 위치입니다.
 - `agents/education/slide-maker/`: 강의 슬라이드 제작용 베이스 템플릿, 디자인 규칙, 슬라이드 패턴
 - `agents/education/slide-maker/assets/base-template.html`: 단일 HTML 슬라이드의 기준 CSS와 JavaScript
 - `agents/education/slide-maker/references/`: `ppt-maker`에서 가져온 디자인 규칙과 14개 슬라이드 패턴
+- `agents/education/slide-maker/references/template-source/`: 웹 PPT 작성 전 참고할 템플릿 예시 HTML과 이미지
 
 강의 자료 슬라이드는 기존 `ppt-maker` 시스템과 동일하게 순수 HTML/CSS/JavaScript 단일 파일로 생성합니다.
+
+오피스 대시보드 에이전트는 `agents/office-dashboard/` 아래에 둡니다.
+
+- `agents/office-dashboard/`: 대시보드 에이전트의 역할, 데이터 구조, 시각화 기준
+- `apps/office-dashboard/`: 실제 웹 대시보드 앱
+- `docs/dashboard/`: 대시보드 설계 문서와 참고 이미지
+
+첫 버전은 콘텐츠배포팀만 시각화하고, 다른 팀은 실제 구현이 완료된 뒤 추가합니다.
 
 ### `apps/`
 
 실행 앱을 둡니다.
 
 현재는 `apps/discord-bot/`을 Discord 보고, 진행 알림, 명령 입력 인터페이스로 사용합니다. MVP에서는 `broadcasting` 채널 메시지를 감지해 콘텐츠배포팀 파이프라인을 실행합니다.
+
+`apps/office-dashboard/`는 라이브 강의에서 보여줄 후츠릿 AI 오피스 운영 대시보드 앱입니다. `outputs/broadcasting/` 산출물을 스캔해 콘텐츠배포팀 상태를 보여주고, `outputs/broadcasting/logs/current-status.json`이 있으면 실행 중인 실제 상태를 우선 표시합니다.
 
 ### `automations/`
 
@@ -186,6 +204,7 @@ n8n 같은 외부 자동화 워크플로우를 둡니다.
 
 - `docs/architecture/`: 시스템 구조 문서
 - `docs/content/`: 콘텐츠 전략과 편집 기준
+- `docs/dashboard/`: 오피스 대시보드 설계와 참고 이미지
 - `docs/education/`: 강의 자료 제작 기준과 슬라이드 시스템 문서
 - `docs/operations/`: 운영 정책과 승인 규칙
 - `docs/reports/`: 오피스 운영 리포트

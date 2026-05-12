@@ -24,6 +24,7 @@
 ├── .agents/
 │   └── skills/
 │       ├── chutzrit-broadcasting/
+│       ├── chutzrit-office-dashboard/
 │       └── chutzrit-education-slides/
 ├── configs/
 │   └── channels.example.yaml
@@ -39,11 +40,14 @@
 │   ├── chief-of-staff/
 │   ├── research/
 │   ├── dev/
+│   ├── office-dashboard/
 │   ├── education/
 │   │   └── slide-maker/
 │   └── youtube/
 ├── apps/
-│   └── discord-bot/
+│   ├── discord-bot/
+│   │   └── README.md
+│   └── office-dashboard/
 │       └── README.md
 ├── automations/
 │   └── n8n/
@@ -52,6 +56,7 @@
 ├── docs/
 │   ├── architecture/
 │   ├── content/
+│   ├── dashboard/
 │   ├── education/
 │   ├── operations/
 │   ├── reports/
@@ -94,6 +99,7 @@ Codex는 현재 작업 폴더부터 저장소 루트까지의 `.agents/skills`�
 
 ```text
 .agents/skills/chutzrit-broadcasting/SKILL.md
+.agents/skills/chutzrit-office-dashboard/SKILL.md
 .agents/skills/chutzrit-education-slides/SKILL.md
 ```
 
@@ -110,8 +116,20 @@ Codex는 현재 작업 폴더부터 저장소 루트까지의 `.agents/skills`�
 - `slide-maker/assets/base-template.html`: 단일 HTML 강의 슬라이드의 기준 CSS와 JavaScript
 - `slide-maker/references/design-rules.md`: 다크모드 디자인 시스템과 컴포넌트 규칙
 - `slide-maker/references/patterns.md`: 14가지 슬라이드 패턴과 HTML 구조
+- `slide-maker/references/template-source/`: 웹 PPT 작성 전 참고할 템플릿 예시 HTML과 이미지
 
 강의 자료 슬라이드 제작은 기존 `ppt-maker`의 웹 슬라이드 시스템을 유지합니다. 새 프레임워크나 빌드 시스템을 만들지 않고, 완성된 결과물을 `outputs/education/slides/`에 저장합니다.
+
+## 오피스 대시보드 구조
+
+오피스 대시보드 에이전트는 `agents/office-dashboard/`에 둡니다.
+
+- `agents/office-dashboard/README.md`: 대시보드 에이전트 역할과 상태 체계
+- `apps/office-dashboard/README.md`: 실제 웹 대시보드 앱 구현 기준
+- `docs/dashboard/office-dashboard.md`: 화면 구조, 데이터 구조, 완료 조건
+- `docs/dashboard/references/`: 오피스 콘셉트와 에이전트 아바타 참고 이미지
+
+첫 버전은 콘텐츠배포팀만 표시합니다. 실제 웹앱은 `apps/office-dashboard/`에 구현하고, `outputs/broadcasting/` 산출물 기반 생성 데이터는 컴포넌트와 분리합니다. `outputs/broadcasting/logs/current-status.json`이 있으면 실행 중인 실제 상태를 우선 연결합니다.
 
 ## 콘텐츠배포팀 구조
 
@@ -144,6 +162,8 @@ Codex는 현재 작업 폴더부터 저장소 루트까지의 `.agents/skills`�
 ## Discord 봇
 
 `apps/discord-bot/`은 Discord 보고, 명령 입력, 승인 요청, 수정 요청을 담당합니다.
+
+`apps/office-dashboard/`는 라이브 강의용 운영 대시보드 앱입니다. 랜딩페이지가 아니라 하나의 오피스 공간 안에서 콘텐츠배포팀 에이전트 상태를 시각화하는 화면입니다.
 
 Discord 채널명은 에이전트 팀 이름과 동일하게 설정합니다.
 
