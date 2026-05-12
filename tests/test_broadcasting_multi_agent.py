@@ -1,0 +1,426 @@
+"""Tests for the broadcasting multi-agent pipeline."""
+
+from __future__ import annotations
+
+import json
+import tempfile
+import threading
+import unittest
+from datetime import datetime
+from pathlib import Path
+
+from agents.broadcasting.pipeline.config import RuntimeConfig
+from agents.broadcasting.pipeline.progress import format_multi_platform_publish_report
+from agents.broadcasting.pipeline.generator import generate_content_package
+from agents.broadcasting.pipeline import storage
+from agents.broadcasting.agents import PublishAgent
+from agents.broadcasting.publishers import PublishResult
+from agents.broadcasting.publishers.tistory import markdown_to_tistory_html
+from scripts.save_tistory_session import assert_isolated_browser_profile_dir, known_real_browser_profile_dirs
+
+
+class FakeJSONClient:
+    """Prompt-aware fake client for multi-agent orchestration tests."""
+
+    def __init__(self) -> None:
+        self.calls: list[str] = []
+        self.lock = threading.Lock()
+
+    def create_json(self, prompt: str, *, max_output_tokens: int = 12000) -> dict:
+        with self.lock:
+            self.calls.append(prompt)
+
+        if "Content Strategy Agent" in prompt:
+            return {
+                "title": "AI 자동화는 답변보다 운영 구조다",
+                "source_summary": "AI 자동화에서 프롬프트보다 실행 구조가 중요하다는 메모",
+                "strategy": {
+                    "core_message": "핵심은 답변이 아니라 운영 구조다.",
+                    "target_reader": "AI 자동화 실무자와 1인 창업자",
+                    "claim": "AI 자동화 품질은 프롬프트보다 입력, 도구, 검증 설계에서 갈린다.",
+                    "platform_directions": {
+                        "blog": "운영 구조 중심으로 길게 설명한다.",
+                        "linkedin": "전문가용 인사이트로 압축한다.",
+                        "discord": "짧은 실행 기준으로 전달한다.",
+                    },
+                },
+            }
+        if "Insight Agent" in prompt:
+            return {
+                "chutzrit_insight": "프롬프트는 시작점이고, 운영 구조는 실패를 복구하는 설계다.",
+                "practical_points": ["입력 계약을 정한다.", "검증 기준을 둔다."],
+                "examples": ["콘텐츠 자동 배포 전에 품질 게이트를 둔다."],
+                "cautions": ["검증 없는 자동 발행은 브랜드 리스크가 된다."],
+            }
+        if "Blog Writer Agent" in prompt:
+            return {
+                "draft": (
+                    "# AI 자동화는 답변보다 운영 구조다\n\n"
+                    "## 문제는 프롬프트가 아니다\n"
+                    "AI 자동화의 핵심은 더 좋은 문장을 쓰는 일이 아니라 반복 실행되는 운영 구조를 설계하는 일이다.\n\n"
+                    "## 필요한 설계\n"
+                    "입력, 도구, 권한, 검증 기준이 분리되어 있어야 한다.\n\n"
+                    "## 실무 기준\n"
+                    "문제는 모델이 아니라 실패해도 복구되는 구조가 있는지에서 갈린다."
+                )
+            }
+        if "LinkedIn Writer Agent" in prompt:
+            return {
+                "draft": (
+                    "AI 자동화의 차이는 답변이 아니라 구조에서 납니다\n\n"
+                    "같은 프롬프트를 써도 결과가 갈리는 이유는 모델보다 운영 구조에 있습니다.\n\n"
+                    "입력, 도구, 권한, 검증 기준을 먼저 설계해야 합니다.\n\n"
+                    "블로그 전문 [블로그 링크]"
+                )
+            }
+        if "Discord Newsletter Writer Agent" in prompt:
+            return {
+                "draft": (
+                    "## AI 자동화는 구조부터 봐야 합니다\n"
+                    "프롬프트만 고치면 자동화가 좋아진다고 보기 쉽습니다. 실제 차이는 입력과 검증 기준을 어떻게 운영하느냐에서 납니다.\n\n"
+                    "- 입력 형식을 먼저 정하세요.\n"
+                    "- 실패했을 때 멈추는 기준을 두세요."
+                )
+            }
+        if "Self Reflection Agent" in prompt:
+            return {
+                "score": 92,
+                "passed": True,
+                "channel_scores": {"blog": 92, "linkedin": 91, "discord": 91},
+                "strengths": ["채널별 기준을 충족한다."],
+                "problems": [],
+                "revision_instructions": [],
+                "publish_status": "자동 발송 가능",
+            }
+        raise AssertionError(f"Unexpected prompt: {prompt[:200]}")
+
+
+class RevisionFakeJSONClient(FakeJSONClient):
+    """Fake client that forces one blog-only revision loop."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.reflection_count = 0
+
+    def create_json(self, prompt: str, *, max_output_tokens: int = 12000) -> dict:
+        if prompt.startswith("너는 후츠릿 콘텐츠의 Self Reflection Agent"):
+            with self.lock:
+                self.calls.append(prompt)
+                self.reflection_count += 1
+                count = self.reflection_count
+            if count == 1:
+                return {
+                    "score": 85,
+                    "passed": False,
+                    "channel_scores": {"blog": 80, "linkedin": 92, "discord": 92},
+                    "strengths": ["LinkedIn과 Discord는 기준을 충족한다."],
+                    "problems": ["블로그 훅이 약하다."],
+                    "revision_instructions": ["블로그만 더 선명하게 수정하라."],
+                    "publish_status": "수정 필요",
+                }
+            return {
+                "score": 93,
+                "passed": True,
+                "channel_scores": {"blog": 93, "linkedin": 92, "discord": 92},
+                "strengths": ["수정 기준을 충족한다."],
+                "problems": [],
+                "revision_instructions": [],
+                "publish_status": "자동 발송 가능",
+            }
+        if "블로그 원고 하나만 수정" in prompt:
+            with self.lock:
+                self.calls.append(prompt)
+            return {
+                "draft": (
+                    "# AI 자동화는 운영 구조에서 갈린다\n\n"
+                    "## 문제는 답변 품질이 아니다\n"
+                    "핵심은 자동화가 실패했을 때 멈추고 복구되는 운영 설계를 갖추는 일이다.\n\n"
+                    "## 필요한 설계\n"
+                    "입력 계약, 도구 권한, 검증 기준을 분리해야 한다.\n\n"
+                    "## 실무 기준\n"
+                    "차이는 프롬프트가 아니라 반복 가능한 구조에서 갈린다."
+                )
+            }
+        return super().create_json(prompt, max_output_tokens=max_output_tokens)
+
+
+def build_config() -> RuntimeConfig:
+    """Build a minimal runtime config for tests."""
+    return RuntimeConfig(
+        discord_webhook_url="https://discord.example/webhook",
+        discord_bot_token="token",
+        discord_guild_id="guild",
+        discord_broadcasting_channel_id="channel",
+        discord_newsletter_channel_id="newsletter",
+        discord_allowed_user_ids={"user"},
+        openai_api_key="key",
+    )
+
+
+def build_publish_config(storage_state: str) -> RuntimeConfig:
+    """Build a config with external publishers enabled."""
+    return RuntimeConfig(
+        discord_webhook_url="https://discord.example/webhook",
+        discord_bot_token="token",
+        discord_guild_id="guild",
+        discord_broadcasting_channel_id="channel",
+        discord_newsletter_channel_id="newsletter",
+        discord_allowed_user_ids={"user"},
+        openai_api_key="key",
+        tistory_manage_url="https://chutzrit.tistory.com/manage",
+        tistory_auto_publish=True,
+        playwright_storage_state=storage_state,
+        linkedin_access_token="linkedin-token",
+        linkedin_author_urn="urn:li:person:123",
+        linkedin_auto_publish=True,
+    )
+
+
+class FakeTistoryPublisher:
+    """Fake Tistory publisher for publish-agent tests."""
+
+    def __init__(self, result: PublishResult) -> None:
+        self.result = result
+        self.calls = 0
+
+    def publish(self, markdown: str, *, output_dir: Path) -> PublishResult:
+        self.calls += 1
+        return self.result
+
+
+class FakeLinkedInPublisher:
+    """Fake LinkedIn publisher for publish-agent tests."""
+
+    def __init__(self) -> None:
+        self.calls = 0
+        self.last_text = ""
+
+    def publish(self, text: str) -> PublishResult:
+        self.calls += 1
+        self.last_text = text
+        return PublishResult(
+            channel="linkedin",
+            status="published",
+            provider="linkedin_posts_api",
+            url="https://www.linkedin.com/feed/update/urn:li:share:123/",
+            reason="LinkedIn 게시 완료",
+        )
+
+
+class BroadcastingMultiAgentTests(unittest.TestCase):
+    def test_generate_content_package_uses_independent_subagents(self) -> None:
+        client = FakeJSONClient()
+
+        package = generate_content_package(
+            "AI 자동화는 프롬프트보다 운영 구조가 중요하다.",
+            build_config(),
+            client=client,
+        )
+
+        self.assertEqual(package["agent_architecture"]["mode"], "multi_agent")
+        self.assertEqual(package["drafts"]["blog"].splitlines()[0], "# AI 자동화는 답변보다 운영 구조다")
+        self.assertEqual(package["reflection"]["score"], 92)
+        self.assertEqual(package["revision_count"], 0)
+        self.assertEqual(package["publish_plan"]["channels"]["blog"]["status"], "external_publish_disabled")
+        self.assertEqual(package["publish_plan"]["publish_strategy"]["order"], ["blog", "linkedin", "discord"])
+        self.assertEqual(package["publish_plan"]["publish_strategy"]["dependencies"]["linkedin"], ["blog.url"])
+
+        joined_calls = "\n".join(client.calls)
+        for marker in (
+            "Content Strategy Agent",
+            "Insight Agent",
+            "Blog Writer Agent",
+            "LinkedIn Writer Agent",
+            "Discord Newsletter Writer Agent",
+            "Self Reflection Agent",
+        ):
+            self.assertIn(marker, joined_calls)
+
+    def test_revision_agent_revises_failed_channel_only(self) -> None:
+        client = RevisionFakeJSONClient()
+
+        package = generate_content_package(
+            "AI 자동화는 프롬프트보다 운영 구조가 중요하다.",
+            build_config(),
+            client=client,
+        )
+
+        self.assertEqual(package["revision_count"], 1)
+        self.assertEqual(package["reflection"]["score"], 93)
+        self.assertIn("운영 구조에서 갈린다", package["drafts"]["blog"])
+        self.assertIn("블로그 전문 [블로그 링크]", package["drafts"]["linkedin"])
+
+        revision_calls = [call for call in client.calls if "원고 하나만 수정" in call]
+        self.assertEqual(len(revision_calls), 1)
+        self.assertIn("블로그 원고 하나만 수정", revision_calls[0])
+
+    def test_storage_writes_draft_and_final_package_files(self) -> None:
+        client = FakeJSONClient()
+        package = generate_content_package(
+            "AI 자동화는 프롬프트보다 운영 구조가 중요하다.",
+            build_config(),
+            client=client,
+        )
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            original_output_root = storage.OUTPUT_ROOT
+            storage.OUTPUT_ROOT = Path(temp_dir)
+            try:
+                draft_path = storage.save_content_package(
+                    package,
+                    now=datetime(2026, 5, 12, 9, 0, 0),
+                )
+            finally:
+                storage.OUTPUT_ROOT = original_output_root
+
+            final_path = Path(temp_dir) / "final" / draft_path.name
+            self.assertTrue((draft_path / "reflection.md").exists())
+            self.assertTrue((draft_path / "publish-plan.json").exists())
+            self.assertTrue((final_path / "blog.md").exists())
+
+            metadata = json.loads((draft_path / "metadata.json").read_text(encoding="utf-8"))
+            self.assertEqual(metadata["output_type"], "draft")
+            self.assertEqual(metadata["input_type"], "memo")
+            self.assertEqual(metadata["agent_architecture"]["mode"], "multi_agent")
+            self.assertEqual(metadata["channel_publish_status"]["discord"], "auto_dispatch_pending")
+
+    def test_publish_agent_executes_tistory_then_linkedin(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            state_path = Path(temp_dir) / "tistory-state.json"
+            state_path.write_text("{}", encoding="utf-8")
+            package = {
+                "drafts": {
+                    "blog": "# 제목\n\n본문",
+                    "linkedin": "블로그 전문 [블로그 링크]",
+                    "discord": "뉴스레터",
+                },
+                "reflection": {"score": 92, "passed": True},
+                "revision_count": 0,
+                "max_revision_loops": 3,
+            }
+            tistory = FakeTistoryPublisher(
+                PublishResult(
+                    channel="blog",
+                    status="published",
+                    provider="tistory_playwright",
+                    url="https://chutzrit.tistory.com/123",
+                    reason="Tistory 게시 완료",
+                )
+            )
+            linkedin = FakeLinkedInPublisher()
+
+            plan = PublishAgent(
+                build_publish_config(str(state_path)),
+                tistory_publisher_factory=lambda: tistory,
+                linkedin_publisher_factory=lambda: linkedin,
+            ).execute(package, Path(temp_dir))
+
+            self.assertEqual(tistory.calls, 1)
+            self.assertEqual(linkedin.calls, 1)
+            self.assertIn("https://chutzrit.tistory.com/123", linkedin.last_text)
+            self.assertNotIn("[블로그 링크]", package["drafts"]["linkedin"])
+            self.assertEqual(plan["channels"]["blog"]["status"], "published")
+            self.assertEqual(plan["channels"]["linkedin"]["status"], "published")
+            self.assertEqual(plan["external_api_status"], "published")
+
+    def test_publish_agent_blocks_linkedin_when_tistory_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            state_path = Path(temp_dir) / "tistory-state.json"
+            state_path.write_text("{}", encoding="utf-8")
+            package = {
+                "drafts": {
+                    "blog": "# 제목\n\n본문",
+                    "linkedin": "블로그 전문 [블로그 링크]",
+                    "discord": "뉴스레터",
+                },
+                "reflection": {"score": 92, "passed": True},
+                "revision_count": 0,
+                "max_revision_loops": 3,
+            }
+            tistory = FakeTistoryPublisher(
+                PublishResult(
+                    channel="blog",
+                    status="failed",
+                    provider="tistory_playwright",
+                    reason="Tistory 실패",
+                )
+            )
+            linkedin = FakeLinkedInPublisher()
+
+            plan = PublishAgent(
+                build_publish_config(str(state_path)),
+                tistory_publisher_factory=lambda: tistory,
+                linkedin_publisher_factory=lambda: linkedin,
+            ).execute(package, Path(temp_dir))
+
+            self.assertEqual(tistory.calls, 1)
+            self.assertEqual(linkedin.calls, 0)
+            self.assertEqual(plan["channels"]["linkedin"]["status"], "blocked_until_blog_url")
+
+    def test_consolidated_publish_report_includes_all_channel_results(self) -> None:
+        plan = {
+            "channels": {
+                "blog": {
+                    "status": "failed",
+                    "url": "",
+                    "reason": "Tistory 본문 입력 실패",
+                },
+                "linkedin": {
+                    "status": "blocked_until_blog_url",
+                    "url": "",
+                    "reason": "티스토리 실제 발행 URL이 없어 LinkedIn 공개 게시를 중단한다.",
+                },
+                "discord": {
+                    "status": "published",
+                    "url": "https://discord.com/channels/1/2/3",
+                    "reason": "Discord 뉴스레터가 뉴스레터 채널에 발송됐다.",
+                },
+            }
+        }
+
+        report = format_multi_platform_publish_report(
+            plan,
+            output_path=Path("/tmp/package"),
+            title="테스트 콘텐츠",
+        )
+
+        self.assertIn("멀티플랫폼 배포 결과", report)
+        self.assertIn("부분 배포 완료", report)
+        self.assertIn("Discord 뉴스레터", report)
+        self.assertIn("https://discord.com/channels/1/2/3", report)
+        self.assertIn("블로그", report)
+        self.assertIn("Tistory 본문 입력 실패", report)
+        self.assertIn("LinkedIn", report)
+        self.assertIn("티스토리 실제 발행 URL", report)
+
+    def test_tistory_session_capture_refuses_real_browser_profile(self) -> None:
+        real_brave_profile = known_real_browser_profile_dirs()[0] / "Default"
+
+        with self.assertRaises(SystemExit):
+            assert_isolated_browser_profile_dir(real_brave_profile)
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            isolated_profile = Path(temp_dir) / "outputs" / "broadcasting" / "session" / "brave-playwright-profile"
+            assert_isolated_browser_profile_dir(isolated_profile)
+
+    def test_tistory_markdown_is_rendered_as_editor_html(self) -> None:
+        markdown = (
+            "망설임은 감정이 아니라 안전장치다.\n\n"
+            "## 망설임은 속도를 늦추는 게 아니라 사고를 줄인다\n\n"
+            "- 검증 기준을 둔다.\n"
+            "- 멈춤 지점을 정한다.\n\n"
+            "자세한 글은 [후츠릿](https://chutzrit.tistory.com)에서 본다."
+        )
+
+        rendered = markdown_to_tistory_html(markdown)
+
+        self.assertIn("<p>망설임은 감정이 아니라 안전장치다.</p>", rendered)
+        self.assertIn("<h2>망설임은 속도를 늦추는 게 아니라 사고를 줄인다</h2>", rendered)
+        self.assertIn("<ul>", rendered)
+        self.assertIn("<li>검증 기준을 둔다.</li>", rendered)
+        self.assertIn('<a href="https://chutzrit.tistory.com"', rendered)
+        self.assertNotIn("## 망설임", rendered)
+
+
+if __name__ == "__main__":
+    unittest.main()
