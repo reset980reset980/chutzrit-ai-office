@@ -19,11 +19,24 @@ class RuntimeConfig:
     discord_bot_token: str
     discord_guild_id: str
     discord_broadcasting_channel_id: str
+    discord_newsletter_channel_id: str
     discord_allowed_user_ids: set[str]
     openai_api_key: str
     openai_model: str = "gpt-5.4-mini"
     public_content_require_approval: bool = False
     discord_channel_auto_publish: bool = True
+    blog_publisher: str = "tistory"
+    tistory_manage_url: str = ""
+    tistory_blog_url: str = ""
+    tistory_write_url: str = ""
+    tistory_publish_mode: str = "public"
+    tistory_auto_publish: bool = False
+    playwright_storage_state: str = ""
+    playwright_headless: bool = True
+    linkedin_access_token: str = ""
+    linkedin_author_urn: str = ""
+    linkedin_version: str = "202602"
+    linkedin_auto_publish: bool = False
 
 
 def load_dotenv(path: Path = DEFAULT_ENV_PATH) -> dict[str, str]:
@@ -70,6 +83,10 @@ def load_runtime_config(env_path: Path = DEFAULT_ENV_PATH) -> RuntimeConfig:
         discord_bot_token=read("DISCORD_BOT_TOKEN"),
         discord_guild_id=read("DISCORD_GUILD_ID"),
         discord_broadcasting_channel_id=read("DISCORD_BROADCASTING_CHANNEL_ID"),
+        discord_newsletter_channel_id=read(
+            "DISCORD_NEWSLETTER_CHANNEL_ID",
+            read("DISCORD_BROADCASTING_CHANNEL_ID"),
+        ),
         discord_allowed_user_ids={
             user_id.strip()
             for user_id in read("DISCORD_ALLOWED_USER_IDS").split(",")
@@ -79,4 +96,16 @@ def load_runtime_config(env_path: Path = DEFAULT_ENV_PATH) -> RuntimeConfig:
         openai_model=read("OPENAI_MODEL", "gpt-5.4-mini"),
         public_content_require_approval=read("PUBLIC_CONTENT_REQUIRE_APPROVAL", "false").lower() == "true",
         discord_channel_auto_publish=read("DISCORD_CHANNEL_AUTO_PUBLISH", "true").lower() == "true",
+        blog_publisher=read("BLOG_PUBLISHER", "tistory"),
+        tistory_manage_url=read("TISTORY_MANAGE_URL"),
+        tistory_blog_url=read("TISTORY_BLOG_URL"),
+        tistory_write_url=read("TISTORY_WRITE_URL"),
+        tistory_publish_mode=read("TISTORY_PUBLISH_MODE", "public"),
+        tistory_auto_publish=read("TISTORY_AUTO_PUBLISH", "false").lower() == "true",
+        playwright_storage_state=read("PLAYWRIGHT_STORAGE_STATE"),
+        playwright_headless=read("PLAYWRIGHT_HEADLESS", "true").lower() == "true",
+        linkedin_access_token=read("LINKEDIN_ACCESS_TOKEN"),
+        linkedin_author_urn=read("LINKEDIN_AUTHOR_URN"),
+        linkedin_version=read("LINKEDIN_VERSION", "202602"),
+        linkedin_auto_publish=read("LINKEDIN_AUTO_PUBLISH", "false").lower() == "true",
     )

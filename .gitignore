@@ -42,6 +42,14 @@ outputs/broadcasting/session/
 outputs/broadcasting/screenshots/
 outputs/broadcasting/traces/
 
+# Generated education outputs and private lecture sources
+outputs/education/slides/*
+!outputs/education/slides/.gitkeep
+outputs/education/logs/*
+!outputs/education/logs/.gitkeep
+outputs/education/sources/*
+!outputs/education/sources/.gitkeep
+
 # Browser automation artifacts
 playwright-report/
 test-results/

@@ -18,7 +18,7 @@ class OpenAIClient:
 
     def __init__(self, *, api_key: str, model: str) -> None:
         """Create the client."""
-        self.client = OpenAI(api_key=api_key)
+        self.client = OpenAI(api_key=api_key, timeout=90.0)
         self.model = model
 
     def create_text(
@@ -32,6 +32,14 @@ class OpenAIClient:
         options: dict[str, Any] = {}
         if json_mode:
             options["text"] = {"format": {"type": "json_object"}}
+        print(
+            "OpenAI request start "
+            f"model={self.model} "
+            f"json_mode={json_mode} "
+            f"prompt_chars={len(prompt)} "
+            f"max_output_tokens={max_output_tokens}",
+            flush=True,
+        )
         try:
             response = self.client.responses.create(
                 model=self.model,
@@ -40,11 +48,13 @@ class OpenAIClient:
                 **options,
             )
         except OpenAIError as exc:
+            print(f"OpenAI request failed: {type(exc).__name__}", flush=True)
             raise OpenAIResponseError(f"OpenAI request failed: {exc}") from exc
 
         text = response.output_text
         if not text:
             raise OpenAIResponseError("OpenAI response did not contain output text")
+        print(f"OpenAI request complete output_chars={len(text)}", flush=True)
         return text
 
     def create_json(self, prompt: str, *, max_output_tokens: int = 12000) -> dict[str, Any]:

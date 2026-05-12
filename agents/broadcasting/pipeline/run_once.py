@@ -7,8 +7,9 @@ from pathlib import Path
 
 from .config import load_runtime_config
 from .generator import generate_content_package
-from .storage import save_content_package
+from .storage import refresh_publish_files, save_content_package
 from .webhook import send_broadcasting_report
+from agents.broadcasting.agents import PublishAgent
 
 
 def parse_args() -> argparse.Namespace:
@@ -16,6 +17,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--text", help="Raw memo or link to turn into content")
     parser.add_argument("--file", help="File containing raw memo or link")
+    parser.add_argument("--publish", action="store_true", help="Execute enabled external publishers after saving")
     parser.add_argument("--no-webhook", action="store_true", help="Do not send Discord webhook report")
     return parser.parse_args()
 
@@ -35,6 +37,9 @@ def main() -> int:
     config = load_runtime_config()
     package = generate_content_package(read_source(args), config)
     output_path = save_content_package(package)
+    if args.publish:
+        package["publish_plan"] = PublishAgent(config).execute(package, output_path)
+        refresh_publish_files(package, output_path)
 
     if not args.no_webhook:
         send_broadcasting_report(config.discord_webhook_url, package=package, output_path=output_path)
