@@ -81,7 +81,7 @@ class TistoryPublisher:
                 channel="blog",
                 status="dependency_missing",
                 provider=self.provider,
-                reason="playwright 패키지가 설치되어 있지 않다. `python -m pip install playwright` 후 `python -m playwright install chromium`이 필요하다.",
+                reason="playwright 패키지가 설치되어 있지 않다. `python -m pip install playwright` 후 `python -m playwright install chrome`이 필요하다.",
             )
 
         title, body = split_markdown_title(markdown)
@@ -89,17 +89,32 @@ class TistoryPublisher:
         screenshot_path = output_dir / "tistory-publish-error.png"
 
         with sync_playwright() as playwright:
-            browser = playwright.chromium.launch(headless=self.headless)
+            browser = playwright.chromium.launch(channel="chrome", headless=self.headless)
             context = browser.new_context(storage_state=str(storage_state))
             page = context.new_page()
             page.set_default_timeout(30_000)
             page.on("dialog", lambda dialog: dialog.dismiss())
 
             try:
+                session_result = ensure_logged_in(page, self.manage_url)
+                if session_result:
+                    return session_result
+
                 page.goto(self.write_url, wait_until="domcontentloaded")
                 with suppress(Exception):
                     page.wait_for_load_state("networkidle", timeout=10_000)
                 page.wait_for_timeout(1_000)
+                if is_tistory_login_url(page.url):
+                    return PublishResult(
+                        channel="blog",
+                        status="session_expired",
+                        provider=self.provider,
+                        reason=(
+                            "Tistory 로그인 세션이 만료되어 글쓰기 화면에 진입하지 못했다. "
+                            "`scripts/save_tistory_session.py --browser chrome`으로 세션을 갱신해야 한다."
+                        ),
+                        details={"current_url": page.url},
+                    )
                 fill_first_matching(page, TITLE_SELECTORS, title, min_height=0, field_name="제목")
                 fill_body_editor(page, body)
 
@@ -163,6 +178,51 @@ class TistoryPublisher:
                 with suppress(Exception):
                     browser.close()
 
+    def validate_session(self) -> PublishResult:
+        """Validate that the stored Tistory session reaches the manage page."""
+        storage_state = resolve_project_path(self.storage_state)
+        if not storage_state.exists():
+            return PublishResult(
+                channel="blog",
+                status="not_connected",
+                provider=self.provider,
+                reason=f"Playwright 로그인 세션 파일이 없다: {storage_state}",
+            )
+
+        try:
+            from playwright.sync_api import sync_playwright
+        except ImportError:
+            return PublishResult(
+                channel="blog",
+                status="dependency_missing",
+                provider=self.provider,
+                reason="playwright 패키지가 설치되어 있지 않다.",
+            )
+
+        with sync_playwright() as playwright:
+            browser = playwright.chromium.launch(channel="chrome", headless=True)
+            context = browser.new_context(storage_state=str(storage_state))
+            page = context.new_page()
+            page.set_default_timeout(20_000)
+            try:
+                session_result = ensure_logged_in(page, self.manage_url)
+                if session_result:
+                    return session_result
+                return PublishResult(
+                    channel="blog",
+                    status="connected",
+                    provider=self.provider,
+                    reason="Tistory 로그인 세션이 유효하다.",
+                    details={"current_url": page.url},
+                )
+            finally:
+                with suppress(Exception):
+                    page.close()
+                with suppress(Exception):
+                    context.close()
+                with suppress(Exception):
+                    browser.close()
+
 
 def resolve_project_path(value: str) -> Path:
     """Resolve a path relative to the repository root."""
@@ -185,6 +245,53 @@ def derive_write_url(manage_url: str, blog_url: str) -> str:
     if blog_url:
         return f"{blog_url.rstrip('/')}/manage/newpost"
     return manage_url.rstrip("/") + "/newpost"
+
+
+def ensure_logged_in(page, manage_url: str) -> PublishResult | None:
+    """Return a failure result when the stored session cannot access Tistory manage."""
+    page.goto(manage_url, wait_until="domcontentloaded")
+    with suppress(Exception):
+        page.wait_for_load_state("networkidle", timeout=10_000)
+    page.wait_for_timeout(1_000)
+
+    if is_logged_in_manage_url(page.url):
+        return None
+
+    if is_tistory_login_url(page.url):
+        return PublishResult(
+            channel="blog",
+            status="session_expired",
+            provider=TistoryPublisher.provider,
+            reason=(
+                "Tistory 로그인 세션이 만료되어 관리자 화면에 접근하지 못했다. "
+                "`scripts/save_tistory_session.py --browser chrome`으로 세션을 갱신해야 한다."
+            ),
+            details={"current_url": page.url},
+        )
+
+    return PublishResult(
+        channel="blog",
+        status="failed",
+        provider=TistoryPublisher.provider,
+        reason="Tistory 관리자 화면 진입 상태를 확인하지 못했다.",
+        details={"current_url": page.url},
+    )
+
+
+def is_logged_in_manage_url(value: str) -> bool:
+    """Return whether a URL indicates a logged-in Tistory admin page."""
+    parsed = urlparse(value)
+    return (
+        parsed.netloc.endswith("tistory.com")
+        and parsed.path.startswith("/manage")
+        and "/auth/login" not in parsed.path
+    )
+
+
+def is_tistory_login_url(value: str) -> bool:
+    """Return whether a URL is a Tistory login page."""
+    parsed = urlparse(value)
+    return parsed.netloc.endswith("tistory.com") and "/auth/login" in parsed.path
 
 
 def split_markdown_title(markdown: str) -> tuple[str, str]:

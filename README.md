@@ -295,7 +295,7 @@ outputs/education/slides/{lecture-slug}-slides.html
 -> Discord에 플랫폼별 링크 보고
 ```
 
-티스토리 Open API는 공식 종료 안내가 있으므로 블로그 배포는 Playwright 브라우저 자동화로 처리합니다. 기본값은 저장된 로그인 세션을 격리된 headless Chromium 컨텍스트에 주입하는 방식이며, 실제 사용 중인 Brave 프로필을 직접 조작하거나 로그아웃하지 않습니다.
+티스토리 Open API는 공식 종료 안내가 있으므로 블로그 배포는 Playwright 브라우저 자동화로 처리합니다. 기본값은 저장된 로그인 세션을 격리된 headless Chrome 컨텍스트에 주입하는 방식이며, 실제 사용 중인 브라우저 프로필을 직접 조작하거나 로그아웃하지 않습니다. 티스토리 자동화는 Chrome Playwright 채널만 사용합니다.
 
 LinkedIn은 Posts API를 사용해 공개 게시합니다. 게시에는 `LINKEDIN_ACCESS_TOKEN`, `LINKEDIN_AUTHOR_URN`, `LINKEDIN_VERSION`이 필요합니다.
 
@@ -325,11 +325,25 @@ LinkedIn Access Token은 로컬 callback 서버로 발급합니다.
 .venv/bin/python -m agents.broadcasting.pipeline.run_once --text "AI 에이전트 시대에는 프롬프트보다 하네스 설계가 더 중요해진다."
 ```
 
-Discord 봇을 실행하려면 먼저 Discord 봇 의존성을 설치합니다.
+Discord 봇을 실행하려면 먼저 Discord 봇 의존성과 Playwright 브라우저를 준비합니다.
 
 ```bash
 python3 -m venv .venv
 .venv/bin/python -m pip install -r apps/discord-bot/requirements.txt
+.venv/bin/python -m playwright install chrome
+```
+
+Discord 입력 테스트 전에 연결 상태를 먼저 검증합니다.
+
+```bash
+.venv/bin/python scripts/check_integrations.py --all
+```
+
+이 검증은 Discord 입력 수신 권한, Discord Webhook 보고, OpenAI 호출, 티스토리 Playwright 로그인 세션의 관리자 화면 접근 가능 여부를 확인합니다. 티스토리 세션이 만료되어 있으면 Discord에 테스트 메시지를 보내기 전에 먼저 세션을 갱신합니다.
+
+검증이 통과하면 Discord 봇을 실행합니다.
+
+```bash
 .venv/bin/python apps/discord-bot/bot.py
 ```
 
@@ -351,10 +365,20 @@ Publish Agent는 티스토리, LinkedIn, Discord 뉴스레터 채널별 배포 �
 
 ## 연결 테스트
 
-`.env` 값을 설정한 뒤 아래 명령으로 Discord와 OpenAI 연결 상태를 확인합니다.
+`.env` 값을 설정한 뒤 아래 명령으로 Discord, OpenAI, Tistory 연결 상태를 확인합니다.
 
 ```bash
 python3 scripts/check_integrations.py --all
 ```
 
-토큰 값은 출력하지 않고, Discord 봇 토큰, `broadcasting` 채널 접근, Discord Webhook 보고, OpenAI Responses API 호출만 검증합니다.
+토큰 값은 출력하지 않고, Discord 봇 토큰, `broadcasting` 채널 접근, Discord Webhook 보고, OpenAI Responses API 호출, Tistory Playwright 세션 유효성을 검증합니다.
+
+## 후츠릿 오피스 시작
+
+Discord 봇, 오피스 대시보드, 필수 연동 검증을 한 번에 실행하려면 아래 명령을 사용합니다.
+
+```bash
+.venv/bin/python scripts/start_chutzrit_office.py
+```
+
+이 명령은 Discord 봇이 이미 실행 중이면 재시작하지 않습니다. 오피스 대시보드는 `http://127.0.0.1:5173/`에서 확인합니다.

@@ -15,6 +15,7 @@ Discord 채널명은 에이전트 팀 이름과 동일하게 설정합니다. �
 - 각 논리 Agent 완료 시 결과 요약 메시지 발송
 - 기준 미달 시 최대 3회까지 Revision Agent 수정 루프 실행 및 회차별 보고
 - Publish Agent의 Discord 발송/외부 배포 통합 결과 보고
+- 작업 중 종료 신호가 들어오면 현재 콘텐츠 생성 작업이 끝날 때까지 종료를 지연
 - 콘텐츠 초안 생성 결과 보고
 - 자동 발송 성공/실패 알림
 - 사용자의 수정 요청 수신
@@ -52,6 +53,8 @@ python3 -m venv .venv
 .venv/bin/python -m pip install -r apps/discord-bot/requirements.txt
 .venv/bin/python apps/discord-bot/bot.py
 ```
+
+콘텐츠 생성이나 Revision Agent 실행 중에는 봇을 재시작하지 않습니다. 현재 봇은 `SIGINT`, `SIGTERM`, `SIGHUP` 종료 신호를 받더라도 진행 중인 작업이 있으면 저장과 배포 흐름이 끝난 뒤 종료합니다.
 
 ## 이후 예상 명령
 

@@ -49,6 +49,7 @@ MVP 목표:
 5. 현재 코드 상태에서는 외부 공개 게시 어댑터가 아직 완전히 연결되지 않았으면 Discord 자동 발송을 최종 처리로 본다.
 6. 외부 공개 게시 어댑터가 연결된 채널은 승인 없이 자동 배포한다. 결제와 계정 변경처럼 리스크가 큰 작업만 승인 후 진행한다.
 7. 작업 시작, Discord 기본 typing 표시, 입력 분석, 에이전트별 결과 요약, 품질 평가, 자동 발송, 배포, 실패, 완료를 Discord로 보고한다.
+8. 콘텐츠 생성이나 Revision Agent 실행 중에는 Discord 봇을 재시작하지 않는다. 종료 신호가 들어와도 현재 작업을 완료한 뒤 종료하도록 구현하고, 강제 종료로 저장 전 작업을 끊지 않는다.
 
 초기 MVP는 자동 리서치 기반 주제 선정이 아니라 **사용자가 Discord에 자연스럽게 작성한 메모, 링크, 생각을 콘텐츠로 확장하는 방식**으로 시작한다.
 
@@ -234,13 +235,18 @@ Publish Agent 실행 규칙:
 - 티스토리는 Open API가 아니라 Playwright 브라우저 자동화로 발행한다.
 - 티스토리 발행은 `TISTORY_AUTO_PUBLISH=true`, `TISTORY_PUBLISH_MODE=public`, 로그인 세션 저장 상태가 준비된 경우에만 실행한다.
 - 블로그 저장 파일은 Markdown으로 유지하되, 티스토리 WYSIWYG 에디터에는 발행 시점에 HTML로 변환해 입력한다. 공개 글에서 `## 소제목` 같은 Markdown 문법이 텍스트로 보이면 배포 품질 실패로 본다.
-- 티스토리 발행 런타임은 저장된 세션 파일을 격리된 headless Chromium 컨텍스트에 주입해 실행하며, 실제 사용 중인 Brave 프로필을 직접 조작하거나 로그아웃하지 않는다.
+- 티스토리 발행 런타임은 Chrome Playwright 채널만 사용한다. 저장된 세션 파일을 격리된 headless Chrome 컨텍스트에 주입해 실행하며, 실제 사용 중인 브라우저 프로필을 직접 조작하거나 로그아웃하지 않는다.
+- 티스토리 세션 저장과 디버깅도 Chrome Playwright 채널만 사용한다. Brave, Safari, 실제 Chrome 일상 프로필로 티스토리 자동화를 실행하지 않는다.
+- 티스토리 발행 준비 여부는 세션 파일 존재만으로 판단하지 않는다. `PLAYWRIGHT_STORAGE_STATE`가 있어도 실제로 `TISTORY_MANAGE_URL`에 접속해 로그인 유지 상태가 확인되어야 준비 완료로 본다.
+- 사용자가 "Discord에 테스트 메시지를 보내도 되는지", "봇 띄워도 되는지", "콘텐츠팀 테스트해도 되는지"를 물으면 반드시 Discord 입력 수신, Discord Webhook/채널 보고, OpenAI 호출, 티스토리 Playwright 세션 유효성, 티스토리 실제 공개 발행 가능 여부를 검증한 뒤 답한다.
+- 위 검증 중 하나라도 실패하면 "보내도 된다"고 답하지 않고, 실패 항목과 조치 명령을 먼저 보고한다.
 - Playwright나 브라우저 자동화는 절대 사용자의 실제 Brave, Chrome, Chromium, Safari 일상 프로필 디렉터리에 연결하지 않는다.
 - `launch_persistent_context`에 실제 브라우저 사용자 데이터 디렉터리를 넘기거나, 실제 프로필을 가리키는 `--user-data-dir`를 사용하는 구현은 금지한다.
 - 자동화는 쿠키, 캐시, localStorage, sessionStorage, IndexedDB, 방문 기록, 사이트 데이터를 삭제하지 않는다.
 - 자동화는 로그아웃, 계정 전환, 세션 초기화, 브라우징 데이터 삭제 UI를 누르지 않는다.
-- 세션 저장이나 visible 디버깅이 필요하면 `outputs/broadcasting/session/` 아래 전용 격리 프로필만 사용한다.
+- 세션 저장이나 visible 디버깅이 필요하면 `outputs/broadcasting/session/chrome-playwright-profile/` 아래 전용 격리 Chrome 프로필만 사용한다.
 - 티스토리 Playwright 실행 중 UI 변경, CAPTCHA, 2FA, 로그인 만료가 발생하면 발행 실패로 기록하고 LinkedIn 공개 게시를 중단한다.
+- 티스토리 로그인 만료는 제목 입력 영역 실패처럼 일반 UI 오류로 숨기지 않는다. `session_expired` 상태로 기록하고 Discord 최종 보고에 세션 갱신 필요를 명시한다.
 - LinkedIn은 Posts API로 공개 게시한다. LinkedIn API는 임시저장 흐름이 아니라 공개 발행 흐름이다.
 - LinkedIn 게시 전에는 반드시 티스토리 실제 URL을 확보하고 `[블로그 링크]` 자리표시자를 실제 URL로 치환한다.
 - 티스토리 발행에 실패해 실제 블로그 URL이 없으면 LinkedIn 공개 게시를 기본 중단한다. 사용자가 명시적으로 허용하지 않는 한 `[블로그 링크]` 자리표시자 그대로 LinkedIn에 게시하지 않는다.
@@ -663,6 +669,18 @@ docs/strategy/persona.md
 5. 테스트를 실행한다.
 6. 실패하면 원인을 찾아 통과할 때까지 수정한다.
 7. 변경 내용과 검증 결과를 보고한다.
+
+## 반복 실행 약속어
+
+사용자가 "오피스 켜줘", "서버 켜줘", "후츠릿 오피스 시작", "콘텐츠팀 서버 켜줘"처럼 후츠릿 오피스 런타임 시작을 요청하면 아래 스크립트를 실행한다.
+
+```bash
+.venv/bin/python scripts/start_chutzrit_office.py
+```
+
+이 스크립트는 Discord 봇을 실행 중이면 재시작하지 않고 유지하며, 실행 중이 아니면 `screen` 세션으로 띄운다. 오피스 대시보드는 `http://127.0.0.1:5173/`에 응답하지 않을 때만 `apps/office-dashboard`의 Vite 개발 서버를 `screen` 세션으로 띄운다.
+
+스크립트 실행 후에는 Discord 입력 채널 접근, Discord Webhook 보고, OpenAI 호출, Tistory Chrome Playwright 세션 검증, 대시보드 URL 응답 여부를 확인한 뒤 결과를 보고한다. 검증 중 하나라도 실패하면 "테스트해도 된다"고 답하지 않고 실패 항목과 조치가 필요한 명령을 먼저 보고한다.
 
 Discord나 외부 배포 연동을 만들 때:
 

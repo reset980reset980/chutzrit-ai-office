@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-12T09:49:42.742Z",
+  "generatedAt": "2026-05-12T11:55:23.300Z",
   "today": "2026-05-12",
   "dataSource": {
     "broadcastingRoot": "outputs/broadcasting",
@@ -10,17 +10,17 @@
   },
   "tokenUsage": {
     "status": "available",
-    "used": 65800,
+    "used": 75000,
     "limit": 200000,
-    "percentage": 33,
+    "percentage": 38,
     "label": "Codex 사용량",
     "reason": "오늘 산출물 기준 사용량 추정"
   },
   "metrics": {
-    "todayInputs": 5,
-    "completedContents": 5,
+    "todayInputs": 7,
+    "completedContents": 7,
     "reviewQueue": 2,
-    "published": 3,
+    "published": 5,
     "overallProgress": 100,
     "systemStatus": "오늘 산출물 기준 · 자동화 대기 중"
   },
@@ -29,6 +29,68 @@
       "title": "오늘 입력",
       "description": "outputs/broadcasting/drafts에서 오늘 생성된 입력 패키지",
       "records": [
+        {
+          "id": "2026-05-12-playwright-방식-블로그-배포-전략-d682a405",
+          "scope": "drafts",
+          "title": "Playwright 방식 블로그 배포 전략",
+          "generatedAt": "2026-05-12T20:28:22.305443",
+          "inputType": "memo",
+          "sourceSummary": "사용자는 Playwright 방식으로 블로그를 배포하는 과정이 까다롭다고 느끼고 있다. 구현 세부보다 배포 난이도와 운영 구조의 문제를 다루는 방향이 적합하다.",
+          "targetPersona": "AI 자동화 실무자와 1인 창업자, 그리고 Playwright로 콘텐츠 배포 자동화를 시도하는 실무형 학습자",
+          "qualityScore": 91,
+          "qualityPassed": true,
+          "revisionCount": 0,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "published",
+            "linkedin": "published",
+            "discord": "published"
+          },
+          "publishedUrls": {
+            "blog": "https://chutzrit.tistory.com/23",
+            "linkedin": "https://www.linkedin.com/feed/update/urn:li:share:7459927502367485953/",
+            "discord": "https://discord.com/channels/1503320400526966814/1503332020842004551/1503720558104150158"
+          },
+          "externalApiStatus": "published",
+          "path": "outputs/broadcasting/drafts/2026-05-12-playwright-방식-블로그-배포-전략-d682a405",
+          "statusReason": "Tistory 공개 발행이 완료됐다.",
+          "packageStatus": "published"
+        },
+        {
+          "id": "2026-05-12-하네스-엔지니어링은-운영의-기술이다-98c0113e",
+          "scope": "drafts",
+          "title": "하네스 엔지니어링은 운영의 기술이다",
+          "generatedAt": "2026-05-12T19:15:34.295581",
+          "inputType": "memo",
+          "sourceSummary": "하네스 엔지니어링을 프롬프트보다 상위 개념으로 보고, AI 자동화와 에이전트 시스템에서 중요한 것은 입력, 도구, 권한, 검증, 승인, 복구 흐름을 안정적으로 설계하는 것이라는 관점이 담겨 있다. 링크는 없고, 사용자의 생각이 핵심 기준이다.",
+          "targetPersona": "AI 자동화 실무자와 1인 창업자, 그리고 AI 시대에 단순 프롬프트가 아니라 시스템 설계 역량이 필요하다고 느끼는 실무형 학습자",
+          "qualityScore": 92,
+          "qualityPassed": true,
+          "revisionCount": 2,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "published",
+            "linkedin": "blocked_until_blog_url",
+            "discord": "published"
+          },
+          "publishedUrls": {
+            "blog": "https://chutzrit.tistory.com/22",
+            "linkedin": "",
+            "discord": "https://discord.com/channels/1503320400526966814/1503332020842004551/1503702221311840336"
+          },
+          "externalApiStatus": "partial_published",
+          "path": "outputs/broadcasting/drafts/2026-05-12-하네스-엔지니어링은-운영의-기술이다-98c0113e",
+          "statusReason": "Tistory 공개 발행이 완료됐다.",
+          "packageStatus": "blocked"
+        },
         {
           "id": "2026-05-12-망설임이-신뢰를-만든다-bd5c312e",
           "scope": "drafts",
@@ -190,6 +252,68 @@
       "title": "작성 완료",
       "description": "outputs/broadcasting/final에 저장된 오늘 최종본",
       "records": [
+        {
+          "id": "2026-05-12-playwright-방식-블로그-배포-전략-d682a405",
+          "scope": "final",
+          "title": "Playwright 방식 블로그 배포 전략",
+          "generatedAt": "2026-05-12T20:28:22.305443",
+          "inputType": "memo",
+          "sourceSummary": "사용자는 Playwright 방식으로 블로그를 배포하는 과정이 까다롭다고 느끼고 있다. 구현 세부보다 배포 난이도와 운영 구조의 문제를 다루는 방향이 적합하다.",
+          "targetPersona": "AI 자동화 실무자와 1인 창업자, 그리고 Playwright로 콘텐츠 배포 자동화를 시도하는 실무형 학습자",
+          "qualityScore": 91,
+          "qualityPassed": true,
+          "revisionCount": 0,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "published",
+            "linkedin": "published",
+            "discord": "published"
+          },
+          "publishedUrls": {
+            "blog": "https://chutzrit.tistory.com/23",
+            "linkedin": "https://www.linkedin.com/feed/update/urn:li:share:7459927502367485953/",
+            "discord": "https://discord.com/channels/1503320400526966814/1503332020842004551/1503720558104150158"
+          },
+          "externalApiStatus": "published",
+          "path": "outputs/broadcasting/final/2026-05-12-playwright-방식-블로그-배포-전략-d682a405",
+          "statusReason": "Tistory 공개 발행이 완료됐다.",
+          "packageStatus": "published"
+        },
+        {
+          "id": "2026-05-12-하네스-엔지니어링은-운영의-기술이다-98c0113e",
+          "scope": "final",
+          "title": "하네스 엔지니어링은 운영의 기술이다",
+          "generatedAt": "2026-05-12T19:15:34.295581",
+          "inputType": "memo",
+          "sourceSummary": "하네스 엔지니어링을 프롬프트보다 상위 개념으로 보고, AI 자동화와 에이전트 시스템에서 중요한 것은 입력, 도구, 권한, 검증, 승인, 복구 흐름을 안정적으로 설계하는 것이라는 관점이 담겨 있다. 링크는 없고, 사용자의 생각이 핵심 기준이다.",
+          "targetPersona": "AI 자동화 실무자와 1인 창업자, 그리고 AI 시대에 단순 프롬프트가 아니라 시스템 설계 역량이 필요하다고 느끼는 실무형 학습자",
+          "qualityScore": 92,
+          "qualityPassed": true,
+          "revisionCount": 2,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "published",
+            "linkedin": "blocked_until_blog_url",
+            "discord": "published"
+          },
+          "publishedUrls": {
+            "blog": "https://chutzrit.tistory.com/22",
+            "linkedin": "",
+            "discord": "https://discord.com/channels/1503320400526966814/1503332020842004551/1503702221311840336"
+          },
+          "externalApiStatus": "partial_published",
+          "path": "outputs/broadcasting/final/2026-05-12-하네스-엔지니어링은-운영의-기술이다-98c0113e",
+          "statusReason": "Tistory 공개 발행이 완료됐다.",
+          "packageStatus": "blocked"
+        },
         {
           "id": "2026-05-12-망설임이-신뢰를-만든다-bd5c312e",
           "scope": "final",
@@ -420,6 +544,68 @@
       "description": "오늘 최종본 중 하나 이상의 채널에 published URL 또는 published 상태가 있는 패키지",
       "records": [
         {
+          "id": "2026-05-12-playwright-방식-블로그-배포-전략-d682a405",
+          "scope": "final",
+          "title": "Playwright 방식 블로그 배포 전략",
+          "generatedAt": "2026-05-12T20:28:22.305443",
+          "inputType": "memo",
+          "sourceSummary": "사용자는 Playwright 방식으로 블로그를 배포하는 과정이 까다롭다고 느끼고 있다. 구현 세부보다 배포 난이도와 운영 구조의 문제를 다루는 방향이 적합하다.",
+          "targetPersona": "AI 자동화 실무자와 1인 창업자, 그리고 Playwright로 콘텐츠 배포 자동화를 시도하는 실무형 학습자",
+          "qualityScore": 91,
+          "qualityPassed": true,
+          "revisionCount": 0,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "published",
+            "linkedin": "published",
+            "discord": "published"
+          },
+          "publishedUrls": {
+            "blog": "https://chutzrit.tistory.com/23",
+            "linkedin": "https://www.linkedin.com/feed/update/urn:li:share:7459927502367485953/",
+            "discord": "https://discord.com/channels/1503320400526966814/1503332020842004551/1503720558104150158"
+          },
+          "externalApiStatus": "published",
+          "path": "outputs/broadcasting/final/2026-05-12-playwright-방식-블로그-배포-전략-d682a405",
+          "statusReason": "Tistory 공개 발행이 완료됐다.",
+          "packageStatus": "published"
+        },
+        {
+          "id": "2026-05-12-하네스-엔지니어링은-운영의-기술이다-98c0113e",
+          "scope": "final",
+          "title": "하네스 엔지니어링은 운영의 기술이다",
+          "generatedAt": "2026-05-12T19:15:34.295581",
+          "inputType": "memo",
+          "sourceSummary": "하네스 엔지니어링을 프롬프트보다 상위 개념으로 보고, AI 자동화와 에이전트 시스템에서 중요한 것은 입력, 도구, 권한, 검증, 승인, 복구 흐름을 안정적으로 설계하는 것이라는 관점이 담겨 있다. 링크는 없고, 사용자의 생각이 핵심 기준이다.",
+          "targetPersona": "AI 자동화 실무자와 1인 창업자, 그리고 AI 시대에 단순 프롬프트가 아니라 시스템 설계 역량이 필요하다고 느끼는 실무형 학습자",
+          "qualityScore": 92,
+          "qualityPassed": true,
+          "revisionCount": 2,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "discord": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "published",
+            "linkedin": "blocked_until_blog_url",
+            "discord": "published"
+          },
+          "publishedUrls": {
+            "blog": "https://chutzrit.tistory.com/22",
+            "linkedin": "",
+            "discord": "https://discord.com/channels/1503320400526966814/1503332020842004551/1503702221311840336"
+          },
+          "externalApiStatus": "partial_published",
+          "path": "outputs/broadcasting/final/2026-05-12-하네스-엔지니어링은-운영의-기술이다-98c0113e",
+          "statusReason": "Tistory 공개 발행이 완료됐다.",
+          "packageStatus": "blocked"
+        },
+        {
           "id": "2026-05-12-망설임이-신뢰를-만든다-bd5c312e",
           "scope": "final",
           "title": "망설임이 신뢰를 만든다",
@@ -516,16 +702,16 @@
     }
   },
   "latestPackage": {
-    "id": "2026-05-12-망설임이-신뢰를-만든다-bd5c312e",
+    "id": "2026-05-12-playwright-방식-블로그-배포-전략-d682a405",
     "scope": "drafts",
-    "title": "망설임이 신뢰를 만든다",
-    "generatedAt": "2026-05-12T14:25:06.790284",
+    "title": "Playwright 방식 블로그 배포 전략",
+    "generatedAt": "2026-05-12T20:28:22.305443",
     "inputType": "memo",
-    "sourceSummary": "AI는 빠르게 답을 내지만 사람은 망설임을 통해 신중함과 책임감을 느낀다는 관점의 글이다. 열쇠공 사례를 통해 효율이 아니라 망설임이 신뢰와 정성을 만든다는 문제의식을 제시한다.",
-    "targetPersona": "AI 활용과 AI 의존의 차이에 관심 있는 AI 시대 커리어 고민형 독자와, 실무에서 AI를 쓰지만 결과의 신뢰성과 책임감을 중요하게 보는 실무형 학습자",
-    "qualityScore": 92,
+    "sourceSummary": "사용자는 Playwright 방식으로 블로그를 배포하는 과정이 까다롭다고 느끼고 있다. 구현 세부보다 배포 난이도와 운영 구조의 문제를 다루는 방향이 적합하다.",
+    "targetPersona": "AI 자동화 실무자와 1인 창업자, 그리고 Playwright로 콘텐츠 배포 자동화를 시도하는 실무형 학습자",
+    "qualityScore": 91,
     "qualityPassed": true,
-    "revisionCount": 1,
+    "revisionCount": 0,
     "channelProcessingStatus": {
       "blog": "generated",
       "linkedin": "generated",
@@ -537,12 +723,12 @@
       "discord": "published"
     },
     "publishedUrls": {
-      "blog": "https://chutzrit.tistory.com/21",
-      "linkedin": "https://www.linkedin.com/feed/update/urn:li:share:7459836066192314368/",
-      "discord": "https://discord.com/channels/1503320400526966814/1503332020842004551/1503629128644169849"
+      "blog": "https://chutzrit.tistory.com/23",
+      "linkedin": "https://www.linkedin.com/feed/update/urn:li:share:7459927502367485953/",
+      "discord": "https://discord.com/channels/1503320400526966814/1503332020842004551/1503720558104150158"
     },
     "externalApiStatus": "published",
-    "path": "outputs/broadcasting/drafts/2026-05-12-망설임이-신뢰를-만든다-bd5c312e",
+    "path": "outputs/broadcasting/drafts/2026-05-12-playwright-방식-블로그-배포-전략-d682a405",
     "statusReason": "Tistory 공개 발행이 완료됐다.",
     "packageStatus": "published"
   },
@@ -552,31 +738,31 @@
       "statusSource": "오늘 산출물 스냅샷",
       "currentTask": "휴식 중이다. 다음 입력이 들어오면 자동으로 재개한다.",
       "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
-      "updatedAt": "2026-05-12T14:25:06.790284",
-      "recentOutput": "최근 입력 타입 memo: AI는 빠르게 답을 내지만 사람은 망설임을 통해 신중함과 책임감을 느낀다는 관점의 글이다. 열쇠공 사례를 통해 효율이 아니라 망설임이 신뢰와 정성을 만든다는 문제의식을 제시한다."
+      "updatedAt": "2026-05-12T20:28:22.305443",
+      "recentOutput": "최근 입력 타입 memo: 사용자는 Playwright 방식으로 블로그를 배포하는 과정이 까다롭다고 느끼고 있다. 구현 세부보다 배포 난이도와 운영 구조의 문제를 다루는 방향이 적합하다."
     },
     "content-strategy": {
       "status": "IDLE",
       "statusSource": "오늘 산출물 스냅샷",
       "currentTask": "휴식 중이다. 다음 입력이 들어오면 자동으로 재개한다.",
       "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
-      "updatedAt": "2026-05-12T14:25:06.790284",
-      "recentOutput": "최근 타깃 독자: AI 활용과 AI 의존의 차이에 관심 있는 AI 시대 커리어 고민형 독자와, 실무에서 AI를 쓰지만 결과의 신뢰성과 책임감을 중요하게 보는 실무형 학습자"
+      "updatedAt": "2026-05-12T20:28:22.305443",
+      "recentOutput": "최근 타깃 독자: AI 자동화 실무자와 1인 창업자, 그리고 Playwright로 콘텐츠 배포 자동화를 시도하는 실무형 학습자"
     },
     "insight": {
       "status": "IDLE",
       "statusSource": "오늘 산출물 스냅샷",
       "currentTask": "휴식 중이다. 다음 입력이 들어오면 자동으로 재개한다.",
       "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
-      "updatedAt": "2026-05-12T14:25:06.790284",
-      "recentOutput": "최근 핵심 맥락: AI는 빠르게 답을 내지만 사람은 망설임을 통해 신중함과 책임감을 느낀다는 관점의 글이다. 열쇠공 사례를 통해 효율이 아니라 망설임이 신뢰와 정성을 만든다는 문제의식을 제시한다."
+      "updatedAt": "2026-05-12T20:28:22.305443",
+      "recentOutput": "최근 핵심 맥락: 사용자는 Playwright 방식으로 블로그를 배포하는 과정이 까다롭다고 느끼고 있다. 구현 세부보다 배포 난이도와 운영 구조의 문제를 다루는 방향이 적합하다."
     },
     "blog-writer": {
       "status": "WORKING",
       "statusSource": "오늘 산출물 스냅샷",
       "currentTask": "검토 대기 패키지의 블로그 원고 상태를 확인 중이다.",
       "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
-      "updatedAt": "2026-05-12T14:25:06.790284",
+      "updatedAt": "2026-05-12T20:28:22.305443",
       "recentOutput": "블로그 채널 상태: generated"
     },
     "linkedin-writer": {
@@ -584,7 +770,7 @@
       "statusSource": "오늘 산출물 스냅샷",
       "currentTask": "검토 대기 패키지의 LinkedIn 원고 상태를 확인 중이다.",
       "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
-      "updatedAt": "2026-05-12T14:25:06.790284",
+      "updatedAt": "2026-05-12T20:28:22.305443",
       "recentOutput": "LinkedIn 채널 상태: generated"
     },
     "discord-newsletter": {
@@ -592,7 +778,7 @@
       "statusSource": "오늘 산출물 스냅샷",
       "currentTask": "휴식 중이다. 다음 입력이 들어오면 자동으로 재개한다.",
       "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
-      "updatedAt": "2026-05-12T14:25:06.790284",
+      "updatedAt": "2026-05-12T20:28:22.305443",
       "recentOutput": "Discord 뉴스레터 상태: published"
     },
     "self-reflection": {
@@ -600,23 +786,23 @@
       "statusSource": "오늘 산출물 스냅샷",
       "currentTask": "검토 대기 패키지의 품질 점수를 점검 중이다.",
       "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
-      "updatedAt": "2026-05-12T14:25:06.790284",
-      "recentOutput": "최근 품질 점수 92점, 통과 여부 통과"
+      "updatedAt": "2026-05-12T20:28:22.305443",
+      "recentOutput": "최근 품질 점수 91점, 통과 여부 통과"
     },
     "revision": {
       "status": "WORKING",
       "statusSource": "오늘 산출물 스냅샷",
       "currentTask": "기준 미달 또는 승인 대기 패키지의 수정 포인트를 확인 중이다.",
       "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
-      "updatedAt": "2026-05-12T14:25:06.790284",
-      "recentOutput": "최근 수정 루프 1회"
+      "updatedAt": "2026-05-12T20:28:22.305443",
+      "recentOutput": "최근 수정 루프 0회"
     },
     "publish": {
       "status": "IDLE",
       "statusSource": "오늘 산출물 스냅샷",
       "currentTask": "휴식 중이다. 다음 입력이 들어오면 자동으로 재개한다.",
       "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
-      "updatedAt": "2026-05-12T14:25:06.790284",
+      "updatedAt": "2026-05-12T20:28:22.305443",
       "recentOutput": "최근 배포 상태: {\"blog\":\"published\",\"linkedin\":\"published\",\"discord\":\"published\"}"
     }
   }

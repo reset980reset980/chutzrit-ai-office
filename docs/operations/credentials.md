@@ -138,13 +138,15 @@ OpenAI 공식 모델 문서 기준으로 `gpt-5.4-mini`는 고빈도 작업에 �
 
 ## 연결 테스트
 
-`.env` 값을 넣은 뒤 아래 명령으로 Discord와 OpenAI 연결을 확인합니다.
+`.env` 값을 넣은 뒤 아래 명령으로 Discord, OpenAI, 티스토리 세션 연결을 확인합니다.
 
 ```bash
 python3 scripts/check_integrations.py --all
 ```
 
-이 명령은 토큰 값을 출력하지 않습니다. Discord 봇 토큰, `broadcasting` 채널 접근, Discord Webhook 보고, OpenAI Responses API 호출만 확인합니다.
+이 명령은 토큰 값을 출력하지 않습니다. Discord 봇 토큰, `broadcasting` 채널 접근, Discord Webhook 보고, OpenAI Responses API 호출, Tistory Playwright 세션의 `/manage` 접근 가능 여부를 확인합니다.
+
+콘텐츠팀 Discord 입력 테스트를 시작하기 전에는 이 검증이 모두 통과해야 합니다. 특히 티스토리는 세션 파일 존재 여부만으로 정상이라고 보지 않습니다. `PLAYWRIGHT_STORAGE_STATE`가 있어도 실제 관리자 화면에 접근하지 못하면 세션 만료로 보고, Discord 입력 테스트를 시작하지 않습니다.
 
 ## 공개 게시용
 
@@ -169,7 +171,7 @@ python3 scripts/check_integrations.py --all
 - 티스토리 자동 게시에는 Playwright 브라우저 자동화를 사용합니다.
 - 현재 목표 흐름은 티스토리 공개 발행 후 실제 블로그 URL을 확보하고, 이 URL로 LinkedIn 원고의 `[블로그 링크]`를 치환하는 방식입니다.
 - 최초 1회는 사용자가 브라우저에서 직접 로그인하고 `PLAYWRIGHT_STORAGE_STATE`에 로그인 세션을 저장합니다.
-- 실제 발행 런타임은 저장된 세션 파일을 격리된 headless Chromium 컨텍스트에 주입해 실행합니다. 사용 중인 Brave 프로필을 직접 조작하지 않고 로그아웃 동작도 수행하지 않습니다.
+- 실제 발행 런타임은 Chrome Playwright 채널만 사용합니다. 저장된 세션 파일을 격리된 headless Chrome 컨텍스트에 주입해 실행하며, 사용 중인 브라우저 프로필을 직접 조작하지 않고 로그아웃 동작도 수행하지 않습니다.
 - 운영 기본값은 `PLAYWRIGHT_HEADLESS=true`입니다. visible 모드는 티스토리 UI 디버깅이 필요할 때만 사용합니다.
 
 브라우저 프로필 안전 규칙:
@@ -185,24 +187,26 @@ Playwright 실행 환경:
 
 ```bash
 python -m pip install -r apps/discord-bot/requirements.txt
-python -m playwright install chromium
+python -m playwright install chrome
 ```
 
 티스토리 로그인 세션 저장:
 
 ```bash
-python scripts/save_tistory_session.py
+python scripts/save_tistory_session.py --browser chrome
 ```
 
 명령을 실행하면 브라우저가 열립니다. 티스토리에 로그인한 뒤 관리자 페이지가 열리면 `PLAYWRIGHT_STORAGE_STATE` 경로에 세션이 저장됩니다.
 
-Brave 실행 파일로 세션을 저장하려면 아래 명령을 사용합니다. 이 명령은 실제 Brave 사용자 프로필이 아니라 저장소의 전용 Playwright 프로필을 사용하므로, 기존 Brave 창, 캐시, 다른 서비스 로그인 상태를 건드리지 않습니다.
-
-```bash
-python scripts/save_tistory_session.py --browser brave
-```
+세션 저장 스크립트는 저장소의 전용 Chrome Playwright 프로필을 사용합니다. 실제 Brave, Chrome, Chromium 일상 프로필을 직접 사용하지 않습니다. Brave나 Safari로 티스토리 자동화를 실행하지 않습니다.
 
 `TISTORY_WRITE_URL`을 비워두면 `TISTORY_BLOG_URL` 또는 `TISTORY_MANAGE_URL`에서 `https://블로그주소/manage/newpost` 형식으로 자동 추론합니다. 티스토리 에디터 본문이 TinyMCE iframe 안에 렌더링되는 경우에도 자동 입력을 시도합니다. 티스토리 편집기 UI가 바뀌거나 CAPTCHA, 2FA, 추가 로그인 확인이 나타나면 자동 발행은 실패로 기록하고 `tistory-publish-error.png` 스크린샷을 산출물 폴더에 저장합니다.
+
+세션 갱신 후에는 반드시 아래 명령으로 실제 로그인 유지 상태를 다시 확인합니다.
+
+```bash
+python3 scripts/check_integrations.py --tistory
+```
 
 ### LinkedIn
 

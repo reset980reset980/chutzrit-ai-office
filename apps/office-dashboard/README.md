@@ -29,6 +29,14 @@ npm run dev
 http://127.0.0.1:5173/
 ```
 
+후츠릿 오피스 전체 런타임을 시작할 때는 저장소 루트에서 아래 명령을 사용합니다.
+
+```bash
+.venv/bin/python scripts/start_chutzrit_office.py
+```
+
+이 명령은 Discord 봇, 오피스 대시보드, Discord/OpenAI/Tistory 연동 상태를 함께 확인합니다.
+
 빌드 검증은 아래 명령으로 실행합니다.
 
 ```bash

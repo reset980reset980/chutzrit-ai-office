@@ -20,12 +20,7 @@ from agents.broadcasting.publishers.tistory import resolve_project_path  # noqa:
 def parse_args() -> argparse.Namespace:
     """Parse CLI arguments."""
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--browser", choices=("chromium", "brave"), default="chromium")
-    parser.add_argument(
-        "--brave-profile",
-        default="Default",
-        help="Deprecated; Brave session capture now uses a dedicated Playwright profile.",
-    )
+    parser.add_argument("--browser", choices=("chrome",), default="chrome")
     parser.add_argument(
         "--save-after",
         type=int,
@@ -58,20 +53,15 @@ def main() -> int:
     print(f"Storage state target: {state_path}", flush=True)
 
     with sync_playwright() as playwright:
-        browser = None
-        if args.browser == "brave":
-            user_data_dir = brave_playwright_profile_dir(state_path)
-            assert_isolated_browser_profile_dir(user_data_dir)
-            user_data_dir.mkdir(parents=True, exist_ok=True)
-            print(f"Using isolated Brave profile for session capture: {user_data_dir}", flush=True)
-            context = playwright.chromium.launch_persistent_context(
-                str(user_data_dir),
-                executable_path=str(brave_executable_path()),
-                headless=False,
-            )
-        else:
-            browser = playwright.chromium.launch(headless=False)
-            context = browser.new_context()
+        user_data_dir = playwright_profile_dir(state_path, "chrome")
+        assert_isolated_browser_profile_dir(user_data_dir)
+        user_data_dir.mkdir(parents=True, exist_ok=True)
+        print(f"Using isolated Chrome profile for session capture: {user_data_dir}", flush=True)
+        context = playwright.chromium.launch_persistent_context(
+            str(user_data_dir),
+            channel="chrome",
+            headless=False,
+        )
         page = context.new_page()
         page.goto(target_url, wait_until="domcontentloaded")
         if args.save_after > 0:
@@ -80,28 +70,28 @@ def main() -> int:
             context.storage_state(path=str(state_path))
             print(f"Saved Tistory storage state: {state_path}", flush=True)
             context.close()
-            if browser:
-                browser.close()
             return 0
 
         deadline = time.monotonic() + args.timeout
+        last_seen_urls: tuple[str, ...] = ()
         while time.monotonic() < deadline:
+            current_urls = tuple(open_page.url for open_page in context.pages)
+            if current_urls != last_seen_urls:
+                print("Current Tistory session pages:", ", ".join(current_urls), flush=True)
+                last_seen_urls = current_urls
+
             for open_page in context.pages:
                 url = open_page.url
-                if is_logged_in_manage_url(url):
+                if is_logged_in_manage_url(url) or is_logged_in_manage_page(open_page):
                     context.storage_state(path=str(state_path))
                     print(f"Saved Tistory storage state: {state_path}", flush=True)
                     context.close()
-                    if browser:
-                        browser.close()
                     return 0
             time.sleep(2)
 
         screenshot_path = state_path.parent / "tistory-session-timeout.png"
         page.screenshot(path=str(screenshot_path), full_page=True)
         context.close()
-        if browser:
-            browser.close()
         raise SystemExit(
             "Tistory login was not detected before timeout. "
             f"Screenshot saved: {screenshot_path}"
@@ -113,12 +103,21 @@ def is_logged_in_manage_url(url: str) -> bool:
     return "tistory.com/manage" in url and "/auth/login" not in url
 
 
-def brave_executable_path() -> Path:
-    """Return the default macOS Brave executable path."""
-    path = Path("/Applications/Brave Browser.app/Contents/MacOS/Brave Browser")
-    if not path.exists():
-        raise SystemExit(f"Brave executable not found: {path}")
-    return path
+def is_logged_in_manage_page(page) -> bool:
+    """Return whether page content indicates a logged-in Tistory admin page."""
+    try:
+        if "블로그관리" in page.title():
+            return True
+    except Exception:  # noqa: BLE001
+        pass
+
+    for label in ("티스토리 관리센터 본문", "블로그관리 홈", "글쓰기"):
+        try:
+            if page.get_by_text(label, exact=False).first.is_visible(timeout=500):
+                return True
+        except Exception:  # noqa: BLE001
+            continue
+    return False
 
 
 def assert_isolated_browser_profile_dir(user_data_dir: Path) -> None:
@@ -146,9 +145,9 @@ def known_real_browser_profile_dirs() -> tuple[Path, ...]:
     )
 
 
-def brave_playwright_profile_dir(state_path: Path) -> Path:
-    """Return the dedicated Brave profile directory used only for session capture."""
-    return state_path.parent / "brave-playwright-profile"
+def playwright_profile_dir(state_path: Path, browser: str) -> Path:
+    """Return the dedicated browser profile directory used only for session capture."""
+    return state_path.parent / f"{browser}-playwright-profile"
 
 
 if __name__ == "__main__":

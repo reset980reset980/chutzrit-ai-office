@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import signal
 import sys
 from collections.abc import Callable
 from contextlib import suppress
@@ -38,6 +39,7 @@ def build_client() -> discord.Client:
 client = build_client()
 config = load_runtime_config()
 active_job_count = 0
+shutdown_requested = False
 
 
 @client.event
@@ -108,6 +110,8 @@ async def on_message(message: discord.Message) -> None:
         if presence_active:
             await set_working_presence(False)
         await message.reply(f"❌ 초안 생성에 실패했습니다: {exc}", mention_author=False)
+        if shutdown_requested and active_job_count == 0:
+            await client.close()
         return
     finally:
         if not typing_task.done():
@@ -131,6 +135,8 @@ async def on_message(message: discord.Message) -> None:
     finally:
         if presence_active:
             await set_working_presence(False)
+        if shutdown_requested and active_job_count == 0:
+            await client.close()
 
 
 def build_source_text(message: discord.Message) -> str:
@@ -303,8 +309,34 @@ async def send_long_message(channel: discord.abc.Messageable, text: str) -> list
 
 def main() -> int:
     """Run the Discord bot."""
+    install_signal_handlers()
     client.run(config.discord_bot_token)
     return 0
+
+
+def install_signal_handlers() -> None:
+    """Defer shutdown while a content generation job is running."""
+
+    def handle_shutdown(signum: int, _frame: object) -> None:
+        global shutdown_requested
+        signal_name = signal.Signals(signum).name
+        if active_job_count > 0:
+            shutdown_requested = True
+            print(
+                f"Shutdown signal {signal_name} received while {active_job_count} job(s) are running; "
+                "deferring shutdown until the current job completes.",
+                flush=True,
+            )
+            return
+
+        print(f"Shutdown signal {signal_name} received; closing Discord client.", flush=True)
+        loop = client.loop
+        if loop.is_running():
+            loop.call_soon_threadsafe(lambda: asyncio.create_task(client.close()))
+
+    for signal_number in (signal.SIGINT, signal.SIGTERM, signal.SIGHUP):
+        with suppress(ValueError):
+            signal.signal(signal_number, handle_shutdown)
 
 
 if __name__ == "__main__":

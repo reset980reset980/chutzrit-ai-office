@@ -78,14 +78,15 @@ When external publishing adapters are connected and enabled:
 
 1. Publish the blog first.
 2. Use Tistory Playwright browser automation for blog publishing. Do not assume Tistory Open API publishing.
-3. Publish Tistory as public when `TISTORY_PUBLISH_MODE=public` and `TISTORY_AUTO_PUBLISH=true`.
-4. Convert the Markdown body into editor HTML before filling Tistory. Headings, lists, links, code blocks, and paragraphs must render visually in the published post.
-5. Capture the actual Tistory post URL.
-6. Replace LinkedIn `[블로그 링크]` with the actual Tistory URL.
-7. Publish LinkedIn through the LinkedIn Posts API when `LINKEDIN_AUTO_PUBLISH=true`.
-8. LinkedIn API publishing is public publishing, not draft saving.
-9. Post the Discord newsletter to `DISCORD_NEWSLETTER_CHANNEL_ID`.
-10. Report one consolidated multi-platform result after all publish attempts finish. Include Tistory URL, LinkedIn URL, Discord message link, failed/blocked channel reasons, and output path in one readable message.
+3. Use the Chrome Playwright channel for every Tistory session capture, validation, and publish run.
+4. Publish Tistory as public when `TISTORY_PUBLISH_MODE=public` and `TISTORY_AUTO_PUBLISH=true`.
+5. Convert the Markdown body into editor HTML before filling Tistory. Headings, lists, links, code blocks, and paragraphs must render visually in the published post.
+6. Capture the actual Tistory post URL.
+7. Replace LinkedIn `[블로그 링크]` with the actual Tistory URL.
+8. Publish LinkedIn through the LinkedIn Posts API when `LINKEDIN_AUTO_PUBLISH=true`.
+9. LinkedIn API publishing is public publishing, not draft saving.
+10. Post the Discord newsletter to `DISCORD_NEWSLETTER_CHANNEL_ID`.
+11. Report one consolidated multi-platform result after all publish attempts finish. Include Tistory URL, LinkedIn URL, Discord message link, failed/blocked channel reasons, and output path in one readable message.
 
 Do not publish LinkedIn with a `[블로그 링크]` placeholder unless the user explicitly allows that fallback. If blog publishing fails, preserve drafts, report the failure, and block LinkedIn publishing by default.
 
@@ -103,8 +104,9 @@ Forbidden patterns:
 
 Required pattern:
 
-- Publishing runtime must use `PLAYWRIGHT_STORAGE_STATE` with an isolated Playwright browser context.
-- Visible browser debugging or session capture must use a dedicated isolated profile under `outputs/broadcasting/session/`, never the user's actual browser profile.
+- Publishing runtime must use `PLAYWRIGHT_STORAGE_STATE` with an isolated Chrome Playwright browser context.
+- Visible browser debugging or session capture must use the dedicated isolated Chrome profile under `outputs/broadcasting/session/chrome-playwright-profile/`, never the user's actual browser profile.
+- Do not use Brave or Safari for Tistory Playwright automation.
 - Closing automation may only close the isolated Playwright page/context it created. It must not close the user's real browser app or tabs.
 - If a task seems to require real browser profile access, stop and ask for explicit approval with a safer alternative.
 

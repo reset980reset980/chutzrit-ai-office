@@ -173,7 +173,9 @@ Publish Agent는 외부 API 배포가 연결되지 않았을 때 성공으로 �
 -> Discord에 블로그, LinkedIn, Discord 링크 보고
 ```
 
-티스토리는 Open API 종료 안내가 있으므로 Playwright 브라우저 자동화로 처리합니다. 기본 배포는 저장된 로그인 세션을 격리된 headless Chromium 컨텍스트에서 사용하며, 실제 사용 중인 Brave 프로필을 직접 조작하거나 로그아웃하지 않습니다.
+티스토리는 Open API 종료 안내가 있으므로 Playwright 브라우저 자동화로 처리합니다. 기본 배포는 저장된 로그인 세션을 격리된 headless Chrome 컨텍스트에서 사용하며, 실제 사용 중인 브라우저 프로필을 직접 조작하거나 로그아웃하지 않습니다. 티스토리 자동화는 Chrome Playwright 채널만 사용합니다.
+
+티스토리 자동 발행 준비 여부는 `PLAYWRIGHT_STORAGE_STATE` 파일 존재만으로 판단하지 않습니다. 발행 전 `TISTORY_MANAGE_URL`에 실제 접속해 로그인 유지 상태를 확인하고, 로그인 페이지로 이동하면 `session_expired`로 기록한 뒤 LinkedIn 공개 게시를 중단합니다.
 
 LinkedIn은 Posts API로 공개 게시하며, API 토큰과 Author URN 설정이 필요합니다.
 
@@ -248,6 +250,14 @@ outputs/broadcasting/drafts/YYYY-MM-DD-slug/
 ```
 
 생성 결과는 `outputs/broadcasting/drafts/`와 `outputs/broadcasting/final/` 아래에 같은 패키지 ID로 저장되고, 기본값으로 Discord Webhook 보고가 전송됩니다.
+
+Discord 입력 테스트 전에 아래 검증이 모두 통과해야 합니다.
+
+```bash
+.venv/bin/python scripts/check_integrations.py --all
+```
+
+이 검증은 Discord 입력 채널 접근, Discord Webhook 보고, OpenAI 호출, 티스토리 Playwright 세션 유효성을 확인합니다. 이 중 하나라도 실패하면 `broadcasting` 채널에 테스트 메시지를 보내기 전에 먼저 환경을 복구합니다.
 
 Discord 봇으로 실행한 경우 블로그 원고와 LinkedIn 원고 미리보기는 `broadcasting` 채널에 남기고, Discord 뉴스레터 본문은 `DISCORD_NEWSLETTER_CHANNEL_ID`로 지정한 뉴스레터 채널에 발송합니다.
 

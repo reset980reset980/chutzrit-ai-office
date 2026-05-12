@@ -241,6 +241,7 @@ class PublishAgent:
             "published": "공개 게시가 완료됐다.",
             "quality_gate_blocked": "품질 게이트가 아직 배포 조건을 충족하지 못했다.",
             "ready": "자동 공개 게시 조건이 준비됐다.",
+            "session_expired": "티스토리 로그인 세션이 만료되어 세션 갱신이 필요하다.",
             "unsupported_provider": "지원하지 않는 블로그 배포 제공자다.",
         }
         return reasons.get(status, "")
@@ -256,7 +257,7 @@ class PublishAgent:
             return "published"
         if "published" in statuses and statuses <= {"published", "external_publish_disabled"}:
             return "partial_published"
-        if "failed" in statuses or "dependency_missing" in statuses:
+        if "failed" in statuses or "dependency_missing" in statuses or "session_expired" in statuses:
             return "failed"
         if "not_connected" in statuses or "blocked_until_blog_url" in statuses:
             return "not_connected"

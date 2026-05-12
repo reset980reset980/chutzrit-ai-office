@@ -151,6 +151,25 @@ def check_openai(values: dict[str, str]) -> None:
     print(f"[ok] openai responses api works: model={model}, response_id={response_id}")
 
 
+def check_tistory_session(values: dict[str, str]) -> None:
+    """Validate that the stored Tistory session reaches the manage page."""
+    sys.path.insert(0, str(PROJECT_ROOT))
+    from agents.broadcasting.publishers.tistory import TistoryPublisher  # noqa: PLC0415
+
+    publisher = TistoryPublisher(
+        manage_url=values.get("TISTORY_MANAGE_URL", ""),
+        blog_url=values.get("TISTORY_BLOG_URL", ""),
+        write_url=values.get("TISTORY_WRITE_URL", ""),
+        storage_state=values.get("PLAYWRIGHT_STORAGE_STATE", ""),
+        headless=True,
+        publish_mode=values.get("TISTORY_PUBLISH_MODE", "public"),
+    )
+    result = publisher.validate_session()
+    if result.status != "connected":
+        raise IntegrationError(f"tistory session check failed: {result.status} - {result.reason}")
+    print("[ok] tistory playwright session works")
+
+
 def parse_args() -> argparse.Namespace:
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(description=__doc__)
@@ -158,6 +177,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--discord-bot", action="store_true", help="Check Discord bot token and channel")
     parser.add_argument("--discord-webhook", action="store_true", help="Send Discord webhook test message")
     parser.add_argument("--openai", action="store_true", help="Check OpenAI Responses API")
+    parser.add_argument("--tistory", action="store_true", help="Check Tistory Playwright login session")
     parser.add_argument("--all", action="store_true", help="Run every integration check")
     return parser.parse_args()
 
@@ -175,6 +195,8 @@ def main() -> int:
             check_discord_webhook(values)
         if args.all or args.openai:
             check_openai(values)
+        if args.all or args.tistory:
+            check_tistory_session(values)
     except IntegrationError as exc:
         print(f"[error] {exc}", file=sys.stderr)
         return 1
