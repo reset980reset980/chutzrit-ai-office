@@ -59,6 +59,18 @@ Discord 서버 ID입니다.
 3. `Copy Channel ID`를 누릅니다.
 4. `.env`의 `DISCORD_BROADCASTING_CHANNEL_ID`에 넣습니다.
 
+### `DISCORD_NEWSLETTER_CHANNEL_ID`
+
+독자용 Discord 뉴스레터 본문을 발송할 채널 ID입니다.
+
+현재 운영 기준:
+
+- 서버: `Chutzrit AI Office`
+- 채널: `뉴스레터`
+- 채널 ID: `1503332020842004551`
+
+`broadcasting` 채널은 입력과 운영 보고용이고, 뉴스레터 본문은 이 채널로 분리해 발송합니다.
+
 ### `DISCORD_WEBHOOK_URL`
 
 Discord 보고 메시지를 간단히 보내기 위한 Webhook URL입니다.
@@ -143,7 +155,9 @@ python3 scripts/check_integrations.py --all
 사용 변수:
 
 - `BLOG_PUBLISHER`
+- `TISTORY_BLOG_URL`
 - `TISTORY_MANAGE_URL`
+- `TISTORY_WRITE_URL`
 - `TISTORY_PUBLISH_MODE`
 - `TISTORY_AUTO_PUBLISH`
 - `PLAYWRIGHT_STORAGE_STATE`
@@ -155,6 +169,40 @@ python3 scripts/check_integrations.py --all
 - 티스토리 자동 게시에는 Playwright 브라우저 자동화를 사용합니다.
 - 현재 목표 흐름은 티스토리 공개 발행 후 실제 블로그 URL을 확보하고, 이 URL로 LinkedIn 원고의 `[블로그 링크]`를 치환하는 방식입니다.
 - 최초 1회는 사용자가 브라우저에서 직접 로그인하고 `PLAYWRIGHT_STORAGE_STATE`에 로그인 세션을 저장합니다.
+- 실제 발행 런타임은 저장된 세션 파일을 격리된 headless Chromium 컨텍스트에 주입해 실행합니다. 사용 중인 Brave 프로필을 직접 조작하지 않고 로그아웃 동작도 수행하지 않습니다.
+- 운영 기본값은 `PLAYWRIGHT_HEADLESS=true`입니다. visible 모드는 티스토리 UI 디버깅이 필요할 때만 사용합니다.
+
+브라우저 프로필 안전 규칙:
+
+- Playwright 자동화에 실제 Brave, Chrome, Chromium, Safari 일상 프로필을 연결하지 않습니다.
+- `launch_persistent_context`에 실제 브라우저 사용자 데이터 디렉터리를 넘기지 않습니다.
+- 실제 프로필을 가리키는 `--user-data-dir`를 사용하지 않습니다.
+- 자동화는 쿠키, 캐시, localStorage, sessionStorage, IndexedDB, 방문 기록, 사이트 데이터를 삭제하지 않습니다.
+- 자동화는 로그아웃, 계정 전환, 세션 초기화, 브라우징 데이터 삭제 UI를 누르지 않습니다.
+- 세션 저장과 visible 디버깅은 `outputs/broadcasting/session/` 아래 전용 격리 프로필에서만 수행합니다.
+
+Playwright 실행 환경:
+
+```bash
+python -m pip install -r apps/discord-bot/requirements.txt
+python -m playwright install chromium
+```
+
+티스토리 로그인 세션 저장:
+
+```bash
+python scripts/save_tistory_session.py
+```
+
+명령을 실행하면 브라우저가 열립니다. 티스토리에 로그인한 뒤 관리자 페이지가 열리면 `PLAYWRIGHT_STORAGE_STATE` 경로에 세션이 저장됩니다.
+
+Brave 실행 파일로 세션을 저장하려면 아래 명령을 사용합니다. 이 명령은 실제 Brave 사용자 프로필이 아니라 저장소의 전용 Playwright 프로필을 사용하므로, 기존 Brave 창, 캐시, 다른 서비스 로그인 상태를 건드리지 않습니다.
+
+```bash
+python scripts/save_tistory_session.py --browser brave
+```
+
+`TISTORY_WRITE_URL`을 비워두면 `TISTORY_BLOG_URL` 또는 `TISTORY_MANAGE_URL`에서 `https://블로그주소/manage/newpost` 형식으로 자동 추론합니다. 티스토리 에디터 본문이 TinyMCE iframe 안에 렌더링되는 경우에도 자동 입력을 시도합니다. 티스토리 편집기 UI가 바뀌거나 CAPTCHA, 2FA, 추가 로그인 확인이 나타나면 자동 발행은 실패로 기록하고 `tistory-publish-error.png` 스크린샷을 산출물 폴더에 저장합니다.
 
 ### LinkedIn
 

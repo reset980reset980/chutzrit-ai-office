@@ -14,6 +14,7 @@ Discord 채널명은 에이전트 팀 이름과 동일하게 설정합니다. �
 - 입력 분석, 원고 작성, 품질 평가 진행 메시지를 이모지와 함께 발송
 - 각 논리 Agent 완료 시 결과 요약 메시지 발송
 - 기준 미달 시 최대 3회까지 Revision Agent 수정 루프 실행 및 회차별 보고
+- Publish Agent의 Discord 발송/외부 배포 통합 결과 보고
 - 콘텐츠 초안 생성 결과 보고
 - 자동 발송 성공/실패 알림
 - 사용자의 수정 요청 수신
@@ -35,14 +36,14 @@ Discord broadcasting 채널 메시지 수신
 -> Self Reflection 평가 결과 메시지
 -> 기준 미달 시 Revision Agent 회차별 수정
 -> 수정본 재평가 결과 메시지
--> 초안 저장
+-> Publish Agent 배포 상태 정리
+-> 초안과 최종본 저장
 -> 블로그, LinkedIn 원고 발송
--> Discord 뉴스레터 자동 발송
+-> Discord 뉴스레터 채널 자동 발송
+-> 멀티플랫폼 배포 결과 통합 보고
 ```
 
-현재 실제 외부 플랫폼 API 배포는 붙이지 않았습니다.
-
-오늘 MVP에서는 생성된 블로그 원고, LinkedIn 원고, Discord 뉴스레터를 `broadcasting` 채널에 바로 발송합니다.
+`broadcasting` 채널은 입력과 운영 보고용입니다. Discord 뉴스레터 본문은 `DISCORD_NEWSLETTER_CHANNEL_ID`로 지정한 독자용 뉴스레터 채널에 발송합니다.
 
 ## 실행 방법
 

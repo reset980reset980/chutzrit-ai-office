@@ -144,6 +144,10 @@ MVP 목표:
 - 블로그 문장 종결은 `다`, `이다`, `한다`, `된다`, `있다`, `없다` 중심으로 쓴다.
 - 블로그에서 `하면 돼`, `해봐`, `거야`, `거든`, `잖아` 같은 대화체를 쓰지 않는다.
 - 공개 초안에는 `[후츠릿 인사이트]`, `후츠릿의 인사이트`, `실무 적용 포인트` 같은 내부 라벨을 쓰지 않는다.
+- 공개 초안의 이모지는 가독성 보조 장치로만 제한적으로 쓴다.
+- 이모지는 `✅`, `⚠️`, `🔍`, `🧩`, `🚀`, `📌`, `🔗` 정도를 우선 사용한다.
+- 블로그는 전체 3~5개, LinkedIn은 2~4개, Discord 뉴스레터는 2~5개 안쪽으로 제한한다.
+- 모든 문장이나 모든 소제목에 이모지를 붙이지 않는다.
 - 블로그는 입력에 참고 링크가 있으면 맨 마지막에 `참고자료` 섹션을 넣는다.
 - 기술 구현형 블로그는 입력에 GitHub 링크가 있을 때만 GitHub 저장소 링크를 넣는다.
 - LinkedIn은 간결한 제목 한 줄과 구조화된 짧은 본문으로 작성하고, 블로그 전문 링크로 유입시키는 목적을 둔다.
@@ -190,6 +194,16 @@ Discord `broadcasting` 팀 채널 메시지 수신
 - Final Quality Gate: 기준 점수 통과 여부를 판단하고 자동 발송 또는 배포 단계로 넘긴다.
 - Publish Agent: Final Quality Gate 통과 후 Discord 발송, 티스토리 공개 발행, LinkedIn 공개 게시, 발행 링크 보고를 담당한다.
 
+구현 구조:
+
+- `agents/broadcasting/`은 콘텐츠배포팀 팀 폴더다.
+- 실제 서브에이전트는 `agents/broadcasting/agents/` 아래에 둔다.
+- `agents/broadcasting/pipeline/`은 서브에이전트를 순서대로 호출하는 오케스트레이션, 품질 게이트, 저장 로직을 담당한다.
+- 전략과 인사이트는 순차 실행한다.
+- Blog Writer Agent, LinkedIn Writer Agent, Discord Newsletter Writer Agent는 병렬 실행한다.
+- Self Reflection 결과가 기준 미달이면 Revision Agent는 기준 미달 채널을 우선 수정한다.
+- Publish Agent는 외부 게시 조건이 준비되지 않으면 성공으로 표시하지 않고 `not_connected`, `dependency_missing`, `blocked_until_blog_url`, `failed` 같은 상태를 남긴다.
+
 플랫폼별 Writer Agent:
 
 - Blog Writer Agent
@@ -207,7 +221,7 @@ Self Reflection 기준:
 승인 기준:
 
 - 초안 생성은 승인 없이 진행한다.
-- Discord 뉴스레터는 Discord 채널에 자동 발송한다.
+- Discord 뉴스레터 본문은 독자용 뉴스레터 채널에 자동 발송한다.
 - 티스토리와 LinkedIn 배포 어댑터가 연결되면 티스토리 공개 발행, LinkedIn API 공개 게시까지 자동 실행한다.
 - 티스토리 발행 URL을 먼저 확보한 뒤 LinkedIn 원고의 `[블로그 링크]`를 실제 URL로 치환한다.
 - 사용자가 자동 배포를 허용한 채널의 콘텐츠 공개 게시도 승인 없이 진행한다.
@@ -218,11 +232,20 @@ Publish Agent 실행 규칙:
 - 현재 어댑터가 연결되지 않은 상태에서는 외부 게시 성공으로 표시하지 않고, 최종 원고를 Discord에 발송한 뒤 `외부 API 배포 미연결` 상태를 보고한다.
 - 티스토리는 Open API가 아니라 Playwright 브라우저 자동화로 발행한다.
 - 티스토리 발행은 `TISTORY_AUTO_PUBLISH=true`, `TISTORY_PUBLISH_MODE=public`, 로그인 세션 저장 상태가 준비된 경우에만 실행한다.
+- 블로그 저장 파일은 Markdown으로 유지하되, 티스토리 WYSIWYG 에디터에는 발행 시점에 HTML로 변환해 입력한다. 공개 글에서 `## 소제목` 같은 Markdown 문법이 텍스트로 보이면 배포 품질 실패로 본다.
+- 티스토리 발행 런타임은 저장된 세션 파일을 격리된 headless Chromium 컨텍스트에 주입해 실행하며, 실제 사용 중인 Brave 프로필을 직접 조작하거나 로그아웃하지 않는다.
+- Playwright나 브라우저 자동화는 절대 사용자의 실제 Brave, Chrome, Chromium, Safari 일상 프로필 디렉터리에 연결하지 않는다.
+- `launch_persistent_context`에 실제 브라우저 사용자 데이터 디렉터리를 넘기거나, 실제 프로필을 가리키는 `--user-data-dir`를 사용하는 구현은 금지한다.
+- 자동화는 쿠키, 캐시, localStorage, sessionStorage, IndexedDB, 방문 기록, 사이트 데이터를 삭제하지 않는다.
+- 자동화는 로그아웃, 계정 전환, 세션 초기화, 브라우징 데이터 삭제 UI를 누르지 않는다.
+- 세션 저장이나 visible 디버깅이 필요하면 `outputs/broadcasting/session/` 아래 전용 격리 프로필만 사용한다.
+- 티스토리 Playwright 실행 중 UI 변경, CAPTCHA, 2FA, 로그인 만료가 발생하면 발행 실패로 기록하고 LinkedIn 공개 게시를 중단한다.
 - LinkedIn은 Posts API로 공개 게시한다. LinkedIn API는 임시저장 흐름이 아니라 공개 발행 흐름이다.
 - LinkedIn 게시 전에는 반드시 티스토리 실제 URL을 확보하고 `[블로그 링크]` 자리표시자를 실제 URL로 치환한다.
 - 티스토리 발행에 실패해 실제 블로그 URL이 없으면 LinkedIn 공개 게시를 기본 중단한다. 사용자가 명시적으로 허용하지 않는 한 `[블로그 링크]` 자리표시자 그대로 LinkedIn에 게시하지 않는다.
-- Discord 뉴스레터는 `broadcasting` 채널에 자동 발송한다.
-- 배포가 완료되면 블로그 URL, LinkedIn URL, Discord 메시지 링크, 산출물 경로를 한 번에 정리해 Discord에 보고한다.
+- Discord 뉴스레터 본문은 `DISCORD_NEWSLETTER_CHANNEL_ID`로 지정한 독자용 `뉴스레터` 채널에 자동 발송한다. `broadcasting` 채널은 입력과 운영 보고용이다.
+- 배포 보고는 채널별 즉시 보고가 아니라 멀티플랫폼 전체 배포 시도 후 최종 결과를 하나의 메시지로 통합해 보낸다.
+- 최종 배포 보고에는 블로그 URL, LinkedIn URL, Discord 메시지 링크, 실패 또는 중단 사유, 산출물 경로를 함께 담는다.
 - 일부 채널만 성공하면 성공/실패를 채널별로 나누어 보고하고, 실패 채널은 원인과 재시도 조건을 함께 적는다.
 
 ### 강의운영팀
@@ -232,14 +255,27 @@ Publish Agent 실행 규칙:
 역할:
 
 - 실습 예제 업데이트
-- PPT와 학습 보조 자료 제작
+- PPT형 강의 슬라이드와 학습 보조 자료 제작
 - 실습 코드 생성과 검증
 - 수강생 기술 질의 대응
+
+현재 강의 자료 슬라이드 제작은 `ppt-maker`의 웹 슬라이드 시스템을 후츠릿 AI 오피스 강의운영팀 구조로 재구성해 사용한다.
+
+강의 슬라이드 제작 기준:
+
+- 슬라이드 산출물은 `.pptx`가 아니라 단일 HTML/CSS/JavaScript 웹 프레젠테이션으로 만든다.
+- `agents/education/slide-maker/assets/base-template.html`을 베이스 템플릿으로 사용한다.
+- `agents/education/slide-maker/references/design-rules.md`와 `agents/education/slide-maker/references/patterns.md`의 코드, 디자인 규칙, 14개 슬라이드 패턴을 유지한다.
+- 강의 슬라이드 작업용 Codex Skill은 `.agents/skills/chutzrit-education-slides/SKILL.md`에 둔다.
+- 강의 원본 자료는 필요할 때 `outputs/education/sources/`에 로컬 보관하되 Git에 올리지 않는다.
+- 완성된 슬라이드는 `outputs/education/slides/`에 저장한다.
+- 강의 자료 생성 시 먼저 강의명, 대상, 챕터 구조, 핵심 메시지, 실습 예제를 분석하고 슬라이드 구성안을 만든다.
+- 원본 시스템과 동일하게 구성 확인 후 HTML을 생성하는 흐름을 기본으로 한다.
 
 기본 흐름:
 
 ```text
-기술 발굴 -> 자료/코드 제작 -> 검증 -> Discord 보고
+기술 발굴 -> 강의 원본 분석 -> 슬라이드 구성안 작성 -> HTML 슬라이드 제작 -> 실습 코드 검증 -> Discord 보고
 ```
 
 ### 유튜브전략팀
@@ -298,16 +334,23 @@ Discord는 팀별 채널을 기준으로 보고, 수정 요청, 명령 입력을
 [처리 방식] 자동 발송 | 자동 배포 | 사용자 조치 필요
 ```
 
-배포 완료 보고:
+배포 결과 보고:
 
 ```text
-[팀] 콘텐츠배포팀
-[상태] 배포 완료
-[채널] 블로그 | LinkedIn | Discord
-[제목] 게시 제목
-[URL] 게시 URL
-[파일] 최종본 저장 경로
-[시간] 배포 시각
+## ✅ 멀티플랫폼 배포 결과
+상태 전체 배포 완료 | 부분 배포 완료 | 배포 실패
+제목 게시 제목
+시간 배포 시각
+
+### ✅ 배포 완료
+- 블로그: URL
+- LinkedIn: URL
+- Discord 뉴스레터: URL
+
+### ⚠️ 확인 필요
+- 실패 또는 중단 채널: 원인
+
+파일 저장 경로
 ```
 
 실패 보고:
@@ -367,6 +410,10 @@ Discord는 팀별 채널을 기준으로 보고, 수정 요청, 명령 입력을
 ├── AGENTS.md
 ├── README.md
 ├── .env.example
+├── .agents/
+│   └── skills/
+│       ├── chutzrit-broadcasting/
+│       └── chutzrit-education-slides/
 ├── configs/
 ├── agents/
 │   ├── broadcasting/
@@ -374,6 +421,7 @@ Discord는 팀별 채널을 기준으로 보고, 수정 요청, 명령 입력을
 │   ├── research/
 │   ├── dev/
 │   ├── education/
+│   │   └── slide-maker/
 │   └── youtube/
 ├── apps/
 │   └── discord-bot/
@@ -382,15 +430,20 @@ Discord는 팀별 채널을 기준으로 보고, 수정 요청, 명령 입력을
 ├── docs/
 │   ├── architecture/
 │   ├── content/
+│   ├── education/
 │   ├── operations/
 │   ├── reports/
 │   └── strategy/
 ├── outputs/
-│   └── broadcasting/
-│       ├── drafts/
-│       ├── final/
-│       ├── approvals/
-│       └── logs/
+│   ├── broadcasting/
+│   │   ├── drafts/
+│   │   ├── final/
+│   │   ├── approvals/
+│   │   └── logs/
+│   └── education/
+│       ├── slides/
+│       ├── logs/
+│       └── sources/
 ├── scripts/
 └── tests/
 ```
@@ -416,8 +469,10 @@ outputs/broadcasting/drafts/YYYY-MM-DD-slug/
 ├── linkedin.md
 ├── discord.md
 ├── reflection.md
+├── reflection.json
 ├── metadata.json
-└── approval-status.json
+├── approval-status.json
+└── publish-plan.json
 ```
 
 `approval-status.json`은 기존 파일명을 유지하되, 현재 MVP에서는 승인 대기 상태가 아니라 자동 발송/배포 처리 상태를 기록한다.
@@ -426,6 +481,7 @@ outputs/broadcasting/drafts/YYYY-MM-DD-slug/
 
 - 입력 타입
 - 생성 시각
+- 에이전트 구조
 - 대상 페르소나
 - 대상 채널
 - 채널별 처리 상태
@@ -433,6 +489,39 @@ outputs/broadcasting/drafts/YYYY-MM-DD-slug/
 - 게시 URL
 - 품질 평가 점수
 - 수정 루프 횟수
+
+Final Quality Gate 이후 현재 최종본은 같은 패키지 ID로 `outputs/broadcasting/final/`에도 저장한다.
+
+## 강의 자료 산출물 규칙
+
+강의운영팀 결과물은 아래 위치에 저장한다.
+
+- `outputs/education/slides/`
+- `outputs/education/logs/`
+- `outputs/education/sources/`
+- `docs/education/`
+
+강의 슬라이드 1건의 기본 산출물:
+
+```text
+outputs/education/slides/{lecture-slug}-slides.html
+```
+
+강의 원본 자료가 필요한 경우 아래에 로컬 보관한다.
+
+```text
+outputs/education/sources/
+```
+
+`outputs/education/sources/`에는 PDF, PPTX, 원고, 수강생 자료처럼 비공개 자료가 들어갈 수 있으므로 `.gitignore` 대상으로 유지한다.
+
+강의 슬라이드 생성 규칙:
+
+- 모든 CSS, JavaScript, 콘텐츠는 하나의 HTML 파일에 인라인으로 포함한다.
+- 별도 서버 없이 브라우저에서 직접 열 수 있어야 한다.
+- 베이스 템플릿과 패턴은 `agents/education/slide-maker/`의 기준 파일을 따른다.
+- 섹션 전환과 임팩트 슬라이드를 제외한 모든 슬라이드 푸터는 `후츠릿 · {강의명}` 형식을 사용한다.
+- 코드 예제와 실습 명령은 가능한 범위에서 실행 가능성, 최신성, 오탈자를 검증한다.
 
 ## 콘텐츠 입력 전략
 

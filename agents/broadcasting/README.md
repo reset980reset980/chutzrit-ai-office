@@ -61,9 +61,39 @@ https://example.com/news-or-video
 - 링크 입력은 원문을 가져와 단순 요약하지 않고, 후츠릿 페르소나와 채널별 템플릿에 맞춰 재해석합니다.
 - 링크 입력은 Input Parser 단계에서 URL, 제목, 설명, 핵심 내용을 간략히 정리해 Discord에 먼저 보고합니다.
 
+## 현재 구현 구조
+
+`agents/broadcasting/`은 단일 에이전트 폴더가 아니라 콘텐츠배포팀 팀 폴더입니다.
+
+실제 서브에이전트는 `agents/broadcasting/agents/` 아래에 있습니다.
+
+```text
+agents/broadcasting/
+├── agents/
+│   ├── input_parser.py
+│   ├── content_strategy.py
+│   ├── insight.py
+│   ├── writers/
+│   │   ├── blog.py
+│   │   ├── linkedin.py
+│   │   └── discord.py
+│   ├── reflection.py
+│   ├── revision.py
+│   └── publish.py
+├── pipeline/
+│   ├── orchestrator.py
+│   ├── generator.py
+│   ├── prompts.py
+│   ├── quality.py
+│   ├── progress.py
+│   └── storage.py
+```
+
+`pipeline/orchestrator.py`는 각 서브에이전트를 호출하는 실행 흐름만 담당합니다. 전략과 인사이트는 순차 실행하고, Blog/LinkedIn/Discord Writer Agent는 병렬 실행합니다. 따라서 현재 구조는 한 번의 LLM 호출로 모든 결과를 만드는 방식이 아니라, 역할별 프롬프트와 출력 스키마를 가진 여러 LLM 호출을 조합하는 방식입니다.
+
 ## 내부 처리 단계
 
-아래 역할들은 별도 폴더로 나누지 않고 `pipeline/` 안에서 실행되는 논리 단계로 관리합니다.
+아래 역할들은 실제 서브에이전트 모듈로 분리되어 있고, `pipeline/`은 이들을 오케스트레이션합니다.
 
 ### 콘텐츠 전략
 
@@ -108,7 +138,23 @@ https://example.com/news-or-video
 
 ### Revision
 
-Self Reflection 피드백을 반영해 글을 수정합니다. 각 회차는 `Revision Agent 1/3회차`처럼 회차를 표시하고, 어떤 피드백을 반영하는지 Discord에 요약합니다.
+Self Reflection 피드백을 반영해 글을 수정합니다. 각 회차는 `Revision Agent 1/3회차`처럼 회차를 표시하고, 어떤 피드백을 반영하는지 Discord에 요약합니다. 채널별 점수가 낮으면 기준 미달 채널만 우선 수정하고, 채널별 점수가 없으면 전체 채널을 수정 대상으로 봅니다.
+
+### Publish
+
+Publish Agent는 품질 게이트 이후 발송과 외부 배포 상태를 구조화하고, 저장된 산출물을 기준으로 활성화된 외부 배포를 실행합니다.
+
+`agents/broadcasting/agents/publish.py`는 배포 순서, 의존성, 채널별 가능 상태를 판단하고 실행하는 오케스트레이터 역할입니다. 실제 티스토리 클릭 자동화나 LinkedIn API 호출은 `agents/broadcasting/publishers/` 아래의 플랫폼별 Publisher 어댑터가 담당합니다.
+
+현재 연결 상태:
+
+- Discord: 봇이 `broadcasting` 채널에 자동 발송
+- 티스토리: Playwright 게시 어댑터가 연결되어 있으며, 세션 파일과 Playwright 실행 환경이 준비되면 공개 발행
+- LinkedIn: 티스토리 실제 URL이 없으면 `[블로그 링크]` 상태로 공개 게시하지 않고 `blocked_until_blog_url`로 기록
+
+Publish Agent는 외부 API 배포가 연결되지 않았을 때 성공으로 표시하지 않습니다.
+
+배포는 병렬이 아니라 순차 방식입니다. LinkedIn 원고에는 티스토리 실제 발행 URL이 필요하므로 `티스토리 발행 -> URL 확보 -> LinkedIn 링크 치환/게시 -> Discord 보고` 순서로 처리합니다.
 
 ## 대상 채널
 
@@ -127,19 +173,30 @@ Self Reflection 피드백을 반영해 글을 수정합니다. 각 회차는 `Re
 -> Discord에 블로그, LinkedIn, Discord 링크 보고
 ```
 
-티스토리는 Open API 종료 안내가 있으므로 Playwright 브라우저 자동화로 처리합니다.
+티스토리는 Open API 종료 안내가 있으므로 Playwright 브라우저 자동화로 처리합니다. 기본 배포는 저장된 로그인 세션을 격리된 headless Chromium 컨텍스트에서 사용하며, 실제 사용 중인 Brave 프로필을 직접 조작하거나 로그아웃하지 않습니다.
 
 LinkedIn은 Posts API로 공개 게시하며, API 토큰과 Author URN 설정이 필요합니다.
 
+CLI에서 외부 배포까지 실행하려면 `--publish`를 붙입니다.
+
+```bash
+python -m agents.broadcasting.pipeline.run_once --text "메모" --publish
+```
+
+Discord 봇은 메시지 처리 후 저장된 패키지를 기준으로 Publish Agent를 실행합니다. 티스토리 발행에 성공하면 LinkedIn 원고의 `[블로그 링크]`를 실제 티스토리 URL로 치환하고, 수정된 `linkedin.md`, `publish-plan.json`, `metadata.json`을 draft/final 양쪽에 다시 기록합니다.
+
+배포 보고는 멀티플랫폼 전체 배포 시도 후 하나의 최종 메시지로 통합합니다. 티스토리 URL, LinkedIn URL, Discord 뉴스레터 메시지 링크와 실패 또는 중단 사유를 한 번에 보여줍니다.
+
 ## 하위 폴더
 
-- `pipeline/`: 콘텐츠 생성 및 변환 파이프라인
+- `agents/`: 콘텐츠배포팀 실제 서브에이전트
+- `pipeline/`: 서브에이전트 오케스트레이션, 품질 게이트, 저장
 - `prompts/`: 페르소나, 플랫폼, 목적별 프롬프트
 - `prompts/templates/`: 실제 후츠릿 글에서 추출한 채널별 작성 템플릿
-- `publishers/`: 블로그, LinkedIn, Discord 뉴스레터 배포/발송 어댑터
+- `publishers/`: 티스토리 Playwright, LinkedIn Posts API, Discord 발송 같은 실제 플랫폼별 배포/발송 어댑터
 - `schemas/`: 메타데이터, 품질 평가, 발송 상태 스키마
 
-전략, 인사이트, 플랫폼별 작성, 평가, 수정은 `pipeline/` 내부 단계로 구현합니다.
+전략, 인사이트, 플랫폼별 작성, 평가, 수정, 배포 판단은 `agents/` 내부 서브에이전트로 구현하고, `pipeline/`은 실행 순서와 병렬화를 관리합니다.
 
 ## 채널별 템플릿
 
@@ -176,8 +233,10 @@ outputs/broadcasting/drafts/YYYY-MM-DD-slug/
 ├── linkedin.md
 ├── discord.md
 ├── reflection.md
+├── reflection.json
 ├── metadata.json
-└── approval-status.json
+├── approval-status.json
+└── publish-plan.json
 ```
 
 ## 실행 방법
@@ -188,16 +247,17 @@ outputs/broadcasting/drafts/YYYY-MM-DD-slug/
 .venv/bin/python -m agents.broadcasting.pipeline.run_once --text "AI 에이전트 시대에는 프롬프트보다 하네스 설계가 더 중요해진다."
 ```
 
-생성 결과는 `outputs/broadcasting/drafts/` 아래에 저장되고, 기본값으로 Discord Webhook 보고가 전송됩니다.
+생성 결과는 `outputs/broadcasting/drafts/`와 `outputs/broadcasting/final/` 아래에 같은 패키지 ID로 저장되고, 기본값으로 Discord Webhook 보고가 전송됩니다.
 
-Discord 봇으로 실행한 경우 블로그 원고, LinkedIn 원고, Discord 뉴스레터를 `broadcasting` 채널에 바로 발송합니다.
+Discord 봇으로 실행한 경우 블로그 원고와 LinkedIn 원고 미리보기는 `broadcasting` 채널에 남기고, Discord 뉴스레터 본문은 `DISCORD_NEWSLETTER_CHANNEL_ID`로 지정한 뉴스레터 채널에 발송합니다.
 
 봇은 메시지를 받자마자 작업 시작 알림을 보내고, Discord 기본 typing 표시와 `글 작성중입니다` 활동 상태를 유지합니다. 각 논리 Agent가 끝날 때마다 이모지와 함께 결과를 메시지용으로 요약해 보낸 뒤 최종 원고를 발송합니다.
 
-실제 외부 플랫폼 API 배포는 아직 붙이지 않았습니다.
+Publish Agent는 티스토리 Playwright, LinkedIn Posts API, Discord 뉴스레터 발송 결과를 채널별로 기록하고, 전체 배포 시도가 끝난 뒤 `broadcasting` 채널에 통합 결과를 보고합니다.
 
 ## 구현 우선순위
 
-1. 블로그, LinkedIn 게시 링크 입력/상태 기록
-2. 실제 플랫폼 배포 어댑터 연결
-3. 실제 발송 결과와 사용자 수정 요청을 반영한 Self Reflection 기준 보정
+1. 티스토리 Playwright Publisher 어댑터 연결
+2. LinkedIn Posts API Publisher 어댑터 연결
+3. Discord 수정 요청을 특정 패키지와 채널에 반영하는 Revision 명령 추가
+4. 실제 발송 결과와 사용자 수정 요청을 반영한 Self Reflection 기준 보정

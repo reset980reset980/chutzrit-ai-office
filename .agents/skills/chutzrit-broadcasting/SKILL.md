@@ -7,6 +7,18 @@ description: Use when generating, revising, evaluating, publishing, or implement
 
 Use this skill for 콘텐츠배포팀 work: source memo/link intake, blog/LinkedIn/Discord draft generation, revision, quality scoring, publishing, and pipeline changes that affect those outputs.
 
+## Implementation Shape
+
+- Treat `agents/broadcasting/` as the 콘텐츠배포팀 team folder, not a single agent.
+- Keep actual runtime subagents under `agents/broadcasting/agents/`.
+- Keep orchestration, progress formatting, quality gates, and storage under `agents/broadcasting/pipeline/`.
+- Content Strategy Agent and Insight Agent run sequentially.
+- Blog Writer Agent, LinkedIn Writer Agent, and Discord Newsletter Writer Agent run in parallel.
+- Self Reflection Agent evaluates the combined package.
+- Revision Agent revises failed channels first; if channel-level failures are unavailable, revise all channels.
+- Publish Agent runs after the final quality gate, records Discord dispatch, and executes enabled external publishers after package files are saved.
+- Do not collapse strategy, insight, and all platform writing back into one generation prompt unless the user explicitly asks for a single-call fallback.
+
 ## Input Parser Rules
 
 - Treat every normal Discord message in the `broadcasting` channel as a content request.
@@ -41,6 +53,11 @@ Before changing generation behavior or judging quality, read the relevant files:
 - Blog must end with `## 참고자료` when source/reference links are present.
 - For technical implementation blogs, include a GitHub repository link only when the input contains one. Never invent a GitHub link.
 - Public drafts must not show internal labels such as `[후츠릿 인사이트]`, `후츠릿의 인사이트`, `실무 적용 포인트`, or `핵심 메시지:`.
+- Use emojis only as readability markers. Prefer `✅`, `⚠️`, `🔍`, `🧩`, `🚀`, `📌`, `🔗`.
+- Do not add emojis to every line or every heading.
+- Blog should use roughly 3-5 emojis total, only for key sections such as conclusion, caution, execution, and references.
+- LinkedIn should use roughly 2-4 emojis total, mainly for the title/hook, short checklist, or blog link.
+- Discord newsletter can use roughly 2-5 emojis total, mainly in the title, action items, and reference link section.
 - LinkedIn must start with one concise title line, then structured short polite Korean paragraphs focused on the user's insight. It should drive readers to the blog with a real blog URL or `[블로그 링크]` placeholder.
 - LinkedIn and Discord newsletter must use polite Korean.
 - Avoid unnecessary colons in public messages, including `블로그 전문:`.
@@ -51,22 +68,45 @@ Before changing generation behavior or judging quality, read the relevant files:
 
 Current project state:
 
-- Discord newsletter auto-posting to the `broadcasting` channel is active.
-- External Tistory and LinkedIn publishing adapters may be absent or incomplete. When adapters are not connected, send the final drafts to Discord and mark external publishing as not connected.
+- Discord newsletter auto-posting goes to the configured newsletter channel. The `broadcasting` channel is for input and operational reports.
+- Publish Agent records publishing status in `publish-plan.json`.
+- Generated packages are saved under both `outputs/broadcasting/drafts/` and `outputs/broadcasting/final/`.
+- Tistory Playwright and LinkedIn Posts API publishers are implemented. When credentials, browser dependencies, or login session files are not connected, send the final drafts to Discord and mark external publishing as not connected or failed.
+- Keep saved blog files in Markdown, but convert Markdown to Tistory editor HTML at publish time. Tistory WYSIWYG must receive rendered HTML headings such as `<h2>`, not raw text like `## heading`.
 
 When external publishing adapters are connected and enabled:
 
 1. Publish the blog first.
 2. Use Tistory Playwright browser automation for blog publishing. Do not assume Tistory Open API publishing.
 3. Publish Tistory as public when `TISTORY_PUBLISH_MODE=public` and `TISTORY_AUTO_PUBLISH=true`.
-4. Capture the actual Tistory post URL.
-5. Replace LinkedIn `[블로그 링크]` with the actual Tistory URL.
-6. Publish LinkedIn through the LinkedIn Posts API when `LINKEDIN_AUTO_PUBLISH=true`.
-7. LinkedIn API publishing is public publishing, not draft saving.
-8. Post the Discord newsletter to the `broadcasting` channel.
-9. Report blog, LinkedIn, Discord message links, and saved output path back to Discord.
+4. Convert the Markdown body into editor HTML before filling Tistory. Headings, lists, links, code blocks, and paragraphs must render visually in the published post.
+5. Capture the actual Tistory post URL.
+6. Replace LinkedIn `[블로그 링크]` with the actual Tistory URL.
+7. Publish LinkedIn through the LinkedIn Posts API when `LINKEDIN_AUTO_PUBLISH=true`.
+8. LinkedIn API publishing is public publishing, not draft saving.
+9. Post the Discord newsletter to `DISCORD_NEWSLETTER_CHANNEL_ID`.
+10. Report one consolidated multi-platform result after all publish attempts finish. Include Tistory URL, LinkedIn URL, Discord message link, failed/blocked channel reasons, and output path in one readable message.
 
 Do not publish LinkedIn with a `[블로그 링크]` placeholder unless the user explicitly allows that fallback. If blog publishing fails, preserve drafts, report the failure, and block LinkedIn publishing by default.
+
+### Browser Profile Safety
+
+Never attach Playwright or any browser automation to the user's real daily browser profile.
+
+Forbidden patterns:
+
+- Do not call `launch_persistent_context` with the real Brave, Chrome, Chromium, Edge, or Safari user data directory.
+- Do not pass `--user-data-dir` pointing at `~/Library/Application Support/BraveSoftware/Brave-Browser`, `~/Library/Application Support/Google/Chrome`, `~/.config/BraveSoftware/Brave-Browser`, `~/.config/google-chrome`, or any equivalent real profile root.
+- Do not automate or close the user's already-running Brave window for publishing.
+- Do not clear cookies, cache, localStorage, sessionStorage, IndexedDB, browser history, or site data.
+- Do not click logout, sign out, account switch, reset session, clear browsing data, or similar UI.
+
+Required pattern:
+
+- Publishing runtime must use `PLAYWRIGHT_STORAGE_STATE` with an isolated Playwright browser context.
+- Visible browser debugging or session capture must use a dedicated isolated profile under `outputs/broadcasting/session/`, never the user's actual browser profile.
+- Closing automation may only close the isolated Playwright page/context it created. It must not close the user's real browser app or tabs.
+- If a task seems to require real browser profile access, stop and ask for explicit approval with a safer alternative.
 
 Publishing requires:
 
