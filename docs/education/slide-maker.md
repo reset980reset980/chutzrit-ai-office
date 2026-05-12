@@ -9,6 +9,7 @@
 - 베이스 템플릿: `agents/education/slide-maker/assets/base-template.html`
 - 디자인 규칙: `agents/education/slide-maker/references/design-rules.md`
 - 슬라이드 패턴: `agents/education/slide-maker/references/patterns.md`
+- 템플릿 참조 자료: `agents/education/slide-maker/references/template-source/`
 - 리서치 문서: `docs/education/web-slide-research.md`
 - Figma 분석 문서: `docs/education/figma-design-rules.md`
 - Codex Skill: `.agents/skills/chutzrit-education-slides/SKILL.md`
@@ -18,6 +19,7 @@
 ```text
 강의 원본 자료 입력
 -> 강의명, 대상, 챕터, 핵심 메시지 분석
+-> template-source 예시 HTML과 참고 이미지 확인
 -> 슬라이드 구성안 작성
 -> 구성 확인
 -> base-template.html 기반 HTML 생성
@@ -48,4 +50,3 @@ outputs/education/
 - 디자인 시스템을 새로 만들지 않고 기존 dark-mode teal 시스템을 사용합니다.
 - 강의용 코드 예제는 실행 가능성과 최신성을 확인한 뒤 반영합니다.
 - 사람이 읽는 안내 문서는 한글로 작성합니다.
-

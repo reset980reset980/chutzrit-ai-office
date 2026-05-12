@@ -16,6 +16,10 @@ Before creating or changing slide output, read the relevant files:
 - `agents/education/slide-maker/assets/base-template.html`
 - `agents/education/slide-maker/references/design-rules.md`
 - `agents/education/slide-maker/references/patterns.md`
+- `agents/education/slide-maker/references/template-source/README.md`
+- `agents/education/slide-maker/references/template-source/examples/template.html`
+- `agents/education/slide-maker/references/template-source/examples/sample.html`
+- `agents/education/slide-maker/references/template-source/images/` for visual template references
 - `docs/education/web-slide-research.md` when changing slide behavior or navigation
 - `docs/education/figma-design-rules.md` when judging visual fidelity or layout
 
@@ -23,6 +27,7 @@ Before creating or changing slide output, read the relevant files:
 
 - Treat `agents/education/` as the 강의운영팀 team folder.
 - Keep slide-maker code and reusable rules under `agents/education/slide-maker/`.
+- Keep reusable template reference images and example HTML under `agents/education/slide-maker/references/template-source/`.
 - Store generated lecture decks under `outputs/education/slides/`.
 - Store local-only source materials under `outputs/education/sources/`.
 - Store generation logs or verification notes under `outputs/education/logs/`.
@@ -43,6 +48,13 @@ Extract:
 - 오래됐거나 검증이 필요한 코드/명령/링크
 
 Ask for the lecture name if it is missing.
+
+Before planning the deck, inspect the template reference material:
+
+- Read `agents/education/slide-maker/references/template-source/README.md`.
+- Review `examples/template.html` for the current template code style.
+- Review `examples/sample.html` for a complete deck example.
+- Check `images/` when visual spacing, layout, or composition needs a template reference.
 
 ### 2. Plan The Deck First
 
@@ -67,6 +79,8 @@ N. [M] 클로징
 ### 3. Generate The HTML
 
 - Start from `agents/education/slide-maker/assets/base-template.html`.
+- Use `agents/education/slide-maker/references/template-source/examples/template.html` and `sample.html` as implementation references before writing slide markup.
+- Use `agents/education/slide-maker/references/template-source/images/` as visual references for layout, rhythm, and composition.
 - Add slides inside `<div class="slide-deck" id="deck">`.
 - Keep all CSS and JS inline in one HTML file.
 - Follow `agents/education/slide-maker/references/patterns.md`.
@@ -111,4 +125,3 @@ When done, report:
 - source material used
 - notable code/example updates
 - any remaining validation gaps
-

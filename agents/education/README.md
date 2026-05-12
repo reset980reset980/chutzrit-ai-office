@@ -19,11 +19,14 @@ agents/education/slide-maker/
 ├── assets/
 │   └── base-template.html
 └── references/
+    ├── template-source/
+    │   ├── examples/
+    │   └── images/
     ├── design-rules.md
     └── patterns.md
 ```
 
-`base-template.html`, `design-rules.md`, `patterns.md`는 기존 `ppt-maker`의 코드와 규칙을 그대로 가져온 기준 파일입니다. 슬라이드 제작 시 이 파일들을 기준으로 사용하고, 임의로 새 디자인 시스템을 만들지 않습니다.
+`base-template.html`, `design-rules.md`, `patterns.md`는 기존 `ppt-maker`의 코드와 규칙을 그대로 가져온 기준 파일입니다. `references/template-source/`는 웹 PPT 작성 전에 확인할 템플릿 예시 코드와 참고 이미지입니다. 슬라이드 제작 시 이 파일들을 기준으로 사용하고, 임의로 새 디자인 시스템을 만들지 않습니다.
 
 ## 산출물 위치
 
@@ -39,4 +42,3 @@ outputs/education/
 - `sources/`: 로컬 강의 원본 자료 보관 위치
 
 `outputs/education/sources/`에는 PDF, PPTX, 원고처럼 비공개일 수 있는 원본 자료가 들어갈 수 있으므로 Git에 올리지 않습니다.
-

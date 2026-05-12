@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>강의용 슬라이드 — 순수 바닐라</title>
+  <!-- Pretendard CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+  <!-- Gmarket Sans CDN (Display/임팩트 타이틀 전용) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css">
+  <style>
+    /* ── 변수 (figma-design-rules.md 7장) ── */
+    :root {
+      --bg:        #0d1117;
+      --bg-card:   #161b22;
+      --bg-code:   #1e2430;
+      --bg-inset:  #252d3a;
+
+      --text:      #e6edf3;
+      --text-dim:  #8b949e;
+      --text-muted:#484f58;
+
+      --teal:      #2DD4BF;
+      --orange:    #FF6D3B;
+      --yellow:    #F0B429;
+      --purple:    #A78BFA;
+      --green:     #4ADE80;
+
+      --border:        rgba(255,255,255,0.08);
+      --border-teal:   rgba(45,212,191,0.25);
+      --border-orange: rgba(255,109,59,0.25);
+      --border-purple: rgba(167,139,250,0.25);
+
+      --dot:  rgba(255,255,255,0.055);
+      --ease: 0.36s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: clamp(12px, 1.35vw, 15px);
+      background: var(--bg);
+      color: var(--text);
+    }
+    body { overflow: hidden; }
+
+    /* ── 슬라이드 덱 ── */
+    .slide-deck { position: fixed; inset: 0; }
+
+    /* ── 기본 슬라이드 ── */
+    .slide {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, var(--dot) 1px, transparent 1px);
+      background-size: 26px 26px;
+      background-color: var(--bg);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      /* 수직 패딩 기준 유지, 요소 간 gap만 1.5배 */
+      padding: clamp(2.5rem, 5.5vh, 4.5rem) clamp(3.5rem, 9vw, 8rem);
+      gap: clamp(1.5rem, 3.75vh, 3rem); /* 1.5x: 원래 clamp(1rem,2.5vh,2rem) */
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--ease);
+    }
+    .slide.active { opacity: 1; pointer-events: auto; }
+
+    /* ── 헤더 ── */
+    .slide__header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem; /* 1.5x: 0.45rem */
+      padding-bottom: clamp(0.9rem, 2.2vh, 1.6rem);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* label: small caps + 넓은 자간 */
+    .slide__label {
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(0.58rem, 0.85vw, 0.72rem);
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+
+    /* H1: Pretendard 800, -0.015em 자간 (세리프보다 여유) */
+    .slide__title {
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(2rem, 5.2vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.015em;
+      color: var(--text);
+    }
+    .slide__title .hl        { color: var(--teal);   }
+    .slide__title .hl-orange { color: var(--orange); }
+
+    /* 부제: Body 크기 기준 */
+    .slide__sub {
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(1rem, 1.65vw, 1.15rem);
+      font-weight: 400;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* ── 바디 ── */
+    .slide__body {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(1.2rem, 2.7vh, 2.1rem); /* 1.5x: clamp(0.8rem,1.8vh,1.4rem) */
+      min-height: 0; /* flex 자식이 grid 1fr 높이를 참조할 수 있도록 */
+    }
+
+    /* slide__body 직계 grid-2는 남은 높이를 전부 채움 */
+    .slide__body > .grid-2 {
+      flex: 1;
+      min-height: 0;
+      align-items: stretch;
+    }
+
+    /* 코드 컬럼: pre가 높이를 채울 수 있도록 flex 래퍼 */
+    .code-col {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .code-col > pre {
+      flex: 1;
+      min-height: 0;
+      max-height: none; /* 컨테이너 높이를 그대로 사용 */
+    }
+
+    /* 카드 안 pre는 별도 상한 유지 */
+    .card pre {
+      max-height: clamp(8rem, 18vh, 14rem);
+    }
+
+    /* ── 푸터 ── */
+    .slide__footer {
+      border-top: 1px solid var(--border);
+      padding-top: clamp(0.5rem, 1.3vh, 0.9rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(0.58rem, 0.85vw, 0.7rem);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ────────────────────────────────────────────────
+       타이포그래피 유틸 (figma-design-rules.md 2장)
+    ──────────────────────────────────────────────── */
+
+    /* Display: GmarketSans Bold — 임팩트 타이틀 전용 */
+    .display {
+      font-family: 'GmarketSans', 'Pretendard', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+    }
+
+    /* H2: Pretendard 700 */
+    .h2 {
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(1.3rem, 2.8vw, 2.1rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    /* Body: 22~24px — 1.5rem × 15px(base) = 22.5px */
+    .body-text {
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(1.1rem, 2.1vw, 1.5rem);
+      line-height: 1.65;
+      color: var(--text);
+    }
+
+    /* Caption: 16~18px — 1.15rem × 15px = 17.25px */
+    .caption {
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(0.9rem, 1.45vw, 1.15rem);
+      line-height: 1.5;
+      color: var(--text-dim);
+    }
+
+    .dim   { color: var(--text-dim) !important; }
+    .muted { color: var(--text-muted) !important; }
+
+    /* ── 키워드 강조: 색상만 변경, 배경·밑줄 없음 ── */
+    .kw         { color: var(--teal);   font-weight: 600; }
+    .kw-orange  { color: var(--orange); font-weight: 600; }
+    .kw-yellow  { color: var(--yellow); font-weight: 600; }
+    .kw-purple  { color: var(--purple); font-weight: 600; }
+    .kw-green   { color: var(--green);  font-weight: 600; }
+
+    /* ── 인라인 코드 ── */
+    code {
+      font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+      font-size: 0.85em;
+      background: rgba(45,212,191,0.1);
+      color: var(--teal);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    /* ── 코드 블록 (figma-design-rules.md 4장) ── */
+    pre {
+      font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+      font-size: clamp(0.58rem, 1.1vw, 0.76rem);
+      line-height: 1.72;
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1rem 1.2rem;
+      color: #c9d1d9;
+      overflow-y: auto;
+      overflow-x: hidden;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    pre .hl  { display: block; background: rgba(45,212,191,0.07); border-left: 2px solid var(--teal); margin: 0 -1.2rem; padding: 0 1.2rem 0 calc(1.2rem - 2px); }
+    pre .kw  { color: #f87171; font-weight: normal; }
+    pre .fn  { color: #c4b5fd; font-weight: normal; }
+    pre .st  { color: #93c5fd; font-weight: normal; }
+    pre .cm  { color: #555f6e; font-style: italic;  }
+    pre .nm  { color: #6ee7b7; font-weight: normal; }
+    pre .op  { color: #79c0ff; font-weight: normal; }
+
+    /* ── 그리드 레이아웃 ── */
+    /* gap 1.5x: 원래 clamp(0.8rem,2vw,1.4rem) → clamp(1.2rem,3vw,2.1rem) */
+    .grid-2      { display: grid; grid-template-columns: 1fr 1fr;       gap: clamp(1.2rem, 3vw, 2.1rem); }
+    .grid-3      { display: grid; grid-template-columns: 1fr 1fr 1fr;   gap: clamp(1.2rem, 3vw, 2.1rem); }
+    /* gap 1.5x: 원래 clamp(2rem,5vw,5rem) → clamp(3rem,7.5vw,7.5rem) */
+    .grid-35-65  { display: grid; grid-template-columns: 35fr 65fr;     gap: clamp(3rem, 7.5vw, 7.5rem); }
+
+    /* ── 카드 ── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: clamp(1.3rem, 2.7vw, 2rem); /* 1.5x */
+    }
+    .card--teal   { border-left: 3px solid var(--teal);   background: rgba(45,212,191,0.05);  }
+    .card--orange { border-left: 3px solid var(--orange); background: rgba(255,109,59,0.05);  }
+    .card--green  { border-left: 3px solid var(--green);  background: rgba(74,222,128,0.05);  }
+    .card--purple { border-left: 3px solid var(--purple); background: rgba(167,139,250,0.05); }
+
+    .card__label {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 0.62em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--teal);
+      margin-bottom: 0.8rem; /* 1.5x: 0.55rem */
+    }
+
+    /* ── 번호 목록 ── */
+    .num-list { list-style: none; display: flex; flex-direction: column; gap: 1.1rem; } /* 1.5x: 0.75rem */
+    .num-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.35rem; /* 1.5x: 0.9rem */
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(1.1rem, 2.1vw, 1.5rem); /* body text 크기 */
+      line-height: 1.55;
+    }
+    .num-circle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.75em;
+      height: 1.75em;
+      min-width: 1.75em;
+      border: 1.5px solid var(--teal);
+      border-radius: 50%;
+      font-size: 0.72em;
+      font-weight: 700;
+      color: var(--teal);
+      margin-top: 0.06em;
+      flex-shrink: 0;
+    }
+    .num-circle--orange { border-color: var(--orange); color: var(--orange); }
+    .num-circle--purple { border-color: var(--purple); color: var(--purple); }
+
+    /* ── 불릿 리스트 ── */
+    .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; } /* 1.5x: 0.45rem */
+    .bullet-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 0.975rem; /* 1.5x: 0.65rem */
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(0.9rem, 1.45vw, 1.15rem); /* caption 크기 */
+      line-height: 1.6;
+    }
+    .bullet-list li::before      { content: '—'; color: var(--teal);   font-weight: 700; flex-shrink: 0; }
+    .bullet-list li.ok::before   { content: '✓'; color: var(--green);  }
+    .bullet-list li.no::before   { content: '✕'; color: var(--orange); }
+    .bullet-list li.note::before { content: '→'; color: var(--yellow); }
+    /* 코드 스니펫 줄바꿈 금지 — 1~3글자 고아 방지 */
+    .bullet-list code { white-space: nowrap; }
+
+    /* ── 팁 / 콜아웃 ── */
+    .tip {
+      background: rgba(45,212,191,0.05);
+      border: 1px solid rgba(45,212,191,0.18);
+      border-radius: 3px;
+      padding: 0.975rem 1.5rem; /* 1.5x: 0.65rem 1rem */
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(0.9rem, 1.35vw, 1.1rem); /* caption 기준 */
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+    .tip::before { content: '→  '; color: var(--teal); font-weight: 700; }
+
+    .divider { height: 1px; background: var(--border); }
+
+    /* ────────────────────────────────────────────────
+       특수 슬라이드 레이아웃
+    ──────────────────────────────────────────────── */
+
+    /* ── 섹션 전환 슬라이드 ── */
+    .slide--section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      background-image: none;
+      background-color: #1A7A6E;
+    }
+
+    .section-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 2.1rem; /* 1.5x: 1.4rem */
+    }
+
+    .section-item {
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(1.2rem, 2.4vw, 1.8rem); /* 직전 크기(3x)의 40% */
+      font-weight: 400;
+      color: rgba(255,255,255,0.45);
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .section-item--active {
+      color: #ffffff;
+      font-weight: 700;
+    }
+    .section-arrow { opacity: 0; }
+    .section-item--active .section-arrow { opacity: 1; }
+
+    /* ── 임팩트 스테이트먼트 ── */
+    .slide--statement {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: clamp(3rem, 8vh, 7rem) clamp(5rem, 14vw, 13rem);
+    }
+
+    /* ── 좌우 분할 레이아웃 ── */
+    .slide--split {
+      display: flex;
+      flex-direction: row;
+      padding: 0;
+    }
+
+    .split-left {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.8rem; /* 1.5x: 1.2rem */
+      padding: clamp(2.5rem, 6vh, 5rem) clamp(3rem, 6vw, 6rem);
+    }
+
+    .split-right {
+      width: 48%;
+      min-width: 48%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      padding: clamp(2.5rem, 6vw, 6rem);
+      gap: 2.1rem; /* 1.5x: 1.4rem */
+    }
+    .split-right--teal   { background: #0d2420; }
+    .split-right--orange { background: #231408; }
+
+    .split__label {
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(0.58rem, 0.85vw, 0.72rem);
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+    .split__label--orange { color: var(--orange); }
+
+    /* split title: Pretendard Bold H2 수준 */
+    .split__title {
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(1.7rem, 4.2vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.015em;
+    }
+    .split__title .hl        { color: var(--teal);   }
+    .split__title .hl-orange { color: var(--orange); }
+
+    /* 패널 안 강조 텍스트: GmarketSans */
+    .panel-quote {
+      font-family: 'GmarketSans', 'Pretendard', sans-serif;
+      font-size: clamp(1.3rem, 2.8vw, 2.1rem);
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+      color: var(--teal);
+    }
+    .panel-quote--orange { color: var(--orange); }
+
+    /* 수치 강조: GmarketSans Display */
+    .panel-stat {
+      font-family: 'GmarketSans', 'Pretendard', sans-serif;
+      font-size: clamp(4rem, 9.5vw, 7rem);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+    }
+    .panel-stat--orange { color: var(--orange); }
+
+    /* ── 3컬럼 카드 ── */
+    .col-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: clamp(1.5rem, 2.7vw, 2.25rem); /* 1.5x */
+      display: flex;
+      flex-direction: column;
+      gap: 0.975rem; /* 1.5x: 0.65rem */
+    }
+    .col-card__num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.9em;
+      height: 1.9em;
+      border: 1.5px solid var(--teal);
+      border-radius: 50%;
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(0.78rem, 1.3vw, 0.9rem);
+      font-weight: 700;
+      color: var(--teal);
+    }
+    .col-card__num--orange { border-color: var(--orange); color: var(--orange); }
+    .col-card__num--purple { border-color: var(--purple); color: var(--purple); }
+
+    /* H3: Pretendard 700, 28~32px — 2rem × 15px = 30px */
+    .col-card__title {
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(1.4rem, 2.8vw, 2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+    .col-card__body {
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(0.9rem, 1.45vw, 1.15rem); /* caption 크기 */
+      line-height: 1.6;
+      color: var(--text-dim);
+    }
+
+    /* ────────────────────────────────────────────────
+       고정 UI
+    ──────────────────────────────────────────────── */
+
+    .progress-bar {
+      position: fixed; top: 0; left: 0; width: 100%; height: 2px; z-index: 200;
+      background: rgba(255,255,255,0.04);
+      user-select: none;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--teal);
+      transition: width 0.3s ease-out;
+    }
+
+    .nav-btn {
+      position: fixed; top: 50%; z-index: 150;
+      transform: translateY(-50%);
+      user-select: none;
+      width: clamp(1.9rem, 2.8vw, 2.5rem);
+      height: clamp(1.9rem, 2.8vw, 2.5rem);
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-btn:hover { background: rgba(45,212,191,0.1); color: var(--teal); border-color: var(--border-teal); }
+    .nav-btn:disabled { opacity: 0.08; cursor: not-allowed; }
+    #btn-prev { left:  clamp(0.4rem, 1.2vw, 1.1rem); }
+    #btn-next { right: clamp(0.4rem, 1.2vw, 1.1rem); }
+
+    .dot-nav {
+      position: fixed; bottom: 1.3rem; left: 50%; transform: translateX(-50%);
+      z-index: 150;
+      display: flex; gap: 5px; align-items: center;
+      user-select: none;
+    }
+    .dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      cursor: pointer; transition: all 0.22s ease;
+      border: none;
+    }
+    .dot.active { width: 22px; border-radius: 3px; background: var(--teal); }
+    .dot:hover:not(.active) { background: rgba(255,255,255,0.38); }
+
+    .slide-counter {
+      position: fixed; bottom: 1.2rem; right: 1.8rem;
+      z-index: 150;
+      font-family: 'Monaco', monospace;
+      font-size: 0.62em;
+      color: var(--text-muted);
+      letter-spacing: 0.07em;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<button class="nav-btn" id="btn-prev" aria-label="이전 슬라이드">&#8592;</button>
+<button class="nav-btn" id="btn-next" aria-label="다음 슬라이드">&#8594;</button>
+<div class="dot-nav" id="dot-nav"></div>
+<div class="slide-counter"><span id="cur">1</span> / <span id="tot">8</span></div>
+
+<div class="slide-deck" id="deck">
+
+  <!-- ════════════════════════════════════════════════
+    SLIDE 1 — 타이틀
+  ════════════════════════════════════════════════ -->
+  <article class="slide active" data-index="0">
+    <header class="slide__header">
+      <span class="slide__label">Vanilla Web · 2026</span>
+      <h1 class="slide__title">
+        순수 <span class="hl">HTML/CSS/JS</span>로<br>강의 슬라이드 만들기
+      </h1>
+      <p class="slide__sub">외부 라이브러리 없이 — 바닐라만으로 프로덕션급 구현</p>
+    </header>
+    <main class="slide__body">
+      <div style="display:flex;align-items:baseline;gap:0.9rem;margin-top:0.45rem;">
+        <span style="font-family:'Pretendard',sans-serif;font-weight:700;font-size:clamp(1rem,1.8vw,1.2rem);">Dasom Lee</span>
+        <span class="dim" style="font-size:0.85em;">·</span>
+        <span class="dim" style="font-size:clamp(0.95rem,1.6vw,1.1rem);">2026년 강의 자료</span>
+      </div>
+      <p class="body-text dim" style="max-width:50ch;">
+        이 슬라이드 자체가 순수 바닐라로 만들어졌습니다.
+        <span class="kw">Reveal.js</span>, <span class="kw">Impress.js</span> 같은 라이브러리 없이
+        레이아웃 · 강조 · 전환을 직접 구현한 결과물입니다.
+      </p>
+      <div class="tip">
+        <span style="white-space:nowrap;"><span class="kw">Space</span> 또는 <span class="kw">→</span> 키로 다음 슬라이드</span>&nbsp;·&nbsp;<span style="white-space:nowrap;"><span class="kw">←</span> 키로 이전</span>&nbsp;·&nbsp;<span style="white-space:nowrap;">터치 스와이프 지원</span>
+      </div>
+    </main>
+    <footer class="slide__footer">
+      <span>figma-design-rules.md 기반 제작</span>
+      <span>Pretendard + Gmarket Sans</span>
+    </footer>
+  </article>
+
+  <!-- ════════════════════════════════════════════════
+    SLIDE 2 — 섹션 전환 (teal 전체 배경)
+  ════════════════════════════════════════════════ -->
+  <article class="slide slide--section" data-index="1">
+    <nav class="section-menu">
+      <div class="section-item">
+        <span class="section-arrow">→</span>
+        Introduction
+      </div>
+      <div class="section-item section-item--active">
+        <span class="section-arrow">→</span>
+        레이아웃 &amp; 구조
+      </div>
+      <div class="section-item">
+        <span class="section-arrow">→</span>
+        강조 표현 기법
+      </div>
+      <div class="section-item">
+        <span class="section-arrow">→</span>
+        코드 시각화
+      </div>
+      <div class="section-item">
+        <span class="section-arrow">→</span>
+        전환 &amp; 네비게이션
+      </div>
+    </nav>
+  </article>
+
+  <!-- ════════════════════════════════════════════════
+    SLIDE 3 — 텍스트 단독 ① 임팩트 스테이트먼트
+  ════════════════════════════════════════════════ -->
+  <article class="slide slide--statement" data-index="2">
+    <p class="slide__label" style="margin-bottom:2.7rem;">디자인 원칙</p>
+    <h1 class="display">
+      한 슬라이드,<br><span style="color:var(--teal);">하나의 메시지</span>
+    </h1>
+    <p class="body-text dim" style="margin-top:2.7rem;max-width:38ch;line-height:1.7;">
+      청중은 텍스트를 읽지 않습니다.<br>
+      임팩트 있는 한 문장이 열 줄의 설명보다 기억에 남습니다.
+    </p>
+  </article>
+
+  <!-- ════════════════════════════════════════════════
+    SLIDE 4 — 텍스트 단독 ② 레이아웃 핵심 원칙
+  ════════════════════════════════════════════════ -->
+  <article class="slide" data-index="3">
+    <header class="slide__header">
+      <span class="slide__label">레이아웃 &amp; 구조 · Chapter 1</span>
+      <h1 class="slide__title">레이아웃 <span class="hl">핵심 원칙</span></h1>
+      <p class="slide__sub">비율 기반 여백 · CSS Grid · clamp() · dvh 단위</p>
+    </header>
+    <main class="slide__body">
+      <div class="grid-35-65" style="align-items:start;">
+        <div style="display:flex;flex-direction:column;gap:1.5rem;padding-top:0.4rem;">
+          <p class="body-text dim" style="line-height:1.8;">
+            화면 크기에 관계없이<br>
+            <span class="kw">숨 쉬는 레이아웃</span>을<br>
+            유지해야 합니다.
+          </p>
+          <p class="caption" style="color:var(--text-muted);">
+            고정 px 대신 상대 단위와<br>clamp()로 반응형을 구현합니다.
+          </p>
+        </div>
+        <ul class="num-list">
+          <li>
+            <span class="num-circle">1</span>
+            <div>
+              <div style="font-weight:600;margin-bottom:0.3rem;font-size:clamp(1.1rem,2.1vw,1.5rem);">수평 여백 약 9vw, 최대 8%</div>
+              <div class="caption">1280~1440px 기준 8~9% — 1920px 이상에서는 6%로 감소 (clamp 상한)</div>
+            </div>
+          </li>
+          <li>
+            <span class="num-circle">2</span>
+            <div>
+              <div style="font-weight:600;margin-bottom:0.3rem;font-size:clamp(1.1rem,2.1vw,1.5rem);"><code>grid-template-rows: auto 1fr auto</code></div>
+              <div class="caption">헤더 고정 · 바디 가변 · 푸터 고정 — 3-row Grid로 영역 분리</div>
+            </div>
+          </li>
+          <li>
+            <span class="num-circle">3</span>
+            <div>
+              <div style="font-weight:600;margin-bottom:0.3rem;font-size:clamp(1.1rem,2.1vw,1.5rem);"><code>clamp(min, vw, max)</code></div>
+              <div class="caption">미디어쿼리 없이 폰트·여백 자동 반응 — 뷰포트 너비에 비례</div>
+            </div>
+          </li>
+          <li>
+            <span class="num-circle">4</span>
+            <div>
+              <div style="font-weight:600;margin-bottom:0.3rem;font-size:clamp(1.1rem,2.1vw,1.5rem);"><code>100dvh</code> 동적 뷰포트</div>
+              <div class="caption">모바일 주소바 제외 실제 가용 높이 — vh 대신 dvh 사용</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </main>
+    <footer class="slide__footer">
+      <span>고정 px 사용 금지 — 모든 크기는 비율 또는 clamp() 기반</span>
+    </footer>
+  </article>
+
+  <!-- ════════════════════════════════════════════════
+    SLIDE 5 — 좌우 분할 ① 강조 표현 기법
+  ════════════════════════════════════════════════ -->
+  <article class="slide slide--split" data-index="4">
+    <div class="split-left">
+      <span class="split__label">강조 표현 기법 · Chapter 2</span>
+      <h2 class="split__title">키워드 강조는<br><span class="hl">색상만으로</span></h2>
+      <p class="body-text dim" style="max-width:38ch;">
+        배경 형광펜, 밑줄 없이 — 폰트 컬러 하나만 바꿔도
+        시선이 정확히 키워드로 향합니다.
+        한 슬라이드에 강조색은 <span class="kw">1가지만</span> 사용합니다.
+      </p>
+      <ul class="bullet-list" style="max-width:38ch;">
+        <li class="ok">인라인 컬러 교체 — <code>color: var(--teal)</code></li>
+        <li class="ok">굵기 병행 — <code>font-weight: 600</code></li>
+        <li class="no">배경 형광펜 — 다크모드에서 가독성 저하</li>
+        <li class="no">밑줄 남발 — 링크와 혼동, 시선 분산</li>
+      </ul>
+    </div>
+    <div class="split-right split-right--teal">
+      <span class="split__label" style="opacity:0.55;">핵심 원칙</span>
+      <p class="panel-quote">
+        "한 슬라이드에<br>강조색은<br>하나뿐."
+      </p>
+      <p class="caption" style="color:rgba(255,255,255,0.25);">
+        Figma 원본 템플릿 규칙 기반
+      </p>
+    </div>
+  </article>
+
+  <!-- ════════════════════════════════════════════════
+    SLIDE 6 — 좌우 분할 ② 슬라이드 전환 구현
+  ════════════════════════════════════════════════ -->
+  <article class="slide slide--split" data-index="5">
+    <div class="split-left">
+      <span class="split__label split__label--orange">전환 &amp; 네비게이션 · Chapter 3</span>
+      <h2 class="split__title">Fade 전환 —<br><span class="hl-orange">isAnimating</span> 패턴</h2>
+      <p class="body-text dim" style="max-width:38ch;">
+        전환 중 중복 입력을 차단하는
+        <span class="kw-orange">이벤트 잠금 패턴</span>은
+        모든 인터랙티브 UI의 기본 방어 코드입니다.
+      </p>
+      <ul class="bullet-list" style="max-width:38ch;">
+        <li class="ok"><code>isAnimating = true</code> — 전환 시작 시 잠금</li>
+        <li class="ok"><code>transitionend</code> 이벤트로 잠금 해제</li>
+        <li class="ok"><code>{ once: true }</code> — 리스너 자동 정리</li>
+        <li class="note"><code>setTimeout</code> 500ms fallback 필수</li>
+      </ul>
+    </div>
+    <div class="split-right split-right--orange">
+      <span class="split__label" style="color:var(--orange);opacity:0.6;">권장 전환 속도</span>
+      <div class="panel-stat panel-stat--orange">
+        360<span style="font-size:0.38em;letter-spacing:0;">ms</span>
+      </div>
+      <div class="caption" style="color:var(--text-dim);max-width:22ch;line-height:1.7;">
+        200ms 이하 — 너무 빠름<br>
+        400ms 이상 — 답답한 느낌<br>
+        <span class="kw-orange">300~360ms</span>가 강의 최적값
+      </div>
+    </div>
+  </article>
+
+  <!-- ════════════════════════════════════════════════
+    SLIDE 7 — 코드 블록
+  ════════════════════════════════════════════════ -->
+  <article class="slide" data-index="6">
+    <header class="slide__header">
+      <span class="slide__label">코드 시각화 · Chapter 4</span>
+      <h1 class="slide__title"><span class="hl">SlidePresentation</span> 클래스 구조</h1>
+      <p class="slide__sub">isAnimating 잠금 + transitionend 감지 — 핵심 로직 구현</p>
+    </header>
+    <main class="slide__body">
+      <div class="grid-2">
+        <div class="code-col"><pre><span class="cm">// 슬라이드 전환 엔진</span>
+<span class="kw">class</span> <span class="fn">SlidePresentation</span> {
+  <span class="fn">constructor</span>() {
+    <span class="kw">this</span>.slides =
+      <span class="nm">document</span>.<span class="fn">querySelectorAll</span>(<span class="st">'.slide'</span>);
+    <span class="kw">this</span>.current = <span class="nm">0</span>;
+    <span class="kw">this</span>.isAnimating = <span class="nm">false</span>;
+  }
+
+<span class="hl">  <span class="fn">goToSlide</span>(index) {</span>
+<span class="hl">    <span class="kw">if</span> (<span class="kw">this</span>.isAnimating) <span class="kw">return</span>; <span class="cm">// 잠금</span></span>
+<span class="hl">    <span class="kw">this</span>.isAnimating = <span class="nm">true</span>;</span>
+
+    <span class="kw">this</span>.slides[<span class="kw">this</span>.current]
+      .classList.<span class="fn">remove</span>(<span class="st">'active'</span>);
+    <span class="kw">this</span>.slides[index]
+      .classList.<span class="fn">add</span>(<span class="st">'active'</span>);
+    <span class="kw">this</span>.current = index;
+
+    <span class="kw">this</span>.slides[index].<span class="fn">addEventListener</span>(
+      <span class="st">'transitionend'</span>,
+      () => { <span class="kw">this</span>.isAnimating = <span class="nm">false</span>; },
+      { once: <span class="nm">true</span> }
+    );
+  }
+}</pre></div>
+        <div style="display:flex;flex-direction:column;gap:1.2rem;">
+          <div class="card card--teal">
+            <div class="card__label">Fade CSS</div>
+            <pre style="font-size:clamp(0.55rem,0.95vw,0.7rem);">.slide {
+  opacity: <span class="nm">0</span>;
+  transition: opacity <span class="nm">0.36s</span>;
+  pointer-events: <span class="nm">none</span>;
+}
+.slide.active {
+  opacity: <span class="nm">1</span>;
+  pointer-events: auto;
+}</pre>
+          </div>
+          <div class="card card--orange">
+            <div class="card__label" style="color:var(--orange);">GPU 가속 원칙</div>
+            <ul class="bullet-list" style="font-size:clamp(0.72rem,1.2vw,0.88rem);">
+              <li class="ok"><code>opacity</code> + <code>transform</code>만 animate</li>
+              <li class="no"><code>width</code>, <code>top</code> 등은 리플로우 발생</li>
+              <li class="ok"><code>will-change: opacity</code> 시작 전 선언</li>
+              <li class="note"><code>will-change</code>는 완료 후 반드시 <code>auto</code>로 해제</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+  </article>
+
+  <!-- ════════════════════════════════════════════════
+    SLIDE 8 — 3컬럼 그리드 핵심 요약
+  ════════════════════════════════════════════════ -->
+  <article class="slide" data-index="7">
+    <header class="slide__header">
+      <span class="slide__label">핵심 요약</span>
+      <h1 class="slide__title">바닐라 슬라이드 <span class="hl">3가지 기둥</span></h1>
+      <p class="slide__sub">레이아웃 · 강조 · 전환 — 이 3가지만 잡으면 완성</p>
+    </header>
+    <main class="slide__body">
+      <div class="grid-3">
+        <div class="col-card">
+          <span class="col-card__num">1</span>
+          <div class="col-card__title">레이아웃 &amp; 구조</div>
+          <div class="col-card__body">
+            비율 기반 여백, CSS Grid 3-row,
+            clamp() 반응형, dvh 단위.
+            고정 px는 절대 사용하지 않습니다.
+          </div>
+          <ul class="bullet-list" style="font-size:clamp(0.78rem,1.3vw,0.95rem);gap:0.45rem;margin-top:0.3rem;">
+            <li class="ok">dot grid 배경 텍스처</li>
+            <li class="ok">좌측 정렬 기본 원칙</li>
+            <li class="ok">수평 여백 8~10% 비율</li>
+          </ul>
+        </div>
+        <div class="col-card" style="border-color:var(--border-orange);">
+          <span class="col-card__num col-card__num--orange">2</span>
+          <div class="col-card__title">강조 표현 기법</div>
+          <div class="col-card__body">
+            폰트 컬러만 변경하는 인라인 강조.
+            한 슬라이드에 강조색 1가지.
+            배경·밑줄 없음.
+          </div>
+          <ul class="bullet-list" style="font-size:clamp(0.78rem,1.3vw,0.95rem);gap:0.45rem;margin-top:0.3rem;">
+            <li class="ok">Pretendard Bold 제목</li>
+            <li class="ok">GmarketSans Display 임팩트</li>
+            <li class="ok">circled number ①②③ 마커</li>
+          </ul>
+        </div>
+        <div class="col-card" style="border-color:var(--border-purple);">
+          <span class="col-card__num col-card__num--purple">3</span>
+          <div class="col-card__title">전환 &amp; 네비게이션</div>
+          <div class="col-card__body">
+            Fade 360ms, isAnimating 잠금,
+            transitionend 감지, 키보드 + 터치.
+            코드 블록 세로 스크롤 허용.
+          </div>
+          <ul class="bullet-list" style="font-size:clamp(0.78rem,1.3vw,0.95rem);gap:0.45rem;margin-top:0.3rem;">
+            <li class="ok"><code>opacity</code> + <code>pointer-events</code></li>
+            <li class="ok">슬라이드 진입 시 전체 표시</li>
+            <li class="ok"><code>overflow-y: auto</code> (코드 블록)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tip">
+        순수 바닐라 HTML/CSS/JS — 외부 라이브러리 0개
+        &nbsp;·&nbsp; Pretendard + Gmarket Sans
+      </div>
+    </main>
+    <footer class="slide__footer">
+      <span>figma-design-rules.md 기반 구현</span>
+      <span>Slide 8 of 8</span>
+    </footer>
+  </article>
+
+</div><!-- /.slide-deck -->
+
+<script>
+class SlidePresentation {
+  constructor() {
+    this.slides      = Array.from(document.querySelectorAll('.slide'));
+    this.total       = this.slides.length;
+    this.current     = 0;
+    this.isAnimating = false;
+    this._tx = 0;
+    this._ty = 0;
+    this._init();
+  }
+
+  _init() {
+    document.getElementById('tot').textContent = this.total;
+    this._buildDots();
+    this._bindKeys();
+    this._bindTouch();
+    this._bindButtons();
+    this._update();
+  }
+
+  next() { if (!this.isAnimating) this._go(this.current + 1); }
+  prev() { if (!this.isAnimating) this._go(this.current - 1); }
+
+  _go(i) {
+    if (i < 0 || i >= this.total || i === this.current || this.isAnimating) return;
+    this.isAnimating = true;
+
+    this.slides[this.current].classList.remove('active');
+    this.slides[i].classList.add('active');
+    this.current = i;
+
+    this.slides[i].addEventListener('transitionend', () => {
+      this.isAnimating = false;
+      this._update();
+    }, { once: true });
+
+    setTimeout(() => { this.isAnimating = false; this._update(); }, 500);
+    this._update();
+  }
+
+  _update() {
+    const pct = (this.current + 1) / this.total * 100;
+    document.getElementById('progress').style.width = pct + '%';
+    document.getElementById('cur').textContent = this.current + 1;
+
+    document.getElementById('btn-prev').disabled = this.current === 0;
+    document.getElementById('btn-next').disabled = this.current === this.total - 1;
+
+    document.querySelectorAll('.dot').forEach((d, i) =>
+      d.classList.toggle('active', i === this.current));
+  }
+
+  _buildDots() {
+    const nav = document.getElementById('dot-nav');
+    this.slides.forEach((_, i) => {
+      const b = document.createElement('button');
+      b.className = 'dot' + (i === 0 ? ' active' : '');
+      b.setAttribute('aria-label', `슬라이드 ${i + 1}`);
+      b.addEventListener('click', () => { if (!this.isAnimating) this._go(i); });
+      nav.appendChild(b);
+    });
+  }
+
+  _bindKeys() {
+    document.addEventListener('keydown', e => {
+      if (this.isAnimating) return;
+      switch (e.key) {
+        case 'ArrowRight': case ' ': e.preventDefault(); this.next(); break;
+        case 'ArrowLeft':            e.preventDefault(); this.prev(); break;
+        case 'Home': e.preventDefault(); this._go(0);              break;
+        case 'End':  e.preventDefault(); this._go(this.total - 1); break;
+      }
+    });
+  }
+
+  _bindTouch() {
+    const deck = document.getElementById('deck');
+    deck.addEventListener('touchstart', e => {
+      this._tx = e.changedTouches[0].screenX;
+      this._ty = e.changedTouches[0].screenY;
+    }, { passive: true });
+    deck.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].screenX - this._tx;
+      const dy = e.changedTouches[0].screenY - this._ty;
+      if (Math.abs(dy) > Math.abs(dx) || Math.abs(dx) < 50) return;
+      if (this.isAnimating) return;
+      dx < 0 ? this.next() : this.prev();
+    }, { passive: true });
+  }
+
+  _bindButtons() {
+    document.getElementById('btn-prev').addEventListener('click', () => this.prev());
+    document.getElementById('btn-next').addEventListener('click', () => this.next());
+  }
+}
+
+new SlidePresentation();
+</script>
+</body>
+</html>
