@@ -672,7 +672,7 @@ docs/strategy/persona.md
 
 ## 반복 실행 약속어
 
-사용자가 "오피스 켜줘", "서버 켜줘", "후츠릿 오피스 시작", "콘텐츠팀 서버 켜줘"처럼 후츠릿 오피스 런타임 시작을 요청하면 아래 스크립트를 실행한다.
+사용자가 `start`만 입력하거나, "오피스 켜줘", "서버 켜줘", "후츠릿 오피스 시작", "콘텐츠팀 서버 켜줘"처럼 후츠릿 오피스 런타임 시작을 요청하면 아래 스크립트를 실행한다.
 
 ```bash
 .venv/bin/python scripts/start_chutzrit_office.py
@@ -681,6 +681,17 @@ docs/strategy/persona.md
 이 스크립트는 Discord 봇을 실행 중이면 재시작하지 않고 유지하며, 실행 중이 아니면 `screen` 세션으로 띄운다. 오피스 대시보드는 `http://127.0.0.1:5173/`에 응답하지 않을 때만 `apps/office-dashboard`의 Vite 개발 서버를 `screen` 세션으로 띄운다.
 
 스크립트 실행 후에는 Discord 입력 채널 접근, Discord Webhook 보고, OpenAI 호출, Tistory Chrome Playwright 세션 검증, 대시보드 URL 응답 여부를 확인한 뒤 결과를 보고한다. 검증 중 하나라도 실패하면 "테스트해도 된다"고 답하지 않고 실패 항목과 조치가 필요한 명령을 먼저 보고한다.
+
+`start` 단축어는 특히 "실제 작동할 수 있게 서버를 모두 띄우고, 티스토리 배포까지 테스트한다"는 의미로 처리한다. 기본 실행 순서는 다음과 같다.
+
+1. `.venv/bin/python scripts/start_chutzrit_office.py`로 Discord 봇과 오피스 대시보드를 띄운다.
+2. Discord 봇 토큰/채널, Discord Webhook, OpenAI Responses API, Tistory Playwright 세션을 검증한다.
+3. Tistory 검증이 `session_expired`이면 `.venv/bin/python scripts/save_tistory_session.py --browser chrome --timeout 900`을 실행하고, 사용자가 뜬 Chrome Playwright 창에서 로그인할 때까지 기다린다.
+4. 세션 갱신 후 `.venv/bin/python scripts/check_integrations.py --tistory`를 다시 실행한다.
+5. Tistory 세션 검증이 통과하면 `.venv/bin/python scripts/test_tistory_publish.py`로 짧은 테스트 글을 실제 공개 발행한다.
+6. 발행 결과 URL이 나오면 HTTP 응답을 확인하고, Discord 봇/대시보드 screen 세션과 함께 최종 상태를 보고한다.
+
+`start` 수행 중 티스토리 공개 발행이 실패하면 성공으로 말하지 않는다. `session_expired`, `dependency_missing`, `failed` 같은 실제 상태와 스크린샷/로그 경로, 사용자가 해야 할 조치를 함께 보고한다.
 
 Discord나 외부 배포 연동을 만들 때:
 

@@ -382,3 +382,9 @@ Discord 봇, 오피스 대시보드, 필수 연동 검증을 한 번에 실행�
 ```
 
 이 명령은 Discord 봇이 이미 실행 중이면 재시작하지 않습니다. 오피스 대시보드는 `http://127.0.0.1:5173/`에서 확인합니다.
+
+Codex에게 `start`라고만 입력하면 후츠릿 오피스 런타임을 띄우고, Discord/OpenAI/Tistory 연결을 검증한 뒤 티스토리 공개 발행 테스트까지 실행하는 단축어로 처리합니다. 티스토리 세션이 만료되어 있으면 격리된 Chrome Playwright 창에서 로그인 세션을 갱신한 뒤 아래 테스트 스크립트를 실행합니다.
+
+```bash
+.venv/bin/python scripts/test_tistory_publish.py
+```
