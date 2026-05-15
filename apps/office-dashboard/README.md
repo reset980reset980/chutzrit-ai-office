@@ -43,7 +43,7 @@ http://127.0.0.1:5173/
 npm run build
 ```
 
-`npm run dev`와 `npm run build` 전에는 `npm run generate:data`가 자동 실행되어 `outputs/broadcasting/` 기준의 최신 스냅샷을 생성합니다.
+`npm run dev`와 `npm run build` 전에는 `npm run generate:data`가 자동 실행되어 `outputs/broadcasting/` 기준의 최신 스냅샷을 생성합니다. 개발 서버가 켜진 뒤에도 `outputs/broadcasting/` 아래 패키지나 `logs/current-status.json`이 바뀌면 Vite watcher가 스냅샷을 다시 만들고 화면을 새로고침합니다.
 
 아바타 PNG를 다시 만들 때는 아래 명령을 실행합니다.
 
