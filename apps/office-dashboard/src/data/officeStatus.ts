@@ -35,7 +35,7 @@ const agentDefinitions = [
   {
     id: "input-parser",
     name: "입력 분석가",
-    role: "Discord 입력 분석",
+    role: "Telegram 입력 분석",
     position: { x: 10, y: 50 }
   },
   {
@@ -65,7 +65,7 @@ const agentDefinitions = [
   {
     id: "discord-newsletter",
     name: "뉴스레터 작가",
-    role: "Discord 뉴스레터 작성",
+    role: "Telegram 뉴스레터 작성",
     position: { x: 83, y: 42 }
   },
   {
@@ -157,8 +157,8 @@ export const officeStatus: OfficeStatus = {
   dataSource: liveData.dataSource,
   pipelineStages: [
     {
-      id: "discord-input",
-      label: "Discord Input",
+      id: "telegram-input",
+      label: "Telegram Input",
       detail: "outputs 입력 기록",
       status: "IDLE",
       position: { x: 10, y: 12 }

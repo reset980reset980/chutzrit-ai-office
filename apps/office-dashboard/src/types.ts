@@ -78,6 +78,11 @@ export type BroadcastingRecord = {
   path: string;
   statusReason: string;
   packageStatus: string;
+  previews: {
+    blog: string;
+    linkedin: string;
+    telegram: string;
+  };
 };
 
 export type MetricDetail = {

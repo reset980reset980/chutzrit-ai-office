@@ -8,6 +8,7 @@ const appDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)));
 const repoRoot = path.resolve(appDir, "../..");
 const statusScript = path.join(appDir, "scripts/generate-office-status.mjs");
 const outputsDir = path.join(repoRoot, "outputs/broadcasting");
+const dashboardPort = Number(process.env.CHUTZRIT_OFFICE_DASHBOARD_PORT || 5188);
 
 function officeStatusDataPlugin() {
   let timer: ReturnType<typeof setTimeout> | null = null;
@@ -64,10 +65,13 @@ export default defineConfig({
   plugins: [officeStatusDataPlugin(), react()],
   server: {
     host: "127.0.0.1",
-    port: 5173
+    port: dashboardPort,
+    strictPort: true,
+    allowedHosts: ["fruit.xsw.kr", "127.0.0.1", "localhost"]
   },
   preview: {
     host: "127.0.0.1",
-    port: 4173
+    port: dashboardPort,
+    strictPort: true
   }
 });

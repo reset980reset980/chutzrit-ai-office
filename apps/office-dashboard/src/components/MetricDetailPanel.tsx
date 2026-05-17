@@ -1,5 +1,6 @@
-import { ExternalLink, FileText, FolderOpen, X } from "lucide-react";
-import type { MetricDetail, MetricKey, OfficeDataSource } from "../types";
+import { ExternalLink, Eye, FileText, FolderOpen, X } from "lucide-react";
+import { useMemo, useState } from "react";
+import type { BroadcastingRecord, MetricDetail, MetricKey, OfficeDataSource } from "../types";
 
 type MetricDetailPanelProps = {
   metricKey: MetricKey;
@@ -14,6 +15,14 @@ const metricLabels: Record<MetricKey, string> = {
   review: "Review Queue",
   published: "Published"
 };
+
+const previewChannels = [
+  { key: "blog", label: "Blog" },
+  { key: "linkedin", label: "LinkedIn" },
+  { key: "telegram", label: "Telegram" }
+] as const;
+
+type PreviewChannel = (typeof previewChannels)[number]["key"];
 
 function formatGeneratedAt(value: string) {
   if (!value) return "시간 기록 없음";
@@ -35,12 +44,30 @@ function getChannelSummary(statuses: Record<string, string>) {
   return entries.map(([channel, status]) => `${channel}: ${status}`).join(" · ");
 }
 
+function getPreviewText(record: BroadcastingRecord, channel: PreviewChannel) {
+  return record.previews?.[channel]?.trim() || "아직 이 채널의 원고 파일이 생성되지 않았다.";
+}
+
 export function MetricDetailPanel({
   metricKey,
   detail,
   dataSource,
   onClose
 }: MetricDetailPanelProps) {
+  const firstPreviewRecord = detail.records.find((record) =>
+    previewChannels.some((channel) => getPreviewText(record, channel.key).trim())
+  );
+  const [previewRecordId, setPreviewRecordId] = useState(firstPreviewRecord?.id ?? "");
+  const [previewChannel, setPreviewChannel] = useState<PreviewChannel>("blog");
+
+  const previewRecord = useMemo(
+    () =>
+      detail.records.find((record) => record.id === previewRecordId) ??
+      firstPreviewRecord ??
+      detail.records[0],
+    [detail.records, firstPreviewRecord, previewRecordId]
+  );
+
   return (
     <aside className="metric-detail-panel" aria-label={`${detail.title} 상세 데이터`}>
       <div className="metric-detail-panel__header">
@@ -94,6 +121,14 @@ export function MetricDetailPanel({
               <div className="metric-record__status">
                 {getChannelSummary(record.channelPublishStatus)}
               </div>
+              <button
+                className="metric-record__preview-button"
+                type="button"
+                onClick={() => setPreviewRecordId(record.id)}
+              >
+                <Eye size={14} />
+                원고 미리보기
+              </button>
               <code>{record.path}</code>
               {Object.entries(record.publishedUrls).some(([, url]) => Boolean(url)) ? (
                 <div className="metric-record__links">
@@ -111,6 +146,39 @@ export function MetricDetailPanel({
           ))
         )}
       </div>
+
+      {previewRecord ? (
+        <section className="content-preview-panel" aria-label="작성된 글 미리보기">
+          <div className="content-preview-panel__header">
+            <div>
+              <span className="agent-detail-panel__eyebrow">Draft Preview</span>
+              <h3>{previewRecord.title}</h3>
+            </div>
+            <span>{formatGeneratedAt(previewRecord.generatedAt)}</span>
+          </div>
+          <div className="content-preview-panel__tabs" role="tablist" aria-label="미리보기 채널">
+            {previewChannels.map((channel) => (
+              <button
+                key={channel.key}
+                className={
+                  previewChannel === channel.key
+                    ? "content-preview-panel__tab content-preview-panel__tab--active"
+                    : "content-preview-panel__tab"
+                }
+                type="button"
+                role="tab"
+                aria-selected={previewChannel === channel.key}
+                onClick={() => setPreviewChannel(channel.key)}
+              >
+                {channel.label}
+              </button>
+            ))}
+          </div>
+          <article className="content-preview-panel__body">
+            {getPreviewText(previewRecord, previewChannel)}
+          </article>
+        </section>
+      ) : null}
     </aside>
   );
 }

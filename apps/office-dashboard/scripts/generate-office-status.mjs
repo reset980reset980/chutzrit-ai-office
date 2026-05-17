@@ -36,6 +36,10 @@ async function readJson(filePath) {
   }
 }
 
+async function readText(filePath) {
+  return fs.readFile(filePath, "utf8").catch(() => "");
+}
+
 async function dirExists(dirPath) {
   try {
     const stat = await fs.stat(dirPath);
@@ -89,9 +93,10 @@ async function readPackage(scope, packageDir) {
   if (!metadata) return null;
 
   const publishPlan = await readJson(path.join(packageDir, "publish-plan.json"));
-  const sourceMarkdown = await fs
-    .readFile(path.join(packageDir, "source.md"), "utf8")
-    .catch(() => "");
+  const sourceMarkdown = await readText(path.join(packageDir, "source.md"));
+  const blogMarkdown = await readText(path.join(packageDir, "blog.md"));
+  const linkedinMarkdown = await readText(path.join(packageDir, "linkedin.md"));
+  const telegramMarkdown = await readText(path.join(packageDir, "discord.md"));
 
   const packageId = metadata.package_id || path.basename(packageDir);
   const channelPublishStatus =
@@ -133,8 +138,20 @@ async function readPackage(scope, packageDir) {
       publishPlan?.channels?.linkedin?.reason ||
       publishPlan?.channels?.discord?.reason ||
       "",
-    packageStatus: "unknown"
+    packageStatus: "unknown",
+    previews: {
+      blog: compactPreview(blogMarkdown),
+      linkedin: compactPreview(linkedinMarkdown),
+      telegram: compactPreview(telegramMarkdown)
+    }
   };
+}
+
+function compactPreview(value) {
+  const text = String(value || "").trim();
+  const limit = 14000;
+  if (text.length <= limit) return text;
+  return `${text.slice(0, limit).trim()}\n\n...`;
 }
 
 function dedupeById(records) {

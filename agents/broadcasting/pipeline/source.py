@@ -19,6 +19,7 @@ class SourceContext:
     raw_text: str
     urls: list[str]
     link_summaries: list[str]
+    input_type: str
 
     def to_prompt_text(self) -> str:
         """Render source context for prompting."""
@@ -36,7 +37,20 @@ def parse_source_context(text: str, *, fetch_links: bool = True) -> SourceContex
     urls = URL_PATTERN.findall(text)
     summaries = [fetch_link_summary(url) for url in urls] if fetch_links else []
     summaries = [summary for summary in summaries if summary]
-    return SourceContext(raw_text=text, urls=urls, link_summaries=summaries)
+    return SourceContext(raw_text=text, urls=urls, link_summaries=summaries, input_type=detect_input_type(text, urls))
+
+
+def detect_input_type(text: str, urls: list[str]) -> str:
+    """Detect whether an input is a memo, link, or link with memo."""
+    note_text = text
+    for url in urls:
+        note_text = note_text.replace(url, "")
+
+    if urls and note_text.strip():
+        return "link_with_memo"
+    if urls:
+        return "link"
+    return "memo"
 
 
 def fetch_link_summary(url: str) -> str:

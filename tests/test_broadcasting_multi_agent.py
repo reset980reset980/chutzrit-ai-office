@@ -3,17 +3,20 @@
 from __future__ import annotations
 
 import json
+import os
 import tempfile
 import threading
+import time
 import unittest
 from datetime import datetime
 from pathlib import Path
+from unittest.mock import patch
 
-from agents.broadcasting.pipeline.config import RuntimeConfig
+from agents.broadcasting.pipeline.config import RuntimeConfig, load_runtime_config
 from agents.broadcasting.pipeline.progress import format_multi_platform_publish_report
 from agents.broadcasting.pipeline.generator import generate_content_package
 from agents.broadcasting.pipeline import storage
-from agents.broadcasting.agents import PublishAgent
+from agents.broadcasting.agents import InputParserAgent, PublishAgent
 from agents.broadcasting.publishers import PublishResult
 from agents.broadcasting.publishers.tistory import markdown_to_tistory_html
 from scripts.save_tistory_session import assert_isolated_browser_profile_dir, known_real_browser_profile_dirs
@@ -144,6 +147,52 @@ class RevisionFakeJSONClient(FakeJSONClient):
         return super().create_json(prompt, max_output_tokens=max_output_tokens)
 
 
+class SlowWriterFakeJSONClient(FakeJSONClient):
+    """Fake client that makes writer prompts slow enough to prove parallelism."""
+
+    def create_json(self, prompt: str, *, max_output_tokens: int = 12000) -> dict:
+        writer_markers = (
+            "Blog Writer Agent",
+            "LinkedIn Writer Agent",
+            "Discord Newsletter Writer Agent",
+        )
+        if any(marker in prompt for marker in writer_markers):
+            time.sleep(0.25)
+        return super().create_json(prompt, max_output_tokens=max_output_tokens)
+
+
+class MaxRevisionFakeJSONClient(FakeJSONClient):
+    """Fake client that never passes reflection so loop limit can be verified."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.reflection_count = 0
+
+    def create_json(self, prompt: str, *, max_output_tokens: int = 12000) -> dict:
+        if prompt.startswith("너는 후츠릿 콘텐츠의 Self Reflection Agent"):
+            with self.lock:
+                self.calls.append(prompt)
+                self.reflection_count += 1
+            return {
+                "score": 82,
+                "passed": False,
+                "channel_scores": {"blog": 82, "linkedin": 82, "discord": 82},
+                "strengths": [],
+                "problems": ["전체 메시지가 약하다."],
+                "revision_instructions": ["각 채널의 주장을 더 선명하게 수정하라."],
+                "publish_status": "수정 필요",
+            }
+        if "원고 하나만 수정" in prompt:
+            with self.lock:
+                self.calls.append(prompt)
+            if "블로그 원고 하나만 수정" in prompt:
+                return {"draft": "# 수정된 블로그\n\n## 문제\n본문\n\n## 구조\n본문\n\n## 기준\n본문"}
+            if "LinkedIn 원고 하나만 수정" in prompt:
+                return {"draft": "수정된 LinkedIn\n\n본문입니다.\n\n블로그 전문 [블로그 링크]"}
+            return {"draft": "## 수정된 Discord 뉴스레터\n본문입니다."}
+        return super().create_json(prompt, max_output_tokens=max_output_tokens)
+
+
 def build_config() -> RuntimeConfig:
     """Build a minimal runtime config for tests."""
     return RuntimeConfig(
@@ -208,6 +257,72 @@ class FakeLinkedInPublisher:
 
 
 class BroadcastingMultiAgentTests(unittest.TestCase):
+    def test_input_parser_detects_memo_link_and_link_with_memo(self) -> None:
+        parser = InputParserAgent(fetch_links=False)
+
+        memo = parser.run("Codex를 써보니까 에이전트 시대가 왔다는 게 실감난다.")
+        link = parser.run("https://example.com/article")
+        link_with_memo = parser.run("이 관점이 중요하다 https://example.com/article")
+
+        self.assertEqual(memo["input_type"], "memo")
+        self.assertEqual(link["input_type"], "link")
+        self.assertEqual(link_with_memo["input_type"], "link_with_memo")
+        self.assertEqual(link["urls"], ["https://example.com/article"])
+
+    def test_telegram_runtime_config_does_not_require_discord_keys(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            env_path = Path(temp_dir) / ".env"
+            env_path.write_text(
+                "\n".join(
+                    [
+                        "TELEGRAM_BOT_TOKEN=123456:test-token",
+                        "TELEGRAM_BROADCASTING_CHAT_ID=1001",
+                        "TELEGRAM_NEWSLETTER_CHAT_ID=1002",
+                        "TELEGRAM_ALLOWED_USER_IDS=42,43",
+                        "OPENAI_API_KEY=test-openai-key",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+
+            with patch.dict(os.environ, {}, clear=True):
+                config = load_runtime_config(
+                    env_path,
+                    require_discord=False,
+                    require_telegram=True,
+                )
+
+        self.assertEqual(config.telegram_bot_token, "123456:test-token")
+        self.assertEqual(config.telegram_broadcasting_chat_id, "1001")
+        self.assertEqual(config.telegram_newsletter_chat_id, "1002")
+        self.assertEqual(config.telegram_allowed_user_ids, {"42", "43"})
+        self.assertEqual(config.discord_bot_token, "")
+
+    def test_telegram_runtime_config_can_bootstrap_without_chat_id(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            env_path = Path(temp_dir) / ".env"
+            env_path.write_text(
+                "\n".join(
+                    [
+                        "TELEGRAM_BOT_TOKEN=123456:test-token",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+
+            with patch.dict(os.environ, {}, clear=True):
+                config = load_runtime_config(
+                    env_path,
+                    require_discord=False,
+                    require_telegram=True,
+                    require_openai=False,
+                )
+
+        self.assertEqual(config.telegram_bot_token, "123456:test-token")
+        self.assertEqual(config.telegram_broadcasting_chat_id, "")
+        self.assertEqual(config.telegram_newsletter_chat_id, "")
+        self.assertEqual(config.openai_api_key, "")
+
     def test_generate_content_package_uses_independent_subagents(self) -> None:
         client = FakeJSONClient()
 
@@ -236,6 +351,19 @@ class BroadcastingMultiAgentTests(unittest.TestCase):
         ):
             self.assertIn(marker, joined_calls)
 
+    def test_platform_writers_run_in_parallel(self) -> None:
+        client = SlowWriterFakeJSONClient()
+
+        started_at = time.perf_counter()
+        generate_content_package(
+            "AI 자동화는 프롬프트보다 운영 구조가 중요하다.",
+            build_config(),
+            client=client,
+        )
+        elapsed = time.perf_counter() - started_at
+
+        self.assertLess(elapsed, 0.65)
+
     def test_revision_agent_revises_failed_channel_only(self) -> None:
         client = RevisionFakeJSONClient()
 
@@ -253,6 +381,19 @@ class BroadcastingMultiAgentTests(unittest.TestCase):
         revision_calls = [call for call in client.calls if "원고 하나만 수정" in call]
         self.assertEqual(len(revision_calls), 1)
         self.assertIn("블로그 원고 하나만 수정", revision_calls[0])
+
+    def test_revision_loop_is_limited_to_three_attempts(self) -> None:
+        client = MaxRevisionFakeJSONClient()
+
+        package = generate_content_package(
+            "AI 자동화는 프롬프트보다 운영 구조가 중요하다.",
+            build_config(),
+            client=client,
+        )
+
+        self.assertEqual(package["revision_count"], 3)
+        self.assertEqual(package["max_revision_loops"], 3)
+        self.assertEqual(client.reflection_count, 4)
 
     def test_storage_writes_draft_and_final_package_files(self) -> None:
         client = FakeJSONClient()
@@ -283,6 +424,31 @@ class BroadcastingMultiAgentTests(unittest.TestCase):
             self.assertEqual(metadata["input_type"], "memo")
             self.assertEqual(metadata["agent_architecture"]["mode"], "multi_agent")
             self.assertEqual(metadata["channel_publish_status"]["discord"], "auto_dispatch_pending")
+
+    def test_telegram_dispatch_updates_newsletter_publish_status(self) -> None:
+        client = FakeJSONClient()
+        package = generate_content_package(
+            "AI 자동화는 프롬프트보다 운영 구조가 중요하다.",
+            build_config(),
+            client=client,
+        )
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            original_output_root = storage.OUTPUT_ROOT
+            storage.OUTPUT_ROOT = Path(temp_dir)
+            try:
+                draft_path = storage.save_content_package(package)
+                storage.record_telegram_dispatch(draft_path, "https://t.me/c/1001/33")
+            finally:
+                storage.OUTPUT_ROOT = original_output_root
+
+            plan = json.loads((draft_path / "publish-plan.json").read_text(encoding="utf-8"))
+            metadata = json.loads((draft_path / "metadata.json").read_text(encoding="utf-8"))
+
+        self.assertEqual(plan["channels"]["discord"]["status"], "published")
+        self.assertEqual(plan["channels"]["discord"]["provider"], "telegram_chat")
+        self.assertEqual(plan["channels"]["discord"]["url"], "https://t.me/c/1001/33")
+        self.assertEqual(metadata["channel_publish_status"]["discord"], "published")
 
     def test_publish_agent_executes_tistory_then_linkedin(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

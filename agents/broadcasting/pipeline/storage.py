@@ -45,6 +45,32 @@ def refresh_publish_files(package: dict[str, Any], draft_path: Path) -> None:
 
 def record_discord_dispatch(draft_path: Path, message_url: str) -> None:
     """Record the Discord newsletter dispatch URL in saved package files."""
+    record_newsletter_dispatch(
+        draft_path,
+        message_url,
+        provider="discord_channel",
+        reason="Discord 뉴스레터가 뉴스레터 채널에 발송됐다.",
+    )
+
+
+def record_telegram_dispatch(draft_path: Path, message_url: str) -> None:
+    """Record the Telegram newsletter dispatch URL in saved package files."""
+    record_newsletter_dispatch(
+        draft_path,
+        message_url,
+        provider="telegram_chat",
+        reason="Telegram 뉴스레터 채팅방에 발송됐다.",
+    )
+
+
+def record_newsletter_dispatch(
+    draft_path: Path,
+    message_url: str,
+    *,
+    provider: str,
+    reason: str,
+) -> None:
+    """Record the reader-facing newsletter dispatch result."""
     for target in saved_package_targets({}, draft_path):
         plan_path = target / "publish-plan.json"
         if not plan_path.exists():
@@ -52,9 +78,9 @@ def record_discord_dispatch(draft_path: Path, message_url: str) -> None:
         plan = json.loads(plan_path.read_text(encoding="utf-8"))
         plan.setdefault("channels", {})["discord"] = {
             "status": "published",
-            "provider": "discord_channel",
+            "provider": provider,
             "url": message_url,
-            "reason": "Discord 뉴스레터가 뉴스레터 채널에 발송됐다.",
+            "reason": reason,
             "details": {},
         }
         write_json(plan_path, plan)
@@ -235,6 +261,10 @@ def build_metadata(
 
 def detect_input_type(source: dict[str, Any]) -> str:
     """Detect whether the source was a memo, link, or link with memo."""
+    explicit_type = source.get("input_type")
+    if explicit_type in {"memo", "link", "link_with_memo"}:
+        return str(explicit_type)
+
     urls = source.get("urls", [])
     raw_text = str(source.get("raw_text", ""))
     note_text = raw_text
