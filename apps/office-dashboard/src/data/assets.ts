@@ -5,9 +5,13 @@ export const assetPaths = {
     insight: "/assets/avatars/insight.png",
     "blog-writer": "/assets/avatars/blog-writer.png",
     "linkedin-writer": "/assets/avatars/linkedin-writer.png",
-    "discord-newsletter": "/assets/avatars/discord-newsletter.png",
+    "telegram-newsletter": "/assets/avatars/telegram-newsletter.png",
     "self-reflection": "/assets/avatars/self-reflection.png",
     revision: "/assets/avatars/revision.png",
+    "visual-strategy": "/assets/avatars/visual-strategy.png",
+    "image-prompt": "/assets/avatars/image-prompt.png",
+    "image-generator": "/assets/avatars/image-generator.png",
+    "visual-quality": "/assets/avatars/visual-quality.png",
     publish: "/assets/avatars/publish.png"
   }
 };

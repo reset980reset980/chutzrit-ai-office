@@ -15,7 +15,7 @@
 
 - 라이브 강의에서 보여줄 후츠릿 AI 오피스 운영 대시보드
 - 단순 랜딩페이지가 아니라 실제 운영 화면
-- Discord 입력부터 발행까지 각 에이전트가 일하는 모습을 시각화
+- Telegram 입력부터 발행까지 각 에이전트가 일하는 모습을 시각화
 - 캐릭터들이 실제로 일하거나 쉬는 것처럼 보이는 자연스러운 애니메이션 흐름 구현
 - 메인 화면에는 가짜 에너지나 임의 진행률을 만들지 않고 실제 산출물과 상태 파일 기준으로 표시
 - 현재 구현 완료된 콘텐츠배포팀만 먼저 표시
@@ -35,7 +35,7 @@
 
 하나의 큰 사무실 공간 안에 아래 영역을 자연스럽게 배치합니다.
 
-- Discord 입력 접수 데스크
+- Telegram 입력 접수 데스크
 - 전략 회의 테이블
 - 작성 책상
 - 검수 책상
@@ -46,12 +46,12 @@
 
 ### 에이전트 배치
 
-- Input Parser Agent: Discord 입력 접수 데스크
+- Input Parser Agent: Telegram 입력 접수 데스크
 - Content Strategy Agent: 전략 회의 테이블
 - Insight Agent: 전략 회의 테이블 옆 또는 보드 앞
 - Blog Writer Agent: 작성 책상
 - LinkedIn Writer Agent: 작성 책상
-- Discord Newsletter Agent: 작성 책상
+- Telegram Newsletter Agent: 작성 책상
 - Self Reflection Agent: 검수 책상
 - Revision Agent: 수정 책상
 - Publish Agent: 오른쪽 끝 또는 하단 출고 구역
@@ -75,7 +75,7 @@
 사무실 내부에 작은 라벨, 화살표, 빛나는 연결선으로 표시합니다.
 
 ```text
-Discord Input -> Strategy -> Writers -> Review -> Publish
+Telegram Input -> Strategy -> Writers -> Review -> Publish
 ```
 
 현재 진행 중인 단계는 강조합니다.

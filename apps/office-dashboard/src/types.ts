@@ -74,6 +74,9 @@ export type BroadcastingRecord = {
   channelProcessingStatus: Record<string, string>;
   channelPublishStatus: Record<string, string>;
   publishedUrls: Record<string, string>;
+  visualAssetsStatus?: string;
+  visualAssets?: Record<string, { status?: string; path?: string; relative_path?: string }>;
+  visualQuality?: { score?: number; passed?: boolean };
   externalApiStatus: string;
   path: string;
   statusReason: string;

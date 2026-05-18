@@ -15,13 +15,13 @@
 
 - 초안 생성
 - 로컬 파일 생성
-- 내부 Discord 보고
-- Discord 뉴스레터 자동 게시
-- 블로그 원고와 LinkedIn 원고의 Discord 자동 발송
+- 내부 Telegram 보고
+- Telegram 뉴스레터 자동 게시
+- 블로그 원고와 LinkedIn 원고의 Telegram 자동 발송
 - 사용자가 자동 배포를 허용한 채널의 콘텐츠 공개 게시
 - 테스트 실행
 - 테스트 통과까지 코드 수정
 - 리스크가 낮은 코드 개선
 - 프로젝트에 이미 안전하게 설정된 배포
 
-현재 MVP에서는 블로그와 LinkedIn의 외부 API 게시를 아직 연결하지 않았습니다. 따라서 생성된 블로그 원고와 LinkedIn 원고는 Discord `broadcasting` 채널에 자동 발송됩니다.
+현재 MVP에서는 블로그와 LinkedIn의 외부 API 게시를 아직 연결하지 않았습니다. 따라서 생성된 블로그 원고와 LinkedIn 원고는 Telegram `broadcasting` 채널에 자동 발송됩니다.

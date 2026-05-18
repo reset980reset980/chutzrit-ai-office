@@ -36,6 +36,7 @@ from agents.broadcasting.pipeline.storage import (  # noqa: E402
     refresh_publish_files,
     save_content_package,
 )
+from agents.broadcasting.pipeline.visuals import generate_visual_assets_for_saved_package  # noqa: E402
 
 
 config = load_runtime_config(require_discord=False, require_telegram=True, require_openai=False)
@@ -187,6 +188,12 @@ def process_message(source_text: str, progress_callback: Callable[[str], None] |
     print(f"Telegram worker started source_len={len(source_text)}", flush=True)
     package = generate_content_package(source_text, config, progress_callback=progress_callback)
     output_path = save_content_package(package)
+    generate_visual_assets_for_saved_package(
+        package,
+        config,
+        output_path,
+        progress_callback=progress_callback,
+    )
     package["publish_plan"] = PublishAgent(config).execute(
         package,
         output_path,
@@ -274,7 +281,10 @@ async def send_telegram_newsletter(
     output_path: Path,
 ) -> str:
     """Publish the reader-facing newsletter draft to Telegram."""
-    newsletter_text = (output_path / "discord.md").read_text(encoding="utf-8").strip()
+    newsletter_path = output_path / "telegram.md"
+    if not newsletter_path.exists():
+        newsletter_path = output_path / "discord.md"
+    newsletter_text = newsletter_path.read_text(encoding="utf-8").strip()
     messages = await send_long_message(int(chat_id), context, newsletter_text)
     if messages:
         return build_telegram_message_url(messages[-1])

@@ -1,11 +1,11 @@
 ---
 name: chutzrit-broadcasting
-description: Use when generating, revising, evaluating, publishing, or implementing Chutzrit broadcasting content for blog, LinkedIn, or Discord. Enforces Korean blog 문어체 평서형 반말, structured markdown, sharp AI automation/developer insight, no visible internal labels, and the Tistory-first publishing flow.
+description: Use when generating, revising, evaluating, publishing, or implementing Chutzrit broadcasting content for blog, LinkedIn, or Telegram. Enforces Korean blog 문어체 평서형 반말, structured markdown, sharp AI automation/developer insight, no visible internal labels, and the Tistory-first publishing flow.
 ---
 
 # Chutzrit Broadcasting
 
-Use this skill for 콘텐츠배포팀 work: source memo/link intake, blog/LinkedIn/Discord draft generation, revision, quality scoring, publishing, and pipeline changes that affect those outputs.
+Use this skill for 콘텐츠배포팀 work: source memo/link intake, blog/LinkedIn/Telegram draft generation, revision, quality scoring, publishing, and pipeline changes that affect those outputs.
 
 ## Implementation Shape
 
@@ -13,18 +13,20 @@ Use this skill for 콘텐츠배포팀 work: source memo/link intake, blog/Linked
 - Keep actual runtime subagents under `agents/broadcasting/agents/`.
 - Keep orchestration, progress formatting, quality gates, and storage under `agents/broadcasting/pipeline/`.
 - Content Strategy Agent and Insight Agent run sequentially.
-- Blog Writer Agent, LinkedIn Writer Agent, and Discord Newsletter Writer Agent run in parallel.
+- Blog Writer Agent, LinkedIn Writer Agent, and Telegram Newsletter Writer Agent run in parallel.
 - Self Reflection Agent evaluates the combined package.
 - Revision Agent revises failed channels first; if channel-level failures are unavailable, revise all channels.
-- Publish Agent runs after the final quality gate, records Discord dispatch, and executes enabled external publishers after package files are saved.
+- Visual Strategy Agent and Image Prompt Agent run after the final text quality gate when `IMAGE_GENERATION_ENABLED=true`.
+- Image Generator Agent creates channel images from the saved package under `outputs/broadcasting/*/visuals/`; Visual Quality Agent scores the generated visual metadata.
+- Publish Agent runs after the final quality gate, records Telegram dispatch, and executes enabled external publishers after package files are saved.
 - Do not collapse strategy, insight, and all platform writing back into one generation prompt unless the user explicitly asks for a single-call fallback.
 
 ## Input Parser Rules
 
-- Treat every normal Discord message in the `broadcasting` channel as a content request.
+- Treat every normal Telegram message in the `broadcasting` channel as a content request.
 - If URLs are present, detect them automatically and fetch lightweight metadata.
 - For each link, summarize title, description, and a short 핵심 내용 before generation.
-- Send the Input Parser Discord progress message with a `링크 핵심 내용` section when links are present.
+- Send the Input Parser Telegram progress message with a `링크 핵심 내용` section when links are present.
 - Preserve the user's own note/thought as the primary angle when a link and user comment appear together.
 - Do not present link metadata as final insight; use it as source context for Strategy and Insight Agents.
 
@@ -38,13 +40,13 @@ Before changing generation behavior or judging quality, read the relevant files:
 - `docs/strategy/channel-style-guide.md`
 - `agents/broadcasting/prompts/templates/blog.md`
 - `agents/broadcasting/prompts/templates/linkedin.md`
-- `agents/broadcasting/prompts/templates/discord.md`
+- `agents/broadcasting/prompts/templates/telegram.md`
 - `docs/operations/approval-policy.md` when changing approval or publishing behavior
 - `docs/operations/credentials.md` when changing platform publishing credentials
 
 ## Output Rules
 
-- Generate all MVP channels: blog, LinkedIn, Discord newsletter.
+- Generate all MVP channels: blog, LinkedIn, Telegram newsletter.
 - Blog must be Korean 문어체 평서형 반말.
 - Blog sentences should end mainly with `다`, `이다`, `한다`, `된다`, `있다`, `없다`.
 - Blog must not sound conversational. Avoid endings like `하면 돼`, `해봐`, `거야`, `거든`, `잖아`, `~해`, `~돼`.
@@ -57,21 +59,23 @@ Before changing generation behavior or judging quality, read the relevant files:
 - Do not add emojis to every line or every heading.
 - Blog should use roughly 3-5 emojis total, only for key sections such as conclusion, caution, execution, and references.
 - LinkedIn should use roughly 2-4 emojis total, mainly for the title/hook, short checklist, or blog link.
-- Discord newsletter can use roughly 2-5 emojis total, mainly in the title, action items, and reference link section.
+- Telegram newsletter can use roughly 2-5 emojis total, mainly in the title, action items, and reference link section.
 - LinkedIn must start with one concise title line, then structured short polite Korean paragraphs focused on the user's insight. It should drive readers to the blog with a real blog URL or `[블로그 링크]` placeholder.
-- LinkedIn and Discord newsletter must use polite Korean.
+- LinkedIn and Telegram newsletter must use polite Korean.
 - Avoid unnecessary colons in public messages, including `블로그 전문:`.
-- Discord newsletter must not use forced labels such as `핵심 요약`, `왜 중요한가`, or `바로 해볼 것`; write natural short paragraphs under the title.
-- Discord newsletter should be concise, polite Korean, Markdown-formatted, and include reference links at the bottom when present.
+- Telegram newsletter must not use forced labels such as `핵심 요약`, `왜 중요한가`, or `바로 해볼 것`; write natural short paragraphs under the title.
+- Telegram newsletter should be concise, polite Korean, Markdown-formatted, and include reference links at the bottom when present.
+- Image prompts must avoid text, logos, watermarks, meaningless abstract backgrounds, and generic stock-photo composition.
+- Generated visual metadata must be saved as `visual-strategy.json`, `image-prompts.json`, `visual-assets.json`, and `visual-quality.json` in both draft and final package folders.
 
 ## Publishing Rules
 
 Current project state:
 
-- Discord newsletter auto-posting goes to the configured newsletter channel. The `broadcasting` channel is for input and operational reports.
+- Telegram newsletter auto-posting goes to the configured newsletter channel. The `broadcasting` channel is for input and operational reports.
 - Publish Agent records publishing status in `publish-plan.json`.
 - Generated packages are saved under both `outputs/broadcasting/drafts/` and `outputs/broadcasting/final/`.
-- Tistory Playwright and LinkedIn Posts API publishers are implemented. When credentials, browser dependencies, or login session files are not connected, send the final drafts to Discord and mark external publishing as not connected or failed.
+- Tistory Playwright and LinkedIn Posts API publishers are implemented. When credentials, browser dependencies, or login session files are not connected, send the final drafts to Telegram and mark external publishing as not connected or failed.
 - Keep saved blog files in Markdown, but convert Markdown to Tistory editor HTML at publish time. Tistory WYSIWYG must receive rendered HTML headings such as `<h2>`, not raw text like `## heading`.
 
 When external publishing adapters are connected and enabled:
@@ -85,8 +89,8 @@ When external publishing adapters are connected and enabled:
 7. Replace LinkedIn `[블로그 링크]` with the actual Tistory URL.
 8. Publish LinkedIn through the LinkedIn Posts API when `LINKEDIN_AUTO_PUBLISH=true`.
 9. LinkedIn API publishing is public publishing, not draft saving.
-10. Post the Discord newsletter to `DISCORD_NEWSLETTER_CHANNEL_ID`.
-11. Report one consolidated multi-platform result after all publish attempts finish. Include Tistory URL, LinkedIn URL, Discord message link, failed/blocked channel reasons, and output path in one readable message.
+10. Post the Telegram newsletter to `TELEGRAM_NEWSLETTER_CHAT_ID`.
+11. Report one consolidated multi-platform result after all publish attempts finish. Include Tistory URL, LinkedIn URL, Telegram message link, failed/blocked channel reasons, and output path in one readable message.
 
 Do not publish LinkedIn with a `[블로그 링크]` placeholder unless the user explicitly allows that fallback. If blog publishing fails, preserve drafts, report the failure, and block LinkedIn publishing by default.
 
@@ -153,4 +157,4 @@ Score below 90 if any of these are true:
 
 When a gate fails, revise automatically before asking for approval or reporting completion.
 
-After the gate passes, follow the Publishing Rules. If publishing is unavailable, do not pretend it succeeded; send the drafts and a clear Discord status instead.
+After the gate passes, follow the Publishing Rules. If publishing is unavailable, do not pretend it succeeded; send the drafts and a clear Telegram status instead.

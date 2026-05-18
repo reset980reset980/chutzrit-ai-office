@@ -13,7 +13,7 @@ agents/broadcasting/publishers/
 ├── base.py         # 플랫폼별 발행 결과 공통 타입
 ├── tistory.py      # Playwright로 티스토리 글쓰기/공개 발행/URL 확보
 ├── linkedin.py     # LinkedIn Posts API 공개 게시
-└── discord.py      # Discord 채널 발송 결과 기록 보조
+└── telegram.py      # Telegram 채널 발송 결과 기록 보조
 ```
 
 배포 순서는 순차 방식입니다.
@@ -23,7 +23,7 @@ Tistory 발행
 -> 실제 블로그 URL 확보
 -> LinkedIn 원고의 [블로그 링크] 치환
 -> LinkedIn 공개 게시
--> Discord 뉴스레터 발송/보고
+-> Telegram 뉴스레터 발송/보고
 ```
 
 LinkedIn은 티스토리 실제 URL에 의존하므로 병렬 발행하지 않습니다. 티스토리 발행에 실패하거나 URL을 확보하지 못하면 LinkedIn 공개 게시를 기본 중단합니다.

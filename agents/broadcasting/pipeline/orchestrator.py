@@ -8,13 +8,15 @@ from typing import Any
 
 from agents.broadcasting.agents.content_strategy import ContentStrategyAgent
 from agents.broadcasting.agents.input_parser import InputParserAgent
+from agents.broadcasting.agents.image_prompt import ImagePromptAgent
 from agents.broadcasting.agents.insight import InsightAgent
 from agents.broadcasting.agents.publish import PublishAgent
 from agents.broadcasting.agents.reflection import SelfReflectionAgent
 from agents.broadcasting.agents.revision import RevisionAgent
 from agents.broadcasting.agents.types import JSONClient
+from agents.broadcasting.agents.visual_strategy import VisualStrategyAgent
 from agents.broadcasting.agents.writers.blog import BlogWriterAgent
-from agents.broadcasting.agents.writers.discord import DiscordNewsletterWriterAgent
+from agents.broadcasting.agents.writers.discord import TelegramNewsletterWriterAgent
 from agents.broadcasting.agents.writers.linkedin import LinkedInWriterAgent
 
 from .config import RuntimeConfig
@@ -28,6 +30,8 @@ from .progress import (
     format_revision_start_progress,
     format_source_progress,
     format_strategy_progress,
+    format_visual_prompt_progress,
+    format_visual_strategy_progress,
     format_writer_progress,
 )
 from .quality import build_approval_state, channels_to_revise, normalize_drafts
@@ -68,9 +72,13 @@ def generate_content_package(
                 "InsightAgent",
                 "BlogWriterAgent",
                 "LinkedInWriterAgent",
-                "DiscordNewsletterWriterAgent",
+                "TelegramNewsletterWriterAgent",
                 "SelfReflectionAgent",
                 "RevisionAgent",
+                "VisualStrategyAgent",
+                "ImagePromptAgent",
+                "ImageGeneratorAgent",
+                "VisualQualityAgent",
                 "PublishAgent",
             ],
         },
@@ -117,6 +125,34 @@ def generate_content_package(
     package["approval"] = build_approval_state(package, config)
     emit_progress(progress_callback, format_final_gate_progress(reflection, revision_count, max_revision_loops))
 
+    if config.image_generation_enabled and reflection.get("passed"):
+        emit_progress(progress_callback, "🎨 Visual Strategy Agent가 이미지 방향을 설계합니다.")
+        visual_strategy = VisualStrategyAgent(llm_client).run(package)
+        package["visual_strategy"] = visual_strategy
+        emit_progress(progress_callback, format_visual_strategy_progress(visual_strategy))
+
+        emit_progress(progress_callback, "🖼️ Image Prompt Agent가 채널별 이미지 프롬프트를 만듭니다.")
+        image_prompts = ImagePromptAgent(llm_client).run(package, visual_strategy)
+        package["image_prompts"] = image_prompts
+        package["visual_assets"] = {
+            "status": "pending_generation",
+            "reason": "패키지 저장 후 Image Generator Agent가 실제 이미지 파일을 생성한다.",
+            "assets": {},
+        }
+        emit_progress(progress_callback, format_visual_prompt_progress(image_prompts))
+    elif config.image_generation_enabled:
+        package["visual_assets"] = {
+            "status": "quality_gate_blocked",
+            "reason": "최종 품질 게이트를 통과하지 못해 이미지 생성을 건너뛰었다.",
+            "assets": {},
+        }
+    else:
+        package["visual_assets"] = {
+            "status": "disabled",
+            "reason": "IMAGE_GENERATION_ENABLED=false",
+            "assets": {},
+        }
+
     package["publish_plan"] = PublishAgent(config).run(package)
     emit_progress(progress_callback, format_publish_progress(package))
     return package
@@ -132,7 +168,7 @@ def run_writers_parallel(
     writers = {
         "blog": BlogWriterAgent(client),
         "linkedin": LinkedInWriterAgent(client),
-        "discord": DiscordNewsletterWriterAgent(client),
+        "telegram": TelegramNewsletterWriterAgent(client),
     }
     drafts: dict[str, str] = {}
     with ThreadPoolExecutor(max_workers=len(writers)) as executor:

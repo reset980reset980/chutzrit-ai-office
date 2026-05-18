@@ -38,8 +38,17 @@ def refresh_publish_files(package: dict[str, Any], draft_path: Path) -> None:
         drafts = package.get("drafts", {})
         write_text(target / "blog.md", drafts.get("blog", ""))
         write_text(target / "linkedin.md", drafts.get("linkedin", ""))
-        write_text(target / "discord.md", drafts.get("discord", ""))
+        write_text(target / "telegram.md", drafts.get("telegram", drafts.get("discord", "")))
+        write_text(target / "discord.md", drafts.get("discord", drafts.get("telegram", "")))
         write_json(target / "publish-plan.json", package.get("publish_plan", {}))
+        write_visual_package_files(target, package)
+        refresh_metadata_publish_fields(target, package)
+
+
+def refresh_visual_files(package: dict[str, Any], draft_path: Path) -> None:
+    """Refresh saved visual metadata files after image generation."""
+    for target in saved_package_targets(package, draft_path):
+        write_visual_package_files(target, package)
         refresh_metadata_publish_fields(target, package)
 
 
@@ -48,6 +57,7 @@ def record_discord_dispatch(draft_path: Path, message_url: str) -> None:
     record_newsletter_dispatch(
         draft_path,
         message_url,
+        channel="discord",
         provider="discord_channel",
         reason="Discord 뉴스레터가 뉴스레터 채널에 발송됐다.",
     )
@@ -58,6 +68,7 @@ def record_telegram_dispatch(draft_path: Path, message_url: str) -> None:
     record_newsletter_dispatch(
         draft_path,
         message_url,
+        channel="telegram",
         provider="telegram_chat",
         reason="Telegram 뉴스레터 채팅방에 발송됐다.",
     )
@@ -67,6 +78,7 @@ def record_newsletter_dispatch(
     draft_path: Path,
     message_url: str,
     *,
+    channel: str,
     provider: str,
     reason: str,
 ) -> None:
@@ -76,7 +88,7 @@ def record_newsletter_dispatch(
         if not plan_path.exists():
             continue
         plan = json.loads(plan_path.read_text(encoding="utf-8"))
-        plan.setdefault("channels", {})["discord"] = {
+        plan.setdefault("channels", {})[channel] = {
             "status": "published",
             "provider": provider,
             "url": message_url,
@@ -117,6 +129,16 @@ def refresh_metadata_publish_fields(target: Path, package: dict[str, Any]) -> No
     }
     metadata["external_api_status"] = publish_plan.get("external_api_status", "")
     metadata["processing_mode"] = publish_plan.get("processing_mode", "")
+    visual_assets = package.get("visual_assets", {})
+    if visual_assets:
+        metadata["channel_processing_status"] = {
+            **metadata.get("channel_processing_status", {}),
+            "visuals": visual_assets.get("status", ""),
+        }
+        metadata["visual_assets_status"] = visual_assets.get("status", "")
+        metadata["visual_assets"] = visual_assets.get("assets", {})
+    if package.get("visual_quality"):
+        metadata["visual_quality"] = package.get("visual_quality", {})
     write_json(metadata_path, metadata)
 
 
@@ -138,13 +160,23 @@ def write_package_files(
     drafts = package.get("drafts", {})
     write_text(target / "blog.md", drafts.get("blog", ""))
     write_text(target / "linkedin.md", drafts.get("linkedin", ""))
-    write_text(target / "discord.md", drafts.get("discord", ""))
+    write_text(target / "telegram.md", drafts.get("telegram", drafts.get("discord", "")))
+    write_text(target / "discord.md", drafts.get("discord", drafts.get("telegram", "")))
 
     write_text(target / "reflection.md", render_reflection(package))
     write_json(target / "reflection.json", package.get("reflection", {}))
+    write_visual_package_files(target, package)
     write_json(target / "metadata.json", build_metadata(package, package_id, generated_at, output_type))
     write_json(target / "approval-status.json", package.get("approval", {}))
     write_json(target / "publish-plan.json", package.get("publish_plan", {}))
+
+
+def write_visual_package_files(target: Path, package: dict[str, Any]) -> None:
+    """Write visual strategy, prompt, quality, and asset metadata files."""
+    write_json(target / "visual-strategy.json", package.get("visual_strategy", {}))
+    write_json(target / "image-prompts.json", package.get("image_prompts", {}))
+    write_json(target / "visual-assets.json", package.get("visual_assets", {}))
+    write_json(target / "visual-quality.json", package.get("visual_quality", {}))
 
 
 def render_source(package: dict[str, Any]) -> str:
@@ -167,7 +199,7 @@ def render_strategy(package: dict[str, Any]) -> str:
         "## Platform Directions\n\n"
         f"- Blog: {directions.get('blog', '')}\n"
         f"- LinkedIn: {directions.get('linkedin', '')}\n"
-        f"- Discord: {directions.get('discord', '')}\n"
+        f"- Telegram: {directions.get('telegram', directions.get('discord', ''))}\n"
     )
 
 
@@ -224,6 +256,7 @@ def build_metadata(
     reflection = package.get("reflection", {})
     publish_plan = package.get("publish_plan", {})
     publish_channels = publish_plan.get("channels", {})
+    visual_assets = package.get("visual_assets", {})
     return {
         "package_id": package_id,
         "output_type": output_type,
@@ -233,7 +266,7 @@ def build_metadata(
         "input_type": detect_input_type(source),
         "target_persona": package.get("strategy", {}).get("target_reader", ""),
         "revision_count": package.get("revision_count", 0),
-        "target_channels": ["blog", "linkedin", "discord"],
+        "target_channels": ["blog", "linkedin", "telegram"],
         "agent_architecture": package.get("agent_architecture", {}),
         "quality_score": reflection.get("score", 0),
         "quality_passed": reflection.get("passed", False),
@@ -241,8 +274,12 @@ def build_metadata(
         "channel_processing_status": {
             "blog": "generated",
             "linkedin": "generated",
-            "discord": "generated",
+            "telegram": "generated",
+            "visuals": visual_assets.get("status", ""),
         },
+        "visual_assets_status": visual_assets.get("status", ""),
+        "visual_assets": visual_assets.get("assets", {}),
+        "visual_quality": package.get("visual_quality", {}),
         "channel_publish_status": {
             channel: value.get("status", "")
             for channel, value in publish_channels.items()

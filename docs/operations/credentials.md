@@ -6,112 +6,83 @@
 
 공식 참고:
 
-- Discord 봇 설치와 권한: https://docs.discord.com/developers/quick-start/getting-started
-- Discord 메시지 ID, 서버 ID, 채널 ID 확인: https://support.discord.com/hc/en-us/articles/206346498
-- Discord Webhook 생성: https://support.discord.com/hc/en-us/articles/228383668
+- Telegram Bot API: https://core.telegram.org/bots/api
+- BotFather 봇 생성: https://core.telegram.org/bots/features#botfather
+- Telegram 채널/그룹 ID 확인은 봇을 채팅방에 추가한 뒤 수신 로그 또는 `getUpdates` 응답으로 확인합니다.
 - OpenAI API Key 관리: https://help.openai.com/en/articles/9186755-managing-your-work-in-the-api-platform-with-projects
 - 티스토리 Open API 종료 안내: https://github.com/tistory/document-tistory-apis
 - LinkedIn OAuth: https://learn.microsoft.com/en-us/linkedin/shared/authentication/authorization-code-flow
 
 ## MVP 필수
 
-### `DISCORD_BOT_TOKEN`
+### `TELEGRAM_BOT_TOKEN`
 
-Discord `broadcasting` 팀 채널의 메시지를 감지하기 위한 봇 토큰입니다.
+Telegram `broadcasting` 팀 채팅방의 메시지를 감지하기 위한 봇 토큰입니다.
 
 발급 방법:
 
-1. Discord Developer Portal에 접속합니다.
-2. 새 Application을 만들거나 기존 Application을 엽니다.
-3. 왼쪽 메뉴에서 `Bot`으로 이동합니다.
-4. `Reset Token` 또는 `Copy Token`으로 토큰을 확인합니다.
-5. `.env`의 `DISCORD_BOT_TOKEN`에 넣습니다.
+1. Telegram에서 `@BotFather`를 엽니다.
+2. `/newbot`으로 새 봇을 만들거나 기존 봇을 선택합니다.
+3. BotFather가 발급한 HTTP API token을 확인합니다.
+5. `.env`의 `TELEGRAM_BOT_TOKEN`에 넣습니다.
 
 필수 설정:
 
-- `Bot` 설정에서 `Message Content Intent`를 켭니다.
-- 봇을 서버에 초대할 때 최소 권한은 `View Channels`, `Read Message History`, `Send Messages`입니다.
-- 나중에 버튼 승인이나 slash command를 쓰려면 `applications.commands` scope도 함께 추가합니다.
+- 봇을 입력용 채팅방에 추가합니다.
+- BotFather의 privacy mode가 켜져 있으면 그룹 일반 메시지를 받지 못할 수 있으므로 운영 방식에 맞게 `/setprivacy`를 확인합니다.
+- 봇에는 메시지 읽기와 메시지 보내기 권한이 필요합니다.
 
-### `DISCORD_GUILD_ID`
+### `TELEGRAM_BROADCASTING_CHAT_ID`
 
-Discord 서버 ID입니다.
+콘텐츠배포팀 전용 Telegram 채팅방 ID입니다.
 
-확인 방법:
+채팅방명은 에이전트 팀 이름과 동일하게 `broadcasting`으로 설정합니다.
 
-1. Discord 앱에서 `User Settings -> Advanced -> Developer Mode`를 켭니다.
-2. 서버 이름을 우클릭합니다.
-3. `Copy Server ID`를 누릅니다.
-4. `.env`의 `DISCORD_GUILD_ID`에 넣습니다.
-
-### `DISCORD_BROADCASTING_CHANNEL_ID`
-
-콘텐츠배포팀 전용 Discord 채널 ID입니다.
-
-채널명은 에이전트 팀 이름과 동일하게 `broadcasting`으로 설정합니다.
-
-이 채널은 MVP에서 입력, 진행 보고, 배포 결과 보고를 담당합니다.
+이 채팅방은 MVP에서 입력, 진행 보고, 배포 결과 보고를 담당합니다.
 
 확인 방법:
 
-1. Discord Developer Mode를 켭니다.
-2. `broadcasting` 채널을 우클릭합니다.
-3. `Copy Channel ID`를 누릅니다.
-4. `.env`의 `DISCORD_BROADCASTING_CHANNEL_ID`에 넣습니다.
+1. 봇을 `broadcasting` 채팅방에 추가합니다.
+2. 테스트 메시지를 하나 보냅니다.
+3. 봇 로그의 `chat_id=` 값을 확인합니다.
+4. `.env`의 `TELEGRAM_BROADCASTING_CHAT_ID`에 넣습니다.
 
-### `DISCORD_NEWSLETTER_CHANNEL_ID`
+### `TELEGRAM_NEWSLETTER_CHAT_ID`
 
-독자용 Discord 뉴스레터 본문을 발송할 채널 ID입니다.
+독자용 Telegram 뉴스레터 본문을 발송할 채팅방 ID입니다.
 
 현재 운영 기준:
 
 - 서버: `Chutzrit AI Office`
-- 채널: `뉴스레터`
-- 채널 ID: `1503332020842004551`
+- 채팅방: `뉴스레터`
+- 채팅방 ID: 운영 `.env`에서 관리
 
-`broadcasting` 채널은 입력과 운영 보고용이고, 뉴스레터 본문은 이 채널로 분리해 발송합니다.
+`broadcasting` 채팅방은 입력과 운영 보고용이고, 뉴스레터 본문은 이 채팅방으로 분리해 발송합니다.
 
-### `DISCORD_WEBHOOK_URL`
-
-Discord 보고 메시지를 간단히 보내기 위한 Webhook URL입니다.
-
-발급 방법:
-
-1. Discord 서버 또는 `broadcasting` 채널의 설정으로 이동합니다.
-2. `Integrations -> Webhooks`로 이동합니다.
-3. 새 Webhook을 만듭니다.
-4. `broadcasting` 채널을 선택합니다.
-5. `Copy Webhook URL`을 눌러 `.env`의 `DISCORD_WEBHOOK_URL`에 넣습니다.
-
-참고:
-
-- 봇으로 직접 보고하게 만들 수도 있지만, MVP에서는 Webhook 보고가 더 단순합니다.
-
-### `DISCORD_ALLOWED_USER_IDS`
+### `TELEGRAM_ALLOWED_USER_IDS`
 
 팀 채널에서 자동화를 실행할 사용자 ID 목록입니다.
 
 권장값:
 
-- MVP에서는 후츠릿 본인 Discord User ID만 넣습니다.
+- MVP에서는 후츠릿 본인 Telegram User ID만 넣습니다.
 
 형식:
 
 ```text
-DISCORD_ALLOWED_USER_IDS=123456789012345678
+TELEGRAM_ALLOWED_USER_IDS=123456789012345678
 ```
 
 여러 명을 허용할 경우 쉼표로 구분합니다.
 
 ```text
-DISCORD_ALLOWED_USER_IDS=123456789012345678,234567890123456789
+TELEGRAM_ALLOWED_USER_IDS=123456789012345678,234567890123456789
 ```
 
 User ID 확인 방법:
 
-1. Discord Developer Mode를 켭니다.
-2. 자신의 프로필 또는 메시지를 우클릭합니다.
-3. `Copy User ID`를 누릅니다.
+1. 봇 로그의 `user_id=` 값을 확인합니다.
+2. 또는 Telegram의 사용자 ID 확인용 봇으로 본인 ID를 확인합니다.
 
 ### `OPENAI_API_KEY`
 
@@ -138,15 +109,15 @@ OpenAI 공식 모델 문서 기준으로 `gpt-5.4-mini`는 고빈도 작업에 �
 
 ## 연결 테스트
 
-`.env` 값을 넣은 뒤 아래 명령으로 Discord, OpenAI, 티스토리 세션 연결을 확인합니다.
+`.env` 값을 넣은 뒤 아래 명령으로 Telegram, OpenAI, 티스토리 세션 연결을 확인합니다.
 
 ```bash
 python3 scripts/check_integrations.py --all
 ```
 
-이 명령은 토큰 값을 출력하지 않습니다. Discord 봇 토큰, `broadcasting` 채널 접근, Discord Webhook 보고, OpenAI Responses API 호출, Tistory Playwright 세션의 `/manage` 접근 가능 여부를 확인합니다.
+이 명령은 토큰 값을 출력하지 않습니다. Telegram 봇 토큰, `broadcasting` 채팅방 접근, OpenAI Responses API 호출, Tistory Playwright 세션의 `/manage` 접근 가능 여부를 확인합니다.
 
-콘텐츠팀 Discord 입력 테스트를 시작하기 전에는 이 검증이 모두 통과해야 합니다. 특히 티스토리는 세션 파일 존재 여부만으로 정상이라고 보지 않습니다. `PLAYWRIGHT_STORAGE_STATE`가 있어도 실제 관리자 화면에 접근하지 못하면 세션 만료로 보고, Discord 입력 테스트를 시작하지 않습니다.
+콘텐츠팀 Telegram 입력 테스트를 시작하기 전에는 이 검증이 모두 통과해야 합니다. 특히 티스토리는 세션 파일 존재 여부만으로 정상이라고 보지 않습니다. `PLAYWRIGHT_STORAGE_STATE`가 있어도 실제 관리자 화면에 접근하지 못하면 세션 만료로 보고, Telegram 입력 테스트를 시작하지 않습니다.
 
 ## 공개 게시용
 
@@ -186,7 +157,7 @@ python3 scripts/check_integrations.py --all
 Playwright 실행 환경:
 
 ```bash
-python -m pip install -r apps/discord-bot/requirements.txt
+python -m pip install -r apps/telegram-bot/requirements.txt
 python -m playwright install chrome
 ```
 
@@ -228,5 +199,5 @@ python3 scripts/check_integrations.py --tistory
 - 개인 계정에 게시하려면 `w_member_social` 권한과 `urn:li:person:{id}` 형식의 Author URN이 필요합니다.
 - 조직 페이지에 게시하려면 `w_organization_social` 권한과 `urn:li:organization:{id}` 형식의 Author URN이 필요합니다.
 - LinkedIn Posts API는 생성 요청에서 `lifecycleState`를 `PUBLISHED`로 사용합니다. 초안 저장이 아니라 공개 게시 흐름입니다.
-- 게시 성공 시 응답 헤더의 `x-restli-id`를 기반으로 LinkedIn 게시 URL을 만들어 Discord에 보고합니다.
+- 게시 성공 시 응답 헤더의 `x-restli-id`를 기반으로 LinkedIn 게시 URL을 만들어 Telegram에 보고합니다.
 - 로컬 토큰 발급은 `scripts/linkedin_oauth_server.py`로 처리합니다. 이 스크립트는 LinkedIn callback을 받아 `LINKEDIN_ACCESS_TOKEN`, `LINKEDIN_AUTHOR_URN`, `LINKEDIN_TOKEN_EXPIRES_AT`을 `.env`에 저장합니다.

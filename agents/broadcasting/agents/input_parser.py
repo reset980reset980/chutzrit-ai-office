@@ -8,7 +8,7 @@ from agents.broadcasting.pipeline.source import parse_source_context
 
 
 class InputParserAgent:
-    """Parse a raw Discord message into source context."""
+    """Parse a raw Telegram message into source context."""
 
     name = "InputParserAgent"
 

@@ -25,7 +25,7 @@
 -> base-template.html 기반 HTML 생성
 -> outputs/education/slides/ 저장
 -> 필요 시 브라우저에서 레이아웃 확인
--> Discord 또는 작업 보고
+-> Telegram 또는 작업 보고
 ```
 
 ## 저장 위치

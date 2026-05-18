@@ -1,4 +1,4 @@
-"""Discord progress message formatting for the broadcasting pipeline."""
+"""Progress message formatting for the broadcasting pipeline."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from typing import Any
 
 
 def format_source_progress(source_payload: dict[str, Any]) -> str:
-    """Format source parsing results for Discord."""
+    """Format source parsing results."""
     raw_text = str(source_payload.get("raw_text", "")).strip()
     urls = source_payload.get("urls", [])
     link_summaries = source_payload.get("link_summaries", [])
@@ -26,7 +26,7 @@ def format_source_progress(source_payload: dict[str, Any]) -> str:
 
 
 def format_link_summary_progress(link_summaries: Any) -> str:
-    """Format fetched link summaries for the Input Parser Discord message."""
+    """Format fetched link summaries for the Input Parser message."""
     if not isinstance(link_summaries, list) or not link_summaries:
         return ""
 
@@ -58,7 +58,7 @@ def parse_link_summary(summary: str) -> dict[str, str]:
 
 
 def format_strategy_progress(package: dict[str, Any]) -> str:
-    """Format content strategy results for Discord."""
+    """Format content strategy results."""
     strategy = package.get("strategy", {})
     directions = strategy.get("platform_directions", {})
     return (
@@ -69,12 +69,12 @@ def format_strategy_progress(package: dict[str, Any]) -> str:
         "플랫폼 방향\n"
         f"- 블로그 {compact_text(directions.get('blog', ''), 120)}\n"
         f"- LinkedIn {compact_text(directions.get('linkedin', ''), 120)}\n"
-        f"- Discord {compact_text(directions.get('discord', ''), 120)}"
+        f"- Telegram {compact_text(directions.get('telegram', directions.get('discord', '')), 120)}"
     )
 
 
 def format_insight_progress(package: dict[str, Any]) -> str:
-    """Format insight results for Discord."""
+    """Format insight results."""
     insight = package.get("insight", {})
     practical_points = insight.get("practical_points", [])
     examples = insight.get("examples", [])
@@ -91,17 +91,49 @@ def format_insight_progress(package: dict[str, Any]) -> str:
 
 
 def format_writer_progress(package: dict[str, Any]) -> str:
-    """Format platform writer results for Discord."""
+    """Format platform writer results."""
     drafts = package.get("drafts", {})
     blog = str(drafts.get("blog", "")).strip()
     linkedin = str(drafts.get("linkedin", "")).strip()
-    discord = str(drafts.get("discord", "")).strip()
+    telegram = str(drafts.get("telegram", drafts.get("discord", ""))).strip()
     return (
         "## ✍️ Platform Writer Agents 완료\n"
         f"- 블로그 {len(blog)}자 / 첫 줄 {compact_text(first_line(blog), 90)}\n"
         f"- LinkedIn {len(linkedin)}자 / 첫 줄 {compact_text(first_line(linkedin), 90)}\n"
-        f"- Discord 뉴스레터 {len(discord)}자 / 첫 줄 {compact_text(first_line(discord), 90)}"
+        f"- Telegram 뉴스레터 {len(telegram)}자 / 첫 줄 {compact_text(first_line(telegram), 90)}"
     )
+
+
+def format_visual_strategy_progress(visual_strategy: dict[str, Any]) -> str:
+    """Format visual strategy progress."""
+    channels = visual_strategy.get("channels", {})
+    return (
+        "## 🎨 Visual Strategy Agent 완료\n"
+        f"콘셉트 {compact_text(visual_strategy.get('visual_concept', ''), 180)}\n"
+        f"분위기 {compact_text(visual_strategy.get('mood', ''), 140)}\n"
+        f"주요 장면 {compact_text(visual_strategy.get('subject', ''), 160)}\n\n"
+        "채널별 이미지 방향\n"
+        f"- 블로그 {compact_text(channels.get('blog', ''), 120)}\n"
+        f"- LinkedIn {compact_text(channels.get('linkedin', ''), 120)}\n"
+        f"- Telegram {compact_text(channels.get('telegram', ''), 120)}"
+    )
+
+
+def format_visual_prompt_progress(image_prompts: dict[str, Any]) -> str:
+    """Format image prompt progress."""
+    prompts = image_prompts.get("prompts", {})
+    if not isinstance(prompts, dict) or not prompts:
+        return "## 🖼️ Image Prompt Agent 완료\n이미지 프롬프트 없음"
+    lines = ["## 🖼️ Image Prompt Agent 완료"]
+    for channel in ("blog", "linkedin", "telegram"):
+        spec = prompts.get(channel, {})
+        if not isinstance(spec, dict):
+            continue
+        lines.append(
+            f"- {channel_label(channel)} {spec.get('size', 'auto')} / "
+            f"{compact_text(spec.get('prompt', ''), 120)}"
+        )
+    return "\n".join(lines)
 
 
 def format_reflection_progress(
@@ -110,7 +142,7 @@ def format_reflection_progress(
     revision_count: int,
     max_revision_loops: int,
 ) -> str:
-    """Format quality reflection for Discord progress updates."""
+    """Format quality reflection for progress updates."""
     score = reflection.get("score", "unknown")
     status = "통과" if reflection.get("passed") else "검토 필요"
     channel_scores = reflection.get("channel_scores", {})
@@ -171,7 +203,7 @@ def format_revision_progress(
         f"제목 {package.get('title', '')}",
     ]
     for channel in channels:
-        label = {"blog": "블로그", "linkedin": "LinkedIn", "discord": "Discord"}.get(channel, channel)
+        label = channel_label(channel)
         lines.append(f"- {label} 첫 줄 {compact_text(first_line(str(drafts.get(channel, ''))), 100)}")
     return "\n".join(lines)
 
@@ -193,7 +225,7 @@ def format_final_gate_progress(
         "## ⚠️ Final Quality Gate 기준 미달\n"
         f"최종 점수 {reflection.get('score', 'unknown')}\n"
         f"수정 루프 {revision_count}/{max_revision_loops}회\n"
-        "최대 수정 루프를 모두 사용했습니다. 현재 결과를 저장하고 Discord에 발송합니다."
+        "최대 수정 루프를 모두 사용했습니다. 현재 결과를 저장하고 Telegram에 발송합니다."
     )
 
 
@@ -203,12 +235,12 @@ def format_publish_progress(package: dict[str, Any]) -> str:
     channels = publish_plan.get("channels", {})
     blog = channels.get("blog", {})
     linkedin = channels.get("linkedin", {})
-    discord = channels.get("discord", {})
+    telegram = channels.get("telegram", channels.get("discord", {}))
     return (
         "## 🚀 Publish Agent 배포 계획\n"
         f"블로그 {blog.get('status', 'unknown')} - {blog.get('reason', '')}\n"
         f"LinkedIn {linkedin.get('status', 'unknown')} - {linkedin.get('reason', '')}\n"
-        f"Discord {discord.get('status', 'unknown')} - {discord.get('reason', '')}\n"
+        f"Telegram {telegram.get('status', 'unknown')} - {telegram.get('reason', '')}\n"
         f"외부 배포 상태 {publish_plan.get('external_api_status', 'unknown')}"
     )
 
@@ -221,7 +253,7 @@ def format_multi_platform_publish_report(
 ) -> str:
     """Format one consolidated publish report after every channel attempt finishes."""
     channels = publish_plan.get("channels", {})
-    ordered_channels = ("blog", "linkedin", "discord")
+    ordered_channels = ("blog", "linkedin", "telegram")
     published = [
         channel
         for channel in ordered_channels
@@ -270,7 +302,8 @@ def format_publish_report_line(channel_name: str, result: dict[str, Any]) -> str
     labels = {
         "blog": "블로그",
         "linkedin": "LinkedIn",
-        "discord": "Discord 뉴스레터",
+        "telegram": "Telegram 뉴스레터",
+        "discord": "Telegram 뉴스레터",
     }
     status = str(result.get("status") or "unknown")
     url = str(result.get("url") or "").strip()
@@ -302,7 +335,8 @@ def format_channel_publish_progress(
     labels = {
         "blog": "블로그",
         "linkedin": "LinkedIn",
-        "discord": "Discord",
+        "telegram": "Telegram",
+        "discord": "Telegram",
     }
     status = str(result.get("status") or "unknown")
     status_label = channel_publish_status_label(status)
@@ -338,8 +372,18 @@ def channel_publish_status_label(status: str) -> str:
     return labels.get(status, "배포 상태 확인 필요")
 
 
+def channel_label(channel: str) -> str:
+    """Return the user-facing label for a channel key."""
+    return {
+        "blog": "블로그",
+        "linkedin": "LinkedIn",
+        "telegram": "Telegram",
+        "discord": "Telegram",
+    }.get(channel, channel)
+
+
 def compact_text(value: Any, limit: int = 120) -> str:
-    """Compact text for Discord progress messages."""
+    """Compact text for progress messages."""
     text = re.sub(r"\s+", " ", str(value or "")).strip()
     if not text:
         return "없음"

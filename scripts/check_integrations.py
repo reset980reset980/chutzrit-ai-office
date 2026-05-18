@@ -17,11 +17,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 ENV_PATH = PROJECT_ROOT / ".env"
 
 REQUIRED_ENV_KEYS = (
-    "DISCORD_WEBHOOK_URL",
-    "DISCORD_BOT_TOKEN",
-    "DISCORD_GUILD_ID",
-    "DISCORD_BROADCASTING_CHANNEL_ID",
-    "DISCORD_ALLOWED_USER_IDS",
+    "TELEGRAM_BOT_TOKEN",
     "OPENAI_API_KEY",
 )
 
@@ -101,35 +97,26 @@ def check_env(values: dict[str, str]) -> None:
     print("[ok] required .env keys are set")
 
 
-def check_discord_bot(values: dict[str, str]) -> None:
-    """Validate Discord bot token and broadcasting channel access."""
-    token = values["DISCORD_BOT_TOKEN"]
-    channel_id = values["DISCORD_BROADCASTING_CHANNEL_ID"]
-    headers = {"Authorization": f"Bot {token}"}
+def check_telegram_bot(values: dict[str, str]) -> None:
+    """Validate Telegram bot token and optional broadcasting chat access."""
+    token = values["TELEGRAM_BOT_TOKEN"]
+    bot_user = request_json(f"https://api.telegram.org/bot{token}/getMe")
+    if not bot_user.get("ok"):
+        raise IntegrationError("Telegram getMe returned ok=false")
 
-    bot_user = request_json("https://discord.com/api/v10/users/@me", headers=headers)
-    channel = request_json(
-        f"https://discord.com/api/v10/channels/{channel_id}",
-        headers=headers,
-    )
+    bot_name = bot_user.get("result", {}).get("username", "unknown")
+    print(f"[ok] telegram bot token works: bot=@{bot_name}")
 
-    bot_name = bot_user.get("username", "unknown")
-    channel_name = channel.get("name", "unknown")
-    print(f"[ok] discord bot token works: bot={bot_name}")
-    print(f"[ok] discord channel is accessible: channel={channel_name}")
+    chat_id = values.get("TELEGRAM_BROADCASTING_CHAT_ID", "")
+    if not chat_id:
+        print("[ok] telegram broadcasting chat id is not set; bot will watch all chats")
+        return
 
-
-def check_discord_webhook(values: dict[str, str]) -> None:
-    """Send a Discord webhook test report."""
-    payload = {
-        "content": (
-            "[Chutzrit AI Office]\n"
-            "team: broadcasting\n"
-            "status: Discord webhook integration test succeeded"
-        )
-    }
-    request_json(values["DISCORD_WEBHOOK_URL"], method="POST", payload=payload)
-    print("[ok] discord webhook sent a test message")
+    chat = request_json(f"https://api.telegram.org/bot{token}/getChat?chat_id={chat_id}")
+    if not chat.get("ok"):
+        raise IntegrationError("Telegram getChat returned ok=false")
+    chat_title = chat.get("result", {}).get("title") or chat.get("result", {}).get("username") or chat_id
+    print(f"[ok] telegram chat is accessible: chat={chat_title}")
 
 
 def check_openai(values: dict[str, str]) -> None:
@@ -174,8 +161,7 @@ def parse_args() -> argparse.Namespace:
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--env", default=str(ENV_PATH), help="Path to .env file")
-    parser.add_argument("--discord-bot", action="store_true", help="Check Discord bot token and channel")
-    parser.add_argument("--discord-webhook", action="store_true", help="Send Discord webhook test message")
+    parser.add_argument("--telegram-bot", action="store_true", help="Check Telegram bot token and chat")
     parser.add_argument("--openai", action="store_true", help="Check OpenAI Responses API")
     parser.add_argument("--tistory", action="store_true", help="Check Tistory Playwright login session")
     parser.add_argument("--all", action="store_true", help="Run every integration check")
@@ -189,10 +175,8 @@ def main() -> int:
     try:
         values = load_env(Path(args.env))
         check_env(values)
-        if args.all or args.discord_bot:
-            check_discord_bot(values)
-        if args.all or args.discord_webhook:
-            check_discord_webhook(values)
+        if args.all or args.telegram_bot:
+            check_telegram_bot(values)
         if args.all or args.openai:
             check_openai(values)
         if args.all or args.tistory:

@@ -48,6 +48,13 @@ function getPreviewText(record: BroadcastingRecord, channel: PreviewChannel) {
   return record.previews?.[channel]?.trim() || "아직 이 채널의 원고 파일이 생성되지 않았다.";
 }
 
+function getVisualSummary(record: BroadcastingRecord) {
+  const status = record.visualAssetsStatus || "기록 없음";
+  const count = Object.keys(record.visualAssets || {}).length;
+  const score = record.visualQuality?.score == null ? "없음" : `${record.visualQuality.score}점`;
+  return `이미지 ${status} · ${count}개 · 품질 ${score}`;
+}
+
 export function MetricDetailPanel({
   metricKey,
   detail,
@@ -121,6 +128,7 @@ export function MetricDetailPanel({
               <div className="metric-record__status">
                 {getChannelSummary(record.channelPublishStatus)}
               </div>
+              <div className="metric-record__status">{getVisualSummary(record)}</div>
               <button
                 className="metric-record__preview-button"
                 type="button"

@@ -482,7 +482,7 @@ button {
   animation-delay: 0.65s;
 }
 
-.office-monitor--discord {
+.office-monitor--telegram {
   left: 6%;
   top: 31%;
   width: 86px;
@@ -1734,7 +1734,7 @@ button {
     height: 30px;
   }
 
-  .office-monitor--discord {
+  .office-monitor--telegram {
     left: 9%;
     top: 24%;
     width: 42px;

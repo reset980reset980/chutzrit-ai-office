@@ -5,7 +5,7 @@
 ## 기본 원칙
 
 - `agents/`: 팀별 에이전트 로직과 도메인 워크플로우
-- `apps/`: Discord 봇, 대시보드처럼 실행되는 앱
+- `apps/`: Telegram 봇, 대시보드처럼 실행되는 앱
 - `automations/`: n8n 등 외부 자동화 워크플로우
 - `configs/`: 비밀값이 없는 설정 예시
 - `docs/`: 사람이 읽는 전략, 정책, 설계, 운영 문서
@@ -45,7 +45,7 @@
 │   │   └── slide-maker/
 │   └── youtube/
 ├── apps/
-│   ├── discord-bot/
+│   ├── telegram-bot/
 │   │   └── README.md
 │   └── office-dashboard/
 │       └── README.md
@@ -139,7 +139,7 @@ Codex는 현재 작업 폴더부터 저장소 루트까지의 `.agents/skills`�
 - `pipeline/`: 서브에이전트 오케스트레이션, 병렬 Writer 실행, 품질 게이트, 저장
 - `prompts/`: 공통 프롬프트와 템플릿
 - `prompts/templates/`: 실제 후츠릿 글에서 추출한 채널별 작성 템플릿
-- `publishers/`: 실제 플랫폼별 배포 어댑터. Publish Agent가 정한 순서에 따라 티스토리 Playwright 발행, LinkedIn Posts API 게시, Discord 발송 결과 기록을 담당
+- `publishers/`: 실제 플랫폼별 배포 어댑터. Publish Agent가 정한 순서에 따라 티스토리 Playwright 발행, LinkedIn Posts API 게시, Telegram 발송 결과 기록을 담당
 - `schemas/`: 메타데이터, 승인 상태, 배포 상태 스키마
 
 콘텐츠배포팀의 처리 흐름:
@@ -153,23 +153,23 @@ Codex는 현재 작업 폴더부터 저장소 루트까지의 `.agents/skills`�
 -> Revision Agent 수정 루프
 -> 품질 기준 통과
 -> Publish Agent 배포 상태 판단 및 활성화된 외부 배포 실행
--> 승인 또는 Discord 자동 발송/외부 배포
--> Discord 보고
+-> 승인 또는 Telegram 자동 발송/외부 배포
+-> Telegram 보고
 ```
 
 `pipeline/`은 더 이상 단일 LLM 호출로 전략, 인사이트, 전체 원고를 한 번에 만드는 구조가 아니다. 각 서브에이전트가 독립 프롬프트와 출력 스키마를 가지고 실행되며, 플랫폼 Writer Agent는 병렬로 실행된다.
 
-## Discord 봇
+## Telegram 봇
 
-`apps/discord-bot/`은 Discord 보고, 명령 입력, 승인 요청, 수정 요청을 담당합니다.
+`apps/telegram-bot/`은 Telegram 보고, 명령 입력, 승인 요청, 수정 요청을 담당합니다.
 
 `apps/office-dashboard/`는 라이브 강의용 운영 대시보드 앱입니다. 랜딩페이지가 아니라 하나의 오피스 공간 안에서 콘텐츠배포팀 에이전트 상태를 시각화하는 화면입니다.
 
-Discord 채널명은 에이전트 팀 이름과 동일하게 설정합니다.
+Telegram 채널명은 에이전트 팀 이름과 동일하게 설정합니다.
 
 현재 콘텐츠배포팀의 팀 채널명은 `broadcasting`이며, MVP에서는 이 채널 하나가 입력, 보고, 승인 요청을 모두 담당합니다.
 
-MVP에서는 webhook 보고와 Discord 채널 자동 발송부터 시작하고, 이후 slash command와 실제 플랫폼 배포를 추가합니다.
+MVP에서는 webhook 보고와 Telegram 채널 자동 발송부터 시작하고, 이후 slash command와 실제 플랫폼 배포를 추가합니다.
 
 ## n8n 자동화
 
@@ -209,7 +209,7 @@ outputs/broadcasting/drafts/YYYY-MM-DD-slug/
 ├── insight.md
 ├── blog.md
 ├── linkedin.md
-├── discord.md
+├── telegram.md
 ├── reflection.md
 ├── reflection.json
 ├── metadata.json

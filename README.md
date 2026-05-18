@@ -2,20 +2,20 @@
 
 후츠릿 AI 오피스는 Codex와 자동화 에이전트로 운영되는 24시간 무인 AI 오피스입니다.
 
-사용자는 CEO이자 디렉터입니다. Codex와 각 팀 에이전트는 실행 직원처럼 동작하며, 기획된 업무를 구현하고 테스트하고 보고합니다. Discord는 보고, 수정 요청, 명령 입력을 담당하는 중앙 관제실입니다.
+사용자는 CEO이자 디렉터입니다. Codex와 각 팀 에이전트는 실행 직원처럼 동작하며, 기획된 업무를 구현하고 테스트하고 보고합니다. Telegram는 보고, 수정 요청, 명령 입력을 담당하는 중앙 관제실입니다.
 
 ## 현재 MVP
 
 현재 1차 구현 대상은 **콘텐츠배포팀**입니다.
 
-목표는 단편화된 메모나 거친 입력을 받아서 여러 플랫폼용 콘텐츠로 변환하고, 결과물을 저장한 뒤, Discord 채널에 바로 발송하고 보고하는 것입니다.
+목표는 단편화된 메모나 거친 입력을 받아서 여러 플랫폼용 콘텐츠로 변환하고, 결과물을 저장한 뒤, Telegram 채널에 바로 발송하고 보고하는 것입니다.
 
 MVP 기본 흐름:
 
 ```text
-Discord `broadcasting` 팀 채널 메시지 수신
+Telegram `broadcasting` 팀 채널 메시지 수신
 -> "글 작성중입니다" 즉시 응답
--> Discord 기본 typing 표시와 봇 작업 상태 표시
+-> Telegram 기본 typing 표시와 봇 작업 상태 표시
 -> URL 포함 여부 자동 감지
 -> 원문/링크/사용자 생각 정리
 -> 링크 입력이면 핵심 내용 간략 요약
@@ -30,14 +30,17 @@ Discord `broadcasting` 팀 채널 메시지 수신
 -> 평가 결과 중간 보고
 -> 기준 미달 시 Revision Agent가 수정
 -> 품질 기준 통과
+-> Visual Strategy Agent가 이미지 방향 설계
+-> Image Prompt Agent가 채널별 이미지 프롬프트 작성
 -> outputs/broadcasting/drafts/ 저장
--> 품질 평가
--> Discord 자동 발송
+-> Image Generator Agent가 대표 이미지 생성
+-> Visual Quality Agent가 이미지 적합성 평가
+-> Telegram 자동 발송
 -> outputs/broadcasting/final/ 저장
--> Discord 결과 보고
+-> Telegram 결과 보고
 ```
 
-초기에는 자동 리서치로 주제를 고르는 방식보다, 사용자가 Discord `broadcasting` 팀 채널에 자연스럽게 작성한 메모, 링크, 생각을 콘텐츠로 확장하는 방식으로 시작합니다. 자동 주제 선정은 콘텐츠 생성, 승인, 배포, 보고 흐름이 안정화된 뒤 추가합니다.
+초기에는 자동 리서치로 주제를 고르는 방식보다, 사용자가 Telegram `broadcasting` 팀 채널에 자연스럽게 작성한 메모, 링크, 생각을 콘텐츠로 확장하는 방식으로 시작합니다. 자동 주제 선정은 콘텐츠 생성, 승인, 배포, 보고 흐름이 안정화된 뒤 추가합니다.
 
 초기 입력 원칙:
 
@@ -45,7 +48,8 @@ Discord `broadcasting` 팀 채널 메시지 수신
 - `broadcasting` 채널에 글을 쓰면 자동화가 실행됩니다.
 - URL이 있으면 링크 입력으로 자동 감지합니다.
 - 링크와 사용자의 생각이 함께 있으면 사용자의 생각을 핵심 관점으로 우선 적용합니다.
-- 기본값은 블로그, LinkedIn, Discord 뉴스레터용 콘텐츠 전체 초안 생성입니다.
+- 기본값은 블로그, LinkedIn, Telegram 뉴스레터용 콘텐츠 전체 초안 생성입니다.
+- `IMAGE_GENERATION_ENABLED=true`이면 블로그, LinkedIn, Telegram 뉴스레터에 맞는 대표 이미지까지 생성합니다.
 
 ## 주요 문서
 
@@ -100,7 +104,7 @@ Discord `broadcasting` 팀 채널 메시지 수신
 │   │   └── slide-maker/              # 강의 슬라이드 템플릿과 패턴 규칙
 │   └── youtube/
 ├── apps/
-│   ├── discord-bot/
+│   ├── telegram-bot/
 │   └── office-dashboard/
 ├── automations/
 │   └── n8n/
@@ -156,10 +160,10 @@ Codex 공식 Agent Skills를 저장하는 위치입니다.
 - `agents/broadcasting/pipeline/`: 콘텐츠 생성 파이프라인
 - `agents/broadcasting/prompts/`: 페르소나/플랫폼별 프롬프트
 - `agents/broadcasting/prompts/templates/`: 실제 후츠릿 글에서 추출한 채널별 작성 템플릿
-- `agents/broadcasting/publishers/`: 블로그, LinkedIn, Discord 뉴스레터 배포/발송 어댑터
+- `agents/broadcasting/publishers/`: 블로그, LinkedIn, Telegram 뉴스레터 배포/발송 어댑터
 - `agents/broadcasting/schemas/`: 메타데이터, 품질 평가, 발송 상태 스키마
 
-`pipeline/`은 단일 두뇌가 모든 글을 한 번에 만드는 위치가 아니라, `agents/`의 서브에이전트를 순서대로 호출하는 오케스트레이터입니다. 전략과 인사이트는 순차 실행하고, Blog/LinkedIn/Discord Writer Agent는 병렬 실행합니다.
+`pipeline/`은 단일 두뇌가 모든 글을 한 번에 만드는 위치가 아니라, `agents/`의 서브에이전트를 순서대로 호출하는 오케스트레이터입니다. 전략과 인사이트는 순차 실행하고, Blog/LinkedIn/Telegram Writer Agent는 병렬 실행합니다.
 
 강의운영팀은 `agents/education/` 아래에 둡니다.
 
@@ -182,7 +186,7 @@ Codex 공식 Agent Skills를 저장하는 위치입니다.
 
 실행 앱을 둡니다.
 
-현재는 `apps/discord-bot/`을 Discord 보고, 진행 알림, 명령 입력 인터페이스로 사용합니다. MVP에서는 `broadcasting` 채널 메시지를 감지해 콘텐츠배포팀 파이프라인을 실행합니다.
+현재는 `apps/telegram-bot/`을 Telegram 보고, 진행 알림, 명령 입력 인터페이스로 사용합니다. MVP에서는 `broadcasting` 채널 메시지를 감지해 콘텐츠배포팀 파이프라인을 실행합니다.
 
 `apps/office-dashboard/`는 라이브 강의에서 보여줄 후츠릿 AI 오피스 운영 대시보드 앱입니다. `outputs/broadcasting/` 산출물을 스캔해 콘텐츠배포팀 상태를 보여주고, `outputs/broadcasting/logs/current-status.json`이 있으면 실행 중인 실제 상태를 우선 표시합니다.
 
@@ -238,7 +242,7 @@ outputs/broadcasting/drafts/YYYY-MM-DD-slug/
 ├── insight.md
 ├── blog.md
 ├── linkedin.md
-├── discord.md
+├── telegram.md
 ├── reflection.md
 ├── reflection.json
 ├── metadata.json
@@ -262,7 +266,7 @@ outputs/education/slides/{lecture-slug}-slides.html
 
 - 콘텐츠 초안 생성
 - 로컬 파일 저장
-- 내부 Discord 보고
+- 내부 Telegram 보고
 - 테스트 실행
 - 코드 수정과 개선
 - 테스트 통과까지 반복 수정
@@ -282,7 +286,7 @@ outputs/education/slides/{lecture-slug}-slides.html
 
 - 블로그
 - LinkedIn
-- Discord 뉴스레터
+- Telegram 뉴스레터
 
 다음 구현 목표는 실제 배포 흐름입니다.
 
@@ -291,8 +295,8 @@ outputs/education/slides/{lecture-slug}-slides.html
 -> 실제 블로그 URL 확보
 -> LinkedIn 원고의 [블로그 링크]를 실제 URL로 치환
 -> LinkedIn API 공개 발행
--> Discord 뉴스레터 발송
--> Discord에 플랫폼별 링크 보고
+-> Telegram 뉴스레터 발송
+-> Telegram에 플랫폼별 링크 보고
 ```
 
 티스토리 Open API는 공식 종료 안내가 있으므로 블로그 배포는 Playwright 브라우저 자동화로 처리합니다. 기본값은 저장된 로그인 세션을 격리된 headless Chrome 컨텍스트에 주입하는 방식이며, 실제 사용 중인 브라우저 프로필을 직접 조작하거나 로그아웃하지 않습니다. 티스토리 자동화는 Chrome Playwright 채널만 사용합니다.
@@ -311,7 +315,7 @@ LinkedIn Access Token은 로컬 callback 서버로 발급합니다.
 
 - Python: 콘텐츠 파이프라인, 파일 처리, AI orchestration, 통합 스크립트
 - OpenAI SDK: 콘텐츠 생성, Self Reflection, Revision의 Responses API 호출
-- Node.js/TypeScript: Discord 봇, API 서버, 대시보드
+- Node.js/TypeScript: Telegram 봇, API 서버, 대시보드
 - n8n: 정기 실행, 승인 라우팅, 단순 외부 연동
 - LangChain 등: 에이전트 메모리, 검색, 도구 호출, 복잡한 멀티스텝 작업이 필요할 때만 사용
 
@@ -325,65 +329,67 @@ LinkedIn Access Token은 로컬 callback 서버로 발급합니다.
 .venv/bin/python -m agents.broadcasting.pipeline.run_once --text "AI 에이전트 시대에는 프롬프트보다 하네스 설계가 더 중요해진다."
 ```
 
-Discord 봇을 실행하려면 먼저 Discord 봇 의존성과 Playwright 브라우저를 준비합니다.
+Telegram 봇을 실행하려면 먼저 Telegram 봇 의존성과 Playwright 브라우저를 준비합니다.
 
 ```bash
 python3 -m venv .venv
-.venv/bin/python -m pip install -r apps/discord-bot/requirements.txt
+.venv/bin/python -m pip install -r apps/telegram-bot/requirements.txt
 .venv/bin/python -m playwright install chrome
 ```
 
-Discord 입력 테스트 전에 연결 상태를 먼저 검증합니다.
+Telegram 입력 테스트 전에 연결 상태를 먼저 검증합니다.
 
 ```bash
 .venv/bin/python scripts/check_integrations.py --all
 ```
 
-이 검증은 Discord 입력 수신 권한, Discord Webhook 보고, OpenAI 호출, 티스토리 Playwright 로그인 세션의 관리자 화면 접근 가능 여부를 확인합니다. 티스토리 세션이 만료되어 있으면 Discord에 테스트 메시지를 보내기 전에 먼저 세션을 갱신합니다.
+이 검증은 Telegram 입력 수신 권한, Telegram Webhook 보고, OpenAI 호출, 티스토리 Playwright 로그인 세션의 관리자 화면 접근 가능 여부를 확인합니다. 티스토리 세션이 만료되어 있으면 Telegram에 테스트 메시지를 보내기 전에 먼저 세션을 갱신합니다.
 
-검증이 통과하면 Discord 봇을 실행합니다.
+검증이 통과하면 Telegram 봇을 실행합니다.
 
 ```bash
-.venv/bin/python apps/discord-bot/bot.py
+.venv/bin/python apps/telegram-bot/bot.py
 ```
 
-봇이 실행 중이면 Discord `broadcasting` 채널에 적은 일반 메시지가 콘텐츠 생성 요청으로 처리됩니다.
+봇이 실행 중이면 Telegram `broadcasting` 채널에 적은 일반 메시지가 콘텐츠 생성 요청으로 처리됩니다.
 
-현재 Discord 봇은 `broadcasting` 채널에서 입력을 받고 진행 상황과 평가 내용을 보고합니다. 블로그 원고와 LinkedIn 원고 미리보기는 `broadcasting` 채널에 남기고, 독자용 Discord 뉴스레터 본문은 `DISCORD_NEWSLETTER_CHANNEL_ID`로 지정한 뉴스레터 채널에 발송합니다. 생성 결과는 `outputs/broadcasting/drafts/`와 `outputs/broadcasting/final/`에 함께 저장됩니다.
+현재 Telegram 봇은 `broadcasting` 채널에서 입력을 받고 진행 상황과 평가 내용을 보고합니다. 블로그 원고와 LinkedIn 원고 미리보기는 `broadcasting` 채널에 남기고, 독자용 Telegram 뉴스레터 본문은 `TELEGRAM_NEWSLETTER_CHANNEL_ID`로 지정한 뉴스레터 채널에 발송합니다. 생성 결과는 `outputs/broadcasting/drafts/`와 `outputs/broadcasting/final/`에 함께 저장됩니다.
 
-봇은 메시지를 받자마자 `글 작성중입니다` 응답을 보내고, Discord 기본 typing 표시와 봇 활동 상태를 켭니다. 이후 Input Parser, Content Strategy Agent, Insight Agent, 병렬 Platform Writer Agents, Self Reflection Agent, Revision Agent, Publish Agent 결과를 이모지와 함께 메시지용으로 요약합니다. 평가 점수가 기준 미달이면 최대 3회까지 Revision Agent가 기준 미달 채널을 중심으로 수정하고, 회차별 점수와 수정 피드백을 공유한 뒤 최종 배포물을 발송합니다.
+봇은 메시지를 받자마자 `글 작성중입니다` 응답을 보내고, Telegram 기본 typing 표시와 봇 활동 상태를 켭니다. 이후 Input Parser, Content Strategy Agent, Insight Agent, 병렬 Platform Writer Agents, Self Reflection Agent, Revision Agent, Visual Strategy Agent, Image Prompt Agent, Image Generator Agent, Visual Quality Agent, Publish Agent 결과를 이모지와 함께 메시지용으로 요약합니다. 평가 점수가 기준 미달이면 최대 3회까지 Revision Agent가 기준 미달 채널을 중심으로 수정하고, 회차별 점수와 수정 피드백을 공유한 뒤 최종 배포물을 발송합니다.
 
-Publish Agent는 티스토리, LinkedIn, Discord 뉴스레터 채널별 배포 상태를 구조화하고, 전체 배포 시도가 끝난 뒤 Discord에 하나의 최종 결과 메시지로 보고합니다. 준비되지 않은 채널은 외부 게시 성공으로 표시하지 않습니다.
+대표 이미지는 `IMAGE_GENERATION_ENABLED=true`일 때만 생성합니다. 이미지 전략과 프롬프트는 콘텐츠 품질 게이트 통과 후 만들고, 실제 이미지 파일은 저장된 패키지의 `visuals/` 폴더에 채널별로 기록합니다.
+
+Publish Agent는 티스토리, LinkedIn, Telegram 뉴스레터 채널별 배포 상태를 구조화하고, 전체 배포 시도가 끝난 뒤 Telegram에 하나의 최종 결과 메시지로 보고합니다. 준비되지 않은 채널은 외부 게시 성공으로 표시하지 않습니다.
 
 ## 다음 구현 순서
 
-1. Discord 봇을 백그라운드 프로세스 또는 서비스로 실행
+1. Telegram 봇을 백그라운드 프로세스 또는 서비스로 실행
 2. 티스토리 Playwright Publisher 어댑터 연결
 3. LinkedIn Posts API Publisher 어댑터 연결
-4. Discord 수정 요청을 특정 패키지와 채널에 반영하는 Revision 명령 추가
+4. Telegram 수정 요청을 특정 패키지와 채널에 반영하는 Revision 명령 추가
 5. 승인/수정 데이터를 반영한 Self Reflection 기준 보정
 
 ## 연결 테스트
 
-`.env` 값을 설정한 뒤 아래 명령으로 Discord, OpenAI, Tistory 연결 상태를 확인합니다.
+`.env` 값을 설정한 뒤 아래 명령으로 Telegram, OpenAI, Tistory 연결 상태를 확인합니다.
 
 ```bash
 python3 scripts/check_integrations.py --all
 ```
 
-토큰 값은 출력하지 않고, Discord 봇 토큰, `broadcasting` 채널 접근, Discord Webhook 보고, OpenAI Responses API 호출, Tistory Playwright 세션 유효성을 검증합니다.
+토큰 값은 출력하지 않고, Telegram 봇 토큰, `broadcasting` 채널 접근, Telegram Webhook 보고, OpenAI Responses API 호출, Tistory Playwright 세션 유효성을 검증합니다.
 
 ## 후츠릿 오피스 시작
 
-Discord 봇, 오피스 대시보드, 필수 연동 검증을 한 번에 실행하려면 아래 명령을 사용합니다.
+Telegram 봇, 오피스 대시보드, 필수 연동 검증을 한 번에 실행하려면 아래 명령을 사용합니다.
 
 ```bash
 .venv/bin/python scripts/start_chutzrit_office.py
 ```
 
-이 명령은 Discord 봇이 이미 실행 중이면 재시작하지 않습니다. 오피스 대시보드는 `http://127.0.0.1:5173/`에서 확인합니다.
+이 명령은 Telegram 봇이 이미 실행 중이면 재시작하지 않습니다. 오피스 대시보드는 `http://127.0.0.1:5173/`에서 확인합니다.
 
-Codex에게 `start`라고만 입력하면 후츠릿 오피스 런타임을 띄우고, Discord/OpenAI/Tistory 연결을 검증한 뒤 티스토리 공개 발행 테스트까지 실행하는 단축어로 처리합니다. 티스토리 세션이 만료되어 있으면 격리된 Chrome Playwright 창에서 로그인 세션을 갱신한 뒤 아래 테스트 스크립트를 실행합니다.
+Codex에게 `start`라고만 입력하면 후츠릿 오피스 런타임을 띄우고, Telegram/OpenAI/Tistory 연결을 검증한 뒤 티스토리 공개 발행 테스트까지 실행하는 단축어로 처리합니다. 티스토리 세션이 만료되어 있으면 격리된 Chrome Playwright 창에서 로그인 세션을 갱신한 뒤 아래 테스트 스크립트를 실행합니다.
 
 ```bash
 .venv/bin/python scripts/test_tistory_publish.py

@@ -63,7 +63,7 @@ const agentDefinitions = [
     position: { x: 69, y: 42 }
   },
   {
-    id: "discord-newsletter",
+    id: "telegram-newsletter",
     name: "뉴스레터 작가",
     role: "Telegram 뉴스레터 작성",
     position: { x: 83, y: 42 }
@@ -72,19 +72,43 @@ const agentDefinitions = [
     id: "self-reflection",
     name: "품질 검수자",
     role: "완성본 품질 평가",
-    position: { x: 43, y: 72 }
+    position: { x: 31, y: 72 }
   },
   {
     id: "revision",
     name: "수정 담당자",
     role: "기준 미달 원고 수정",
-    position: { x: 58, y: 72 }
+    position: { x: 43, y: 72 }
+  },
+  {
+    id: "visual-strategy",
+    name: "비주얼 전략가",
+    role: "이미지 콘셉트 설계",
+    position: { x: 55, y: 72 }
+  },
+  {
+    id: "image-prompt",
+    name: "이미지 프롬프트 작가",
+    role: "생성 프롬프트 작성",
+    position: { x: 67, y: 72 }
+  },
+  {
+    id: "image-generator",
+    name: "이미지 제작자",
+    role: "대표 이미지 생성",
+    position: { x: 79, y: 72 }
+  },
+  {
+    id: "visual-quality",
+    name: "이미지 검수자",
+    role: "이미지 적합성 평가",
+    position: { x: 91, y: 72 }
   },
   {
     id: "publish",
     name: "배포 담당자",
     role: "멀티플랫폼 배포 상태 확인",
-    position: { x: 80, y: 72 }
+    position: { x: 80, y: 88 }
   }
 ] as const;
 
@@ -94,7 +118,9 @@ function getMotion(id: string, status: AgentStatus): AgentMotion {
   if (status === "REVIEW") return id === "revision" ? "revising" : "reviewing";
 
   if (id === "input-parser") return "reading";
-  if (id === "content-strategy" || id === "insight") return "thinking";
+  if (id === "content-strategy" || id === "insight" || id === "visual-strategy" || id === "image-prompt") {
+    return "thinking";
+  }
   if (id === "publish") return "publishing";
   return "typing";
 }
@@ -109,9 +135,13 @@ function getEnergyLevel(id: string, status: AgentStatus) {
     insight: 84,
     "blog-writer": 78,
     "linkedin-writer": 76,
-    "discord-newsletter": 82,
+    "telegram-newsletter": 82,
     "self-reflection": 73,
     revision: 71,
+    "visual-strategy": 82,
+    "image-prompt": 79,
+    "image-generator": 88,
+    "visual-quality": 76,
     publish: 88
   };
 
@@ -141,11 +171,17 @@ const publishStatus = liveData.derivedAgents.publish?.status ?? "IDLE";
 const hasWorkingWriters = [
   "blog-writer",
   "linkedin-writer",
-  "discord-newsletter"
+  "telegram-newsletter"
 ].some((id) => liveData.derivedAgents[id]?.status === "WORKING");
 const hasWorkingReview = ["self-reflection", "revision"].some(
   (id) => liveData.derivedAgents[id]?.status === "WORKING"
 );
+const hasWorkingVisuals = [
+  "visual-strategy",
+  "image-prompt",
+  "image-generator",
+  "visual-quality"
+].some((id) => liveData.derivedAgents[id]?.status === "WORKING");
 
 export const officeStatus: OfficeStatus = {
   teamName: "콘텐츠배포팀",
@@ -182,14 +218,21 @@ export const officeStatus: OfficeStatus = {
       label: "Review",
       detail: "품질 점수 기록",
       status: hasWorkingReview ? "WORKING" : "IDLE",
-      position: { x: 70, y: 12 }
+      position: { x: 68, y: 12 }
+    },
+    {
+      id: "visuals",
+      label: "Visuals",
+      detail: "대표 이미지 기록",
+      status: hasWorkingVisuals ? "WORKING" : "IDLE",
+      position: { x: 80, y: 12 }
     },
     {
       id: "publish",
       label: "Publish",
       detail: "배포 결과 기록",
       status: publishStatus,
-      position: { x: 88, y: 12 }
+      position: { x: 92, y: 12 }
     }
   ],
   agents: agentDefinitions.map(buildAgent)

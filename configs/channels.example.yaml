@@ -4,27 +4,26 @@
 language: ko
 timezone: Asia/Tokyo
 
-discord:
+telegram:
   channel_naming: agent_team_name
   team_channels:
     broadcasting:
       channel_name: broadcasting
-      channel_id_env: DISCORD_BROADCASTING_CHANNEL_ID
-      description: 콘텐츠 메모와 링크를 입력하면 블로그, LinkedIn, Discord 채널용 콘텐츠 생성과 승인/배포 보고를 처리하는 콘텐츠배포팀 채널입니다.
-  input_channel_env: DISCORD_BROADCASTING_CHANNEL_ID
-  report_channel_env: DISCORD_BROADCASTING_CHANNEL_ID
-  approval_channel_env: DISCORD_BROADCASTING_CHANNEL_ID
-  allowed_user_ids_env: DISCORD_ALLOWED_USER_IDS
-  webhook_env: DISCORD_WEBHOOK_URL
+      chat_id_env: TELEGRAM_BROADCASTING_CHAT_ID
+      description: 콘텐츠 메모와 링크를 입력하면 블로그, LinkedIn, Telegram 채널용 콘텐츠 생성과 승인/배포 보고를 처리하는 콘텐츠배포팀 채널입니다.
+  input_chat_env: TELEGRAM_BROADCASTING_CHAT_ID
+  report_chat_env: TELEGRAM_BROADCASTING_CHAT_ID
+  approval_chat_env: TELEGRAM_BROADCASTING_CHAT_ID
+  allowed_user_ids_env: TELEGRAM_ALLOWED_USER_IDS
 
 broadcasting:
-  default_input_source: discord
+  default_input_source: telegram
   input_mode: natural_message
   link_detection: auto
   default_target_channels:
     - blog
     - linkedin
-    - discord
+    - telegram
   save_drafts: true
   save_final_outputs: true
   quality_gate:
@@ -47,7 +46,7 @@ broadcasting:
       depends_on:
         - blog
       note: 티스토리 공개 발행 URL을 받은 뒤 [블로그 링크]를 실제 URL로 치환해 Posts API로 공개 게시합니다.
-    discord:
+    telegram:
       enabled: true
       auto_publish: true
       require_approval: false

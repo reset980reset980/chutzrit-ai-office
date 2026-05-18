@@ -17,7 +17,7 @@ REFERENCE_FILES = (
     "docs/strategy/channel-style-guide.md",
     "agents/broadcasting/prompts/templates/blog.md",
     "agents/broadcasting/prompts/templates/linkedin.md",
-    "agents/broadcasting/prompts/templates/discord.md",
+    "agents/broadcasting/prompts/templates/telegram.md",
 )
 
 
@@ -55,7 +55,7 @@ def build_strategy_prompt(source: dict[str, Any]) -> str:
 - 핵심 메시지, 타깃 독자, 글의 주장, 플랫폼별 방향을 결정한다.
 - 링크와 사용자 생각이 함께 있으면 사용자의 생각을 우선 관점으로 삼는다.
 - 매번 새 페르소나를 만들지 말고 참고 문서의 타깃/포지셔닝 중 이번 입력에 맞는 각도를 고른다.
-- 아직 블로그, LinkedIn, Discord 본문은 쓰지 않는다.
+- 아직 블로그, LinkedIn, Telegram 본문은 쓰지 않는다.
 
 반드시 JSON 객체만 반환한다. 코드블록을 쓰지 않는다.
 
@@ -70,7 +70,7 @@ JSON 형식:
     "platform_directions": {{
       "blog": "블로그 방향",
       "linkedin": "LinkedIn 방향",
-      "discord": "Discord 뉴스레터 방향"
+      "telegram": "Telegram 뉴스레터 방향"
     }}
   }}
 }}
@@ -124,7 +124,7 @@ def build_writer_prompt(
     channel_names = {
         "blog": "Blog Writer Agent",
         "linkedin": "LinkedIn Writer Agent",
-        "discord": "Discord Newsletter Writer Agent",
+        "telegram": "Telegram Newsletter Writer Agent",
     }
     channel_rules = {
         "blog": """
@@ -157,8 +157,8 @@ def build_writer_prompt(
 - 체크리스트, 변화 단계, 블로그 링크 유도에만 제한적으로 쓴다.
 - 문장마다 이모지를 붙이지 않는다.
 """,
-        "discord": """
-- Discord 뉴스레터 원고만 작성한다.
+        "telegram": """
+- Telegram 뉴스레터 원고만 작성한다.
 - 타깃 독자용 뉴스레터이며 내부 보고가 아니다.
 - 존댓말, Markdown 제목, 짧은 구조를 지킨다.
 - 제목 다음에는 자연스러운 핵심 문단과 짧은 실행 목록을 둔다.
@@ -211,7 +211,7 @@ def build_generation_prompt(source: SourceContext) -> str:
     """Build the initial content generation prompt."""
     return f"""
 너는 후츠릿 AI 오피스의 콘텐츠배포팀이다.
-아래 참고 문서와 사용자 입력을 바탕으로 블로그, LinkedIn, Discord 뉴스레터 초안을 생성한다.
+아래 참고 문서와 사용자 입력을 바탕으로 블로그, LinkedIn, Telegram 뉴스레터 초안을 생성한다.
 
 중요 규칙:
 - 한국어로 작성한다.
@@ -230,22 +230,22 @@ def build_generation_prompt(source: SourceContext) -> str:
 - 이모지는 가독성을 높이는 보조 장치로만 제한적으로 사용한다.
 - 추천 이모지는 ✅, ⚠️, 🔍, 🧩, 🚀, 📌, 🔗 정도로 제한한다.
 - 문장마다 이모지를 붙이지 않고, 섹션 구분, 주의, 실행 항목, 링크 유도에만 선택적으로 쓴다.
-- 블로그는 전체 3~5개, LinkedIn은 2~4개, Discord 뉴스레터는 2~5개 안쪽으로 제한한다.
+- 블로그는 전체 3~5개, LinkedIn은 2~4개, Telegram 뉴스레터는 2~5개 안쪽으로 제한한다.
 - LinkedIn은 300~800자 중심으로 전문성과 관점을 보여준다.
-- LinkedIn과 Discord 뉴스레터는 존댓말로 쓴다.
+- LinkedIn과 Telegram 뉴스레터는 존댓말로 쓴다.
 - LinkedIn 첫 문장은 설명형이 아니라 대비형 훅으로 쓴다.
 - LinkedIn은 맨 위에 간결한 제목 한 줄을 두고, 블로그에서 뽑은 통찰을 구조화해서 압축한다.
 - LinkedIn 본문에는 실무 판단 기준을 한 줄로 넣는다.
 - LinkedIn 마지막에는 블로그 링크 자리를 넣는다. 아직 배포 전이면 [블로그 링크] 자리표시자를 사용한다.
 - [블로그 링크] 자리표시자는 정상 유입 장치로 간주하며 평가에서 감점하지 않는다.
 - LinkedIn에서 "블로그 전문:"처럼 불필요한 콜론을 쓰지 않는다. "블로그 전문 [블로그 링크]"처럼 쓴다.
-- Discord 초안은 타깃 독자용 뉴스레터다. 존댓말, Markdown 제목, 짧은 구조를 지킨다.
-- Discord 뉴스레터는 "핵심 요약", "왜 중요한가", "바로 해볼 것" 같은 고정 라벨을 쓰지 않는다.
-- Discord 뉴스레터는 제목 다음에 자연스러운 핵심 문단과 짧은 실행 목록만 둔다.
-- 입력에 참고 링크가 있으면 Discord 뉴스레터 맨 아래에 "참고 링크"로 정리한다.
-- 입력에 참고 링크가 없으면 Discord 뉴스레터에 "참고 링크" 섹션이나 "참고 자료는 없습니다" 문구를 쓰지 않는다.
-- Discord 뉴스레터에는 {{BLOG_URL}} placeholder를 넣지 않는다.
-- 블로그 원고와 LinkedIn 원고는 운영 보고 채널에서 확인 가능하고, Discord 뉴스레터는 독자용 뉴스레터 채널에 자동 발송되는 상태로 둔다.
+- Telegram 초안은 타깃 독자용 뉴스레터다. 존댓말, Markdown 제목, 짧은 구조를 지킨다.
+- Telegram 뉴스레터는 "핵심 요약", "왜 중요한가", "바로 해볼 것" 같은 고정 라벨을 쓰지 않는다.
+- Telegram 뉴스레터는 제목 다음에 자연스러운 핵심 문단과 짧은 실행 목록만 둔다.
+- 입력에 참고 링크가 있으면 Telegram 뉴스레터 맨 아래에 "참고 링크"로 정리한다.
+- 입력에 참고 링크가 없으면 Telegram 뉴스레터에 "참고 링크" 섹션이나 "참고 자료는 없습니다" 문구를 쓰지 않는다.
+- Telegram 뉴스레터에는 {{BLOG_URL}} placeholder를 넣지 않는다.
+- 블로그 원고와 LinkedIn 원고는 운영 보고 채팅방에서 확인 가능하고, Telegram 뉴스레터는 독자용 뉴스레터 채팅방에 자동 발송되는 상태로 둔다.
 
 반드시 JSON 객체만 반환한다. 코드블록을 쓰지 않는다.
 
@@ -260,7 +260,7 @@ JSON 형식:
     "platform_directions": {{
       "blog": "블로그 방향",
       "linkedin": "LinkedIn 방향",
-      "discord": "Discord 뉴스레터 방향"
+      "telegram": "Telegram 뉴스레터 방향"
     }}
   }},
   "insight": {{
@@ -272,7 +272,7 @@ JSON 형식:
   "drafts": {{
     "blog": "블로그 초안",
     "linkedin": "LinkedIn 초안",
-    "discord": "Discord 뉴스레터 초안"
+    "telegram": "Telegram 뉴스레터 초안"
   }}
 }}
 
@@ -307,12 +307,12 @@ def build_reflection_prompt(package: dict[str, Any]) -> str:
 - 입력에 참고 링크가 있는데 블로그 맨 아래 참고자료 섹션이 없으면 85점 미만으로 평가한다.
 - LinkedIn에 블로그 전문 링크 또는 [블로그 링크] 자리표시자가 없으면 88점 미만으로 평가한다.
 - 실제 발행 링크가 없는 테스트 생성에서는 LinkedIn의 [블로그 링크] 자리표시자를 정상 유입 장치로 간주한다.
-- Discord 뉴스레터에 "핵심 요약", "왜 중요한가", "바로 해볼 것" 같은 고정 라벨이 보이면 88점 미만으로 평가한다.
-- Discord 뉴스레터에 Markdown 제목이 없거나 참고 링크가 누락되면 88점 미만으로 평가한다.
-- 단, 입력에 참고 링크가 없으면 블로그 참고자료 섹션과 Discord 참고 링크 섹션이 없어도 감점하지 않는다.
+- Telegram 뉴스레터에 "핵심 요약", "왜 중요한가", "바로 해볼 것" 같은 고정 라벨이 보이면 88점 미만으로 평가한다.
+- Telegram 뉴스레터에 Markdown 제목이 없거나 참고 링크가 누락되면 88점 미만으로 평가한다.
+- 단, 입력에 참고 링크가 없으면 블로그 참고자료 섹션과 Telegram 참고 링크 섹션이 없어도 감점하지 않는다.
 - 공개 초안에 "[후츠릿 인사이트]", "후츠릿의 인사이트", "실무 적용 포인트" 같은 라벨이 보이면 80점 미만으로 평가한다.
 - 일반론 위주이고 구조적 해석이나 실무 판단 기준이 약하면 88점 미만으로 평가한다.
-- 블로그, LinkedIn, Discord 뉴스레터에 가독성을 돕는 이모지가 전혀 없으면 플랫폼 적합성 피드백에 포함한다.
+- 블로그, LinkedIn, Telegram 뉴스레터에 가독성을 돕는 이모지가 전혀 없으면 플랫폼 적합성 피드백에 포함한다.
 - 이모지가 문장마다 반복되거나 제목과 모든 소제목에 붙어 있으면 88점 미만으로 평가한다.
 
 반드시 JSON 객체만 반환한다. 코드블록을 쓰지 않는다.
@@ -324,7 +324,7 @@ JSON 형식:
   "channel_scores": {{
     "blog": 0,
     "linkedin": 0,
-    "discord": 0
+    "telegram": 0
   }},
   "strengths": ["유지할 부분"],
   "problems": ["고쳐야 할 부분"],
@@ -355,11 +355,11 @@ Self Reflection 피드백을 반영해 콘텐츠 패키지를 수정한다.
 - 공개 초안에는 "[후츠릿 인사이트]", "후츠릿의 인사이트", "실무 적용 포인트" 같은 라벨을 쓰지 않는다.
 - 결론은 라벨이 아니라 임팩트 있는 문장으로 닫는다.
 - LinkedIn에는 블로그 전문 링크 또는 [블로그 링크] 자리표시자를 넣는다.
-- Discord 뉴스레터는 Markdown 제목, 존댓말, 참고 링크 하단 배치를 지킨다.
-- Discord 뉴스레터에는 "핵심 요약", "왜 중요한가", "바로 해볼 것" 같은 고정 라벨을 넣지 않는다.
-- 입력에 참고 링크가 없으면 Discord 뉴스레터에 참고 링크 섹션을 만들지 않는다.
-- Discord 뉴스레터에는 {{BLOG_URL}} placeholder를 넣지 않는다.
-- 블로그, LinkedIn, Discord 뉴스레터를 모두 수정한다.
+- Telegram 뉴스레터는 Markdown 제목, 존댓말, 참고 링크 하단 배치를 지킨다.
+- Telegram 뉴스레터에는 "핵심 요약", "왜 중요한가", "바로 해볼 것" 같은 고정 라벨을 넣지 않는다.
+- 입력에 참고 링크가 없으면 Telegram 뉴스레터에 참고 링크 섹션을 만들지 않는다.
+- Telegram 뉴스레터에는 {{BLOG_URL}} placeholder를 넣지 않는다.
+- 블로그, LinkedIn, Telegram 뉴스레터를 모두 수정한다.
 - JSON 객체만 반환한다. 코드블록을 쓰지 않는다.
 
 [기존 콘텐츠 패키지]
@@ -370,12 +370,133 @@ Self Reflection 피드백을 반영해 콘텐츠 패키지를 수정한다.
 """.strip()
 
 
+def build_visual_strategy_prompt(package: dict[str, Any]) -> str:
+    """Build the Visual Strategy Agent prompt."""
+    return f"""
+너는 후츠릿 AI 오피스 콘텐츠배포팀의 Visual Strategy Agent다.
+최종 원고와 전략을 바탕으로 글에 어울리는 이미지 방향만 설계한다.
+
+역할:
+- 글의 핵심 주장과 독자에게 맞는 시각 콘셉트를 정한다.
+- 블로그 대표 이미지, LinkedIn 피드 이미지, Telegram 뉴스레터 이미지의 목적을 구분한다.
+- 과장된 사이버펑크, 의미 없는 추상 배경, 텍스트가 들어간 이미지, 저품질 stock 느낌을 피한다.
+- 이미지 안에는 글자나 로고를 넣지 않는다. 플랫폼 텍스트는 HTML/Markdown 영역에서 처리한다.
+
+반드시 JSON 객체만 반환한다. 코드블록을 쓰지 않는다.
+
+JSON 형식:
+{{
+  "visual_concept": "대표 시각 콘셉트",
+  "mood": "분위기",
+  "subject": "주요 피사체 또는 장면",
+  "metaphor": "글의 핵심을 시각적으로 설명하는 은유",
+  "avoid": ["피해야 할 요소"],
+  "channels": {{
+    "blog": "블로그 대표 이미지 방향",
+    "linkedin": "LinkedIn 피드 이미지 방향",
+    "telegram": "Telegram 뉴스레터 이미지 방향"
+  }}
+}}
+
+[콘텐츠 패키지]
+{json.dumps(package, ensure_ascii=False, indent=2)}
+""".strip()
+
+
+def build_image_prompt_prompt(package: dict[str, Any], visual_strategy: dict[str, Any]) -> str:
+    """Build the Image Prompt Agent prompt."""
+    return f"""
+너는 후츠릿 AI 오피스 콘텐츠배포팀의 Image Prompt Agent다.
+Visual Strategy Agent의 방향을 실제 이미지 생성 프롬프트로 바꾼다.
+
+역할:
+- 채널별로 바로 이미지 생성 API에 넣을 수 있는 영어 프롬프트를 작성한다.
+- 프롬프트에는 텍스트, 워터마크, 로고, UI 글자를 넣지 말라는 제약을 반드시 포함한다.
+- 기술 교육/AI 자동화/운영 구조 콘텐츠에 어울리는 선명한 장면을 만든다.
+- 후츠릿 톤에 맞게 실용적이고 지적인 느낌을 유지한다.
+
+반드시 JSON 객체만 반환한다. 코드블록을 쓰지 않는다.
+
+JSON 형식:
+{{
+  "prompts": {{
+    "blog": {{
+      "purpose": "blog_hero",
+      "size": "1536x1024",
+      "quality": "medium",
+      "prompt": "English image prompt"
+    }},
+    "linkedin": {{
+      "purpose": "linkedin_feed",
+      "size": "1024x1024",
+      "quality": "medium",
+      "prompt": "English image prompt"
+    }},
+    "telegram": {{
+      "purpose": "telegram_newsletter",
+      "size": "1024x1024",
+      "quality": "medium",
+      "prompt": "English image prompt"
+    }}
+  }}
+}}
+
+[Visual Strategy]
+{json.dumps(visual_strategy, ensure_ascii=False, indent=2)}
+
+[콘텐츠 패키지]
+{json.dumps(package, ensure_ascii=False, indent=2)}
+""".strip()
+
+
+def build_visual_quality_prompt(
+    package: dict[str, Any],
+    visual_strategy: dict[str, Any],
+    image_prompts: dict[str, Any],
+    visual_assets: dict[str, Any],
+) -> str:
+    """Build the Visual Quality Agent prompt."""
+    return f"""
+너는 후츠릿 AI 오피스 콘텐츠배포팀의 Visual Quality Agent다.
+생성된 이미지 산출물 메타데이터를 보고 글과 이미지의 적합성을 평가한다.
+
+평가 기준:
+- 글의 핵심 주장과 이미지 콘셉트가 맞는가
+- 채널별 목적과 비율이 맞는가
+- 이미지 안에 텍스트/워터마크/로고가 들어가지 않도록 프롬프트가 통제됐는가
+- 후츠릿의 실용적이고 지적인 AI 자동화 콘텐츠 톤과 맞는가
+- 너무 추상적이거나 stock 이미지처럼 보이지 않는가
+
+반드시 JSON 객체만 반환한다. 코드블록을 쓰지 않는다.
+
+JSON 형식:
+{{
+  "score": 0,
+  "passed": false,
+  "problems": ["문제"],
+  "recommendations": ["개선 지시"]
+}}
+
+[콘텐츠 패키지]
+{json.dumps(package, ensure_ascii=False, indent=2)}
+
+[Visual Strategy]
+{json.dumps(visual_strategy, ensure_ascii=False, indent=2)}
+
+[Image Prompts]
+{json.dumps(image_prompts, ensure_ascii=False, indent=2)}
+
+[Visual Assets]
+{json.dumps(visual_assets, ensure_ascii=False, indent=2)}
+""".strip()
+
+
 def build_channel_revision_prompt(package: dict[str, Any], reflection: dict[str, Any], channel: str) -> str:
     """Build a channel-specific revision prompt."""
     channel_names = {
         "blog": "블로그",
         "linkedin": "LinkedIn",
-        "discord": "Discord 뉴스레터",
+        "telegram": "Telegram 뉴스레터",
     }
     channel_rules = {
         "blog": """
@@ -395,8 +516,8 @@ def build_channel_revision_prompt(package: dict[str, Any], reflection: dict[str,
 - `블로그 전문:`처럼 불필요한 콜론을 쓰지 않는다.
 - 이모지는 전체 2~4개 안쪽으로 제한하고 제목/훅, 체크리스트, 링크 유도에만 선택적으로 쓴다.
 """,
-        "discord": """
-- Discord 뉴스레터 원고만 수정한다.
+        "telegram": """
+- Telegram 뉴스레터 원고만 수정한다.
 - 타깃 독자용 존댓말 뉴스레터로 작성한다.
 - Markdown 제목으로 시작한다.
 - `핵심 요약`, `왜 중요한가`, `바로 해볼 것` 같은 고정 라벨을 쓰지 않는다.

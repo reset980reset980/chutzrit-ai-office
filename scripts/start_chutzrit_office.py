@@ -14,7 +14,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DASHBOARD_ROOT = PROJECT_ROOT / "apps" / "office-dashboard"
 LOG_DIR = PROJECT_ROOT / "outputs" / "broadcasting" / "logs"
-DISCORD_SCREEN = "chutzrit-discord-bot"
+TELEGRAM_SCREEN = "chutzrit-telegram-bot"
 DASHBOARD_SCREEN = "chutzrit-office-dashboard"
 DASHBOARD_URL = "http://127.0.0.1:5173/"
 
@@ -33,7 +33,7 @@ def main() -> int:
     LOG_DIR.mkdir(parents=True, exist_ok=True)
 
     results: list[tuple[str, bool, str]] = []
-    results.append(ensure_discord_bot())
+    results.append(ensure_telegram_bot())
     results.append(ensure_dashboard(args.dashboard_url))
 
     if not args.skip_checks:
@@ -51,24 +51,24 @@ def main() -> int:
         return 1
 
     print(f"[ok] office dashboard: {args.dashboard_url}")
-    print("[ok] Discord 입력 테스트 가능")
+    print("[ok] Telegram 입력 테스트 가능")
     return 0
 
 
-def ensure_discord_bot() -> tuple[str, bool, str]:
-    """Start the Discord bot unless it is already running."""
-    if process_running("apps/discord-bot/bot.py"):
-        return ("discord bot", True, "이미 실행 중이라 재시작하지 않음")
+def ensure_telegram_bot() -> tuple[str, bool, str]:
+    """Start the Telegram bot unless it is already running."""
+    if process_running("apps/telegram-bot/bot.py"):
+        return ("telegram bot", True, "이미 실행 중이라 재시작하지 않음")
 
     command = (
         f"cd {shell_quote(PROJECT_ROOT)} && "
-        ".venv/bin/python apps/discord-bot/bot.py "
-        ">> outputs/broadcasting/logs/discord-bot.log 2>&1"
+        ".venv/bin/python apps/telegram-bot/bot.py "
+        ">> outputs/broadcasting/logs/telegram-bot.log 2>&1"
     )
-    start_screen(DISCORD_SCREEN, command)
-    if wait_for_process("apps/discord-bot/bot.py", timeout=10):
-        return ("discord bot", True, "새 screen 세션으로 실행")
-    return ("discord bot", False, "실행 확인 실패")
+    start_screen(TELEGRAM_SCREEN, command)
+    if wait_for_process("apps/telegram-bot/bot.py", timeout=10):
+        return ("telegram bot", True, "새 screen 세션으로 실행")
+    return ("telegram bot", False, "실행 확인 실패")
 
 
 def ensure_dashboard(url: str) -> tuple[str, bool, str]:
@@ -94,7 +94,7 @@ def ensure_dashboard(url: str) -> tuple[str, bool, str]:
 
 
 def run_integration_checks() -> tuple[str, bool, str]:
-    """Run Discord, OpenAI, and Tistory readiness checks."""
+    """Run Telegram, OpenAI, and Tistory readiness checks."""
     python_bin = PROJECT_ROOT / ".venv" / "bin" / "python"
     if not python_bin.exists():
         python_bin = Path(sys.executable)
@@ -111,7 +111,7 @@ def run_integration_checks() -> tuple[str, bool, str]:
     output = completed.stdout.strip().splitlines()
     detail = output[-1] if output else "출력 없음"
     if completed.returncode == 0:
-        return ("integrations", True, "Discord, OpenAI, Tistory 검증 통과")
+        return ("integrations", True, "Telegram, OpenAI, Tistory 검증 통과")
     return ("integrations", False, detail)
 
 

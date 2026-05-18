@@ -44,7 +44,7 @@ class PublishAgent:
 
         blog_status = self._blog_status(public_requires_approval, quality_ready)
         linkedin_status = self._linkedin_status(blog_status, public_requires_approval, quality_ready)
-        discord_status = "auto_dispatch_pending" if self.config.discord_channel_auto_publish else "disabled"
+        telegram_status = "auto_dispatch_pending" if self.config.telegram_channel_auto_publish else "disabled"
         external_api_status = self._external_api_status(blog_status, linkedin_status)
 
         return {
@@ -53,15 +53,15 @@ class PublishAgent:
             "quality_passed": quality_passed,
             "quality_ready_for_publish": quality_ready,
             "external_api_status": external_api_status,
-            "processing_mode": "sequential_tistory_first_with_discord_dispatch",
+            "processing_mode": "sequential_tistory_first_with_telegram_dispatch",
             "executed_at": "",
             "publish_strategy": {
                 "mode": "sequential",
-                "order": ["blog", "linkedin", "discord"],
+                "order": ["blog", "linkedin", "telegram"],
                 "dependencies": {
                     "blog": [],
                     "linkedin": ["blog.url"],
-                    "discord": [],
+                    "telegram": [],
                 },
                 "reason": "LinkedIn 원고는 티스토리 실제 발행 URL이 필요하므로 블로그를 먼저 발행한다.",
             },
@@ -80,11 +80,11 @@ class PublishAgent:
                     "reason": self._reason_for_status(linkedin_status),
                     "details": {},
                 },
-                "discord": {
-                    "status": discord_status,
-                    "provider": "discord_channel",
+                "telegram": {
+                    "status": telegram_status,
+                    "provider": "telegram_chat",
                     "url": "",
-                    "reason": "Discord 봇이 final 파일을 채널에 자동 발송한다.",
+                    "reason": "Telegram 봇이 final 파일을 채팅방에 자동 발송한다.",
                     "details": {},
                 },
             },

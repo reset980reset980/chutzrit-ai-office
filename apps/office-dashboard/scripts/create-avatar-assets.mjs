@@ -30,7 +30,7 @@ const avatars = [
     crop: { left: 26, top: 548, width: 334, height: 420 }
   },
   {
-    fileName: "discord-newsletter.png",
+    fileName: "telegram-newsletter.png",
     crop: { left: 410, top: 548, width: 334, height: 420 }
   },
   {
@@ -144,8 +144,24 @@ async function createPublishAvatarFromRevision() {
   );
 }
 
+async function createVisualAgentAvatars() {
+  const copies = [
+    ["insight.png", "visual-strategy.png"],
+    ["linkedin-writer.png", "image-prompt.png"],
+    ["publish.png", "image-generator.png"],
+    ["self-reflection.png", "visual-quality.png"]
+  ];
+
+  await Promise.all(
+    copies.map(([source, target]) =>
+      fs.copyFile(path.join(outputDir, source), path.join(outputDir, target))
+    )
+  );
+}
+
 await fs.mkdir(outputDir, { recursive: true });
 await Promise.all(avatars.map(createTransparentAvatar));
 await createPublishAvatarFromRevision();
+await createVisualAgentAvatars();
 
-console.log(`extracted ${avatars.length} original transparent avatar assets in ${outputDir}`);
+console.log(`extracted ${avatars.length} original transparent avatar assets and visual agent aliases in ${outputDir}`);

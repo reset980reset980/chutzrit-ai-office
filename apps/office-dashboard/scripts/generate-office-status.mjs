@@ -22,9 +22,13 @@ const agentIds = [
   "insight",
   "blog-writer",
   "linkedin-writer",
-  "discord-newsletter",
+  "telegram-newsletter",
   "self-reflection",
   "revision",
+  "visual-strategy",
+  "image-prompt",
+  "image-generator",
+  "visual-quality",
   "publish"
 ];
 
@@ -69,6 +73,22 @@ function hasPublishedChannel(record) {
   return statuses.includes("published") || urls.some(Boolean);
 }
 
+function normalizeNewsletterChannels(value) {
+  const normalized = { ...(value || {}) };
+  if (normalized.discord && !normalized.telegram) {
+    normalized.telegram = normalized.discord;
+  }
+  delete normalized.discord;
+  return normalized;
+}
+
+function sanitizeDisplayText(value) {
+  return String(value || "")
+    .replaceAll("Discord 뉴스레터", "Telegram 뉴스레터")
+    .replaceAll("Discord", "Telegram")
+    .replaceAll("discord", "telegram");
+}
+
 function getPackageStatus(record) {
   if (record.externalApiStatus === "failed") return "failed";
   if (Object.values(record.channelPublishStatus || {}).includes("failed")) return "failed";
@@ -93,29 +113,40 @@ async function readPackage(scope, packageDir) {
   if (!metadata) return null;
 
   const publishPlan = await readJson(path.join(packageDir, "publish-plan.json"));
+  const visualAssets = await readJson(path.join(packageDir, "visual-assets.json"));
+  const visualQuality = await readJson(path.join(packageDir, "visual-quality.json"));
   const sourceMarkdown = await readText(path.join(packageDir, "source.md"));
   const blogMarkdown = await readText(path.join(packageDir, "blog.md"));
   const linkedinMarkdown = await readText(path.join(packageDir, "linkedin.md"));
-  const telegramMarkdown = await readText(path.join(packageDir, "discord.md"));
+  const telegramMarkdown =
+    (await readText(path.join(packageDir, "telegram.md"))) ||
+    (await readText(path.join(packageDir, "discord.md")));
 
   const packageId = metadata.package_id || path.basename(packageDir);
-  const channelPublishStatus =
+  const channelPublishStatus = normalizeNewsletterChannels(
     metadata.channel_publish_status ||
-    Object.fromEntries(
-      Object.entries(publishPlan?.channels || {}).map(([channel, value]) => [
-        channel,
-        value?.status || "unknown"
-      ])
-    );
+      Object.fromEntries(
+        Object.entries(publishPlan?.channels || {}).map(([channel, value]) => [
+          channel,
+          value?.status || "unknown"
+        ])
+      )
+  );
 
-  const publishedUrls =
+  const publishedUrls = normalizeNewsletterChannels(
     metadata.published_urls ||
-    Object.fromEntries(
-      Object.entries(publishPlan?.channels || {}).map(([channel, value]) => [
-        channel,
-        value?.url || ""
-      ])
-    );
+      Object.fromEntries(
+        Object.entries(publishPlan?.channels || {}).map(([channel, value]) => [
+          channel,
+          value?.url || ""
+        ])
+      )
+  );
+  const channelProcessingStatus = normalizeNewsletterChannels(
+    metadata.channel_processing_status || {}
+  );
+  const publishChannels = publishPlan?.channels || {};
+  const newsletterPublishChannel = publishChannels.telegram || publishChannels.discord || {};
 
   return {
     id: packageId,
@@ -128,15 +159,18 @@ async function readPackage(scope, packageDir) {
     qualityScore: metadata.quality_score ?? null,
     qualityPassed: Boolean(metadata.quality_passed),
     revisionCount: metadata.revision_count ?? 0,
-    channelProcessingStatus: metadata.channel_processing_status || {},
+    channelProcessingStatus,
     channelPublishStatus,
     publishedUrls,
+    visualAssetsStatus: metadata.visual_assets_status || visualAssets?.status || "",
+    visualAssets: metadata.visual_assets || visualAssets?.assets || {},
+    visualQuality: metadata.visual_quality || visualQuality || {},
     externalApiStatus: metadata.external_api_status || publishPlan?.external_api_status || "",
     path: path.relative(repoRoot, packageDir),
     statusReason:
       publishPlan?.channels?.blog?.reason ||
       publishPlan?.channels?.linkedin?.reason ||
-      publishPlan?.channels?.discord?.reason ||
+      newsletterPublishChannel?.reason ||
       "",
     packageStatus: "unknown",
     previews: {
@@ -239,11 +273,11 @@ function getCodexUsage(currentStatus) {
 function getTextValue(source, keys, fallback) {
   for (const key of keys) {
     if (typeof source?.[key] === "string" && source[key].trim()) {
-      return source[key];
+    return sanitizeDisplayText(source[key]);
     }
   }
 
-  return fallback;
+  return sanitizeDisplayText(fallback);
 }
 
 function isPendingReview(record) {
@@ -262,13 +296,22 @@ function getSnapshotStatus(id, { todayDrafts, reviewQueue, publishedToday }) {
   if (todayDrafts.length === 0) return "IDLE";
 
   if (reviewQueue.length > 0) {
-    return ["blog-writer", "linkedin-writer", "self-reflection", "revision"].includes(id)
+    return [
+      "blog-writer",
+      "linkedin-writer",
+      "self-reflection",
+      "revision",
+      "visual-strategy",
+      "image-prompt",
+      "image-generator",
+      "visual-quality"
+    ].includes(id)
       ? "WORKING"
       : "IDLE";
   }
 
   if (publishedToday.length > 0) {
-    return ["discord-newsletter", "publish"].includes(id) ? "WORKING" : "IDLE";
+    return ["telegram-newsletter", "publish"].includes(id) ? "WORKING" : "IDLE";
   }
 
   return ["input-parser", "content-strategy", "insight"].includes(id) ? "WORKING" : "IDLE";
@@ -285,7 +328,11 @@ function getSnapshotTask(id, status) {
     insight: "후츠릿 관점의 실무 인사이트를 보강 중이다.",
     "blog-writer": "검토 대기 패키지의 블로그 원고 상태를 확인 중이다.",
     "linkedin-writer": "검토 대기 패키지의 LinkedIn 원고 상태를 확인 중이다.",
-    "discord-newsletter": "Discord 뉴스레터 발송 상태를 확인 중이다.",
+    "telegram-newsletter": "Telegram 뉴스레터 발송 상태를 확인 중이다.",
+    "visual-strategy": "최근 패키지의 이미지 콘셉트를 확인 중이다.",
+    "image-prompt": "최근 패키지의 이미지 프롬프트를 확인 중이다.",
+    "image-generator": "최근 패키지의 이미지 생성 상태를 확인 중이다.",
+    "visual-quality": "최근 패키지의 이미지 적합성을 확인 중이다.",
     "self-reflection": "검토 대기 패키지의 품질 점수를 점검 중이다.",
     revision: "기준 미달 또는 승인 대기 패키지의 수정 포인트를 확인 중이다.",
     publish: "최근 배포 링크와 채널별 게시 상태를 확인 중이다."
@@ -343,11 +390,32 @@ function deriveAgents({ latest, currentStatus, todayDrafts, reviewQueue, publish
         latest?.channelProcessingStatus?.linkedin || "기록 없음"
       }`
     },
-    "discord-newsletter": {
+    "telegram-newsletter": {
       ...common,
-      recentOutput: `Discord 뉴스레터 상태: ${
-        latest?.channelPublishStatus?.discord || latest?.channelProcessingStatus?.discord || "기록 없음"
+      recentOutput: `Telegram 뉴스레터 상태: ${
+        latest?.channelPublishStatus?.telegram || latest?.channelProcessingStatus?.telegram || "기록 없음"
       }`
+    },
+    "visual-strategy": {
+      ...common,
+      recentOutput: `이미지 콘셉트 상태: ${latest?.visualAssetsStatus || "기록 없음"}`
+    },
+    "image-prompt": {
+      ...common,
+      recentOutput: `이미지 프롬프트 상태: ${
+        latest?.visualAssetsStatus === "pending_generation" ? "생성 대기" : latest?.visualAssetsStatus || "기록 없음"
+      }`
+    },
+    "image-generator": {
+      ...common,
+      recentOutput: `이미지 생성 상태: ${latest?.visualAssetsStatus || "기록 없음"}`
+    },
+    "visual-quality": {
+      ...common,
+      recentOutput:
+        latest?.visualQuality?.score == null
+          ? "이미지 품질 기록 없음"
+          : `이미지 품질 점수 ${latest.visualQuality.score}점`
     },
     "self-reflection": {
       ...common,

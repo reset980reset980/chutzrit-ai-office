@@ -37,7 +37,7 @@
 
 사용하지 않을 내용:
 
-- 블로그, LinkedIn, Discord 뉴스레터의 문장 스타일을 YouTube 말투에서 복사하지 않는다.
+- 블로그, LinkedIn, Telegram 뉴스레터의 문장 스타일을 YouTube 말투에서 복사하지 않는다.
 
 ## 블로그
 
@@ -91,7 +91,7 @@
 
 - `agents/broadcasting/prompts/templates/linkedin.md`
 
-## Discord 뉴스레터
+## Telegram 뉴스레터
 
 추출할 내용:
 
@@ -101,7 +101,7 @@
 
 템플릿 파일:
 
-- `agents/broadcasting/prompts/templates/discord.md`
+- `agents/broadcasting/prompts/templates/telegram.md`
 
 ## 싫어하는 톤
 

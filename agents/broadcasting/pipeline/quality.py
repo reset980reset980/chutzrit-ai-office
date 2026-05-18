@@ -8,7 +8,7 @@ from typing import Any
 from .config import RuntimeConfig
 
 
-CHANNELS = ("blog", "linkedin", "discord")
+CHANNELS = ("blog", "linkedin", "telegram")
 
 
 def normalize_drafts(package: dict[str, Any]) -> None:
@@ -18,15 +18,15 @@ def normalize_drafts(package: dict[str, Any]) -> None:
         return
 
     urls = package.get("source", {}).get("urls", [])
-    discord = str(drafts.get("discord", ""))
+    telegram = str(drafts.get("telegram", drafts.get("discord", "")))
     if not urls:
-        discord = re.sub(
+        telegram = re.sub(
             r"\n+\*\*참고\s*링크\*\*\s*\n(?:[-*]\s*.*\n?)*\s*$",
             "",
-            discord,
+            telegram,
             flags=re.MULTILINE,
         ).strip()
-        drafts["discord"] = discord
+        drafts["telegram"] = telegram
     linkedin = str(drafts.get("linkedin", ""))
     drafts["linkedin"] = linkedin.replace("{BLOG_URL}", "[블로그 링크]").replace("BLOG_URL", "[블로그 링크]")
 
@@ -39,9 +39,9 @@ def build_approval_state(package: dict[str, Any], config: RuntimeConfig) -> dict
         "quality_passed": score >= 90,
         "public_content_require_approval": config.public_content_require_approval,
         "channels": {
-            "blog": "auto_dispatch_to_discord",
-            "linkedin": "auto_dispatch_to_discord",
-            "discord": "auto_publish_to_discord",
+            "blog": "auto_dispatch_to_telegram",
+            "linkedin": "auto_dispatch_to_telegram",
+            "telegram": "auto_publish_to_telegram",
         },
     }
 
@@ -79,7 +79,7 @@ def enforce_style_gates(package: dict[str, Any], reflection: dict[str, Any]) -> 
     drafts = package.get("drafts", {})
     blog = str(drafts.get("blog", ""))
     linkedin = str(drafts.get("linkedin", ""))
-    discord = str(drafts.get("discord", ""))
+    telegram = str(drafts.get("telegram", drafts.get("discord", "")))
     public_text = f"{blog}\n{linkedin}"
     urls = package.get("source", {}).get("urls", [])
     github_urls = [url for url in urls if "github.com" in url.lower()]
@@ -182,46 +182,46 @@ def enforce_style_gates(package: dict[str, Any], reflection: dict[str, Any]) -> 
             "LinkedIn 링크 유도 문구는 '블로그 전문 [블로그 링크]'처럼 콜론 없이 작성하라.",
         )
 
-    if re.search(r"(핵심\s*요약|왜\s*중요한가|바로\s*해볼\s*것)", discord):
+    if re.search(r"(핵심\s*요약|왜\s*중요한가|바로\s*해볼\s*것)", telegram):
         penalize(
             88,
-            "Discord 뉴스레터에 고정 라벨형 제목이 노출되어 있다.",
-            "Discord 뉴스레터는 제목 다음에 자연스러운 핵심 문단과 짧은 실행 목록으로 작성하라.",
+            "Telegram 뉴스레터에 고정 라벨형 제목이 노출되어 있다.",
+            "Telegram 뉴스레터는 제목 다음에 자연스러운 핵심 문단과 짧은 실행 목록으로 작성하라.",
         )
 
-    if not re.match(r"^\s*#{1,2}\s+\S+", discord):
+    if not re.match(r"^\s*#{1,2}\s+\S+", telegram):
         penalize(
             88,
-            "Discord 뉴스레터에 Markdown 제목이 없다.",
-            "Discord 뉴스레터 맨 위에 '## 제목' 형식의 제목을 넣어라.",
+            "Telegram 뉴스레터에 Markdown 제목이 없다.",
+            "Telegram 뉴스레터 맨 위에 '## 제목' 형식의 제목을 넣어라.",
         )
 
-    if not re.search(r"(습니다|세요|드립니다|합니다)", discord):
+    if not re.search(r"(습니다|세요|드립니다|합니다)", telegram):
         penalize(
             88,
-            "Discord 뉴스레터가 존댓말 기준을 충분히 만족하지 않는다.",
-            "Discord 뉴스레터는 타깃 독자에게 보내는 메시지이므로 존댓말로 작성하라.",
+            "Telegram 뉴스레터가 존댓말 기준을 충분히 만족하지 않는다.",
+            "Telegram 뉴스레터는 타깃 독자에게 보내는 메시지이므로 존댓말로 작성하라.",
         )
 
-    if urls and ("참고 링크" not in discord or not any(url in discord for url in urls)):
+    if urls and ("참고 링크" not in telegram or not any(url in telegram for url in urls)):
         penalize(
             88,
-            "입력에 참고 링크가 있지만 Discord 뉴스레터 하단 참고 링크가 부족하다.",
-            "Discord 뉴스레터 맨 아래에 '참고 링크' 섹션을 만들고 입력 링크를 정리하라.",
+            "입력에 참고 링크가 있지만 Telegram 뉴스레터 하단 참고 링크가 부족하다.",
+            "Telegram 뉴스레터 맨 아래에 '참고 링크' 섹션을 만들고 입력 링크를 정리하라.",
         )
 
-    if not urls and re.search(r"(참고\s*링크|참고\s*자료는\s*없습니다|참고자료\s*없음)", discord):
+    if not urls and re.search(r"(참고\s*링크|참고\s*자료는\s*없습니다|참고자료\s*없음)", telegram):
         penalize(
             88,
-            "입력에 참고 링크가 없는데 Discord 뉴스레터에 참고 링크 섹션이 생성되었다.",
-            "참고 링크가 없으면 Discord 뉴스레터에 참고 링크 섹션을 만들지 마라.",
+            "입력에 참고 링크가 없는데 Telegram 뉴스레터에 참고 링크 섹션이 생성되었다.",
+            "참고 링크가 없으면 Telegram 뉴스레터에 참고 링크 섹션을 만들지 마라.",
         )
 
-    if re.search(r"\{BLOG_URL\}|BLOG_URL", discord):
+    if re.search(r"\{BLOG_URL\}|BLOG_URL", telegram):
         penalize(
             88,
-            "Discord 뉴스레터에 블로그 URL placeholder가 들어갔다.",
-            "Discord 뉴스레터에는 {BLOG_URL} placeholder를 넣지 마라.",
+            "Telegram 뉴스레터에 블로그 URL placeholder가 들어갔다.",
+            "Telegram 뉴스레터에는 {BLOG_URL} placeholder를 넣지 마라.",
         )
 
     channel_scores = reflection.get("channel_scores", {})

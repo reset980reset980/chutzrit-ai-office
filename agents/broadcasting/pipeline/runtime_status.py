@@ -18,9 +18,13 @@ AGENT_IDS = [
     "insight",
     "blog-writer",
     "linkedin-writer",
-    "discord-newsletter",
+    "telegram-newsletter",
     "self-reflection",
     "revision",
+    "visual-strategy",
+    "image-prompt",
+    "image-generator",
+    "visual-quality",
     "publish",
 ]
 
@@ -30,9 +34,13 @@ AGENT_DEFAULT_TASKS = {
     "insight": "후츠릿 관점 보강 대기 중이다.",
     "blog-writer": "블로그 원고 작성 대기 중이다.",
     "linkedin-writer": "LinkedIn 원고 작성 대기 중이다.",
-    "discord-newsletter": "Telegram 뉴스레터 원고 작성 대기 중이다.",
+    "telegram-newsletter": "Telegram 뉴스레터 원고 작성 대기 중이다.",
     "self-reflection": "품질 평가 대기 중이다.",
     "revision": "수정 대상 원고 대기 중이다.",
+    "visual-strategy": "이미지 콘셉트 설계 대기 중이다.",
+    "image-prompt": "이미지 프롬프트 작성 대기 중이다.",
+    "image-generator": "대표 이미지 생성 대기 중이다.",
+    "visual-quality": "이미지 적합성 평가 대기 중이다.",
     "publish": "배포 작업 대기 중이다.",
 }
 
@@ -158,10 +166,10 @@ def infer_agent_updates(message: str) -> dict[str, dict[str, str]]:
         updates["insight"] = idle("인사이트 정리 완료", message)
 
     if "Platform Writer Agents가" in message:
-        for agent_id in ("blog-writer", "linkedin-writer", "discord-newsletter"):
+        for agent_id in ("blog-writer", "linkedin-writer", "telegram-newsletter"):
             updates[agent_id] = working("채널별 원고 병렬 작성 중", message)
     elif "Platform Writer Agents 완료" in message:
-        for agent_id in ("blog-writer", "linkedin-writer", "discord-newsletter"):
+        for agent_id in ("blog-writer", "linkedin-writer", "telegram-newsletter"):
             updates[agent_id] = idle("채널별 원고 작성 완료", message)
 
     if "Self Reflection Agent가" in message:
@@ -180,9 +188,28 @@ def infer_agent_updates(message: str) -> dict[str, dict[str, str]]:
     elif "Revision Agent" in message and "완료" in message:
         updates["revision"] = idle("수정 완료", message)
 
+    if "Visual Strategy Agent가" in message:
+        updates["visual-strategy"] = working("이미지 콘셉트 설계 중", message)
+    elif "Visual Strategy Agent 완료" in message:
+        updates["visual-strategy"] = idle("이미지 콘셉트 설계 완료", message)
+
+    if "Image Prompt Agent가" in message:
+        updates["image-prompt"] = working("채널별 이미지 프롬프트 작성 중", message)
+    elif "Image Prompt Agent 완료" in message:
+        updates["image-prompt"] = idle("이미지 프롬프트 작성 완료", message)
+
+    if "Image Generator Agent가" in message:
+        updates["image-generator"] = working("대표 이미지 생성 중", message)
+
+    if "Visual Quality Agent가" in message:
+        updates["image-generator"] = idle("대표 이미지 생성 완료", message)
+        updates["visual-quality"] = working("이미지 적합성 평가 중", message)
+    elif "Visual Quality Agent 완료" in message:
+        updates["visual-quality"] = idle("이미지 적합성 평가 완료", message)
+
     if "Final Quality Gate" in message:
         updates["self-reflection"] = idle("최종 품질 게이트 완료", message)
-        updates["publish"] = working("배포 계획과 채널별 발송 상태 정리 중", message)
+        updates["publish"] = working("이미지 제작 후 배포 계획 정리 대기 중", message)
 
     if "Publish Agent" in message:
         updates["publish"] = working("채널별 배포 계획 정리 중", message)

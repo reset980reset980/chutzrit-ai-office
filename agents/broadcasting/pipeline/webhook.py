@@ -1,4 +1,4 @@
-"""Discord webhook reporting for broadcasting outputs."""
+"""Legacy webhook reporting for broadcasting outputs."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ def send_broadcasting_report(
     package: dict[str, Any],
     output_path: Path,
 ) -> None:
-    """Send a Discord report for a generated content package."""
+    """Send a webhook report for a generated content package."""
     reflection = package.get("reflection", {})
     approval = package.get("approval", {})
     score = reflection.get("score", "unknown")
@@ -35,9 +35,9 @@ def send_broadcasting_report(
         f"**수정 루프** {package.get('revision_count', 0)}회\n\n"
         "**주요 피드백**\n"
         f"{problem_text}\n\n"
-        "**산출물** 블로그, LinkedIn, Discord 뉴스레터\n"
+        "**산출물** 블로그, LinkedIn, Telegram 뉴스레터\n"
         f"**파일** {output_path}\n"
-        "**처리 방식** 생성 완료 후 Discord 채널에 자동 발송\n"
+        "**처리 방식** 생성 완료 후 Telegram 채팅방에 자동 발송\n"
         "**외부 API 배포** 아직 미연결"
     )
     request_json(webhook_url, method="POST", payload={"content": content})

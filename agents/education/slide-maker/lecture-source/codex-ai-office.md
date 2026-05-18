@@ -2,9 +2,9 @@
 
 ## 콘텐츠배포팀 구현 라이브 — 슬라이드 소스
 
-강사: 후츠릿  
-대상: Codex와 AI 에이전트로 업무 자동화를 시작하려는 개발자·크리에이터  
-목표: Discord 메시지 하나를 블로그/LinkedIn/Discord 뉴스레터로 자동 변환·배포하는 콘텐츠배포팀 직접 구현  
+강사: 후츠릿
+대상: Codex와 AI 에이전트로 업무 자동화를 시작하려는 개발자·크리에이터
+목표: Telegram 메시지 하나를 블로그/LinkedIn/Telegram 뉴스레터로 자동 변환·배포하는 콘텐츠배포팀 직접 구현
 슬라이드: 총 24장
 
 ---
@@ -60,9 +60,9 @@ Ch.5  · 확장 예시 및 마무리
 
 - 레이블: AI 오피스 · 2026
 - 제목: Codex로 만드는 24시간 **AI 무인 오피스**
-- 부제: Discord 메시지 한 줄이 멀티플랫폼으로 변환 · 되는 날
+- 부제: Telegram 메시지 한 줄이 멀티플랫폼으로 변환 · 되는 날
 - 강사: 후츠릿 · 콘텐츠배포팀 구현 라이브
-- 소개: 콘텐츠배포팀 하나를 직접 설계하고 구현하는 라이브입니다. 오늘 끝나면 Discord 메시지 하나로 3개 채널 콘텐츠 패키지가 자동 생성됩니다.
+- 소개: 콘텐츠배포팀 하나를 직접 설계하고 구현하는 라이브입니다. 오늘 끝나면 Telegram 메시지 하나로 3개 채널 콘텐츠 패키지가 자동 생성됩니다.
 
 ---
 
@@ -89,13 +89,13 @@ Ch.5  · 확장 예시 및 마무리
 - 왼쪽:
   - 레이블: Ch.1 · 강의 개요
   - 제목: 후츠릿 **AI 오피스**
-  - 설명: 에이전트들이 역할을 나눠 24시간 돌아가는 가상 조직. Discord 채널 하나에서 콘텐츠 전략·작성·검수·배포까지 자동으로 처리한다.
+  - 설명: 에이전트들이 역할을 나눠 24시간 돌아가는 가상 조직. Telegram 채널 하나에서 콘텐츠 전략·작성·검수·배포까지 자동으로 처리한다.
   - ✓ 다중 에이전트가 역할을 분담해 병렬 실행
   - ✓ 사람은 방향을 설정하고 결과를 검토한다
   - ✓ 현재 구현된 첫 번째 팀: 콘텐츠배포팀
 - 오른쪽 (teal):
   - 레이블: 오늘 함께 만드는 것
-  - "Discord 메시지 하나가 멀티플랫폼 3개로 자동 변환·배포되는 콘텐츠배포팀을 오늘 이 자리에서 직접 구현한다"
+  - "Telegram 메시지 하나가 멀티플랫폼 3개로 자동 변환·배포되는 콘텐츠배포팀을 오늘 이 자리에서 직접 구현한다"
 
 ---
 
@@ -196,7 +196,7 @@ Ch.5  · 확장 예시 및 마무리
 - 짧은 문단, 강한 대비
 - 블로그 전문 유입 CTA 포함
 
-카드 3 (purple) — Discord 뉴스레터:
+카드 3 (purple) — Telegram 뉴스레터:
 
 - 타깃 독자 존댓말
 - 핵심 + 바로 할 일 압축 전달
@@ -216,7 +216,7 @@ Ch.5  · 확장 예시 및 마무리
 1. InputParserAgent — URL 감지 + 원문/생각/링크 분리
 2. ContentStrategyAgent — 콘텐츠 방향·제목·구조 설계
 3. InsightAgent — 후츠릿 관점 실무 인사이트 추가
-4. Writers 병렬 — BlogWriter + LinkedInWriter + DiscordWriter 동시 실행
+4. Writers 병렬 — BlogWriter + LinkedInWriter + TelegramWriter 동시 실행
 5. SelfReflectionAgent → RevisionAgent — 품질 평가·자동 수정·PublishAgent
 
 ---
@@ -243,7 +243,7 @@ Ch.5  · 확장 예시 및 마무리
 │       ├── prompts/    # 페르소나·채널별 프롬프트
 │       └── publishers/ # 배포 어댑터
 ├── apps/
-│   └── discord-bot/bot.py
+│   └── telegram-bot/bot.py
 └── outputs/
     └── broadcasting/
         ├── drafts/     # 생성 초안 패키지
@@ -260,16 +260,16 @@ Ch.5  · 확장 예시 및 마무리
 - 설명:
   - .env에 저장, .gitignore로 커밋 차단
   - check_integrations.py로 연결 상태 사전 검증
-  - Discord 봇·채널 접근·OpenAI API 한 번에 확인
+  - Telegram 봇·채널 접근·OpenAI API 한 번에 확인
 
 코드:
 
 ```
 # .env (절대 커밋하지 않는다)
 OPENAI_API_KEY=sk-...
-DISCORD_BOT_TOKEN=...
-DISCORD_BROADCASTING_CHANNEL_ID=...
-DISCORD_NEWSLETTER_CHANNEL_ID=...
+TELEGRAM_BOT_TOKEN=...
+TELEGRAM_BROADCASTING_CHANNEL_ID=...
+TELEGRAM_NEWSLETTER_CHANNEL_ID=...
 
 # 연결 상태 확인 (토큰값 출력 없이 연결만 검증)
 .venv/bin/python scripts/check_integrations.py --all
@@ -305,7 +305,7 @@ DISCORD_NEWSLETTER_CHANNEL_ID=...
   - 레이블: Ch.4 · Revision 루프
   - 제목: 자동 **수정 루프**
   - 설명: 90점 미만이면 RevisionAgent가 기준 미달 채널 중심으로 수정. 최대 3회 반복.
-  - ✓ 회차별 점수 변화 Discord 실시간 보고
+  - ✓ 회차별 점수 변화 Telegram 실시간 보고
   - ✓ 기준 미달 채널만 선택적 수정
   - → 3회 후에도 미달이면 현재 결과물 저장 + 미달 알림
 - 오른쪽 (teal):
@@ -326,9 +326,9 @@ DISCORD_NEWSLETTER_CHANNEL_ID=...
 - LINKEDIN_ACCESS_TOKEN + LINKEDIN_AUTHOR_URN 필요
 - 로컬 OAuth callback 서버로 토큰 발급
 
-카드 2 (orange) — Discord 뉴스레터:
+카드 2 (orange) — Telegram 뉴스레터:
 
-- DISCORD_NEWSLETTER_CHANNEL_ID 지정 채널 직접 발송
+- TELEGRAM_NEWSLETTER_CHANNEL_ID 지정 채널 직접 발송
 - 봇이 2,000자 제한 자동 분할 처리
 
 카드 3 (purple) — 티스토리 블로그:

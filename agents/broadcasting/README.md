@@ -1,15 +1,15 @@
 # 콘텐츠배포팀
 
-콘텐츠배포팀은 하나의 입력 소스를 여러 플랫폼에 맞는 콘텐츠로 변환하고, 저장, Discord 자동 발송, 보고까지 담당합니다.
+콘텐츠배포팀은 하나의 입력 소스를 여러 플랫폼에 맞는 콘텐츠로 변환하고, 저장, Telegram 자동 발송, 보고까지 담당합니다.
 
 현재 후츠릿 AI 오피스의 1차 MVP 팀입니다.
 
 ## MVP 흐름
 
 ```text
-Discord `broadcasting` 팀 채널 메시지 수신
+Telegram `broadcasting` 팀 채널 메시지 수신
 -> "글 작성중입니다" 즉시 응답
--> Discord 기본 typing 표시와 봇 작업 상태 표시
+-> Telegram 기본 typing 표시와 봇 작업 상태 표시
 -> URL 포함 여부 자동 감지
 -> 원문/링크/사용자 생각 정리
 -> 링크 입력이면 핵심 내용 간략 요약
@@ -26,13 +26,13 @@ Discord `broadcasting` 팀 채널 메시지 수신
 -> 품질 기준 통과
 -> 초안 패키지 저장
 -> 품질 상태 생성
--> Discord 자동 발송
--> Discord 보고
+-> Telegram 자동 발송
+-> Telegram 보고
 ```
 
 ## 입력 방식
 
-MVP 입력은 Discord `broadcasting` 팀 채널에 작성된 일반 메시지입니다.
+MVP 입력은 Telegram `broadcasting` 팀 채널에 작성된 일반 메시지입니다.
 
 사용자는 별도의 명령어, 접두어, 채널명을 붙이지 않습니다.
 
@@ -57,9 +57,9 @@ https://example.com/news-or-video
 - URL이 있으면 링크 입력으로 자동 감지합니다.
 - URL이 없으면 원본 메모로 처리합니다.
 - 링크와 사용자의 생각이 함께 있으면 사용자의 생각을 핵심 관점으로 우선 적용합니다.
-- 기본값은 블로그, LinkedIn, Discord 뉴스레터용 콘텐츠 전체 초안 생성입니다.
+- 기본값은 블로그, LinkedIn, Telegram 뉴스레터용 콘텐츠 전체 초안 생성입니다.
 - 링크 입력은 원문을 가져와 단순 요약하지 않고, 후츠릿 페르소나와 채널별 템플릿에 맞춰 재해석합니다.
-- 링크 입력은 Input Parser 단계에서 URL, 제목, 설명, 핵심 내용을 간략히 정리해 Discord에 먼저 보고합니다.
+- 링크 입력은 Input Parser 단계에서 URL, 제목, 설명, 핵심 내용을 간략히 정리해 Telegram에 먼저 보고합니다.
 
 ## 현재 구현 구조
 
@@ -76,7 +76,7 @@ agents/broadcasting/
 │   ├── writers/
 │   │   ├── blog.py
 │   │   ├── linkedin.py
-│   │   └── discord.py
+│   │   └── telegram.py
 │   ├── reflection.py
 │   ├── revision.py
 │   └── publish.py
@@ -89,7 +89,7 @@ agents/broadcasting/
 │   └── storage.py
 ```
 
-`pipeline/orchestrator.py`는 각 서브에이전트를 호출하는 실행 흐름만 담당합니다. 전략과 인사이트는 순차 실행하고, Blog/LinkedIn/Discord Writer Agent는 병렬 실행합니다. 따라서 현재 구조는 한 번의 LLM 호출로 모든 결과를 만드는 방식이 아니라, 역할별 프롬프트와 출력 스키마를 가진 여러 LLM 호출을 조합하는 방식입니다.
+`pipeline/orchestrator.py`는 각 서브에이전트를 호출하는 실행 흐름만 담당합니다. 전략과 인사이트는 순차 실행하고, Blog/LinkedIn/Telegram Writer Agent는 병렬 실행합니다. 텍스트 품질 게이트를 통과하면 이미지 전략과 이미지 프롬프트를 만들고, 저장된 패키지를 기준으로 실제 이미지 파일을 생성합니다. 따라서 현재 구조는 한 번의 LLM 호출로 모든 결과를 만드는 방식이 아니라, 역할별 프롬프트와 출력 스키마를 가진 여러 LLM 호출을 조합하는 방식입니다.
 
 ## 내부 처리 단계
 
@@ -123,7 +123,7 @@ agents/broadcasting/
 
 - Blog Writer Agent
 - LinkedIn Writer Agent
-- Discord Writer Agent
+- Telegram Writer Agent
 
 ### Self Reflection
 
@@ -133,12 +133,23 @@ agents/broadcasting/
 
 - 90점 이상: 자동 발송 가능
 - 기준 미달: 최대 3회까지 Revision 실행
-- 각 평가 결과와 수정 지시를 Discord에 중간 보고
-- 최대 수정 루프 이후에도 기준 미달이면 현재 결과를 저장하고 Discord에 발송하되, 기준 미달 상태를 명확히 표시
+- 각 평가 결과와 수정 지시를 Telegram에 중간 보고
+- 최대 수정 루프 이후에도 기준 미달이면 현재 결과를 저장하고 Telegram에 발송하되, 기준 미달 상태를 명확히 표시
 
 ### Revision
 
-Self Reflection 피드백을 반영해 글을 수정합니다. 각 회차는 `Revision Agent 1/3회차`처럼 회차를 표시하고, 어떤 피드백을 반영하는지 Discord에 요약합니다. 채널별 점수가 낮으면 기준 미달 채널만 우선 수정하고, 채널별 점수가 없으면 전체 채널을 수정 대상으로 봅니다.
+Self Reflection 피드백을 반영해 글을 수정합니다. 각 회차는 `Revision Agent 1/3회차`처럼 회차를 표시하고, 어떤 피드백을 반영하는지 Telegram에 요약합니다. 채널별 점수가 낮으면 기준 미달 채널만 우선 수정하고, 채널별 점수가 없으면 전체 채널을 수정 대상으로 봅니다.
+
+### Visual Agents
+
+품질 게이트를 통과한 글에 어울리는 대표 이미지를 만듭니다. `IMAGE_GENERATION_ENABLED=true`일 때만 실행합니다.
+
+- Visual Strategy Agent: 글의 핵심 주장, 독자, 플랫폼 목적에 맞는 이미지 콘셉트 결정
+- Image Prompt Agent: OpenAI 이미지 생성 API에 넣을 채널별 영어 프롬프트, 비율, 품질 설정 작성
+- Image Generator Agent: 저장된 패키지 기준으로 `visuals/blog.png`, `visuals/linkedin.png`, `visuals/telegram.png` 생성
+- Visual Quality Agent: 이미지 프롬프트와 생성 메타데이터가 글의 메시지와 후츠릿 톤에 맞는지 평가
+
+이미지 관련 메타데이터는 draft/final 양쪽에 `visual-strategy.json`, `image-prompts.json`, `visual-assets.json`, `visual-quality.json`으로 저장합니다.
 
 ### Publish
 
@@ -148,19 +159,19 @@ Publish Agent는 품질 게이트 이후 발송과 외부 배포 상태를 구�
 
 현재 연결 상태:
 
-- Discord: 봇이 `broadcasting` 채널에 자동 발송
+- Telegram: 봇이 `broadcasting` 채널에 자동 발송
 - 티스토리: Playwright 게시 어댑터가 연결되어 있으며, 세션 파일과 Playwright 실행 환경이 준비되면 공개 발행
 - LinkedIn: 티스토리 실제 URL이 없으면 `[블로그 링크]` 상태로 공개 게시하지 않고 `blocked_until_blog_url`로 기록
 
 Publish Agent는 외부 API 배포가 연결되지 않았을 때 성공으로 표시하지 않습니다.
 
-배포는 병렬이 아니라 순차 방식입니다. LinkedIn 원고에는 티스토리 실제 발행 URL이 필요하므로 `티스토리 발행 -> URL 확보 -> LinkedIn 링크 치환/게시 -> Discord 보고` 순서로 처리합니다.
+배포는 병렬이 아니라 순차 방식입니다. LinkedIn 원고에는 티스토리 실제 발행 URL이 필요하므로 `티스토리 발행 -> URL 확보 -> LinkedIn 링크 치환/게시 -> Telegram 보고` 순서로 처리합니다.
 
 ## 대상 채널
 
 - 블로그
 - LinkedIn
-- Discord 뉴스레터
+- Telegram 뉴스레터
 
 다음 배포 흐름은 티스토리 공개 발행을 먼저 수행한 뒤 LinkedIn을 발행합니다.
 
@@ -169,8 +180,8 @@ Publish Agent는 외부 API 배포가 연결되지 않았을 때 성공으로 �
 -> 티스토리 글 URL 확보
 -> LinkedIn 원고의 [블로그 링크] 치환
 -> LinkedIn API 공개 발행
--> Discord 뉴스레터 발송
--> Discord에 블로그, LinkedIn, Discord 링크 보고
+-> Telegram 뉴스레터 발송
+-> Telegram에 블로그, LinkedIn, Telegram 링크 보고
 ```
 
 티스토리는 Open API 종료 안내가 있으므로 Playwright 브라우저 자동화로 처리합니다. 기본 배포는 저장된 로그인 세션을 격리된 headless Chrome 컨텍스트에서 사용하며, 실제 사용 중인 브라우저 프로필을 직접 조작하거나 로그아웃하지 않습니다. 티스토리 자동화는 Chrome Playwright 채널만 사용합니다.
@@ -185,9 +196,9 @@ CLI에서 외부 배포까지 실행하려면 `--publish`를 붙입니다.
 python -m agents.broadcasting.pipeline.run_once --text "메모" --publish
 ```
 
-Discord 봇은 메시지 처리 후 저장된 패키지를 기준으로 Publish Agent를 실행합니다. 티스토리 발행에 성공하면 LinkedIn 원고의 `[블로그 링크]`를 실제 티스토리 URL로 치환하고, 수정된 `linkedin.md`, `publish-plan.json`, `metadata.json`을 draft/final 양쪽에 다시 기록합니다.
+Telegram 봇은 메시지 처리 후 저장된 패키지를 기준으로 Publish Agent를 실행합니다. 티스토리 발행에 성공하면 LinkedIn 원고의 `[블로그 링크]`를 실제 티스토리 URL로 치환하고, 수정된 `linkedin.md`, `publish-plan.json`, `metadata.json`을 draft/final 양쪽에 다시 기록합니다.
 
-배포 보고는 멀티플랫폼 전체 배포 시도 후 하나의 최종 메시지로 통합합니다. 티스토리 URL, LinkedIn URL, Discord 뉴스레터 메시지 링크와 실패 또는 중단 사유를 한 번에 보여줍니다.
+배포 보고는 멀티플랫폼 전체 배포 시도 후 하나의 최종 메시지로 통합합니다. 티스토리 URL, LinkedIn URL, Telegram 뉴스레터 메시지 링크와 실패 또는 중단 사유를 한 번에 보여줍니다.
 
 ## 하위 폴더
 
@@ -195,7 +206,7 @@ Discord 봇은 메시지 처리 후 저장된 패키지를 기준으로 Publish 
 - `pipeline/`: 서브에이전트 오케스트레이션, 품질 게이트, 저장
 - `prompts/`: 페르소나, 플랫폼, 목적별 프롬프트
 - `prompts/templates/`: 실제 후츠릿 글에서 추출한 채널별 작성 템플릿
-- `publishers/`: 티스토리 Playwright, LinkedIn Posts API, Discord 발송 같은 실제 플랫폼별 배포/발송 어댑터
+- `publishers/`: 티스토리 Playwright, LinkedIn Posts API, Telegram 발송 같은 실제 플랫폼별 배포/발송 어댑터
 - `schemas/`: 메타데이터, 품질 평가, 발송 상태 스키마
 
 전략, 인사이트, 플랫폼별 작성, 평가, 수정, 배포 판단은 `agents/` 내부 서브에이전트로 구현하고, `pipeline/`은 실행 순서와 병렬화를 관리합니다.
@@ -206,7 +217,7 @@ Writer Agent는 아래 템플릿을 참고해 입력 메시지에 맞는 글 구
 
 - `prompts/templates/blog.md`: 구현형, 개념 설명형, 인사이트형 블로그 템플릿
 - `prompts/templates/linkedin.md`: LinkedIn 인사이트 포스트 템플릿
-- `prompts/templates/discord.md`: Discord 뉴스레터 템플릿
+- `prompts/templates/telegram.md`: Telegram 뉴스레터 템플릿
 
 ## 산출물 위치
 
@@ -222,7 +233,7 @@ outputs/broadcasting/
 └── logs/
 ```
 
-`approvals/`는 향후 결제, 계정 변경, 되돌리기 어려운 외부 작업처럼 별도 승인이 필요한 작업의 기록용입니다. 현재 콘텐츠 MVP의 블로그 원고, LinkedIn 원고, Discord 뉴스레터는 승인 없이 자동 발송합니다.
+`approvals/`는 향후 결제, 계정 변경, 되돌리기 어려운 외부 작업처럼 별도 승인이 필요한 작업의 기록용입니다. 현재 콘텐츠 MVP의 블로그 원고, LinkedIn 원고, Telegram 뉴스레터는 승인 없이 자동 발송합니다.
 
 콘텐츠 1건의 초안 패키지는 아래 구조를 따릅니다.
 
@@ -233,7 +244,7 @@ outputs/broadcasting/drafts/YYYY-MM-DD-slug/
 ├── insight.md
 ├── blog.md
 ├── linkedin.md
-├── discord.md
+├── telegram.md
 ├── reflection.md
 ├── reflection.json
 ├── metadata.json
@@ -249,25 +260,25 @@ outputs/broadcasting/drafts/YYYY-MM-DD-slug/
 .venv/bin/python -m agents.broadcasting.pipeline.run_once --text "AI 에이전트 시대에는 프롬프트보다 하네스 설계가 더 중요해진다."
 ```
 
-생성 결과는 `outputs/broadcasting/drafts/`와 `outputs/broadcasting/final/` 아래에 같은 패키지 ID로 저장되고, 기본값으로 Discord Webhook 보고가 전송됩니다.
+생성 결과는 `outputs/broadcasting/drafts/`와 `outputs/broadcasting/final/` 아래에 같은 패키지 ID로 저장되고, 기본값으로 Telegram Webhook 보고가 전송됩니다.
 
-Discord 입력 테스트 전에 아래 검증이 모두 통과해야 합니다.
+Telegram 입력 테스트 전에 아래 검증이 모두 통과해야 합니다.
 
 ```bash
 .venv/bin/python scripts/check_integrations.py --all
 ```
 
-이 검증은 Discord 입력 채널 접근, Discord Webhook 보고, OpenAI 호출, 티스토리 Playwright 세션 유효성을 확인합니다. 이 중 하나라도 실패하면 `broadcasting` 채널에 테스트 메시지를 보내기 전에 먼저 환경을 복구합니다.
+이 검증은 Telegram 입력 채널 접근, Telegram Webhook 보고, OpenAI 호출, 티스토리 Playwright 세션 유효성을 확인합니다. 이 중 하나라도 실패하면 `broadcasting` 채널에 테스트 메시지를 보내기 전에 먼저 환경을 복구합니다.
 
-Discord 봇으로 실행한 경우 블로그 원고와 LinkedIn 원고 미리보기는 `broadcasting` 채널에 남기고, Discord 뉴스레터 본문은 `DISCORD_NEWSLETTER_CHANNEL_ID`로 지정한 뉴스레터 채널에 발송합니다.
+Telegram 봇으로 실행한 경우 블로그 원고와 LinkedIn 원고 미리보기는 `broadcasting` 채널에 남기고, Telegram 뉴스레터 본문은 `TELEGRAM_NEWSLETTER_CHANNEL_ID`로 지정한 뉴스레터 채널에 발송합니다.
 
-봇은 메시지를 받자마자 작업 시작 알림을 보내고, Discord 기본 typing 표시와 `글 작성중입니다` 활동 상태를 유지합니다. 각 논리 Agent가 끝날 때마다 이모지와 함께 결과를 메시지용으로 요약해 보낸 뒤 최종 원고를 발송합니다.
+봇은 메시지를 받자마자 작업 시작 알림을 보내고, Telegram 기본 typing 표시와 `글 작성중입니다` 활동 상태를 유지합니다. 각 논리 Agent가 끝날 때마다 이모지와 함께 결과를 메시지용으로 요약해 보낸 뒤 최종 원고를 발송합니다.
 
-Publish Agent는 티스토리 Playwright, LinkedIn Posts API, Discord 뉴스레터 발송 결과를 채널별로 기록하고, 전체 배포 시도가 끝난 뒤 `broadcasting` 채널에 통합 결과를 보고합니다.
+Publish Agent는 티스토리 Playwright, LinkedIn Posts API, Telegram 뉴스레터 발송 결과를 채널별로 기록하고, 전체 배포 시도가 끝난 뒤 `broadcasting` 채널에 통합 결과를 보고합니다.
 
 ## 구현 우선순위
 
 1. 티스토리 Playwright Publisher 어댑터 연결
 2. LinkedIn Posts API Publisher 어댑터 연결
-3. Discord 수정 요청을 특정 패키지와 채널에 반영하는 Revision 명령 추가
+3. Telegram 수정 요청을 특정 패키지와 채널에 반영하는 Revision 명령 추가
 4. 실제 발송 결과와 사용자 수정 요청을 반영한 Self Reflection 기준 보정

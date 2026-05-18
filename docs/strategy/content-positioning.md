@@ -27,7 +27,7 @@ AI와 개발 도구를 실무자의 실행력으로 바꿔주는 강사형 크�
 - AI Agent
 - Multi-Agent Systems
 - Human In The Loop
-- Discord 승인 플로우
+- Telegram 승인 플로우
 - GitHub 자동화
 - 무인 오피스
 

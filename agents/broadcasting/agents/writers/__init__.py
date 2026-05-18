@@ -1,7 +1,11 @@
 """Platform writer subagents."""
 
 from .blog import BlogWriterAgent
-from .discord import DiscordNewsletterWriterAgent
+from .discord import TelegramNewsletterWriterAgent
 from .linkedin import LinkedInWriterAgent
 
-__all__ = ["BlogWriterAgent", "DiscordNewsletterWriterAgent", "LinkedInWriterAgent"]
+__all__ = [
+    "BlogWriterAgent",
+    "LinkedInWriterAgent",
+    "TelegramNewsletterWriterAgent",
+]

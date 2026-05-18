@@ -27,7 +27,12 @@ class RuntimeConfig:
     telegram_allowed_user_ids: set[str] | None = None
     openai_api_key: str = ""
     openai_model: str = "gpt-5.4-mini"
+    image_generation_enabled: bool = False
+    image_model: str = "gpt-image-1"
+    image_size: str = "1536x1024"
+    image_quality: str = "medium"
     public_content_require_approval: bool = False
+    telegram_channel_auto_publish: bool = True
     discord_channel_auto_publish: bool = True
     blog_publisher: str = "tistory"
     tistory_manage_url: str = ""
@@ -125,7 +130,16 @@ def load_runtime_config(
         },
         openai_api_key=read("OPENAI_API_KEY"),
         openai_model=read("OPENAI_MODEL", "gpt-5.4-mini"),
+        image_generation_enabled=read("IMAGE_GENERATION_ENABLED", "false").lower() == "true",
+        image_model=read("IMAGE_MODEL", "gpt-image-1"),
+        image_size=read("IMAGE_SIZE", "1536x1024"),
+        image_quality=read("IMAGE_QUALITY", "medium"),
         public_content_require_approval=read("PUBLIC_CONTENT_REQUIRE_APPROVAL", "false").lower() == "true",
+        telegram_channel_auto_publish=read(
+            "TELEGRAM_CHANNEL_AUTO_PUBLISH",
+            read("DISCORD_CHANNEL_AUTO_PUBLISH", "true"),
+        ).lower()
+        == "true",
         discord_channel_auto_publish=read("DISCORD_CHANNEL_AUTO_PUBLISH", "true").lower() == "true",
         blog_publisher=read("BLOG_PUBLISHER", "tistory"),
         tistory_manage_url=read("TISTORY_MANAGE_URL"),

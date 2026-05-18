@@ -37,7 +37,7 @@ export function OfficeMap({
         <div className="office-furniture office-furniture--revision" />
         <div className="office-furniture office-furniture--publish" />
 
-        <div className="office-monitor office-monitor--discord" />
+        <div className="office-monitor office-monitor--telegram" />
         <div className="office-monitor office-monitor--board" />
         <div className="office-conveyor" aria-hidden="true">
           <span />
