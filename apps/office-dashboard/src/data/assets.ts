@@ -11,6 +11,7 @@ export const assetPaths = {
     "visual-strategy": "/assets/avatars/visual-strategy.png",
     "image-prompt": "/assets/avatars/image-prompt.png",
     "image-generator": "/assets/avatars/image-generator.png",
+    "visual-observation": "/assets/avatars/visual-quality.png",
     "visual-quality": "/assets/avatars/visual-quality.png",
     publish: "/assets/avatars/publish.png"
   }

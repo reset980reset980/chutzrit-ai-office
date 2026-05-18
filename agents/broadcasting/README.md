@@ -147,9 +147,10 @@ Self Reflection 피드백을 반영해 글을 수정합니다. 각 회차는 `Re
 - Visual Strategy Agent: 글의 핵심 주장, 독자, 플랫폼 목적에 맞는 이미지 콘셉트 결정
 - Image Prompt Agent: OpenAI 이미지 생성 API에 넣을 채널별 영어 프롬프트, 비율, 품질 설정 작성
 - Image Generator Agent: 저장된 패키지 기준으로 `visuals/blog.png`, `visuals/linkedin.png`, `visuals/telegram.png` 생성
-- Visual Quality Agent: 이미지 프롬프트와 생성 메타데이터가 글의 메시지와 후츠릿 톤에 맞는지 평가
+- Visual Observation Agent: 실제 PNG를 열어 카드 구조, 텍스트 노출, 채널 적합성을 확인
+- Visual Quality Agent: 이미지 관찰 결과를 우선 기준으로 글의 메시지와 후츠릿 톤에 맞는지 평가
 
-이미지 관련 메타데이터는 draft/final 양쪽에 `visual-strategy.json`, `image-prompts.json`, `visual-assets.json`, `visual-quality.json`으로 저장합니다.
+이미지 관련 메타데이터는 draft/final 양쪽에 `visual-strategy.json`, `image-prompts.json`, `visual-assets.json`, `visual-observations.json`, `visual-quality.json`으로 저장합니다. 실제 이미지 관찰에서 재생성이 필요하다고 표시된 채널이 있으면 Visual Quality Agent는 전체 통과 처리하지 않습니다.
 
 ### Publish
 

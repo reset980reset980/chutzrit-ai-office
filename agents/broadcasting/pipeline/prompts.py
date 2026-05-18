@@ -414,6 +414,9 @@ Visual Strategy Agent의 방향을 실제 이미지 생성 프롬프트로 바�
 - 프롬프트에는 텍스트, 워터마크, 로고, UI 글자를 넣지 말라는 제약을 반드시 포함한다.
 - 기술 교육/AI 자동화/운영 구조 콘텐츠에 어울리는 선명한 장면을 만든다.
 - 후츠릿 톤에 맞게 실용적이고 지적인 느낌을 유지한다.
+- 데이터/리포트/대시보드 콘텐츠에서는 단순 아이콘, 화살표, 추상 상징만 있는 이미지를 금지한다.
+- 카드형 비교가 핵심이면 각 채널 프롬프트에 "fixed grid of comparison cards", "repeated card structure", "different visual weights per card", "priority ordering"처럼 실제 비교 구조를 명시한다.
+- Telegram 이미지는 모바일에서 바로 읽히는 요약형이어야 하지만, 단순 하락 화살표 6개처럼 정보 구조가 사라지면 실패로 본다.
 
 반드시 JSON 객체만 반환한다. 코드블록을 쓰지 않는다.
 
@@ -454,11 +457,12 @@ def build_visual_quality_prompt(
     visual_strategy: dict[str, Any],
     image_prompts: dict[str, Any],
     visual_assets: dict[str, Any],
+    visual_observations: dict[str, Any] | None = None,
 ) -> str:
     """Build the Visual Quality Agent prompt."""
     return f"""
 너는 후츠릿 AI 오피스 콘텐츠배포팀의 Visual Quality Agent다.
-생성된 이미지 산출물 메타데이터를 보고 글과 이미지의 적합성을 평가한다.
+생성된 이미지 산출물과 실제 이미지 관찰 결과를 보고 글과 이미지의 적합성을 평가한다.
 
 평가 기준:
 - 글의 핵심 주장과 이미지 콘셉트가 맞는가
@@ -466,6 +470,10 @@ def build_visual_quality_prompt(
 - 이미지 안에 텍스트/워터마크/로고가 들어가지 않도록 프롬프트가 통제됐는가
 - 후츠릿의 실용적이고 지적인 AI 자동화 콘텐츠 톤과 맞는가
 - 너무 추상적이거나 stock 이미지처럼 보이지 않는가
+- 실제 이미지 관찰 결과가 있으면 프롬프트보다 관찰 결과를 우선한다.
+- 데이터/리포트 이미지에서 단순 화살표, 단일 아이콘, 의미 없는 장식 패널만 보이면 해당 채널은 실패다.
+- 카드형 비교가 핵심인 콘텐츠에서 카드별 차이, 우선순위, 반복 구조가 보이지 않으면 90점 이상을 줄 수 없다.
+- 하나라도 `requires_regeneration: true`인 채널이 있으면 전체 `passed`는 false다.
 
 반드시 JSON 객체만 반환한다. 코드블록을 쓰지 않는다.
 
@@ -475,6 +483,76 @@ JSON 형식:
   "passed": false,
   "problems": ["문제"],
   "recommendations": ["개선 지시"]
+}}
+
+[콘텐츠 패키지]
+{json.dumps(package, ensure_ascii=False, indent=2)}
+
+[Visual Strategy]
+{json.dumps(visual_strategy, ensure_ascii=False, indent=2)}
+
+[Image Prompts]
+{json.dumps(image_prompts, ensure_ascii=False, indent=2)}
+
+[Visual Assets]
+{json.dumps(visual_assets, ensure_ascii=False, indent=2)}
+
+[Actual Image Observations]
+{json.dumps(visual_observations or {}, ensure_ascii=False, indent=2)}
+""".strip()
+
+
+def build_visual_observation_prompt(
+    package: dict[str, Any],
+    visual_strategy: dict[str, Any],
+    image_prompts: dict[str, Any],
+    visual_assets: dict[str, Any],
+) -> str:
+    """Build the prompt used to inspect actual generated image pixels."""
+    return f"""
+너는 후츠릿 AI 오피스 콘텐츠배포팀의 Visual Observation Agent다.
+첨부된 실제 PNG 이미지를 눈으로 보고, 이미지가 원고와 프롬프트에 맞는지 채널별로 판정한다.
+
+중요:
+- 프롬프트나 파일명만 믿지 말고 실제 이미지에 보이는 요소만 근거로 쓴다.
+- 데이터/리포트/대시보드 콘텐츠에서 단순 화살표나 아이콘만 반복된 이미지는 부적합하다.
+- 카드형 비교가 핵심이면 카드 배열, 반복되는 정보 블록, 카드별 강약 차이, 우선순위가 실제로 보여야 한다.
+- 이미지에 텍스트/숫자/로고/워터마크가 보이면 문제로 기록한다.
+- Telegram 이미지는 단순해야 하지만, 단순함 때문에 비교 정보 구조가 사라지면 `requires_regeneration`을 true로 둔다.
+
+반드시 JSON 객체만 반환한다. 코드블록을 쓰지 않는다.
+
+JSON 형식:
+{{
+  "pixel_audited": true,
+  "channels": {{
+    "blog": {{
+      "score": 0,
+      "matches_content": false,
+      "actual_subject": "실제 보이는 장면",
+      "fit": "적합성 판단",
+      "problems": ["문제"],
+      "requires_regeneration": false
+    }},
+    "linkedin": {{
+      "score": 0,
+      "matches_content": false,
+      "actual_subject": "실제 보이는 장면",
+      "fit": "적합성 판단",
+      "problems": ["문제"],
+      "requires_regeneration": false
+    }},
+    "telegram": {{
+      "score": 0,
+      "matches_content": false,
+      "actual_subject": "실제 보이는 장면",
+      "fit": "적합성 판단",
+      "problems": ["문제"],
+      "requires_regeneration": false
+    }}
+  }},
+  "overall_problems": ["전체 문제"],
+  "recommendations": ["재생성 또는 수정 지시"]
 }}
 
 [콘텐츠 패키지]

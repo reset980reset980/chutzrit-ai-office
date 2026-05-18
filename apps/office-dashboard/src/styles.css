@@ -1350,7 +1350,7 @@ button {
 .metric-detail-panel__records {
   display: grid;
   gap: 10px;
-  max-height: 300px;
+  max-height: clamp(150px, 24vh, 260px);
   min-height: 0;
   overflow: auto;
   padding-right: 2px;
@@ -1585,8 +1585,8 @@ button {
 }
 
 .content-preview-panel__body {
-  max-height: 360px;
-  min-height: 220px;
+  max-height: clamp(180px, 28vh, 360px);
+  min-height: 160px;
   padding: 14px;
   overflow: auto;
   white-space: pre-wrap;
@@ -1597,6 +1597,30 @@ button {
   background: rgba(4, 9, 11, 0.48);
   font-size: 0.82rem;
   line-height: 1.62;
+}
+
+.publication-document-viewer,
+.publication-modal__content {
+  display: grid;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.publication-document-viewer {
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 10px;
+}
+
+.publication-document-viewer__content,
+.publication-document-viewer__raw {
+  display: grid;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.publication-document-viewer__raw {
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 8px;
 }
 
 .publication-preview {
@@ -1745,6 +1769,7 @@ button {
   width: min(1040px, 100%);
   max-height: min(86vh, 900px);
   min-height: 0;
+  overflow: hidden;
   padding: 16px;
   border: 1px solid rgba(143, 244, 210, 0.28);
   border-radius: 18px;
@@ -2422,8 +2447,8 @@ button {
   }
 
   .content-preview-panel__body {
-    max-height: 420px;
-    min-height: 260px;
+    max-height: min(50vh, 420px);
+    min-height: 180px;
     padding: 12px;
     font-size: 0.8rem;
   }
@@ -2438,6 +2463,10 @@ button {
     max-height: calc(100vh - 20px);
     padding: 12px;
     border-radius: 16px;
+  }
+
+  .publication-document-viewer {
+    gap: 8px;
   }
 
   .publication-modal__header h3 {

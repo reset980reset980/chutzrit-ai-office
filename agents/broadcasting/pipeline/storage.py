@@ -139,6 +139,8 @@ def refresh_metadata_publish_fields(target: Path, package: dict[str, Any]) -> No
         metadata["visual_assets"] = visual_assets.get("assets", {})
     if package.get("visual_quality"):
         metadata["visual_quality"] = package.get("visual_quality", {})
+    if package.get("visual_observations"):
+        metadata["visual_observations"] = package.get("visual_observations", {})
     write_json(metadata_path, metadata)
 
 
@@ -176,6 +178,7 @@ def write_visual_package_files(target: Path, package: dict[str, Any]) -> None:
     write_json(target / "visual-strategy.json", package.get("visual_strategy", {}))
     write_json(target / "image-prompts.json", package.get("image_prompts", {}))
     write_json(target / "visual-assets.json", package.get("visual_assets", {}))
+    write_json(target / "visual-observations.json", package.get("visual_observations", {}))
     write_json(target / "visual-quality.json", package.get("visual_quality", {}))
 
 
@@ -279,6 +282,7 @@ def build_metadata(
         },
         "visual_assets_status": visual_assets.get("status", ""),
         "visual_assets": visual_assets.get("assets", {}),
+        "visual_observations": package.get("visual_observations", {}),
         "visual_quality": package.get("visual_quality", {}),
         "channel_publish_status": {
             channel: value.get("status", "")

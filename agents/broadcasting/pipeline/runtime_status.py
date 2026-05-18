@@ -24,6 +24,7 @@ AGENT_IDS = [
     "visual-strategy",
     "image-prompt",
     "image-generator",
+    "visual-observation",
     "visual-quality",
     "publish",
 ]
@@ -40,6 +41,7 @@ AGENT_DEFAULT_TASKS = {
     "visual-strategy": "이미지 콘셉트 설계 대기 중이다.",
     "image-prompt": "이미지 프롬프트 작성 대기 중이다.",
     "image-generator": "대표 이미지 생성 대기 중이다.",
+    "visual-observation": "실제 이미지 확인 대기 중이다.",
     "visual-quality": "이미지 적합성 평가 대기 중이다.",
     "publish": "배포 작업 대기 중이다.",
 }
@@ -201,8 +203,12 @@ def infer_agent_updates(message: str) -> dict[str, dict[str, str]]:
     if "Image Generator Agent가" in message:
         updates["image-generator"] = working("대표 이미지 생성 중", message)
 
-    if "Visual Quality Agent가" in message:
+    if "Visual Observation Agent가" in message:
         updates["image-generator"] = idle("대표 이미지 생성 완료", message)
+        updates["visual-observation"] = working("실제 이미지 구조 확인 중", message)
+
+    if "Visual Quality Agent가" in message:
+        updates["visual-observation"] = idle("실제 이미지 확인 완료", message)
         updates["visual-quality"] = working("이미지 적합성 평가 중", message)
     elif "Visual Quality Agent 완료" in message:
         updates["visual-quality"] = idle("이미지 적합성 평가 완료", message)

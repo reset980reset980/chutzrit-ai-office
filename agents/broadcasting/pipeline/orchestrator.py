@@ -78,6 +78,7 @@ def generate_content_package(
                 "VisualStrategyAgent",
                 "ImagePromptAgent",
                 "ImageGeneratorAgent",
+                "VisualObservationAgent",
                 "VisualQualityAgent",
                 "PublishAgent",
             ],

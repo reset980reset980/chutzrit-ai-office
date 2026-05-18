@@ -96,13 +96,19 @@ const agentDefinitions = [
     id: "image-generator",
     name: "이미지 제작자",
     role: "대표 이미지 생성",
-    position: { x: 79, y: 72 }
+    position: { x: 76, y: 72 }
+  },
+  {
+    id: "visual-observation",
+    name: "이미지 관찰자",
+    role: "실제 PNG 구조 확인",
+    position: { x: 86, y: 72 }
   },
   {
     id: "visual-quality",
     name: "이미지 검수자",
     role: "이미지 적합성 평가",
-    position: { x: 91, y: 72 }
+    position: { x: 94, y: 72 }
   },
   {
     id: "publish",
@@ -141,6 +147,7 @@ function getEnergyLevel(id: string, status: AgentStatus) {
     "visual-strategy": 82,
     "image-prompt": 79,
     "image-generator": 88,
+    "visual-observation": 80,
     "visual-quality": 76,
     publish: 88
   };
@@ -180,6 +187,7 @@ const hasWorkingVisuals = [
   "visual-strategy",
   "image-prompt",
   "image-generator",
+  "visual-observation",
   "visual-quality"
 ].some((id) => liveData.derivedAgents[id]?.status === "WORKING");
 

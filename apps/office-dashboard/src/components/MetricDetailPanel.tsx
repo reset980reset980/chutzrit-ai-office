@@ -91,7 +91,7 @@ function PublicationDocumentViewer({
   const isIntegratedDocument = documentKey === integratedDocumentKey || !documentKey;
 
   return (
-    <>
+    <div className="publication-document-viewer">
       <div className="content-preview-panel__document-tabs" role="tablist" aria-label="배포 문서">
         <button
           className={
@@ -123,54 +123,56 @@ function PublicationDocumentViewer({
           </button>
         ))}
       </div>
-      {isIntegratedDocument ? (
-        <article className="publication-preview" aria-label="이미지 포함 통합 배포 문서">
-          <header className="publication-preview__header">
-            <span>통합 배포 문서</span>
-            <h4>{record.title}</h4>
-            <p>
-              품질 {record.qualityScore == null ? "기록 없음" : `${record.qualityScore}점`} ·
-              이미지 {record.visualAssetsStatus || "기록 없음"} · 배포{" "}
-              {getChannelSummary(record.channelPublishStatus)}
-            </p>
-          </header>
-          {previewChannels.map((channel) => {
-            const visual = getVisualForChannel(record, channel.key);
-            const draft = getPreviewText(record, channel.key);
-            return (
-              <section className="publication-section" key={channel.key}>
-                <div className="publication-section__heading">
-                  <strong>{getChannelLabel(channel.key)}</strong>
-                  <span>{record.channelPublishStatus[channel.key] || "draft"}</span>
-                </div>
-                {visual ? (
-                  <figure className="publication-section__visual">
-                    <a href={visual.url} rel="noreferrer" target="_blank">
-                      <img alt={`${getChannelLabel(channel.key)} 대표 이미지`} src={visual.url} />
-                    </a>
-                    <figcaption>
-                      {visual.size || "size unknown"} · {visual.quality || "quality unknown"}
-                    </figcaption>
-                  </figure>
-                ) : (
-                  <div className="content-preview-panel__empty">
-                    {getChannelLabel(channel.key)} 대표 이미지가 아직 없다.
+      <div className="publication-document-viewer__content">
+        {isIntegratedDocument ? (
+          <article className="publication-preview" aria-label="이미지 포함 통합 배포 문서">
+            <header className="publication-preview__header">
+              <span>통합 배포 문서</span>
+              <h4>{record.title}</h4>
+              <p>
+                품질 {record.qualityScore == null ? "기록 없음" : `${record.qualityScore}점`} ·
+                이미지 {record.visualAssetsStatus || "기록 없음"} · 배포{" "}
+                {getChannelSummary(record.channelPublishStatus)}
+              </p>
+            </header>
+            {previewChannels.map((channel) => {
+              const visual = getVisualForChannel(record, channel.key);
+              const draft = getPreviewText(record, channel.key);
+              return (
+                <section className="publication-section" key={channel.key}>
+                  <div className="publication-section__heading">
+                    <strong>{getChannelLabel(channel.key)}</strong>
+                    <span>{record.channelPublishStatus[channel.key] || "draft"}</span>
                   </div>
-                )}
-                <div className="publication-section__body">{draft}</div>
-              </section>
-            );
-          })}
-        </article>
-      ) : activeDocument ? (
-        <>
-          <div className="content-preview-panel__document-path">{activeDocument.path}</div>
-          <article className="content-preview-panel__body">{activeDocument.content}</article>
-        </>
-      ) : (
-        <div className="content-preview-panel__empty">표시할 배포 문서가 없다.</div>
-      )}
-    </>
+                  {visual ? (
+                    <figure className="publication-section__visual">
+                      <a href={visual.url} rel="noreferrer" target="_blank">
+                        <img alt={`${getChannelLabel(channel.key)} 대표 이미지`} src={visual.url} />
+                      </a>
+                      <figcaption>
+                        {visual.size || "size unknown"} · {visual.quality || "quality unknown"}
+                      </figcaption>
+                    </figure>
+                  ) : (
+                    <div className="content-preview-panel__empty">
+                      {getChannelLabel(channel.key)} 대표 이미지가 아직 없다.
+                    </div>
+                  )}
+                  <div className="publication-section__body">{draft}</div>
+                </section>
+              );
+            })}
+          </article>
+        ) : activeDocument ? (
+          <div className="publication-document-viewer__raw">
+            <div className="content-preview-panel__document-path">{activeDocument.path}</div>
+            <article className="content-preview-panel__body">{activeDocument.content}</article>
+          </div>
+        ) : (
+          <div className="content-preview-panel__empty">표시할 배포 문서가 없다.</div>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -429,11 +431,13 @@ export function MetricDetailPanel({
                 <X size={18} />
               </button>
             </div>
-            <PublicationDocumentViewer
-              documentKey={documentKey}
-              onDocumentKeyChange={setDocumentKey}
-              record={previewRecord}
-            />
+            <div className="publication-modal__content">
+              <PublicationDocumentViewer
+                documentKey={documentKey}
+                onDocumentKeyChange={setDocumentKey}
+                record={previewRecord}
+              />
+            </div>
           </section>
         </div>
       ) : null}

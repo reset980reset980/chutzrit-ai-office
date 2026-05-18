@@ -17,7 +17,7 @@ from agents.broadcasting.pipeline.progress import format_multi_platform_publish_
 from agents.broadcasting.pipeline.generator import generate_content_package
 from agents.broadcasting.pipeline import storage
 from agents.broadcasting.pipeline.visuals import generate_visual_assets_for_saved_package
-from agents.broadcasting.agents import InputParserAgent, PublishAgent
+from agents.broadcasting.agents import InputParserAgent, PublishAgent, VisualQualityAgent
 from agents.broadcasting.publishers import PublishResult
 from agents.broadcasting.publishers.tistory import markdown_to_tistory_html
 from scripts.save_tistory_session import assert_isolated_browser_profile_dir, known_real_browser_profile_dirs
@@ -454,13 +454,42 @@ class BroadcastingMultiAgentTests(unittest.TestCase):
             final_path = Path(temp_dir) / "final" / draft_path.name
             metadata = json.loads((draft_path / "metadata.json").read_text(encoding="utf-8"))
             visual_quality = json.loads((draft_path / "visual-quality.json").read_text(encoding="utf-8"))
+            visual_observations = json.loads(
+                (draft_path / "visual-observations.json").read_text(encoding="utf-8")
+            )
 
             self.assertEqual(visual_assets["status"], "generated")
             self.assertEqual(len(image_client.calls), 3)
             self.assertTrue((draft_path / "visuals" / "blog.png").exists())
             self.assertTrue((final_path / "visuals" / "blog.png").exists())
             self.assertEqual(metadata["visual_assets_status"], "generated")
+            self.assertFalse(visual_observations["pixel_audited"])
             self.assertEqual(visual_quality["score"], 91)
+
+    def test_visual_quality_blocks_regeneration_requested_by_image_observation(self) -> None:
+        client = FakeJSONClient()
+        result = VisualQualityAgent(client).run(
+            {"title": "카드형 리포트"},
+            {},
+            {},
+            {"assets": {"telegram": {"status": "generated"}}},
+            {
+                "pixel_audited": True,
+                "channels": {
+                    "telegram": {
+                        "score": 40,
+                        "matches_content": False,
+                        "actual_subject": "하락 화살표 6개만 반복된 이미지",
+                        "fit": "카드형 비교 구조가 보이지 않는다.",
+                        "problems": ["단순 화살표 반복"],
+                        "requires_regeneration": True,
+                    }
+                },
+            },
+        )
+
+        self.assertFalse(result["passed"])
+        self.assertLessEqual(result["score"], 84)
 
     def test_platform_writers_run_in_parallel(self) -> None:
         client = SlowWriterFakeJSONClient()

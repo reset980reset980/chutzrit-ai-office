@@ -29,6 +29,7 @@ const agentIds = [
   "visual-strategy",
   "image-prompt",
   "image-generator",
+  "visual-observation",
   "visual-quality",
   "publish"
 ];
@@ -172,6 +173,7 @@ async function readPackageDocuments(packageDir) {
     ["visual-strategy", "이미지 전략", "visual-strategy.json"],
     ["image-prompts", "이미지 프롬프트", "image-prompts.json"],
     ["visual-assets", "이미지 산출물", "visual-assets.json"],
+    ["visual-observations", "이미지 실제 검수", "visual-observations.json"],
     ["visual-quality", "이미지 평가", "visual-quality.json"],
     ["metadata", "메타데이터", "metadata.json"],
     ["approval-status", "승인 상태", "approval-status.json"]
@@ -427,6 +429,7 @@ function getSnapshotTask(id, status) {
     "visual-strategy": "최근 패키지의 이미지 콘셉트를 확인 중이다.",
     "image-prompt": "최근 패키지의 이미지 프롬프트를 확인 중이다.",
     "image-generator": "최근 패키지의 이미지 생성 상태를 확인 중이다.",
+    "visual-observation": "최근 패키지의 실제 이미지 관찰 결과를 확인 중이다.",
     "visual-quality": "최근 패키지의 이미지 적합성을 확인 중이다.",
     "self-reflection": "검토 대기 패키지의 품질 점수를 점검 중이다.",
     revision: "기준 미달 또는 승인 대기 패키지의 수정 포인트를 확인 중이다.",
@@ -504,6 +507,13 @@ function deriveAgents({ latest, currentStatus, todayDrafts, reviewQueue, publish
     "image-generator": {
       ...common,
       recentOutput: `이미지 생성 상태: ${latest?.visualAssetsStatus || "기록 없음"}`
+    },
+    "visual-observation": {
+      ...common,
+      recentOutput:
+        latest?.visualQuality?.score == null
+          ? "실제 이미지 관찰 기록 없음"
+          : `실제 PNG 검수 후 이미지 품질 ${latest.visualQuality.score}점`
     },
     "visual-quality": {
       ...common,

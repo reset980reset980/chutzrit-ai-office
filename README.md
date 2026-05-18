@@ -34,6 +34,7 @@ Telegram `broadcasting` 팀 채널 메시지 수신
 -> Image Prompt Agent가 채널별 이미지 프롬프트 작성
 -> outputs/broadcasting/drafts/ 저장
 -> Image Generator Agent가 대표 이미지 생성
+-> Visual Observation Agent가 실제 PNG를 보고 이미지 구조 확인
 -> Visual Quality Agent가 이미지 적합성 평가
 -> Telegram 자동 발송
 -> outputs/broadcasting/final/ 저장
@@ -355,9 +356,9 @@ Telegram 입력 테스트 전에 연결 상태를 먼저 검증합니다.
 
 현재 Telegram 봇은 `broadcasting` 채널에서 입력을 받고 진행 상황과 평가 내용을 보고합니다. 블로그 원고와 LinkedIn 원고 미리보기는 `broadcasting` 채널에 남기고, 독자용 Telegram 뉴스레터 본문은 `TELEGRAM_NEWSLETTER_CHANNEL_ID`로 지정한 뉴스레터 채널에 발송합니다. 생성 결과는 `outputs/broadcasting/drafts/`와 `outputs/broadcasting/final/`에 함께 저장됩니다.
 
-봇은 메시지를 받자마자 `글 작성중입니다` 응답을 보내고, Telegram 기본 typing 표시와 봇 활동 상태를 켭니다. 이후 Input Parser, Content Strategy Agent, Insight Agent, 병렬 Platform Writer Agents, Self Reflection Agent, Revision Agent, Visual Strategy Agent, Image Prompt Agent, Image Generator Agent, Visual Quality Agent, Publish Agent 결과를 이모지와 함께 메시지용으로 요약합니다. 평가 점수가 기준 미달이면 최대 3회까지 Revision Agent가 기준 미달 채널을 중심으로 수정하고, 회차별 점수와 수정 피드백을 공유한 뒤 최종 배포물을 발송합니다.
+봇은 메시지를 받자마자 `글 작성중입니다` 응답을 보내고, Telegram 기본 typing 표시와 봇 활동 상태를 켭니다. 이후 Input Parser, Content Strategy Agent, Insight Agent, 병렬 Platform Writer Agents, Self Reflection Agent, Revision Agent, Visual Strategy Agent, Image Prompt Agent, Image Generator Agent, Visual Observation Agent, Visual Quality Agent, Publish Agent 결과를 이모지와 함께 메시지용으로 요약합니다. 평가 점수가 기준 미달이면 최대 3회까지 Revision Agent가 기준 미달 채널을 중심으로 수정하고, 회차별 점수와 수정 피드백을 공유한 뒤 최종 배포물을 발송합니다.
 
-대표 이미지는 `IMAGE_GENERATION_ENABLED=true`일 때만 생성합니다. 이미지 전략과 프롬프트는 콘텐츠 품질 게이트 통과 후 만들고, 실제 이미지 파일은 저장된 패키지의 `visuals/` 폴더에 채널별로 기록합니다.
+대표 이미지는 `IMAGE_GENERATION_ENABLED=true`일 때만 생성합니다. 이미지 전략과 프롬프트는 콘텐츠 품질 게이트 통과 후 만들고, 실제 이미지 파일은 저장된 패키지의 `visuals/` 폴더에 채널별로 기록합니다. 생성 후에는 실제 PNG를 다시 읽어 카드 구조, 텍스트 노출, 채널 적합성을 검수하고 `visual-observations.json`과 `visual-quality.json`에 분리 저장합니다.
 
 Publish Agent는 티스토리, LinkedIn, Telegram 뉴스레터 채널별 배포 상태를 구조화하고, 전체 배포 시도가 끝난 뒤 Telegram에 하나의 최종 결과 메시지로 보고합니다. 준비되지 않은 채널은 외부 게시 성공으로 표시하지 않습니다.
 
