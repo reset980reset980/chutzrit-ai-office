@@ -1664,6 +1664,62 @@ button {
     linear-gradient(180deg, rgba(13, 24, 23, 0.96), rgba(5, 10, 12, 0.98));
 }
 
+.publication-scroll-progress {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  display: flex;
+  min-height: 22px;
+  align-items: center;
+  justify-content: flex-end;
+  margin: -8px -8px 0;
+  padding: 0 10px;
+  overflow: hidden;
+  border: 1px solid rgba(239, 212, 153, 0.18);
+  border-radius: 999px;
+  background: rgba(4, 9, 11, 0.78);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(14px);
+}
+
+.publication-scroll-progress::before {
+  position: absolute;
+  right: 10px;
+  left: 10px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(239, 212, 153, 0.18);
+  content: "";
+}
+
+.publication-scroll-progress span {
+  position: absolute;
+  right: 10px;
+  left: 10px;
+  height: 4px;
+  transform-origin: left center;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #9a5421, #d5a45e 56%, #efd499);
+  box-shadow: 0 0 18px rgba(239, 212, 153, 0.28);
+  transition: transform 120ms linear;
+}
+
+.publication-scroll-progress em {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  min-width: 56px;
+  justify-content: center;
+  padding: 2px 6px;
+  border: 1px solid rgba(239, 212, 153, 0.24);
+  border-radius: 999px;
+  color: #fff7df;
+  background: rgba(5, 10, 12, 0.72);
+  font-size: 0.62rem;
+  font-style: normal;
+  font-weight: 900;
+}
+
 .scroll-reveal {
   opacity: 0.18;
   transform: translateY(54px) scale(0.975);
@@ -1754,7 +1810,7 @@ button {
   margin-top: 8px;
 }
 
-.publication-preview__status-grid div {
+.publication-preview__status-grid > div {
   display: grid;
   gap: 3px;
   min-height: 68px;
@@ -1775,6 +1831,24 @@ button {
   color: #fff7df;
   font-size: 0.95rem;
   line-height: 1.2;
+}
+
+.publication-counter strong {
+  color: #fff7df;
+  font-size: clamp(1.25rem, 3vw, 1.8rem);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  line-height: 1;
+  transition:
+    color 220ms ease,
+    text-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.publication-counter.is-counting strong {
+  color: #8ff4d2;
+  transform: translateY(-1px);
+  text-shadow: 0 0 18px rgba(143, 244, 210, 0.38);
 }
 
 .publication-preview__chips {
@@ -2715,8 +2789,13 @@ button {
     grid-template-columns: 1fr;
   }
 
-  .publication-preview__status-grid div {
+  .publication-preview__status-grid > div {
     min-height: 54px;
+  }
+
+  .publication-scroll-progress {
+    min-height: 20px;
+    margin: -4px -4px 0;
   }
 
   .publication-section {

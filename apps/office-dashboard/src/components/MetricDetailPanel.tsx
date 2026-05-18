@@ -78,8 +78,104 @@ function getStatusEntries(record: BroadcastingRecord) {
   return Object.entries(record.channelPublishStatus || {});
 }
 
-function getReportScore(record: BroadcastingRecord) {
-  return record.qualityScore == null ? "기록 없음" : `${record.qualityScore}점`;
+function ScrollCountUp({
+  label,
+  value,
+  suffix = "",
+  durationMs = 1100
+}: {
+  label: string;
+  value: number;
+  suffix?: string;
+  durationMs?: number;
+}) {
+  const counterRef = useRef<HTMLDivElement | null>(null);
+  const frameRef = useRef<number | null>(null);
+  const [displayValue, setDisplayValue] = useState(0);
+  const [isCounting, setIsCounting] = useState(false);
+
+  useEffect(() => {
+    const counter = counterRef.current;
+    if (!counter) return;
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const targetValue = Math.max(0, value);
+
+    const stopAnimation = () => {
+      if (frameRef.current !== null) {
+        window.cancelAnimationFrame(frameRef.current);
+        frameRef.current = null;
+      }
+      setIsCounting(false);
+    };
+
+    const startAnimation = () => {
+      stopAnimation();
+
+      if (prefersReducedMotion || targetValue === 0) {
+        setDisplayValue(targetValue);
+        return;
+      }
+
+      setDisplayValue(0);
+      setIsCounting(true);
+      const startedAt = performance.now();
+
+      const tick = (now: number) => {
+        const progress = Math.min((now - startedAt) / durationMs, 1);
+        const easedProgress = 1 - Math.pow(1 - progress, 3);
+        setDisplayValue(Math.round(targetValue * easedProgress));
+
+        if (progress < 1) {
+          frameRef.current = window.requestAnimationFrame(tick);
+          return;
+        }
+
+        frameRef.current = null;
+        setDisplayValue(targetValue);
+        setIsCounting(false);
+      };
+
+      frameRef.current = window.requestAnimationFrame(tick);
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          startAnimation();
+          return;
+        }
+
+        stopAnimation();
+        setDisplayValue(0);
+      },
+      {
+        root: counter.closest(".publication-preview"),
+        rootMargin: "0px 0px -12% 0px",
+        threshold: 0.35
+      }
+    );
+
+    observer.observe(counter);
+
+    return () => {
+      observer.disconnect();
+      stopAnimation();
+    };
+  }, [durationMs, value]);
+
+  return (
+    <div
+      className={isCounting ? "publication-counter is-counting" : "publication-counter"}
+      ref={counterRef}
+    >
+      <span>{label}</span>
+      <strong>
+        {displayValue.toLocaleString("ko-KR")}
+        {suffix}
+      </strong>
+    </div>
+  );
 }
 
 function PublicationDocumentViewer({
@@ -93,6 +189,7 @@ function PublicationDocumentViewer({
 }) {
   const activeDocuments = getDocuments(record);
   const viewerRef = useRef<HTMLDivElement | null>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const activeDocument =
     documentKey === integratedDocumentKey
       ? null
@@ -116,6 +213,11 @@ function PublicationDocumentViewer({
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible");
+            return;
+          }
+
+          if (entry.target.classList.contains("publication-section")) {
+            entry.target.classList.remove("is-visible");
           }
         });
       },
@@ -129,6 +231,40 @@ function PublicationDocumentViewer({
     revealItems.forEach((item) => observer.observe(item));
     return () => observer.disconnect();
   }, [documentKey, record.id]);
+
+  useEffect(() => {
+    const viewer = viewerRef.current;
+    const scroller = viewer?.querySelector<HTMLElement>(".publication-preview");
+    setScrollProgress(0);
+
+    if (!viewer || !scroller || !isIntegratedDocument) return;
+
+    const updateProgress = () => {
+      const scrollableDistance = scroller.scrollHeight - scroller.clientHeight;
+      if (scrollableDistance <= 0) {
+        setScrollProgress(100);
+        return;
+      }
+
+      const nextProgress = Math.min(
+        100,
+        Math.max(0, (scroller.scrollTop / scrollableDistance) * 100)
+      );
+      setScrollProgress(nextProgress);
+    };
+
+    updateProgress();
+    scroller.addEventListener("scroll", updateProgress, { passive: true });
+
+    const resizeObserver = new ResizeObserver(updateProgress);
+    resizeObserver.observe(scroller);
+    Array.from(scroller.children).forEach((child) => resizeObserver.observe(child));
+
+    return () => {
+      scroller.removeEventListener("scroll", updateProgress);
+      resizeObserver.disconnect();
+    };
+  }, [documentKey, isIntegratedDocument, record.id]);
 
   return (
     <div className="publication-document-viewer" ref={viewerRef}>
@@ -166,6 +302,10 @@ function PublicationDocumentViewer({
       <div className="publication-document-viewer__content">
         {isIntegratedDocument ? (
           <article className="publication-preview" aria-label="이미지 포함 통합 배포 문서">
+            <div className="publication-scroll-progress" aria-label="배포 문서 읽기 진행률">
+              <span style={{ transform: `scaleX(${scrollProgress / 100})` }} />
+              <em>{Math.max(0, Math.round(100 - scrollProgress))}% 남음</em>
+            </div>
             <header className="publication-preview__cover scroll-reveal" data-reveal>
               <div className="publication-preview__seal" aria-hidden="true">
                 AI
@@ -174,18 +314,13 @@ function PublicationDocumentViewer({
               <h4>{record.title}</h4>
               <p>{record.sourceSummary || "원본 입력과 채널별 원고를 통합한 배포 미리보기입니다."}</p>
               <div className="publication-preview__status-grid" aria-label="보고서 상태">
-                <div>
-                  <span>품질</span>
-                  <strong>{getReportScore(record)}</strong>
-                </div>
-                <div>
-                  <span>이미지</span>
-                  <strong>{record.visualAssetsStatus || "기록 없음"}</strong>
-                </div>
-                <div>
-                  <span>수정</span>
-                  <strong>{record.revisionCount}회</strong>
-                </div>
+                <ScrollCountUp label="품질" value={record.qualityScore ?? 0} suffix="점" />
+                <ScrollCountUp
+                  label="이미지"
+                  value={Object.keys(record.visualAssets || {}).length}
+                  suffix="개"
+                />
+                <ScrollCountUp label="수정" value={record.revisionCount} suffix="회" />
               </div>
               <div className="publication-preview__chips" aria-label="채널 배포 상태">
                 {getStatusEntries(record).length === 0 ? (
