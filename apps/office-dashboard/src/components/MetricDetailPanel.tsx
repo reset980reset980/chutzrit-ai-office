@@ -74,6 +74,106 @@ function getVisualForChannel(record: BroadcastingRecord, channel: PreviewChannel
   return record.visualPreviewUrls?.[channel];
 }
 
+function PublicationDocumentViewer({
+  record,
+  documentKey,
+  onDocumentKeyChange
+}: {
+  record: BroadcastingRecord;
+  documentKey: string;
+  onDocumentKeyChange: (key: string) => void;
+}) {
+  const activeDocuments = getDocuments(record);
+  const activeDocument =
+    documentKey === integratedDocumentKey
+      ? null
+      : activeDocuments.find((document) => document.key === documentKey) ?? activeDocuments[0];
+  const isIntegratedDocument = documentKey === integratedDocumentKey || !documentKey;
+
+  return (
+    <>
+      <div className="content-preview-panel__document-tabs" role="tablist" aria-label="배포 문서">
+        <button
+          className={
+            isIntegratedDocument
+              ? "content-preview-panel__subtab content-preview-panel__subtab--active"
+              : "content-preview-panel__subtab"
+          }
+          type="button"
+          role="tab"
+          aria-selected={isIntegratedDocument}
+          onClick={() => onDocumentKeyChange(integratedDocumentKey)}
+        >
+          통합 문서
+        </button>
+        {activeDocuments.map((document) => (
+          <button
+            key={document.key}
+            className={
+              !isIntegratedDocument && activeDocument?.key === document.key
+                ? "content-preview-panel__subtab content-preview-panel__subtab--active"
+                : "content-preview-panel__subtab"
+            }
+            type="button"
+            role="tab"
+            aria-selected={!isIntegratedDocument && activeDocument?.key === document.key}
+            onClick={() => onDocumentKeyChange(document.key)}
+          >
+            {document.label}
+          </button>
+        ))}
+      </div>
+      {isIntegratedDocument ? (
+        <article className="publication-preview" aria-label="이미지 포함 통합 배포 문서">
+          <header className="publication-preview__header">
+            <span>통합 배포 문서</span>
+            <h4>{record.title}</h4>
+            <p>
+              품질 {record.qualityScore == null ? "기록 없음" : `${record.qualityScore}점`} ·
+              이미지 {record.visualAssetsStatus || "기록 없음"} · 배포{" "}
+              {getChannelSummary(record.channelPublishStatus)}
+            </p>
+          </header>
+          {previewChannels.map((channel) => {
+            const visual = getVisualForChannel(record, channel.key);
+            const draft = getPreviewText(record, channel.key);
+            return (
+              <section className="publication-section" key={channel.key}>
+                <div className="publication-section__heading">
+                  <strong>{getChannelLabel(channel.key)}</strong>
+                  <span>{record.channelPublishStatus[channel.key] || "draft"}</span>
+                </div>
+                {visual ? (
+                  <figure className="publication-section__visual">
+                    <a href={visual.url} rel="noreferrer" target="_blank">
+                      <img alt={`${getChannelLabel(channel.key)} 대표 이미지`} src={visual.url} />
+                    </a>
+                    <figcaption>
+                      {visual.size || "size unknown"} · {visual.quality || "quality unknown"}
+                    </figcaption>
+                  </figure>
+                ) : (
+                  <div className="content-preview-panel__empty">
+                    {getChannelLabel(channel.key)} 대표 이미지가 아직 없다.
+                  </div>
+                )}
+                <div className="publication-section__body">{draft}</div>
+              </section>
+            );
+          })}
+        </article>
+      ) : activeDocument ? (
+        <>
+          <div className="content-preview-panel__document-path">{activeDocument.path}</div>
+          <article className="content-preview-panel__body">{activeDocument.content}</article>
+        </>
+      ) : (
+        <div className="content-preview-panel__empty">표시할 배포 문서가 없다.</div>
+      )}
+    </>
+  );
+}
+
 export function MetricDetailPanel({
   metricKey,
   detail,
@@ -87,6 +187,7 @@ export function MetricDetailPanel({
   const [previewChannel, setPreviewChannel] = useState<PreviewChannel>("blog");
   const [previewMode, setPreviewMode] = useState<PreviewMode>("draft");
   const [documentKey, setDocumentKey] = useState("");
+  const [isDocumentModalOpen, setIsDocumentModalOpen] = useState(false);
 
   const previewRecord = useMemo(
     () =>
@@ -95,16 +196,16 @@ export function MetricDetailPanel({
       detail.records[0],
     [detail.records, firstPreviewRecord, previewRecordId]
   );
-  const activeDocuments = previewRecord ? getDocuments(previewRecord) : [];
-  const activeDocument =
-    documentKey === integratedDocumentKey
-      ? null
-      : activeDocuments.find((document) => document.key === documentKey) ?? activeDocuments[0];
-  const isIntegratedDocument = documentKey === integratedDocumentKey || !documentKey;
-
   function selectPreview(record: BroadcastingRecord, mode: PreviewMode) {
     setPreviewRecordId(record.id);
     setPreviewMode(mode);
+  }
+
+  function openDocumentModal(record: BroadcastingRecord) {
+    setPreviewRecordId(record.id);
+    setPreviewMode("document");
+    setDocumentKey(integratedDocumentKey);
+    setIsDocumentModalOpen(true);
   }
 
   return (
@@ -181,7 +282,7 @@ export function MetricDetailPanel({
                 <button
                   className="metric-record__preview-button"
                   type="button"
-                  onClick={() => selectPreview(record, "document")}
+                  onClick={() => openDocumentModal(record)}
                 >
                   <FileText size={14} />
                   문서
@@ -230,7 +331,13 @@ export function MetricDetailPanel({
                 type="button"
                 role="tab"
                 aria-selected={previewMode === mode.key}
-                onClick={() => setPreviewMode(mode.key as PreviewMode)}
+                onClick={() => {
+                  setPreviewMode(mode.key as PreviewMode);
+                  if (mode.key === "document" && previewRecord) {
+                    setDocumentKey(integratedDocumentKey);
+                    setIsDocumentModalOpen(true);
+                  }
+                }}
               >
                 {mode.label}
               </button>
@@ -286,92 +393,49 @@ export function MetricDetailPanel({
             </div>
           ) : null}
           {previewMode === "document" ? (
-            <>
-              <div className="content-preview-panel__document-tabs" role="tablist" aria-label="배포 문서">
-                <button
-                  className={
-                    isIntegratedDocument
-                      ? "content-preview-panel__subtab content-preview-panel__subtab--active"
-                      : "content-preview-panel__subtab"
-                  }
-                  type="button"
-                  role="tab"
-                  aria-selected={isIntegratedDocument}
-                  onClick={() => setDocumentKey(integratedDocumentKey)}
-                >
-                  통합 문서
-                </button>
-                {activeDocuments.map((document) => (
-                  <button
-                    key={document.key}
-                    className={
-                      !isIntegratedDocument && activeDocument?.key === document.key
-                        ? "content-preview-panel__subtab content-preview-panel__subtab--active"
-                        : "content-preview-panel__subtab"
-                    }
-                    type="button"
-                    role="tab"
-                    aria-selected={!isIntegratedDocument && activeDocument?.key === document.key}
-                    onClick={() => setDocumentKey(document.key)}
-                  >
-                    {document.label}
-                  </button>
-                ))}
-              </div>
-              {isIntegratedDocument ? (
-                <article className="publication-preview" aria-label="이미지 포함 통합 배포 문서">
-                  <header className="publication-preview__header">
-                    <span>통합 배포 문서</span>
-                    <h4>{previewRecord.title}</h4>
-                    <p>
-                      품질 {previewRecord.qualityScore == null ? "기록 없음" : `${previewRecord.qualityScore}점`} ·
-                      이미지 {previewRecord.visualAssetsStatus || "기록 없음"} ·
-                      배포 {getChannelSummary(previewRecord.channelPublishStatus)}
-                    </p>
-                  </header>
-                  {previewChannels.map((channel) => {
-                    const visual = getVisualForChannel(previewRecord, channel.key);
-                    const draft = getPreviewText(previewRecord, channel.key);
-                    return (
-                      <section className="publication-section" key={channel.key}>
-                        <div className="publication-section__heading">
-                          <strong>{getChannelLabel(channel.key)}</strong>
-                          <span>{previewRecord.channelPublishStatus[channel.key] || "draft"}</span>
-                        </div>
-                        {visual ? (
-                          <figure className="publication-section__visual">
-                            <a href={visual.url} rel="noreferrer" target="_blank">
-                              <img alt={`${getChannelLabel(channel.key)} 대표 이미지`} src={visual.url} />
-                            </a>
-                            <figcaption>
-                              {visual.size || "size unknown"} · {visual.quality || "quality unknown"}
-                            </figcaption>
-                          </figure>
-                        ) : (
-                          <div className="content-preview-panel__empty">
-                            {getChannelLabel(channel.key)} 대표 이미지가 아직 없다.
-                          </div>
-                        )}
-                        <div className="publication-section__body">{draft}</div>
-                      </section>
-                    );
-                  })}
-                </article>
-              ) : activeDocument ? (
-                <>
-                  <div className="content-preview-panel__document-path">
-                    {activeDocument.path}
-                  </div>
-                  <article className="content-preview-panel__body">
-                    {activeDocument.content}
-                  </article>
-                </>
-              ) : (
-                <div className="content-preview-panel__empty">표시할 배포 문서가 없다.</div>
-              )}
-            </>
+            <div className="content-preview-panel__empty">
+              배포 문서는 팝업으로 확인합니다.
+              <button
+                className="publication-open-button"
+                type="button"
+                onClick={() => openDocumentModal(previewRecord)}
+              >
+                통합 문서 열기
+              </button>
+            </div>
           ) : null}
         </section>
+      ) : null}
+      {isDocumentModalOpen && previewRecord ? (
+        <div className="publication-modal" role="dialog" aria-modal="true" aria-label="배포 문서 팝업">
+          <button
+            className="publication-modal__backdrop"
+            type="button"
+            aria-label="배포 문서 팝업 닫기"
+            onClick={() => setIsDocumentModalOpen(false)}
+          />
+          <section className="publication-modal__panel">
+            <div className="publication-modal__header">
+              <div>
+                <span className="agent-detail-panel__eyebrow">Publication Document</span>
+                <h3>{previewRecord.title}</h3>
+              </div>
+              <button
+                className="icon-button"
+                type="button"
+                aria-label="배포 문서 팝업 닫기"
+                onClick={() => setIsDocumentModalOpen(false)}
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <PublicationDocumentViewer
+              documentKey={documentKey}
+              onDocumentKeyChange={setDocumentKey}
+              record={previewRecord}
+            />
+          </section>
+        </div>
       ) : null}
     </aside>
   );
