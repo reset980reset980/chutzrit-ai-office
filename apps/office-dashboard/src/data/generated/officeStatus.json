@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-18T03:31:33.857Z",
+  "generatedAt": "2026-05-18T07:44:36.744Z",
   "today": "2026-05-18",
   "dataSource": {
     "broadcastingRoot": "outputs/broadcasting",
@@ -10,30 +10,448 @@
   },
   "tokenUsage": {
     "status": "available",
-    "used": 42000,
+    "used": 46600,
     "limit": 200000,
-    "percentage": 21,
+    "percentage": 23,
     "label": "Codex 사용량",
     "reason": "오늘 산출물 기준 사용량 추정"
   },
   "metrics": {
-    "todayInputs": 0,
-    "completedContents": 0,
+    "todayInputs": 1,
+    "completedContents": 1,
     "reviewQueue": 0,
-    "published": 0,
-    "overallProgress": 0,
+    "published": 1,
+    "overallProgress": 100,
     "systemStatus": "실시간 운영 상태 동기화 중"
   },
   "metricDetails": {
     "inputs": {
       "title": "오늘 입력",
       "description": "outputs/broadcasting/drafts에서 오늘 생성된 입력 패키지",
-      "records": []
+      "records": [
+        {
+          "id": "2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a",
+          "scope": "drafts",
+          "title": "Finance Signal Radar 리포트 이미지 테스트 전략",
+          "generatedAt": "2026-05-18T16:37:15.349746",
+          "inputType": "memo",
+          "sourceSummary": "Finance Signal Radar 리포트의 6개 신호를 바탕으로 이미지 제작까지 테스트하려는 요청이다. LG에너지솔루션, 네이버, 카카오, KB금융, SK하이닉스, 삼성전자 모두 T+5 기준 하락 예측이 잡혔고, 최근 1개월 변동률과 신뢰도, 강도가 함께 제시됐다. 참고 링크는 없다.",
+          "targetPersona": "금융 데이터 자동화, 시장 신호 대시보드, 리포트 이미지화에 관심 있는 실무형 학습자와 1인 운영자",
+          "qualityScore": 92,
+          "qualityPassed": true,
+          "revisionCount": 1,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "telegram": "generated",
+            "visuals": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "external_publish_disabled",
+            "linkedin": "blocked_until_blog_url",
+            "telegram": "published"
+          },
+          "publishedUrls": {
+            "blog": "",
+            "linkedin": "",
+            "telegram": "https://t.me/reset9800/97"
+          },
+          "visualAssetsStatus": "generated",
+          "visualAssets": {
+            "blog": {
+              "status": "generated",
+              "path": "/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/blog.png",
+              "relative_path": "visuals/blog.png",
+              "prompt": "A clean financial report dashboard with a structured workflow feel, showing a transformation from raw market signals into standardized comparison cards. Multiple stock cards arranged in a balanced grid or layered panel layout, each card containing abstract data blocks, subtle downward trend indicators, small risk bars, and consistent visual hierarchy that suggests a radar-style risk scanner. Calm, analytical, trustworthy mood, practical fintech interface design, elegant spacing, soft neutral palette with restrained blue, gray, and muted amber accents, crisp lighting, high clarity, modern enterprise dashboard aesthetic, information architecture made visible, no people, no devices in hand, no clutter, no dramatic effects. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.",
+              "size": "1536x1024",
+              "quality": "medium",
+              "provider": "openai_images",
+              "model": "gpt-image-1"
+            },
+            "linkedin": {
+              "status": "generated",
+              "path": "/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/linkedin.png",
+              "relative_path": "visuals/linkedin.png",
+              "prompt": "A compact finance signal comparison dashboard designed for quick scanning in a social feed. Several stock risk cards in a clean front-facing layout, with one or two priority cards slightly emphasized in the foreground, showing abstract downward trend cues, simple risk blocks, and subtle hierarchy that instantly communicates comparable downside risk and priority sorting. Minimal, sharp, professional, analytical tone, balanced composition, muted blue-gray palette with controlled contrast, modern data visualization style, no excessive depth, no dramatic red alerts, no cyberpunk neon, no abstract background noise, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.",
+              "size": "1024x1024",
+              "quality": "medium",
+              "provider": "openai_images",
+              "model": "gpt-image-1"
+            },
+            "telegram": {
+              "status": "generated",
+              "path": "/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/telegram.png",
+              "relative_path": "visuals/telegram.png",
+              "prompt": "A simple mobile-friendly summary image showing six neatly arranged stock cards on one screen, all indicating downward market signals with subtle differences in confidence and strength through card order, spacing, and restrained color contrast. Clean, balanced square layout, easy to read at a glance, practical risk-scan aesthetic, calm and trustworthy fintech dashboard feel, soft gray and blue palette with muted accent differences only, crisp edges, minimal visual noise, no complex charts, no dramatic alarm styling, no 3D overload, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.",
+              "size": "1024x1024",
+              "quality": "medium",
+              "provider": "openai_images",
+              "model": "gpt-image-1"
+            }
+          },
+          "visualPreviewUrls": {
+            "blog": {
+              "url": "/generated/broadcasting/drafts/2026-05-18-finance-signal-radar-%EB%A6%AC%ED%8F%AC%ED%8A%B8-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%A0%84%EB%9E%B5-f5ce456a/visuals/blog.png",
+              "status": "generated",
+              "size": "1536x1024",
+              "quality": "medium",
+              "provider": "openai_images",
+              "model": "gpt-image-1"
+            },
+            "linkedin": {
+              "url": "/generated/broadcasting/drafts/2026-05-18-finance-signal-radar-%EB%A6%AC%ED%8F%AC%ED%8A%B8-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%A0%84%EB%9E%B5-f5ce456a/visuals/linkedin.png",
+              "status": "generated",
+              "size": "1024x1024",
+              "quality": "medium",
+              "provider": "openai_images",
+              "model": "gpt-image-1"
+            },
+            "telegram": {
+              "url": "/generated/broadcasting/drafts/2026-05-18-finance-signal-radar-%EB%A6%AC%ED%8F%AC%ED%8A%B8-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%A0%84%EB%9E%B5-f5ce456a/visuals/telegram.png",
+              "status": "generated",
+              "size": "1024x1024",
+              "quality": "medium",
+              "provider": "openai_images",
+              "model": "gpt-image-1"
+            }
+          },
+          "visualQuality": {
+            "score": 94,
+            "passed": true,
+            "problems": [
+              "세 채널 모두 핵심 메시지와 이미지 콘셉트가 잘 맞는다. 카드형 대시보드, 우선순위 비교, 위험도 시각화가 텍스트 주장과 일치한다.",
+              "비율 측면에서 blog 1536x1024, linkedin/telegram 1024x1024로 채널 목적에 대체로 적합하다. 특히 LinkedIn과 Telegram의 정사각형 비율은 피드/메신저 환경에 무난하다.",
+              "프롬프트에 텍스트, 숫자, 로고, 워터마크 금지 지시가 명시되어 있어 통제는 잘 되어 있다.",
+              "후츠릿 톤인 실용적이고 분석적인 금융 자동화 분위기와 잘 맞으며, stock 사진처럼 보일 위험도 낮다.",
+              "다만 blog와 linkedin 프롬프트의 'abstract data blocks', 'simple risk blocks'가 다소 추상적이라 실제 생성 결과가 카드 UI보다 장식적 대시보드로 흐를 가능성이 있다.",
+              "telegram 프롬프트는 명확하지만 6개 종목의 '비교 순서'를 더 강하게 규정하지 않아, 결과물이 균등 배열만 되고 우선순위가 약해질 수 있다."
+            ],
+            "recommendations": [
+              "blog 프롬프트에서 카드의 정보 구조를 더 구체화하라. 예: 상단 종목명 자리, 중단 수치 블록 자리, 하단 위험 막대 자리처럼 레이아웃 고정 지시를 넣어라.",
+              "linkedin 프롬프트는 'one or two priority cards' 외에 첫 번째 카드가 가장 먼저 시선이 가도록 전경/크기/대비 우선순위를 더 명시하라.",
+              "telegram 프롬프트에는 6개 카드의 정렬 기준을 '신뢰도와 강도 우선'으로 못 박아, 단순 균등 배열이 아니라 판단용 순서가 보이도록 강화하라.",
+              "세 프롬프트 모두 'no text, numbers' 금지는 유지하되, UI glyph까지 포함해 카드 내부의 미세 아이콘도 글자처럼 보이지 않도록 더 단순한 기호 체계를 제한하라.",
+              "추상 표현을 줄이고 'front-facing cards', 'fixed grid', 'consistent spacing', 'priority first' 같은 조형 지시를 더 늘려 생성 안정성을 높여라."
+            ]
+          },
+          "externalApiStatus": "not_connected",
+          "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a",
+          "statusReason": "자동 공개 게시 설정이 꺼져 있다.",
+          "packageStatus": "blocked",
+          "previews": {
+            "blog": "# Finance Signal Radar 리포트를 이미지로 바꾸는 이유\n\n뉴스와 가격 데이터를 붙여 놓는 것만으로는 운영이 되지 않는다. 지금처럼 6개 종목이 모두 하락 신호를 보일 때는 텍스트 요약보다 한눈에 비교되는 이미지 구조가 더 중요하다. 핵심은 예측을 맞히는 데만 있지 않다. 어떤 종목을 먼저 봐야 하는지, 무엇을 위험 신호로 읽어야 하는지를 빠르게 결정하게 만드는 데 있다.\n\n## ✅ 결론부터 말하면\n\n이 리포트는 텍스트 리포트로 끝내기보다 카드형 이미지로 렌더링해야 한다. 이유는 간단하다. 뉴스 개수, 최근 1개월 변화율, 예측 변화율, 신뢰도, 강도가 한 화면에 함께 있어야 신호의 우선순위가 보이기 때문이다. 숫자를 많이 넣는다고 더 정확해지는 것은 아니다. 비교 가능한 형태로 묶어야 실무에서 쓸 수 있다.\n\n## 텍스트 리포트가 분산시키는 정보\n\n현재 신호는 전부 하락 예측이지만, 종목마다 해석 무게가 다르다. 예를 들어 LG에너지솔루션은 신뢰도 82%, 예측 변화율 -12.82%로 강한 하락 신호가 보인다. 반면 삼성전자는 신뢰도 71%, 강도 3으로 같은 하락 예측이라도 우선순위가 다르다. \n\n문제는 이런 차이가 텍스트에서는 쉽게 흐려진다는 점이다. 사람은 긴 목록을 읽을 때 절대값보다 첫인상에 끌린다. 그래서 “모두 하락”이라는 결론만 남고, 실제로는 더 먼저 봐야 할 종목이 사라진다. 🔍\n\n## 이미지로 바꿀 때의 설계 기준\n\n이미지는 예쁘게 만드는 작업이 아니라 읽는 비용을 줄이는 작업이다. 카드형 레이아웃을 쓸 때는 다음 순서를 고정하는 편이 좋다.\n\n1. 신뢰도와 강도를 먼저 본다\n2. 그다음 예측 변화율을 본다\n3. 마지막에 뉴스 개수와 최근 1개월 변화율을 본다\n\n이 순서가 중요한 이유는 예측 변화율이 크다고 해서 반드시 믿을 수 있는 신호는 아니기 때문이다. SK하이닉스는 최근 1개월 변화율이 110.05%로 매우 크지만, 신뢰도는 71%, 강도는 4다. 삼성전자는 최근 1개월 변화율이 50.91%지만 강도는 3이다. 같은 하락 신호라도 읽어야 하는 우선순위가 다르다. 📌\n\n## 카드형 레이아웃 설계 원칙\n\n카드 하나에는 같은 위치에 같은 정보를 넣어야 한다. 그래야 종목끼리 비교가 된다. 추천 구조는 다음과 같다.\n\n- 상단: 종목명, 신뢰도, 강도\n- 중단: 뉴스 개수, 최근 1개월 변화율\n- 하단: 예측 변화율\n\n예를 들면 이런 식이다.\n\n- LG에너지솔루션 / 신뢰도 82% / 강도 5\n- 뉴스 7건 / 최근 1개월 +2.38% / 예측 -12.82%\n\n이 구조의 장점은 단순하다. 숫자가 많아도 위치가 고정되면 눈이 자동으로 비교한다. 반대로 위치가 흔들리면 매번 다시 읽어야 한다. 실무에서는 이 읽는 비용이 생각보다 크다.\n\n## 이미지 제작까지 분리해야 하는 이유\n\n자동화에서는 리포트 생성과 이미지 렌더링을 한 번에 묶지 않는 편이 안전하다. 원본 JSON을 먼저 만들고, 그다음 카드형 이미지로 렌더링하는 2단계 파이프라인이 맞다. 이렇게 나누면 이미지가 깨져도 데이터는 살아남는다.\n\n권장 산출물은 세 가지다.\n\n- 원본 JSON\n- 텍스트 요약본\n- PNG 이미지\n\n이렇게 저장해야 실패 복구가 된다. 이미지가 잘리지 않았는지, 숫자 라운딩이 일관적인지, 카드 간 대비가 충분한지는 렌더링 단계에서 따로 검수해야 한다. ⚠️\n\n## 이번 데이터에서 읽히는 운영 포인트\n\n이번 리포트는 전 종목 하락 신호다. 이런 경우에는 “매수/매도 판단”보다 “위험 신호 우선순위 정렬”이 더 맞다. 실무적으로는 다음 순서가 유효하다.\n\n- 먼저 LG에너지솔루션처럼 신뢰도와 강도가 높은 카드부터 본다\n- 그다음 네이버, 카카오처럼 뉴스와 예측 변화가 함께 움직인 종목을 본다\n- 마지막에 삼성전자처럼 신호는 있으나 강도가 낮은 카드를 본다\n\n이 판단 기준이 없으면 이미지가 있어도 오독이 생긴다. 반대로 기준이 있으면 이미지 한 장이 단순 요약이 아니라 운영 자산이 된다.\n\n## 마무리\n\n이 리포트의 핵심은 맞히는 예측이 아니라 비교 가능한 위험 시각화다. AI가 숫자를 만드는 단계보다 중요한 것은 그 숫자를 사람이 빠르게 읽고 검증할 수 있게 만드는 구조다. 따라서 다음 테스트는 예측 정확도보다 카드 순서, 정보 배치, 우선순위 판독 시간을 먼저 봐야 한다. 도구 사용량보다 시스템을 설계하고 검증하는 능력에서 차이가 난다.",
+            "linkedin": "# 뉴스가 많아도 신호는 강하지 않을 수 있습니다 📉\n\n데이터가 실무에 쓰이려면 숫자를 더하는 것보다, 먼저 비교되게 만들어야 합니다.\n\n이번 Finance Signal Radar는 6개 종목 모두 하락 예측이 잡혔습니다. 하지만 실무에서 더 중요한 건 ‘전부 하락’이 아니라 무엇을 먼저 봐야 하느냐입니다. LG에너지솔루션은 신뢰도 82%로 가장 높고, SK하이닉스는 최근 1개월 +110.05%인데 예측은 -2.13%입니다. 같은 하락 신호라도 우선순위는 다릅니다.\n\n판단 기준은 단순합니다. 예측 변화율만 보지 말고, 신뢰도와 강도를 먼저 보셔야 합니다. 그다음에 뉴스 개수와 가격 반응을 붙여야 실무 판단이 흔들리지 않습니다.\n\n중요한 건 예측을 맞히는 것이 아니라, 카드형 레이아웃으로 위험도를 정렬해 3초 안에 오독 없이 읽히게 만드는 것입니다. 텍스트 리포트와 이미지 리포트는 분리해야 하고, 렌더링이 깨져도 원본 수치는 반드시 남아 있어야 합니다.\n\nAI가 숫자를 만드는 단계보다, 숫자를 비교하고 검증하게 만드는 구조가 더 중요합니다. 이 구조를 실제 화면으로 어떻게 설계했는지는 블로그 전문 [블로그 링크]에서 확인하실 수 있습니다. 🔎",
+            "telegram": "## 🚀 6개 종목이 모두 하락일 때는, 예측보다 우선순위부터 보셔야 합니다\n\n이번 Finance Signal Radar는 6개 종목 모두 하락 예측이 잡혔습니다. 이런 경우 실무에서 먼저 봐야 하는 건 “전부 하락”이라는 결론이 아니라, 어떤 종목을 먼저 확인해야 하는지입니다.\n\nLG에너지솔루션은 신뢰도 82%에 예측 하락폭이 -12.82%로 가장 강했고, 삼성전자는 신뢰도 71%에 강도 3으로 같은 하락 신호라도 무게가 달랐습니다. 뉴스 개수, 최근 1개월 변동, 예측 변화율, 신뢰도, 강도가 함께 있으면 텍스트 요약만으로는 판단이 쉽게 분산됩니다.\n\n그래서 이번 테스트는 원본 리포트로 끝내지 말고, 카드형 이미지로 바꿔서 우선 확인 종목이 바로 보이게 만드는 쪽이 맞습니다. 이미지 한 장에서 위험도 순서가 읽혀야 현업에서 쓸 수 있습니다. 📌\n\n- ✅ 원본 JSON 생성과 카드형 이미지 렌더링은 분리해서 보셔야 합니다\n- ✅ 카드 순서는 예측 변화율보다 신뢰도와 강도를 먼저 반영해 정렬해 보셔야 합니다\n- ⚠️ 뉴스 개수·1개월 변화율·예측 변화율·신뢰도는 같은 위치에 고정해 비교 가능하게 만드셔야 합니다\n\n이번 데이터는 “맞추는 예측”보다 “위험도를 읽는 시각화”에 더 적합합니다. 우선 확인 종목이 3초 안에 보이면 운영 가치가 생기고, 카드가 복잡해져 오독이 늘면 모델이 좋아도 현업에서는 쓰기 어렵습니다."
+          },
+          "documents": [
+            {
+              "key": "blog",
+              "label": "Blog 원고",
+              "fileName": "blog.md",
+              "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/blog.md",
+              "content": "# Finance Signal Radar 리포트를 이미지로 바꾸는 이유\n\n뉴스와 가격 데이터를 붙여 놓는 것만으로는 운영이 되지 않는다. 지금처럼 6개 종목이 모두 하락 신호를 보일 때는 텍스트 요약보다 한눈에 비교되는 이미지 구조가 더 중요하다. 핵심은 예측을 맞히는 데만 있지 않다. 어떤 종목을 먼저 봐야 하는지, 무엇을 위험 신호로 읽어야 하는지를 빠르게 결정하게 만드는 데 있다.\n\n## ✅ 결론부터 말하면\n\n이 리포트는 텍스트 리포트로 끝내기보다 카드형 이미지로 렌더링해야 한다. 이유는 간단하다. 뉴스 개수, 최근 1개월 변화율, 예측 변화율, 신뢰도, 강도가 한 화면에 함께 있어야 신호의 우선순위가 보이기 때문이다. 숫자를 많이 넣는다고 더 정확해지는 것은 아니다. 비교 가능한 형태로 묶어야 실무에서 쓸 수 있다.\n\n## 텍스트 리포트가 분산시키는 정보\n\n현재 신호는 전부 하락 예측이지만, 종목마다 해석 무게가 다르다. 예를 들어 LG에너지솔루션은 신뢰도 82%, 예측 변화율 -12.82%로 강한 하락 신호가 보인다. 반면 삼성전자는 신뢰도 71%, 강도 3으로 같은 하락 예측이라도 우선순위가 다르다. \n\n문제는 이런 차이가 텍스트에서는 쉽게 흐려진다는 점이다. 사람은 긴 목록을 읽을 때 절대값보다 첫인상에 끌린다. 그래서 “모두 하락”이라는 결론만 남고, 실제로는 더 먼저 봐야 할 종목이 사라진다. 🔍\n\n## 이미지로 바꿀 때의 설계 기준\n\n이미지는 예쁘게 만드는 작업이 아니라 읽는 비용을 줄이는 작업이다. 카드형 레이아웃을 쓸 때는 다음 순서를 고정하는 편이 좋다.\n\n1. 신뢰도와 강도를 먼저 본다\n2. 그다음 예측 변화율을 본다\n3. 마지막에 뉴스 개수와 최근 1개월 변화율을 본다\n\n이 순서가 중요한 이유는 예측 변화율이 크다고 해서 반드시 믿을 수 있는 신호는 아니기 때문이다. SK하이닉스는 최근 1개월 변화율이 110.05%로 매우 크지만, 신뢰도는 71%, 강도는 4다. 삼성전자는 최근 1개월 변화율이 50.91%지만 강도는 3이다. 같은 하락 신호라도 읽어야 하는 우선순위가 다르다. 📌\n\n## 카드형 레이아웃 설계 원칙\n\n카드 하나에는 같은 위치에 같은 정보를 넣어야 한다. 그래야 종목끼리 비교가 된다. 추천 구조는 다음과 같다.\n\n- 상단: 종목명, 신뢰도, 강도\n- 중단: 뉴스 개수, 최근 1개월 변화율\n- 하단: 예측 변화율\n\n예를 들면 이런 식이다.\n\n- LG에너지솔루션 / 신뢰도 82% / 강도 5\n- 뉴스 7건 / 최근 1개월 +2.38% / 예측 -12.82%\n\n이 구조의 장점은 단순하다. 숫자가 많아도 위치가 고정되면 눈이 자동으로 비교한다. 반대로 위치가 흔들리면 매번 다시 읽어야 한다. 실무에서는 이 읽는 비용이 생각보다 크다.\n\n## 이미지 제작까지 분리해야 하는 이유\n\n자동화에서는 리포트 생성과 이미지 렌더링을 한 번에 묶지 않는 편이 안전하다. 원본 JSON을 먼저 만들고, 그다음 카드형 이미지로 렌더링하는 2단계 파이프라인이 맞다. 이렇게 나누면 이미지가 깨져도 데이터는 살아남는다.\n\n권장 산출물은 세 가지다.\n\n- 원본 JSON\n- 텍스트 요약본\n- PNG 이미지\n\n이렇게 저장해야 실패 복구가 된다. 이미지가 잘리지 않았는지, 숫자 라운딩이 일관적인지, 카드 간 대비가 충분한지는 렌더링 단계에서 따로 검수해야 한다. ⚠️\n\n## 이번 데이터에서 읽히는 운영 포인트\n\n이번 리포트는 전 종목 하락 신호다. 이런 경우에는 “매수/매도 판단”보다 “위험 신호 우선순위 정렬”이 더 맞다. 실무적으로는 다음 순서가 유효하다.\n\n- 먼저 LG에너지솔루션처럼 신뢰도와 강도가 높은 카드부터 본다\n- 그다음 네이버, 카카오처럼 뉴스와 예측 변화가 함께 움직인 종목을 본다\n- 마지막에 삼성전자처럼 신호는 있으나 강도가 낮은 카드를 본다\n\n이 판단 기준이 없으면 이미지가 있어도 오독이 생긴다. 반대로 기준이 있으면 이미지 한 장이 단순 요약이 아니라 운영 자산이 된다.\n\n## 마무리\n\n이 리포트의 핵심은 맞히는 예측이 아니라 비교 가능한 위험 시각화다. AI가 숫자를 만드는 단계보다 중요한 것은 그 숫자를 사람이 빠르게 읽고 검증할 수 있게 만드는 구조다. 따라서 다음 테스트는 예측 정확도보다 카드 순서, 정보 배치, 우선순위 판독 시간을 먼저 봐야 한다. 도구 사용량보다 시스템을 설계하고 검증하는 능력에서 차이가 난다."
+            },
+            {
+              "key": "linkedin",
+              "label": "LinkedIn 원고",
+              "fileName": "linkedin.md",
+              "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/linkedin.md",
+              "content": "# 뉴스가 많아도 신호는 강하지 않을 수 있습니다 📉\n\n데이터가 실무에 쓰이려면 숫자를 더하는 것보다, 먼저 비교되게 만들어야 합니다.\n\n이번 Finance Signal Radar는 6개 종목 모두 하락 예측이 잡혔습니다. 하지만 실무에서 더 중요한 건 ‘전부 하락’이 아니라 무엇을 먼저 봐야 하느냐입니다. LG에너지솔루션은 신뢰도 82%로 가장 높고, SK하이닉스는 최근 1개월 +110.05%인데 예측은 -2.13%입니다. 같은 하락 신호라도 우선순위는 다릅니다.\n\n판단 기준은 단순합니다. 예측 변화율만 보지 말고, 신뢰도와 강도를 먼저 보셔야 합니다. 그다음에 뉴스 개수와 가격 반응을 붙여야 실무 판단이 흔들리지 않습니다.\n\n중요한 건 예측을 맞히는 것이 아니라, 카드형 레이아웃으로 위험도를 정렬해 3초 안에 오독 없이 읽히게 만드는 것입니다. 텍스트 리포트와 이미지 리포트는 분리해야 하고, 렌더링이 깨져도 원본 수치는 반드시 남아 있어야 합니다.\n\nAI가 숫자를 만드는 단계보다, 숫자를 비교하고 검증하게 만드는 구조가 더 중요합니다. 이 구조를 실제 화면으로 어떻게 설계했는지는 블로그 전문 [블로그 링크]에서 확인하실 수 있습니다. 🔎"
+            },
+            {
+              "key": "telegram",
+              "label": "Telegram 뉴스레터",
+              "fileName": "telegram.md",
+              "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/telegram.md",
+              "content": "## 🚀 6개 종목이 모두 하락일 때는, 예측보다 우선순위부터 보셔야 합니다\n\n이번 Finance Signal Radar는 6개 종목 모두 하락 예측이 잡혔습니다. 이런 경우 실무에서 먼저 봐야 하는 건 “전부 하락”이라는 결론이 아니라, 어떤 종목을 먼저 확인해야 하는지입니다.\n\nLG에너지솔루션은 신뢰도 82%에 예측 하락폭이 -12.82%로 가장 강했고, 삼성전자는 신뢰도 71%에 강도 3으로 같은 하락 신호라도 무게가 달랐습니다. 뉴스 개수, 최근 1개월 변동, 예측 변화율, 신뢰도, 강도가 함께 있으면 텍스트 요약만으로는 판단이 쉽게 분산됩니다.\n\n그래서 이번 테스트는 원본 리포트로 끝내지 말고, 카드형 이미지로 바꿔서 우선 확인 종목이 바로 보이게 만드는 쪽이 맞습니다. 이미지 한 장에서 위험도 순서가 읽혀야 현업에서 쓸 수 있습니다. 📌\n\n- ✅ 원본 JSON 생성과 카드형 이미지 렌더링은 분리해서 보셔야 합니다\n- ✅ 카드 순서는 예측 변화율보다 신뢰도와 강도를 먼저 반영해 정렬해 보셔야 합니다\n- ⚠️ 뉴스 개수·1개월 변화율·예측 변화율·신뢰도는 같은 위치에 고정해 비교 가능하게 만드셔야 합니다\n\n이번 데이터는 “맞추는 예측”보다 “위험도를 읽는 시각화”에 더 적합합니다. 우선 확인 종목이 3초 안에 보이면 운영 가치가 생기고, 카드가 복잡해져 오독이 늘면 모델이 좋아도 현업에서는 쓰기 어렵습니다."
+            },
+            {
+              "key": "strategy",
+              "label": "전략 문서",
+              "fileName": "strategy.md",
+              "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/strategy.md",
+              "content": "# Strategy\n\n- 핵심 메시지: 뉴스와 가격 데이터를 결합한 신호는 단순 알림이 아니라, 한눈에 위험도를 읽는 시각화 자산으로 만들어야 한다.\n- 타깃 독자: 금융 데이터 자동화, 시장 신호 대시보드, 리포트 이미지화에 관심 있는 실무형 학습자와 1인 운영자\n- 주장: 이 리포트는 텍스트 요약으로 끝낼 것이 아니라, 종목별 하락 신호를 비교 가능한 이미지로 바꾸는 테스트에 최적화된 입력이다.\n\n## Platform Directions\n\n- Blog: 기술 구현형으로 간다. 리포트를 이미지로 바꾸는 워크플로우, 시각화 기준, 카드형 레이아웃 설계, 종목별 점수와 예측치 배치 원칙을 다룬다. 핵심은 예측 정확도 자체보다 신호를 읽기 쉬운 형태로 운영하는 구조다.\n- LinkedIn: 시장 신호를 '데이터 요약'이 아니라 '판단 가능한 시각적 구조'로 바꿔야 한다는 관점으로 압축한다. AI가 숫자를 만드는 단계보다, 숫자를 비교하고 검증하게 만드는 설계가 중요하다는 메시지를 전면에 둔다.\n- Telegram: 짧게 핵심만 전달한다. 이번 리포트에서 6개 종목 모두 하락 예측이 잡혔고, 신뢰도와 강도가 함께 제시된 만큼 이미지 한 장으로 요약하는 테스트를 해보는 흐름이라는 점을 강조한다. 실행 항목은 카드형 이미지 시안 생성과 종목별 위험도 정렬 확인 정도로 짧게 잡는다."
+            },
+            {
+              "key": "insight",
+              "label": "인사이트 문서",
+              "fileName": "insight.md",
+              "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/insight.md",
+              "content": "# Insight\n\n이 리포트의 핵심은 ‘맞추는 예측’이 아니라 ‘비교 가능한 위험 시각화’로 바꾸는 데 있다. 지금 데이터는 종목별 뉴스 개수, 최근 변동, 예측 변화율, 신뢰도, 강도가 함께 붙어 있어서 텍스트로 읽으면 신호가 분산된다. 실무 관점에서는 이걸 그대로 요약하는 것이 아니라, 위험도 순서와 확신 수준을 한 화면에서 읽히는 카드 구조로 바꿔야 한다. 특히 예측 하락이 전 종목에 걸쳐 나오더라도, 강도와 신뢰도 차이가 있으므로 ‘모두 하락’이라는 단일 결론보다 어떤 종목을 먼저 볼지 결정하게 만드는 운영 구조가 중요하다. AI 자동화 측면에서는 리포트 생성과 이미지 렌더링을 분리해야 하고, 개발툴 측면에서는 수치 계산과 레이아웃 규칙을 코드로 고정해야 한다. 검증은 예측 정확도만 보지 말고, 이미지 한 장에서 오독이 줄었는지, 우선순위가 빨리 잡히는지로 판단해야 한다. 실패 복구는 이미지 생성이 깨져도 원본 텍스트 리포트는 유지되도록 두 단계 파이프라인으로 설계하는 것이 맞다.\n\n## Practical Points\n\n- 텍스트 리포트와 이미지 리포트를 한 작업으로 묶지 말고, 원본 JSON 생성 -> 카드형 렌더링의 2단계로 분리한다.\n- 카드 순서는 예측 변화율보다 신뢰도와 강도를 먼저 반영해 정렬 규칙을 고정한다.\n- 종목별 비교가 목적이면 절대값보다 상대 순위와 색상 체계를 우선 설계한다.\n- 이미지에서는 뉴스 개수, 최근 1개월 변화율, 예측 변화율, 신뢰도를 한 카드 안에 같은 위치에 배치해 읽는 비용을 줄인다.\n- 강도가 낮아도 신뢰도가 높으면 상단 노출 후보가 될 수 있으므로 단일 점수로 뭉개지 말고 분리 지표를 유지한다.\n- 검증 기준은 예측 적중률뿐 아니라, 사람이 3초 안에 위험도를 읽을 수 있는지로 둔다.\n- 렌더링 실패 대비를 위해 텍스트 요약본, 테이블 HTML, 이미지 PNG를 각각 독립 산출물로 저장한다.\n- 자동 배포 전에는 이미지가 실제로 잘리는지, 카드 간 대비가 충분한지, 숫자 라운딩이 일관적인지 확인하는 시각 검수 단계를 둔다.\n\n## Examples\n\n- 예시 1: 상단에는 신뢰도 82%의 LG에너지솔루션을 두고, 그 아래로 뉴스 15건인 KB금융과 뉴스 14건인 삼성전자를 배치해 ‘우선 확인 종목’ 구조를 만든다.\n- 예시 2: 카드 하나에 '뉴스 11건 / 최근 1개월 +110.05% / 예측 -2.13% / 신뢰도 71%'처럼 넣고, 예측 하락폭보다 신뢰도와 변동 이력을 같이 보여준다.\n- 예시 3: 이미지 버전과 텍스트 버전을 동시에 생성해, Telegram에는 이미지 한 장과 핵심 2줄만 보내고, 블로그나 내부 로그에는 전체 수치 테이블을 남긴다.\n- 예시 4: 하락 신호 6개가 모두 잡혔을 때는 ‘매수/매도 판단’보다 ‘위험 신호 우선순위 정렬’로 메시지를 바꿔 오독을 줄인다.\n\n## Cautions\n\n- 예측이 전 종목 하락으로 나왔다고 해서 실제 매매 신호로 바로 쓰면 안 된다. 신뢰도와 강도 차이를 검증 없이 동일하게 취급하면 위험하다.\n- 뉴스 개수가 많다고 신호 품질이 높다고 단정하면 안 된다. 뉴스 양은 맥락일 뿐이고, 가격 반응과 결합했을 때만 의미가 있다.\n- 이미지 중심 운영에서는 숫자 과밀이 가장 큰 실패 요인이다. 한 카드에 지표를 너무 많이 넣으면 비교성이 떨어진다.\n- 색상만으로 위험도를 표현하면 색각 문제와 모바일 가독성 이슈가 생긴다. 색상은 보조고, 숫자와 순서가 기준이어야 한다.\n- 이미지 생성 오류를 본 리포트 오류로 착각하지 않도록, 렌더링 실패와 데이터 생성 실패를 로그 단계에서 분리해야 한다.\n- 예측 변화율이 큰 종목과 신뢰도가 높은 종목이 다를 수 있으므로 단일 랭킹만 운영하면 판단이 왜곡된다."
+            },
+            {
+              "key": "reflection",
+              "label": "평가 문서",
+              "fileName": "reflection.md",
+              "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/reflection.md",
+              "content": "# Reflection\n\n- 총점: 92\n- 통과 여부: True\n- 배포 상태: 자동 발송 가능\n\n## Channel Scores\n\n- blog: 94\n- linkedin: 90\n- telegram: 91\n\n## Strengths\n\n- 블로그가 문어체 평서형 반말로 작성되어 있고, 소제목 구조도 स्पष्ट해서 하드 게이트를 충족한다.\n- 후츠릿 관점에서 '예측'보다 '비교 가능한 위험 시각화'와 운영 구조를 강조해 관점이 선명하다.\n- 실무 적용성 측면에서 원본 JSON -> 카드형 렌더링의 2단계 파이프라인, 정렬 기준, 검수 포인트가 구체적이다.\n- LinkedIn에 [블로그 링크] 자리표시자가 있어 유입 장치가 명확하다.\n- Telegram이 고정 라벨 없이 Markdown 제목과 핵심 메시지를 유지하고 있어 플랫폼 적합성이 좋다.\n- 과도한 이모지 사용이 없고, 스캔성 보조 수준에서만 사용해 가독성이 무너지지 않는다.\n\n## Problems\n\n- 블로그 첫 문단과 일부 문장들이 다소 선언형이라, 초반 훅에서 바로 실무 문제를 더 강하게 찌르면 후킹력이 더 좋아진다.\n- LinkedIn은 메시지가 좋지만 문단이 다소 길어 모바일 스캔성은 더 개선될 여지가 있다.\n- Telegram은 실행 항목이 유효하지만, 마지막 한 줄에 CTA가 조금 더 또렷하면 전환력이 높아진다.\n- 블로그와 Telegram 모두 예시가 충분하나, 실제 화면 구성에 대한 한 줄 설명이 더 있으면 구체성이 더 올라간다.\n\n## Revision Instructions\n\n- 블로그 도입부를 '모두 하락인데 왜 텍스트로 읽으면 위험 순서가 안 보이는가'처럼 문제 제기형으로 더 압축하라.\n- LinkedIn은 3문단 이내로 줄이고, 각 문단의 첫 문장을 더 짧게 만들어 모바일 스캔성을 높여라.\n- Telegram 마지막 문장에 '카드형 이미지 시안 생성 → 우선순위 정렬 확인' 같은 직접 CTA를 한 번 더 넣어라.\n- 블로그에 카드 예시를 1개만 더 추가해, 실제 레이아웃 상의 정보 배치를 더 선명하게 보여줘라.\n- 이미지 기준 문장을 추가할 때는 숫자와 순서를 유지하고, 추상적인 표현은 최소화하라."
+            },
+            {
+              "key": "publish-plan",
+              "label": "배포 계획",
+              "fileName": "publish-plan.json",
+              "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/publish-plan.json",
+              "content": "{\n  \"agent\": \"PublishAgent\",\n  \"quality_score\": 92,\n  \"quality_passed\": true,\n  \"quality_ready_for_publish\": true,\n  \"external_api_status\": \"not_connected\",\n  \"processing_mode\": \"sequential_tistory_first_with_telegram_dispatch\",\n  \"executed_at\": \"2026-05-18T16:38:13.542793\",\n  \"publish_strategy\": {\n    \"mode\": \"sequential\",\n    \"order\": [\n      \"blog\",\n      \"linkedin\",\n      \"telegram\"\n    ],\n    \"dependencies\": {\n      \"blog\": [],\n      \"linkedin\": [\n        \"blog.url\"\n      ],\n      \"telegram\": []\n    },\n    \"reason\": \"LinkedIn 원고는 티스토리 실제 발행 URL이 필요하므로 블로그를 먼저 발행한다.\"\n  },\n  \"channels\": {\n    \"blog\": {\n      \"status\": \"external_publish_disabled\",\n      \"provider\": \"tistory_playwright\",\n      \"url\": \"\",\n      \"reason\": \"자동 공개 게시 설정이 꺼져 있다.\",\n      \"details\": {}\n    },\n    \"linkedin\": {\n      \"status\": \"blocked_until_blog_url\",\n      \"provider\": \"linkedin_posts_api\",\n      \"url\": \"\",\n      \"reason\": \"티스토리 실제 발행 URL이 없어 LinkedIn 공개 게시를 중단한다.\",\n      \"details\": {}\n    },\n    \"telegram\": {\n      \"status\": \"published\",\n      \"provider\": \"telegram_chat\",\n      \"url\": \"https://t.me/reset9800/97\",\n      \"reason\": \"Telegram 뉴스레터 채팅방에 발송됐다.\",\n      \"details\": {}\n    }\n  }\n}"
+            },
+            {
+              "key": "visual-strategy",
+              "label": "이미지 전략",
+              "fileName": "visual-strategy.json",
+              "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visual-strategy.json",
+              "content": "{\n  \"visual_concept\": \"차트와 카드가 결합된 금융 리포트 대시보드형 시각화. 여러 종목의 하락 신호를 한 화면에서 비교 가능한 정보 카드로 정리한, 실무형 리스크 스캐너 느낌\",\n  \"mood\": \"차분하고 분석적이며 신뢰감 있는 분위기\",\n  \"subject\": \"여러 종목이 나열된 카드형 리포트 화면, 각 카드에는 종목별 위험도 차이를 암시하는 정돈된 숫자 블록과 하락 방향을 보여주는 간결한 시각 요소\",\n  \"metaphor\": \"흩어진 뉴스와 가격 신호를 한 번에 읽게 해주는 레이더 스캔 화면\",\n  \"avoid\": [\n    \"사이버펑크풍 과장된 네온\",\n    \"의미 없는 추상 배경\",\n    \"이미지 안의 텍스트, 숫자, 로고\",\n    \"저품질 stock 사진 느낌\",\n    \"과도한 3D 렌더링\",\n    \"복잡한 그래프가 난무하는 혼란스러운 구성\",\n    \"공포감을 과장한 붉은 경보 연출\",\n    \"종목별 비교가 어려운 단일 상징 이미지\"\n  ],\n  \"channels\": {\n    \"blog\": \"블로그 대표 이미지는 기술 구현형이므로, 상단에 리포트 입력에서 이미지 카드로 변환되는 흐름을 암시하는 구조도 느낌의 대시보드. 좌우 또는 상하로 정리된 카드 묶음, 정렬된 패널, 표준화된 레이아웃이 핵심이며 전체적으로 정보 설계와 자동화 워크플로우가 보이게 만든다.\",\n    \"linkedin\": \"LinkedIn 피드 이미지는 한눈에 메시지가 읽히는 압축형. 여러 카드 중 우선 확인해야 할 카드가 앞에 보이는 구성으로, '비교 가능한 위험도'와 '우선순위 정렬'이 시각적으로 즉시 느껴지게 한다. 디테일보다는 깔끔한 인포메이션 계층이 중요하다.\",\n    \"telegram\": \"Telegram 뉴스레터 이미지는 가장 단순하고 빠르게 읽히는 요약형. 6개 종목이 한 장에 정돈되어 있고, 모두 하락 신호라는 점과 신뢰도·강도 차이가 존재한다는 사실이 카드 배열과 색 대비로만 드러나게 설계한다. 모바일에서 잘리지 않는 세로형 또는 균형 잡힌 정사각형 구성이 적합하다.\"\n  }\n}"
+            },
+            {
+              "key": "image-prompts",
+              "label": "이미지 프롬프트",
+              "fileName": "image-prompts.json",
+              "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/image-prompts.json",
+              "content": "{\n  \"prompts\": {\n    \"blog\": {\n      \"purpose\": \"blog_hero\",\n      \"size\": \"1536x1024\",\n      \"quality\": \"medium\",\n      \"prompt\": \"A clean financial report dashboard with a structured workflow feel, showing a transformation from raw market signals into standardized comparison cards. Multiple stock cards arranged in a balanced grid or layered panel layout, each card containing abstract data blocks, subtle downward trend indicators, small risk bars, and consistent visual hierarchy that suggests a radar-style risk scanner. Calm, analytical, trustworthy mood, practical fintech interface design, elegant spacing, soft neutral palette with restrained blue, gray, and muted amber accents, crisp lighting, high clarity, modern enterprise dashboard aesthetic, information architecture made visible, no people, no devices in hand, no clutter, no dramatic effects. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\"\n    },\n    \"linkedin\": {\n      \"purpose\": \"linkedin_feed\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"prompt\": \"A compact finance signal comparison dashboard designed for quick scanning in a social feed. Several stock risk cards in a clean front-facing layout, with one or two priority cards slightly emphasized in the foreground, showing abstract downward trend cues, simple risk blocks, and subtle hierarchy that instantly communicates comparable downside risk and priority sorting. Minimal, sharp, professional, analytical tone, balanced composition, muted blue-gray palette with controlled contrast, modern data visualization style, no excessive depth, no dramatic red alerts, no cyberpunk neon, no abstract background noise, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\"\n    },\n    \"telegram\": {\n      \"purpose\": \"telegram_newsletter\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"prompt\": \"A simple mobile-friendly summary image showing six neatly arranged stock cards on one screen, all indicating downward market signals with subtle differences in confidence and strength through card order, spacing, and restrained color contrast. Clean, balanced square layout, easy to read at a glance, practical risk-scan aesthetic, calm and trustworthy fintech dashboard feel, soft gray and blue palette with muted accent differences only, crisp edges, minimal visual noise, no complex charts, no dramatic alarm styling, no 3D overload, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\"\n    }\n  }\n}"
+            },
+            {
+              "key": "visual-assets",
+              "label": "이미지 산출물",
+              "fileName": "visual-assets.json",
+              "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visual-assets.json",
+              "content": "{\n  \"status\": \"generated\",\n  \"assets\": {\n    \"blog\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/blog.png\",\n      \"relative_path\": \"visuals/blog.png\",\n      \"prompt\": \"A clean financial report dashboard with a structured workflow feel, showing a transformation from raw market signals into standardized comparison cards. Multiple stock cards arranged in a balanced grid or layered panel layout, each card containing abstract data blocks, subtle downward trend indicators, small risk bars, and consistent visual hierarchy that suggests a radar-style risk scanner. Calm, analytical, trustworthy mood, practical fintech interface design, elegant spacing, soft neutral palette with restrained blue, gray, and muted amber accents, crisp lighting, high clarity, modern enterprise dashboard aesthetic, information architecture made visible, no people, no devices in hand, no clutter, no dramatic effects. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1536x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    },\n    \"linkedin\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/linkedin.png\",\n      \"relative_path\": \"visuals/linkedin.png\",\n      \"prompt\": \"A compact finance signal comparison dashboard designed for quick scanning in a social feed. Several stock risk cards in a clean front-facing layout, with one or two priority cards slightly emphasized in the foreground, showing abstract downward trend cues, simple risk blocks, and subtle hierarchy that instantly communicates comparable downside risk and priority sorting. Minimal, sharp, professional, analytical tone, balanced composition, muted blue-gray palette with controlled contrast, modern data visualization style, no excessive depth, no dramatic red alerts, no cyberpunk neon, no abstract background noise, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    },\n    \"telegram\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/telegram.png\",\n      \"relative_path\": \"visuals/telegram.png\",\n      \"prompt\": \"A simple mobile-friendly summary image showing six neatly arranged stock cards on one screen, all indicating downward market signals with subtle differences in confidence and strength through card order, spacing, and restrained color contrast. Clean, balanced square layout, easy to read at a glance, practical risk-scan aesthetic, calm and trustworthy fintech dashboard feel, soft gray and blue palette with muted accent differences only, crisp edges, minimal visual noise, no complex charts, no dramatic alarm styling, no 3D overload, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    }\n  },\n  \"failures\": {}\n}"
+            },
+            {
+              "key": "visual-quality",
+              "label": "이미지 평가",
+              "fileName": "visual-quality.json",
+              "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visual-quality.json",
+              "content": "{\n  \"score\": 94,\n  \"passed\": true,\n  \"problems\": [\n    \"세 채널 모두 핵심 메시지와 이미지 콘셉트가 잘 맞는다. 카드형 대시보드, 우선순위 비교, 위험도 시각화가 텍스트 주장과 일치한다.\",\n    \"비율 측면에서 blog 1536x1024, linkedin/telegram 1024x1024로 채널 목적에 대체로 적합하다. 특히 LinkedIn과 Telegram의 정사각형 비율은 피드/메신저 환경에 무난하다.\",\n    \"프롬프트에 텍스트, 숫자, 로고, 워터마크 금지 지시가 명시되어 있어 통제는 잘 되어 있다.\",\n    \"후츠릿 톤인 실용적이고 분석적인 금융 자동화 분위기와 잘 맞으며, stock 사진처럼 보일 위험도 낮다.\",\n    \"다만 blog와 linkedin 프롬프트의 'abstract data blocks', 'simple risk blocks'가 다소 추상적이라 실제 생성 결과가 카드 UI보다 장식적 대시보드로 흐를 가능성이 있다.\",\n    \"telegram 프롬프트는 명확하지만 6개 종목의 '비교 순서'를 더 강하게 규정하지 않아, 결과물이 균등 배열만 되고 우선순위가 약해질 수 있다.\"\n  ],\n  \"recommendations\": [\n    \"blog 프롬프트에서 카드의 정보 구조를 더 구체화하라. 예: 상단 종목명 자리, 중단 수치 블록 자리, 하단 위험 막대 자리처럼 레이아웃 고정 지시를 넣어라.\",\n    \"linkedin 프롬프트는 'one or two priority cards' 외에 첫 번째 카드가 가장 먼저 시선이 가도록 전경/크기/대비 우선순위를 더 명시하라.\",\n    \"telegram 프롬프트에는 6개 카드의 정렬 기준을 '신뢰도와 강도 우선'으로 못 박아, 단순 균등 배열이 아니라 판단용 순서가 보이도록 강화하라.\",\n    \"세 프롬프트 모두 'no text, numbers' 금지는 유지하되, UI glyph까지 포함해 카드 내부의 미세 아이콘도 글자처럼 보이지 않도록 더 단순한 기호 체계를 제한하라.\",\n    \"추상 표현을 줄이고 'front-facing cards', 'fixed grid', 'consistent spacing', 'priority first' 같은 조형 지시를 더 늘려 생성 안정성을 높여라.\"\n  ]\n}"
+            },
+            {
+              "key": "metadata",
+              "label": "메타데이터",
+              "fileName": "metadata.json",
+              "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/metadata.json",
+              "content": "{\n  \"package_id\": \"2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a\",\n  \"output_type\": \"draft\",\n  \"generated_at\": \"2026-05-18T16:37:15.349746\",\n  \"title\": \"Finance Signal Radar 리포트 이미지 테스트 전략\",\n  \"source_summary\": \"Finance Signal Radar 리포트의 6개 신호를 바탕으로 이미지 제작까지 테스트하려는 요청이다. LG에너지솔루션, 네이버, 카카오, KB금융, SK하이닉스, 삼성전자 모두 T+5 기준 하락 예측이 잡혔고, 최근 1개월 변동률과 신뢰도, 강도가 함께 제시됐다. 참고 링크는 없다.\",\n  \"input_type\": \"memo\",\n  \"target_persona\": \"금융 데이터 자동화, 시장 신호 대시보드, 리포트 이미지화에 관심 있는 실무형 학습자와 1인 운영자\",\n  \"revision_count\": 1,\n  \"target_channels\": [\n    \"blog\",\n    \"linkedin\",\n    \"telegram\"\n  ],\n  \"agent_architecture\": {\n    \"mode\": \"multi_agent\",\n    \"agents\": [\n      \"InputParserAgent\",\n      \"ContentStrategyAgent\",\n      \"InsightAgent\",\n      \"BlogWriterAgent\",\n      \"LinkedInWriterAgent\",\n      \"TelegramNewsletterWriterAgent\",\n      \"SelfReflectionAgent\",\n      \"RevisionAgent\",\n      \"VisualStrategyAgent\",\n      \"ImagePromptAgent\",\n      \"ImageGeneratorAgent\",\n      \"VisualQualityAgent\",\n      \"PublishAgent\"\n    ]\n  },\n  \"quality_score\": 92,\n  \"quality_passed\": true,\n  \"channel_scores\": {\n    \"blog\": 94,\n    \"linkedin\": 90,\n    \"telegram\": 91\n  },\n  \"channel_processing_status\": {\n    \"blog\": \"generated\",\n    \"linkedin\": \"generated\",\n    \"telegram\": \"generated\",\n    \"visuals\": \"generated\"\n  },\n  \"visual_assets_status\": \"generated\",\n  \"visual_assets\": {\n    \"blog\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/blog.png\",\n      \"relative_path\": \"visuals/blog.png\",\n      \"prompt\": \"A clean financial report dashboard with a structured workflow feel, showing a transformation from raw market signals into standardized comparison cards. Multiple stock cards arranged in a balanced grid or layered panel layout, each card containing abstract data blocks, subtle downward trend indicators, small risk bars, and consistent visual hierarchy that suggests a radar-style risk scanner. Calm, analytical, trustworthy mood, practical fintech interface design, elegant spacing, soft neutral palette with restrained blue, gray, and muted amber accents, crisp lighting, high clarity, modern enterprise dashboard aesthetic, information architecture made visible, no people, no devices in hand, no clutter, no dramatic effects. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1536x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    },\n    \"linkedin\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/linkedin.png\",\n      \"relative_path\": \"visuals/linkedin.png\",\n      \"prompt\": \"A compact finance signal comparison dashboard designed for quick scanning in a social feed. Several stock risk cards in a clean front-facing layout, with one or two priority cards slightly emphasized in the foreground, showing abstract downward trend cues, simple risk blocks, and subtle hierarchy that instantly communicates comparable downside risk and priority sorting. Minimal, sharp, professional, analytical tone, balanced composition, muted blue-gray palette with controlled contrast, modern data visualization style, no excessive depth, no dramatic red alerts, no cyberpunk neon, no abstract background noise, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    },\n    \"telegram\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/telegram.png\",\n      \"relative_path\": \"visuals/telegram.png\",\n      \"prompt\": \"A simple mobile-friendly summary image showing six neatly arranged stock cards on one screen, all indicating downward market signals with subtle differences in confidence and strength through card order, spacing, and restrained color contrast. Clean, balanced square layout, easy to read at a glance, practical risk-scan aesthetic, calm and trustworthy fintech dashboard feel, soft gray and blue palette with muted accent differences only, crisp edges, minimal visual noise, no complex charts, no dramatic alarm styling, no 3D overload, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    }\n  },\n  \"visual_quality\": {\n    \"score\": 94,\n    \"passed\": true,\n    \"problems\": [\n      \"세 채널 모두 핵심 메시지와 이미지 콘셉트가 잘 맞는다. 카드형 대시보드, 우선순위 비교, 위험도 시각화가 텍스트 주장과 일치한다.\",\n      \"비율 측면에서 blog 1536x1024, linkedin/telegram 1024x1024로 채널 목적에 대체로 적합하다. 특히 LinkedIn과 Telegram의 정사각형 비율은 피드/메신저 환경에 무난하다.\",\n      \"프롬프트에 텍스트, 숫자, 로고, 워터마크 금지 지시가 명시되어 있어 통제는 잘 되어 있다.\",\n      \"후츠릿 톤인 실용적이고 분석적인 금융 자동화 분위기와 잘 맞으며, stock 사진처럼 보일 위험도 낮다.\",\n      \"다만 blog와 linkedin 프롬프트의 'abstract data blocks', 'simple risk blocks'가 다소 추상적이라 실제 생성 결과가 카드 UI보다 장식적 대시보드로 흐를 가능성이 있다.\",\n      \"telegram 프롬프트는 명확하지만 6개 종목의 '비교 순서'를 더 강하게 규정하지 않아, 결과물이 균등 배열만 되고 우선순위가 약해질 수 있다.\"\n    ],\n    \"recommendations\": [\n      \"blog 프롬프트에서 카드의 정보 구조를 더 구체화하라. 예: 상단 종목명 자리, 중단 수치 블록 자리, 하단 위험 막대 자리처럼 레이아웃 고정 지시를 넣어라.\",\n      \"linkedin 프롬프트는 'one or two priority cards' 외에 첫 번째 카드가 가장 먼저 시선이 가도록 전경/크기/대비 우선순위를 더 명시하라.\",\n      \"telegram 프롬프트에는 6개 카드의 정렬 기준을 '신뢰도와 강도 우선'으로 못 박아, 단순 균등 배열이 아니라 판단용 순서가 보이도록 강화하라.\",\n      \"세 프롬프트 모두 'no text, numbers' 금지는 유지하되, UI glyph까지 포함해 카드 내부의 미세 아이콘도 글자처럼 보이지 않도록 더 단순한 기호 체계를 제한하라.\",\n      \"추상 표현을 줄이고 'front-facing cards', 'fixed grid', 'consistent spacing', 'priority first' 같은 조형 지시를 더 늘려 생성 안정성을 높여라.\"\n    ]\n  },\n  \"channel_publish_status\": {\n    \"blog\": \"external_publish_disabled\",\n    \"linkedin\": \"blocked_until_blog_url\",\n    \"telegram\": \"published\"\n  },\n  \"published_urls\": {\n    \"blog\": \"\",\n    \"linkedin\": \"\",\n    \"telegram\": \"https://t.me/reset9800/97\"\n  },\n  \"external_api_status\": \"not_connected\",\n  \"processing_mode\": \"sequential_tistory_first_with_telegram_dispatch\",\n  \"output_paths\": {\n    \"draft\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a\",\n    \"final\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a\"\n  }\n}"
+            },
+            {
+              "key": "approval-status",
+              "label": "승인 상태",
+              "fileName": "approval-status.json",
+              "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/approval-status.json",
+              "content": "{\n  \"quality_score\": 92,\n  \"quality_passed\": true,\n  \"public_content_require_approval\": false,\n  \"channels\": {\n    \"blog\": \"auto_dispatch_to_telegram\",\n    \"linkedin\": \"auto_dispatch_to_telegram\",\n    \"telegram\": \"auto_publish_to_telegram\"\n  }\n}"
+            }
+          ]
+        }
+      ]
     },
     "completed": {
       "title": "작성 완료",
       "description": "outputs/broadcasting/final에 저장된 오늘 최종본",
-      "records": []
+      "records": [
+        {
+          "id": "2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a",
+          "scope": "final",
+          "title": "Finance Signal Radar 리포트 이미지 테스트 전략",
+          "generatedAt": "2026-05-18T16:37:15.349746",
+          "inputType": "memo",
+          "sourceSummary": "Finance Signal Radar 리포트의 6개 신호를 바탕으로 이미지 제작까지 테스트하려는 요청이다. LG에너지솔루션, 네이버, 카카오, KB금융, SK하이닉스, 삼성전자 모두 T+5 기준 하락 예측이 잡혔고, 최근 1개월 변동률과 신뢰도, 강도가 함께 제시됐다. 참고 링크는 없다.",
+          "targetPersona": "금융 데이터 자동화, 시장 신호 대시보드, 리포트 이미지화에 관심 있는 실무형 학습자와 1인 운영자",
+          "qualityScore": 92,
+          "qualityPassed": true,
+          "revisionCount": 1,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "telegram": "generated",
+            "visuals": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "external_publish_disabled",
+            "linkedin": "blocked_until_blog_url",
+            "telegram": "published"
+          },
+          "publishedUrls": {
+            "blog": "",
+            "linkedin": "",
+            "telegram": "https://t.me/reset9800/97"
+          },
+          "visualAssetsStatus": "generated",
+          "visualAssets": {
+            "blog": {
+              "status": "generated",
+              "path": "/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/blog.png",
+              "relative_path": "visuals/blog.png",
+              "prompt": "A clean financial report dashboard with a structured workflow feel, showing a transformation from raw market signals into standardized comparison cards. Multiple stock cards arranged in a balanced grid or layered panel layout, each card containing abstract data blocks, subtle downward trend indicators, small risk bars, and consistent visual hierarchy that suggests a radar-style risk scanner. Calm, analytical, trustworthy mood, practical fintech interface design, elegant spacing, soft neutral palette with restrained blue, gray, and muted amber accents, crisp lighting, high clarity, modern enterprise dashboard aesthetic, information architecture made visible, no people, no devices in hand, no clutter, no dramatic effects. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.",
+              "size": "1536x1024",
+              "quality": "medium",
+              "provider": "openai_images",
+              "model": "gpt-image-1"
+            },
+            "linkedin": {
+              "status": "generated",
+              "path": "/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/linkedin.png",
+              "relative_path": "visuals/linkedin.png",
+              "prompt": "A compact finance signal comparison dashboard designed for quick scanning in a social feed. Several stock risk cards in a clean front-facing layout, with one or two priority cards slightly emphasized in the foreground, showing abstract downward trend cues, simple risk blocks, and subtle hierarchy that instantly communicates comparable downside risk and priority sorting. Minimal, sharp, professional, analytical tone, balanced composition, muted blue-gray palette with controlled contrast, modern data visualization style, no excessive depth, no dramatic red alerts, no cyberpunk neon, no abstract background noise, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.",
+              "size": "1024x1024",
+              "quality": "medium",
+              "provider": "openai_images",
+              "model": "gpt-image-1"
+            },
+            "telegram": {
+              "status": "generated",
+              "path": "/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/telegram.png",
+              "relative_path": "visuals/telegram.png",
+              "prompt": "A simple mobile-friendly summary image showing six neatly arranged stock cards on one screen, all indicating downward market signals with subtle differences in confidence and strength through card order, spacing, and restrained color contrast. Clean, balanced square layout, easy to read at a glance, practical risk-scan aesthetic, calm and trustworthy fintech dashboard feel, soft gray and blue palette with muted accent differences only, crisp edges, minimal visual noise, no complex charts, no dramatic alarm styling, no 3D overload, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.",
+              "size": "1024x1024",
+              "quality": "medium",
+              "provider": "openai_images",
+              "model": "gpt-image-1"
+            }
+          },
+          "visualPreviewUrls": {
+            "blog": {
+              "url": "/generated/broadcasting/final/2026-05-18-finance-signal-radar-%EB%A6%AC%ED%8F%AC%ED%8A%B8-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%A0%84%EB%9E%B5-f5ce456a/visuals/blog.png",
+              "status": "generated",
+              "size": "1536x1024",
+              "quality": "medium",
+              "provider": "openai_images",
+              "model": "gpt-image-1"
+            },
+            "linkedin": {
+              "url": "/generated/broadcasting/final/2026-05-18-finance-signal-radar-%EB%A6%AC%ED%8F%AC%ED%8A%B8-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%A0%84%EB%9E%B5-f5ce456a/visuals/linkedin.png",
+              "status": "generated",
+              "size": "1024x1024",
+              "quality": "medium",
+              "provider": "openai_images",
+              "model": "gpt-image-1"
+            },
+            "telegram": {
+              "url": "/generated/broadcasting/final/2026-05-18-finance-signal-radar-%EB%A6%AC%ED%8F%AC%ED%8A%B8-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%A0%84%EB%9E%B5-f5ce456a/visuals/telegram.png",
+              "status": "generated",
+              "size": "1024x1024",
+              "quality": "medium",
+              "provider": "openai_images",
+              "model": "gpt-image-1"
+            }
+          },
+          "visualQuality": {
+            "score": 94,
+            "passed": true,
+            "problems": [
+              "세 채널 모두 핵심 메시지와 이미지 콘셉트가 잘 맞는다. 카드형 대시보드, 우선순위 비교, 위험도 시각화가 텍스트 주장과 일치한다.",
+              "비율 측면에서 blog 1536x1024, linkedin/telegram 1024x1024로 채널 목적에 대체로 적합하다. 특히 LinkedIn과 Telegram의 정사각형 비율은 피드/메신저 환경에 무난하다.",
+              "프롬프트에 텍스트, 숫자, 로고, 워터마크 금지 지시가 명시되어 있어 통제는 잘 되어 있다.",
+              "후츠릿 톤인 실용적이고 분석적인 금융 자동화 분위기와 잘 맞으며, stock 사진처럼 보일 위험도 낮다.",
+              "다만 blog와 linkedin 프롬프트의 'abstract data blocks', 'simple risk blocks'가 다소 추상적이라 실제 생성 결과가 카드 UI보다 장식적 대시보드로 흐를 가능성이 있다.",
+              "telegram 프롬프트는 명확하지만 6개 종목의 '비교 순서'를 더 강하게 규정하지 않아, 결과물이 균등 배열만 되고 우선순위가 약해질 수 있다."
+            ],
+            "recommendations": [
+              "blog 프롬프트에서 카드의 정보 구조를 더 구체화하라. 예: 상단 종목명 자리, 중단 수치 블록 자리, 하단 위험 막대 자리처럼 레이아웃 고정 지시를 넣어라.",
+              "linkedin 프롬프트는 'one or two priority cards' 외에 첫 번째 카드가 가장 먼저 시선이 가도록 전경/크기/대비 우선순위를 더 명시하라.",
+              "telegram 프롬프트에는 6개 카드의 정렬 기준을 '신뢰도와 강도 우선'으로 못 박아, 단순 균등 배열이 아니라 판단용 순서가 보이도록 강화하라.",
+              "세 프롬프트 모두 'no text, numbers' 금지는 유지하되, UI glyph까지 포함해 카드 내부의 미세 아이콘도 글자처럼 보이지 않도록 더 단순한 기호 체계를 제한하라.",
+              "추상 표현을 줄이고 'front-facing cards', 'fixed grid', 'consistent spacing', 'priority first' 같은 조형 지시를 더 늘려 생성 안정성을 높여라."
+            ]
+          },
+          "externalApiStatus": "not_connected",
+          "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a",
+          "statusReason": "자동 공개 게시 설정이 꺼져 있다.",
+          "packageStatus": "blocked",
+          "previews": {
+            "blog": "# Finance Signal Radar 리포트를 이미지로 바꾸는 이유\n\n뉴스와 가격 데이터를 붙여 놓는 것만으로는 운영이 되지 않는다. 지금처럼 6개 종목이 모두 하락 신호를 보일 때는 텍스트 요약보다 한눈에 비교되는 이미지 구조가 더 중요하다. 핵심은 예측을 맞히는 데만 있지 않다. 어떤 종목을 먼저 봐야 하는지, 무엇을 위험 신호로 읽어야 하는지를 빠르게 결정하게 만드는 데 있다.\n\n## ✅ 결론부터 말하면\n\n이 리포트는 텍스트 리포트로 끝내기보다 카드형 이미지로 렌더링해야 한다. 이유는 간단하다. 뉴스 개수, 최근 1개월 변화율, 예측 변화율, 신뢰도, 강도가 한 화면에 함께 있어야 신호의 우선순위가 보이기 때문이다. 숫자를 많이 넣는다고 더 정확해지는 것은 아니다. 비교 가능한 형태로 묶어야 실무에서 쓸 수 있다.\n\n## 텍스트 리포트가 분산시키는 정보\n\n현재 신호는 전부 하락 예측이지만, 종목마다 해석 무게가 다르다. 예를 들어 LG에너지솔루션은 신뢰도 82%, 예측 변화율 -12.82%로 강한 하락 신호가 보인다. 반면 삼성전자는 신뢰도 71%, 강도 3으로 같은 하락 예측이라도 우선순위가 다르다. \n\n문제는 이런 차이가 텍스트에서는 쉽게 흐려진다는 점이다. 사람은 긴 목록을 읽을 때 절대값보다 첫인상에 끌린다. 그래서 “모두 하락”이라는 결론만 남고, 실제로는 더 먼저 봐야 할 종목이 사라진다. 🔍\n\n## 이미지로 바꿀 때의 설계 기준\n\n이미지는 예쁘게 만드는 작업이 아니라 읽는 비용을 줄이는 작업이다. 카드형 레이아웃을 쓸 때는 다음 순서를 고정하는 편이 좋다.\n\n1. 신뢰도와 강도를 먼저 본다\n2. 그다음 예측 변화율을 본다\n3. 마지막에 뉴스 개수와 최근 1개월 변화율을 본다\n\n이 순서가 중요한 이유는 예측 변화율이 크다고 해서 반드시 믿을 수 있는 신호는 아니기 때문이다. SK하이닉스는 최근 1개월 변화율이 110.05%로 매우 크지만, 신뢰도는 71%, 강도는 4다. 삼성전자는 최근 1개월 변화율이 50.91%지만 강도는 3이다. 같은 하락 신호라도 읽어야 하는 우선순위가 다르다. 📌\n\n## 카드형 레이아웃 설계 원칙\n\n카드 하나에는 같은 위치에 같은 정보를 넣어야 한다. 그래야 종목끼리 비교가 된다. 추천 구조는 다음과 같다.\n\n- 상단: 종목명, 신뢰도, 강도\n- 중단: 뉴스 개수, 최근 1개월 변화율\n- 하단: 예측 변화율\n\n예를 들면 이런 식이다.\n\n- LG에너지솔루션 / 신뢰도 82% / 강도 5\n- 뉴스 7건 / 최근 1개월 +2.38% / 예측 -12.82%\n\n이 구조의 장점은 단순하다. 숫자가 많아도 위치가 고정되면 눈이 자동으로 비교한다. 반대로 위치가 흔들리면 매번 다시 읽어야 한다. 실무에서는 이 읽는 비용이 생각보다 크다.\n\n## 이미지 제작까지 분리해야 하는 이유\n\n자동화에서는 리포트 생성과 이미지 렌더링을 한 번에 묶지 않는 편이 안전하다. 원본 JSON을 먼저 만들고, 그다음 카드형 이미지로 렌더링하는 2단계 파이프라인이 맞다. 이렇게 나누면 이미지가 깨져도 데이터는 살아남는다.\n\n권장 산출물은 세 가지다.\n\n- 원본 JSON\n- 텍스트 요약본\n- PNG 이미지\n\n이렇게 저장해야 실패 복구가 된다. 이미지가 잘리지 않았는지, 숫자 라운딩이 일관적인지, 카드 간 대비가 충분한지는 렌더링 단계에서 따로 검수해야 한다. ⚠️\n\n## 이번 데이터에서 읽히는 운영 포인트\n\n이번 리포트는 전 종목 하락 신호다. 이런 경우에는 “매수/매도 판단”보다 “위험 신호 우선순위 정렬”이 더 맞다. 실무적으로는 다음 순서가 유효하다.\n\n- 먼저 LG에너지솔루션처럼 신뢰도와 강도가 높은 카드부터 본다\n- 그다음 네이버, 카카오처럼 뉴스와 예측 변화가 함께 움직인 종목을 본다\n- 마지막에 삼성전자처럼 신호는 있으나 강도가 낮은 카드를 본다\n\n이 판단 기준이 없으면 이미지가 있어도 오독이 생긴다. 반대로 기준이 있으면 이미지 한 장이 단순 요약이 아니라 운영 자산이 된다.\n\n## 마무리\n\n이 리포트의 핵심은 맞히는 예측이 아니라 비교 가능한 위험 시각화다. AI가 숫자를 만드는 단계보다 중요한 것은 그 숫자를 사람이 빠르게 읽고 검증할 수 있게 만드는 구조다. 따라서 다음 테스트는 예측 정확도보다 카드 순서, 정보 배치, 우선순위 판독 시간을 먼저 봐야 한다. 도구 사용량보다 시스템을 설계하고 검증하는 능력에서 차이가 난다.",
+            "linkedin": "# 뉴스가 많아도 신호는 강하지 않을 수 있습니다 📉\n\n데이터가 실무에 쓰이려면 숫자를 더하는 것보다, 먼저 비교되게 만들어야 합니다.\n\n이번 Finance Signal Radar는 6개 종목 모두 하락 예측이 잡혔습니다. 하지만 실무에서 더 중요한 건 ‘전부 하락’이 아니라 무엇을 먼저 봐야 하느냐입니다. LG에너지솔루션은 신뢰도 82%로 가장 높고, SK하이닉스는 최근 1개월 +110.05%인데 예측은 -2.13%입니다. 같은 하락 신호라도 우선순위는 다릅니다.\n\n판단 기준은 단순합니다. 예측 변화율만 보지 말고, 신뢰도와 강도를 먼저 보셔야 합니다. 그다음에 뉴스 개수와 가격 반응을 붙여야 실무 판단이 흔들리지 않습니다.\n\n중요한 건 예측을 맞히는 것이 아니라, 카드형 레이아웃으로 위험도를 정렬해 3초 안에 오독 없이 읽히게 만드는 것입니다. 텍스트 리포트와 이미지 리포트는 분리해야 하고, 렌더링이 깨져도 원본 수치는 반드시 남아 있어야 합니다.\n\nAI가 숫자를 만드는 단계보다, 숫자를 비교하고 검증하게 만드는 구조가 더 중요합니다. 이 구조를 실제 화면으로 어떻게 설계했는지는 블로그 전문 [블로그 링크]에서 확인하실 수 있습니다. 🔎",
+            "telegram": "## 🚀 6개 종목이 모두 하락일 때는, 예측보다 우선순위부터 보셔야 합니다\n\n이번 Finance Signal Radar는 6개 종목 모두 하락 예측이 잡혔습니다. 이런 경우 실무에서 먼저 봐야 하는 건 “전부 하락”이라는 결론이 아니라, 어떤 종목을 먼저 확인해야 하는지입니다.\n\nLG에너지솔루션은 신뢰도 82%에 예측 하락폭이 -12.82%로 가장 강했고, 삼성전자는 신뢰도 71%에 강도 3으로 같은 하락 신호라도 무게가 달랐습니다. 뉴스 개수, 최근 1개월 변동, 예측 변화율, 신뢰도, 강도가 함께 있으면 텍스트 요약만으로는 판단이 쉽게 분산됩니다.\n\n그래서 이번 테스트는 원본 리포트로 끝내지 말고, 카드형 이미지로 바꿔서 우선 확인 종목이 바로 보이게 만드는 쪽이 맞습니다. 이미지 한 장에서 위험도 순서가 읽혀야 현업에서 쓸 수 있습니다. 📌\n\n- ✅ 원본 JSON 생성과 카드형 이미지 렌더링은 분리해서 보셔야 합니다\n- ✅ 카드 순서는 예측 변화율보다 신뢰도와 강도를 먼저 반영해 정렬해 보셔야 합니다\n- ⚠️ 뉴스 개수·1개월 변화율·예측 변화율·신뢰도는 같은 위치에 고정해 비교 가능하게 만드셔야 합니다\n\n이번 데이터는 “맞추는 예측”보다 “위험도를 읽는 시각화”에 더 적합합니다. 우선 확인 종목이 3초 안에 보이면 운영 가치가 생기고, 카드가 복잡해져 오독이 늘면 모델이 좋아도 현업에서는 쓰기 어렵습니다."
+          },
+          "documents": [
+            {
+              "key": "blog",
+              "label": "Blog 원고",
+              "fileName": "blog.md",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/blog.md",
+              "content": "# Finance Signal Radar 리포트를 이미지로 바꾸는 이유\n\n뉴스와 가격 데이터를 붙여 놓는 것만으로는 운영이 되지 않는다. 지금처럼 6개 종목이 모두 하락 신호를 보일 때는 텍스트 요약보다 한눈에 비교되는 이미지 구조가 더 중요하다. 핵심은 예측을 맞히는 데만 있지 않다. 어떤 종목을 먼저 봐야 하는지, 무엇을 위험 신호로 읽어야 하는지를 빠르게 결정하게 만드는 데 있다.\n\n## ✅ 결론부터 말하면\n\n이 리포트는 텍스트 리포트로 끝내기보다 카드형 이미지로 렌더링해야 한다. 이유는 간단하다. 뉴스 개수, 최근 1개월 변화율, 예측 변화율, 신뢰도, 강도가 한 화면에 함께 있어야 신호의 우선순위가 보이기 때문이다. 숫자를 많이 넣는다고 더 정확해지는 것은 아니다. 비교 가능한 형태로 묶어야 실무에서 쓸 수 있다.\n\n## 텍스트 리포트가 분산시키는 정보\n\n현재 신호는 전부 하락 예측이지만, 종목마다 해석 무게가 다르다. 예를 들어 LG에너지솔루션은 신뢰도 82%, 예측 변화율 -12.82%로 강한 하락 신호가 보인다. 반면 삼성전자는 신뢰도 71%, 강도 3으로 같은 하락 예측이라도 우선순위가 다르다. \n\n문제는 이런 차이가 텍스트에서는 쉽게 흐려진다는 점이다. 사람은 긴 목록을 읽을 때 절대값보다 첫인상에 끌린다. 그래서 “모두 하락”이라는 결론만 남고, 실제로는 더 먼저 봐야 할 종목이 사라진다. 🔍\n\n## 이미지로 바꿀 때의 설계 기준\n\n이미지는 예쁘게 만드는 작업이 아니라 읽는 비용을 줄이는 작업이다. 카드형 레이아웃을 쓸 때는 다음 순서를 고정하는 편이 좋다.\n\n1. 신뢰도와 강도를 먼저 본다\n2. 그다음 예측 변화율을 본다\n3. 마지막에 뉴스 개수와 최근 1개월 변화율을 본다\n\n이 순서가 중요한 이유는 예측 변화율이 크다고 해서 반드시 믿을 수 있는 신호는 아니기 때문이다. SK하이닉스는 최근 1개월 변화율이 110.05%로 매우 크지만, 신뢰도는 71%, 강도는 4다. 삼성전자는 최근 1개월 변화율이 50.91%지만 강도는 3이다. 같은 하락 신호라도 읽어야 하는 우선순위가 다르다. 📌\n\n## 카드형 레이아웃 설계 원칙\n\n카드 하나에는 같은 위치에 같은 정보를 넣어야 한다. 그래야 종목끼리 비교가 된다. 추천 구조는 다음과 같다.\n\n- 상단: 종목명, 신뢰도, 강도\n- 중단: 뉴스 개수, 최근 1개월 변화율\n- 하단: 예측 변화율\n\n예를 들면 이런 식이다.\n\n- LG에너지솔루션 / 신뢰도 82% / 강도 5\n- 뉴스 7건 / 최근 1개월 +2.38% / 예측 -12.82%\n\n이 구조의 장점은 단순하다. 숫자가 많아도 위치가 고정되면 눈이 자동으로 비교한다. 반대로 위치가 흔들리면 매번 다시 읽어야 한다. 실무에서는 이 읽는 비용이 생각보다 크다.\n\n## 이미지 제작까지 분리해야 하는 이유\n\n자동화에서는 리포트 생성과 이미지 렌더링을 한 번에 묶지 않는 편이 안전하다. 원본 JSON을 먼저 만들고, 그다음 카드형 이미지로 렌더링하는 2단계 파이프라인이 맞다. 이렇게 나누면 이미지가 깨져도 데이터는 살아남는다.\n\n권장 산출물은 세 가지다.\n\n- 원본 JSON\n- 텍스트 요약본\n- PNG 이미지\n\n이렇게 저장해야 실패 복구가 된다. 이미지가 잘리지 않았는지, 숫자 라운딩이 일관적인지, 카드 간 대비가 충분한지는 렌더링 단계에서 따로 검수해야 한다. ⚠️\n\n## 이번 데이터에서 읽히는 운영 포인트\n\n이번 리포트는 전 종목 하락 신호다. 이런 경우에는 “매수/매도 판단”보다 “위험 신호 우선순위 정렬”이 더 맞다. 실무적으로는 다음 순서가 유효하다.\n\n- 먼저 LG에너지솔루션처럼 신뢰도와 강도가 높은 카드부터 본다\n- 그다음 네이버, 카카오처럼 뉴스와 예측 변화가 함께 움직인 종목을 본다\n- 마지막에 삼성전자처럼 신호는 있으나 강도가 낮은 카드를 본다\n\n이 판단 기준이 없으면 이미지가 있어도 오독이 생긴다. 반대로 기준이 있으면 이미지 한 장이 단순 요약이 아니라 운영 자산이 된다.\n\n## 마무리\n\n이 리포트의 핵심은 맞히는 예측이 아니라 비교 가능한 위험 시각화다. AI가 숫자를 만드는 단계보다 중요한 것은 그 숫자를 사람이 빠르게 읽고 검증할 수 있게 만드는 구조다. 따라서 다음 테스트는 예측 정확도보다 카드 순서, 정보 배치, 우선순위 판독 시간을 먼저 봐야 한다. 도구 사용량보다 시스템을 설계하고 검증하는 능력에서 차이가 난다."
+            },
+            {
+              "key": "linkedin",
+              "label": "LinkedIn 원고",
+              "fileName": "linkedin.md",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/linkedin.md",
+              "content": "# 뉴스가 많아도 신호는 강하지 않을 수 있습니다 📉\n\n데이터가 실무에 쓰이려면 숫자를 더하는 것보다, 먼저 비교되게 만들어야 합니다.\n\n이번 Finance Signal Radar는 6개 종목 모두 하락 예측이 잡혔습니다. 하지만 실무에서 더 중요한 건 ‘전부 하락’이 아니라 무엇을 먼저 봐야 하느냐입니다. LG에너지솔루션은 신뢰도 82%로 가장 높고, SK하이닉스는 최근 1개월 +110.05%인데 예측은 -2.13%입니다. 같은 하락 신호라도 우선순위는 다릅니다.\n\n판단 기준은 단순합니다. 예측 변화율만 보지 말고, 신뢰도와 강도를 먼저 보셔야 합니다. 그다음에 뉴스 개수와 가격 반응을 붙여야 실무 판단이 흔들리지 않습니다.\n\n중요한 건 예측을 맞히는 것이 아니라, 카드형 레이아웃으로 위험도를 정렬해 3초 안에 오독 없이 읽히게 만드는 것입니다. 텍스트 리포트와 이미지 리포트는 분리해야 하고, 렌더링이 깨져도 원본 수치는 반드시 남아 있어야 합니다.\n\nAI가 숫자를 만드는 단계보다, 숫자를 비교하고 검증하게 만드는 구조가 더 중요합니다. 이 구조를 실제 화면으로 어떻게 설계했는지는 블로그 전문 [블로그 링크]에서 확인하실 수 있습니다. 🔎"
+            },
+            {
+              "key": "telegram",
+              "label": "Telegram 뉴스레터",
+              "fileName": "telegram.md",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/telegram.md",
+              "content": "## 🚀 6개 종목이 모두 하락일 때는, 예측보다 우선순위부터 보셔야 합니다\n\n이번 Finance Signal Radar는 6개 종목 모두 하락 예측이 잡혔습니다. 이런 경우 실무에서 먼저 봐야 하는 건 “전부 하락”이라는 결론이 아니라, 어떤 종목을 먼저 확인해야 하는지입니다.\n\nLG에너지솔루션은 신뢰도 82%에 예측 하락폭이 -12.82%로 가장 강했고, 삼성전자는 신뢰도 71%에 강도 3으로 같은 하락 신호라도 무게가 달랐습니다. 뉴스 개수, 최근 1개월 변동, 예측 변화율, 신뢰도, 강도가 함께 있으면 텍스트 요약만으로는 판단이 쉽게 분산됩니다.\n\n그래서 이번 테스트는 원본 리포트로 끝내지 말고, 카드형 이미지로 바꿔서 우선 확인 종목이 바로 보이게 만드는 쪽이 맞습니다. 이미지 한 장에서 위험도 순서가 읽혀야 현업에서 쓸 수 있습니다. 📌\n\n- ✅ 원본 JSON 생성과 카드형 이미지 렌더링은 분리해서 보셔야 합니다\n- ✅ 카드 순서는 예측 변화율보다 신뢰도와 강도를 먼저 반영해 정렬해 보셔야 합니다\n- ⚠️ 뉴스 개수·1개월 변화율·예측 변화율·신뢰도는 같은 위치에 고정해 비교 가능하게 만드셔야 합니다\n\n이번 데이터는 “맞추는 예측”보다 “위험도를 읽는 시각화”에 더 적합합니다. 우선 확인 종목이 3초 안에 보이면 운영 가치가 생기고, 카드가 복잡해져 오독이 늘면 모델이 좋아도 현업에서는 쓰기 어렵습니다."
+            },
+            {
+              "key": "strategy",
+              "label": "전략 문서",
+              "fileName": "strategy.md",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/strategy.md",
+              "content": "# Strategy\n\n- 핵심 메시지: 뉴스와 가격 데이터를 결합한 신호는 단순 알림이 아니라, 한눈에 위험도를 읽는 시각화 자산으로 만들어야 한다.\n- 타깃 독자: 금융 데이터 자동화, 시장 신호 대시보드, 리포트 이미지화에 관심 있는 실무형 학습자와 1인 운영자\n- 주장: 이 리포트는 텍스트 요약으로 끝낼 것이 아니라, 종목별 하락 신호를 비교 가능한 이미지로 바꾸는 테스트에 최적화된 입력이다.\n\n## Platform Directions\n\n- Blog: 기술 구현형으로 간다. 리포트를 이미지로 바꾸는 워크플로우, 시각화 기준, 카드형 레이아웃 설계, 종목별 점수와 예측치 배치 원칙을 다룬다. 핵심은 예측 정확도 자체보다 신호를 읽기 쉬운 형태로 운영하는 구조다.\n- LinkedIn: 시장 신호를 '데이터 요약'이 아니라 '판단 가능한 시각적 구조'로 바꿔야 한다는 관점으로 압축한다. AI가 숫자를 만드는 단계보다, 숫자를 비교하고 검증하게 만드는 설계가 중요하다는 메시지를 전면에 둔다.\n- Telegram: 짧게 핵심만 전달한다. 이번 리포트에서 6개 종목 모두 하락 예측이 잡혔고, 신뢰도와 강도가 함께 제시된 만큼 이미지 한 장으로 요약하는 테스트를 해보는 흐름이라는 점을 강조한다. 실행 항목은 카드형 이미지 시안 생성과 종목별 위험도 정렬 확인 정도로 짧게 잡는다."
+            },
+            {
+              "key": "insight",
+              "label": "인사이트 문서",
+              "fileName": "insight.md",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/insight.md",
+              "content": "# Insight\n\n이 리포트의 핵심은 ‘맞추는 예측’이 아니라 ‘비교 가능한 위험 시각화’로 바꾸는 데 있다. 지금 데이터는 종목별 뉴스 개수, 최근 변동, 예측 변화율, 신뢰도, 강도가 함께 붙어 있어서 텍스트로 읽으면 신호가 분산된다. 실무 관점에서는 이걸 그대로 요약하는 것이 아니라, 위험도 순서와 확신 수준을 한 화면에서 읽히는 카드 구조로 바꿔야 한다. 특히 예측 하락이 전 종목에 걸쳐 나오더라도, 강도와 신뢰도 차이가 있으므로 ‘모두 하락’이라는 단일 결론보다 어떤 종목을 먼저 볼지 결정하게 만드는 운영 구조가 중요하다. AI 자동화 측면에서는 리포트 생성과 이미지 렌더링을 분리해야 하고, 개발툴 측면에서는 수치 계산과 레이아웃 규칙을 코드로 고정해야 한다. 검증은 예측 정확도만 보지 말고, 이미지 한 장에서 오독이 줄었는지, 우선순위가 빨리 잡히는지로 판단해야 한다. 실패 복구는 이미지 생성이 깨져도 원본 텍스트 리포트는 유지되도록 두 단계 파이프라인으로 설계하는 것이 맞다.\n\n## Practical Points\n\n- 텍스트 리포트와 이미지 리포트를 한 작업으로 묶지 말고, 원본 JSON 생성 -> 카드형 렌더링의 2단계로 분리한다.\n- 카드 순서는 예측 변화율보다 신뢰도와 강도를 먼저 반영해 정렬 규칙을 고정한다.\n- 종목별 비교가 목적이면 절대값보다 상대 순위와 색상 체계를 우선 설계한다.\n- 이미지에서는 뉴스 개수, 최근 1개월 변화율, 예측 변화율, 신뢰도를 한 카드 안에 같은 위치에 배치해 읽는 비용을 줄인다.\n- 강도가 낮아도 신뢰도가 높으면 상단 노출 후보가 될 수 있으므로 단일 점수로 뭉개지 말고 분리 지표를 유지한다.\n- 검증 기준은 예측 적중률뿐 아니라, 사람이 3초 안에 위험도를 읽을 수 있는지로 둔다.\n- 렌더링 실패 대비를 위해 텍스트 요약본, 테이블 HTML, 이미지 PNG를 각각 독립 산출물로 저장한다.\n- 자동 배포 전에는 이미지가 실제로 잘리는지, 카드 간 대비가 충분한지, 숫자 라운딩이 일관적인지 확인하는 시각 검수 단계를 둔다.\n\n## Examples\n\n- 예시 1: 상단에는 신뢰도 82%의 LG에너지솔루션을 두고, 그 아래로 뉴스 15건인 KB금융과 뉴스 14건인 삼성전자를 배치해 ‘우선 확인 종목’ 구조를 만든다.\n- 예시 2: 카드 하나에 '뉴스 11건 / 최근 1개월 +110.05% / 예측 -2.13% / 신뢰도 71%'처럼 넣고, 예측 하락폭보다 신뢰도와 변동 이력을 같이 보여준다.\n- 예시 3: 이미지 버전과 텍스트 버전을 동시에 생성해, Telegram에는 이미지 한 장과 핵심 2줄만 보내고, 블로그나 내부 로그에는 전체 수치 테이블을 남긴다.\n- 예시 4: 하락 신호 6개가 모두 잡혔을 때는 ‘매수/매도 판단’보다 ‘위험 신호 우선순위 정렬’로 메시지를 바꿔 오독을 줄인다.\n\n## Cautions\n\n- 예측이 전 종목 하락으로 나왔다고 해서 실제 매매 신호로 바로 쓰면 안 된다. 신뢰도와 강도 차이를 검증 없이 동일하게 취급하면 위험하다.\n- 뉴스 개수가 많다고 신호 품질이 높다고 단정하면 안 된다. 뉴스 양은 맥락일 뿐이고, 가격 반응과 결합했을 때만 의미가 있다.\n- 이미지 중심 운영에서는 숫자 과밀이 가장 큰 실패 요인이다. 한 카드에 지표를 너무 많이 넣으면 비교성이 떨어진다.\n- 색상만으로 위험도를 표현하면 색각 문제와 모바일 가독성 이슈가 생긴다. 색상은 보조고, 숫자와 순서가 기준이어야 한다.\n- 이미지 생성 오류를 본 리포트 오류로 착각하지 않도록, 렌더링 실패와 데이터 생성 실패를 로그 단계에서 분리해야 한다.\n- 예측 변화율이 큰 종목과 신뢰도가 높은 종목이 다를 수 있으므로 단일 랭킹만 운영하면 판단이 왜곡된다."
+            },
+            {
+              "key": "reflection",
+              "label": "평가 문서",
+              "fileName": "reflection.md",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/reflection.md",
+              "content": "# Reflection\n\n- 총점: 92\n- 통과 여부: True\n- 배포 상태: 자동 발송 가능\n\n## Channel Scores\n\n- blog: 94\n- linkedin: 90\n- telegram: 91\n\n## Strengths\n\n- 블로그가 문어체 평서형 반말로 작성되어 있고, 소제목 구조도 स्पष्ट해서 하드 게이트를 충족한다.\n- 후츠릿 관점에서 '예측'보다 '비교 가능한 위험 시각화'와 운영 구조를 강조해 관점이 선명하다.\n- 실무 적용성 측면에서 원본 JSON -> 카드형 렌더링의 2단계 파이프라인, 정렬 기준, 검수 포인트가 구체적이다.\n- LinkedIn에 [블로그 링크] 자리표시자가 있어 유입 장치가 명확하다.\n- Telegram이 고정 라벨 없이 Markdown 제목과 핵심 메시지를 유지하고 있어 플랫폼 적합성이 좋다.\n- 과도한 이모지 사용이 없고, 스캔성 보조 수준에서만 사용해 가독성이 무너지지 않는다.\n\n## Problems\n\n- 블로그 첫 문단과 일부 문장들이 다소 선언형이라, 초반 훅에서 바로 실무 문제를 더 강하게 찌르면 후킹력이 더 좋아진다.\n- LinkedIn은 메시지가 좋지만 문단이 다소 길어 모바일 스캔성은 더 개선될 여지가 있다.\n- Telegram은 실행 항목이 유효하지만, 마지막 한 줄에 CTA가 조금 더 또렷하면 전환력이 높아진다.\n- 블로그와 Telegram 모두 예시가 충분하나, 실제 화면 구성에 대한 한 줄 설명이 더 있으면 구체성이 더 올라간다.\n\n## Revision Instructions\n\n- 블로그 도입부를 '모두 하락인데 왜 텍스트로 읽으면 위험 순서가 안 보이는가'처럼 문제 제기형으로 더 압축하라.\n- LinkedIn은 3문단 이내로 줄이고, 각 문단의 첫 문장을 더 짧게 만들어 모바일 스캔성을 높여라.\n- Telegram 마지막 문장에 '카드형 이미지 시안 생성 → 우선순위 정렬 확인' 같은 직접 CTA를 한 번 더 넣어라.\n- 블로그에 카드 예시를 1개만 더 추가해, 실제 레이아웃 상의 정보 배치를 더 선명하게 보여줘라.\n- 이미지 기준 문장을 추가할 때는 숫자와 순서를 유지하고, 추상적인 표현은 최소화하라."
+            },
+            {
+              "key": "publish-plan",
+              "label": "배포 계획",
+              "fileName": "publish-plan.json",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/publish-plan.json",
+              "content": "{\n  \"agent\": \"PublishAgent\",\n  \"quality_score\": 92,\n  \"quality_passed\": true,\n  \"quality_ready_for_publish\": true,\n  \"external_api_status\": \"not_connected\",\n  \"processing_mode\": \"sequential_tistory_first_with_telegram_dispatch\",\n  \"executed_at\": \"2026-05-18T16:38:13.542793\",\n  \"publish_strategy\": {\n    \"mode\": \"sequential\",\n    \"order\": [\n      \"blog\",\n      \"linkedin\",\n      \"telegram\"\n    ],\n    \"dependencies\": {\n      \"blog\": [],\n      \"linkedin\": [\n        \"blog.url\"\n      ],\n      \"telegram\": []\n    },\n    \"reason\": \"LinkedIn 원고는 티스토리 실제 발행 URL이 필요하므로 블로그를 먼저 발행한다.\"\n  },\n  \"channels\": {\n    \"blog\": {\n      \"status\": \"external_publish_disabled\",\n      \"provider\": \"tistory_playwright\",\n      \"url\": \"\",\n      \"reason\": \"자동 공개 게시 설정이 꺼져 있다.\",\n      \"details\": {}\n    },\n    \"linkedin\": {\n      \"status\": \"blocked_until_blog_url\",\n      \"provider\": \"linkedin_posts_api\",\n      \"url\": \"\",\n      \"reason\": \"티스토리 실제 발행 URL이 없어 LinkedIn 공개 게시를 중단한다.\",\n      \"details\": {}\n    },\n    \"telegram\": {\n      \"status\": \"published\",\n      \"provider\": \"telegram_chat\",\n      \"url\": \"https://t.me/reset9800/97\",\n      \"reason\": \"Telegram 뉴스레터 채팅방에 발송됐다.\",\n      \"details\": {}\n    }\n  }\n}"
+            },
+            {
+              "key": "visual-strategy",
+              "label": "이미지 전략",
+              "fileName": "visual-strategy.json",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visual-strategy.json",
+              "content": "{\n  \"visual_concept\": \"차트와 카드가 결합된 금융 리포트 대시보드형 시각화. 여러 종목의 하락 신호를 한 화면에서 비교 가능한 정보 카드로 정리한, 실무형 리스크 스캐너 느낌\",\n  \"mood\": \"차분하고 분석적이며 신뢰감 있는 분위기\",\n  \"subject\": \"여러 종목이 나열된 카드형 리포트 화면, 각 카드에는 종목별 위험도 차이를 암시하는 정돈된 숫자 블록과 하락 방향을 보여주는 간결한 시각 요소\",\n  \"metaphor\": \"흩어진 뉴스와 가격 신호를 한 번에 읽게 해주는 레이더 스캔 화면\",\n  \"avoid\": [\n    \"사이버펑크풍 과장된 네온\",\n    \"의미 없는 추상 배경\",\n    \"이미지 안의 텍스트, 숫자, 로고\",\n    \"저품질 stock 사진 느낌\",\n    \"과도한 3D 렌더링\",\n    \"복잡한 그래프가 난무하는 혼란스러운 구성\",\n    \"공포감을 과장한 붉은 경보 연출\",\n    \"종목별 비교가 어려운 단일 상징 이미지\"\n  ],\n  \"channels\": {\n    \"blog\": \"블로그 대표 이미지는 기술 구현형이므로, 상단에 리포트 입력에서 이미지 카드로 변환되는 흐름을 암시하는 구조도 느낌의 대시보드. 좌우 또는 상하로 정리된 카드 묶음, 정렬된 패널, 표준화된 레이아웃이 핵심이며 전체적으로 정보 설계와 자동화 워크플로우가 보이게 만든다.\",\n    \"linkedin\": \"LinkedIn 피드 이미지는 한눈에 메시지가 읽히는 압축형. 여러 카드 중 우선 확인해야 할 카드가 앞에 보이는 구성으로, '비교 가능한 위험도'와 '우선순위 정렬'이 시각적으로 즉시 느껴지게 한다. 디테일보다는 깔끔한 인포메이션 계층이 중요하다.\",\n    \"telegram\": \"Telegram 뉴스레터 이미지는 가장 단순하고 빠르게 읽히는 요약형. 6개 종목이 한 장에 정돈되어 있고, 모두 하락 신호라는 점과 신뢰도·강도 차이가 존재한다는 사실이 카드 배열과 색 대비로만 드러나게 설계한다. 모바일에서 잘리지 않는 세로형 또는 균형 잡힌 정사각형 구성이 적합하다.\"\n  }\n}"
+            },
+            {
+              "key": "image-prompts",
+              "label": "이미지 프롬프트",
+              "fileName": "image-prompts.json",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/image-prompts.json",
+              "content": "{\n  \"prompts\": {\n    \"blog\": {\n      \"purpose\": \"blog_hero\",\n      \"size\": \"1536x1024\",\n      \"quality\": \"medium\",\n      \"prompt\": \"A clean financial report dashboard with a structured workflow feel, showing a transformation from raw market signals into standardized comparison cards. Multiple stock cards arranged in a balanced grid or layered panel layout, each card containing abstract data blocks, subtle downward trend indicators, small risk bars, and consistent visual hierarchy that suggests a radar-style risk scanner. Calm, analytical, trustworthy mood, practical fintech interface design, elegant spacing, soft neutral palette with restrained blue, gray, and muted amber accents, crisp lighting, high clarity, modern enterprise dashboard aesthetic, information architecture made visible, no people, no devices in hand, no clutter, no dramatic effects. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\"\n    },\n    \"linkedin\": {\n      \"purpose\": \"linkedin_feed\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"prompt\": \"A compact finance signal comparison dashboard designed for quick scanning in a social feed. Several stock risk cards in a clean front-facing layout, with one or two priority cards slightly emphasized in the foreground, showing abstract downward trend cues, simple risk blocks, and subtle hierarchy that instantly communicates comparable downside risk and priority sorting. Minimal, sharp, professional, analytical tone, balanced composition, muted blue-gray palette with controlled contrast, modern data visualization style, no excessive depth, no dramatic red alerts, no cyberpunk neon, no abstract background noise, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\"\n    },\n    \"telegram\": {\n      \"purpose\": \"telegram_newsletter\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"prompt\": \"A simple mobile-friendly summary image showing six neatly arranged stock cards on one screen, all indicating downward market signals with subtle differences in confidence and strength through card order, spacing, and restrained color contrast. Clean, balanced square layout, easy to read at a glance, practical risk-scan aesthetic, calm and trustworthy fintech dashboard feel, soft gray and blue palette with muted accent differences only, crisp edges, minimal visual noise, no complex charts, no dramatic alarm styling, no 3D overload, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\"\n    }\n  }\n}"
+            },
+            {
+              "key": "visual-assets",
+              "label": "이미지 산출물",
+              "fileName": "visual-assets.json",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visual-assets.json",
+              "content": "{\n  \"status\": \"generated\",\n  \"assets\": {\n    \"blog\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/blog.png\",\n      \"relative_path\": \"visuals/blog.png\",\n      \"prompt\": \"A clean financial report dashboard with a structured workflow feel, showing a transformation from raw market signals into standardized comparison cards. Multiple stock cards arranged in a balanced grid or layered panel layout, each card containing abstract data blocks, subtle downward trend indicators, small risk bars, and consistent visual hierarchy that suggests a radar-style risk scanner. Calm, analytical, trustworthy mood, practical fintech interface design, elegant spacing, soft neutral palette with restrained blue, gray, and muted amber accents, crisp lighting, high clarity, modern enterprise dashboard aesthetic, information architecture made visible, no people, no devices in hand, no clutter, no dramatic effects. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1536x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    },\n    \"linkedin\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/linkedin.png\",\n      \"relative_path\": \"visuals/linkedin.png\",\n      \"prompt\": \"A compact finance signal comparison dashboard designed for quick scanning in a social feed. Several stock risk cards in a clean front-facing layout, with one or two priority cards slightly emphasized in the foreground, showing abstract downward trend cues, simple risk blocks, and subtle hierarchy that instantly communicates comparable downside risk and priority sorting. Minimal, sharp, professional, analytical tone, balanced composition, muted blue-gray palette with controlled contrast, modern data visualization style, no excessive depth, no dramatic red alerts, no cyberpunk neon, no abstract background noise, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    },\n    \"telegram\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/telegram.png\",\n      \"relative_path\": \"visuals/telegram.png\",\n      \"prompt\": \"A simple mobile-friendly summary image showing six neatly arranged stock cards on one screen, all indicating downward market signals with subtle differences in confidence and strength through card order, spacing, and restrained color contrast. Clean, balanced square layout, easy to read at a glance, practical risk-scan aesthetic, calm and trustworthy fintech dashboard feel, soft gray and blue palette with muted accent differences only, crisp edges, minimal visual noise, no complex charts, no dramatic alarm styling, no 3D overload, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    }\n  },\n  \"failures\": {}\n}"
+            },
+            {
+              "key": "visual-quality",
+              "label": "이미지 평가",
+              "fileName": "visual-quality.json",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visual-quality.json",
+              "content": "{\n  \"score\": 94,\n  \"passed\": true,\n  \"problems\": [\n    \"세 채널 모두 핵심 메시지와 이미지 콘셉트가 잘 맞는다. 카드형 대시보드, 우선순위 비교, 위험도 시각화가 텍스트 주장과 일치한다.\",\n    \"비율 측면에서 blog 1536x1024, linkedin/telegram 1024x1024로 채널 목적에 대체로 적합하다. 특히 LinkedIn과 Telegram의 정사각형 비율은 피드/메신저 환경에 무난하다.\",\n    \"프롬프트에 텍스트, 숫자, 로고, 워터마크 금지 지시가 명시되어 있어 통제는 잘 되어 있다.\",\n    \"후츠릿 톤인 실용적이고 분석적인 금융 자동화 분위기와 잘 맞으며, stock 사진처럼 보일 위험도 낮다.\",\n    \"다만 blog와 linkedin 프롬프트의 'abstract data blocks', 'simple risk blocks'가 다소 추상적이라 실제 생성 결과가 카드 UI보다 장식적 대시보드로 흐를 가능성이 있다.\",\n    \"telegram 프롬프트는 명확하지만 6개 종목의 '비교 순서'를 더 강하게 규정하지 않아, 결과물이 균등 배열만 되고 우선순위가 약해질 수 있다.\"\n  ],\n  \"recommendations\": [\n    \"blog 프롬프트에서 카드의 정보 구조를 더 구체화하라. 예: 상단 종목명 자리, 중단 수치 블록 자리, 하단 위험 막대 자리처럼 레이아웃 고정 지시를 넣어라.\",\n    \"linkedin 프롬프트는 'one or two priority cards' 외에 첫 번째 카드가 가장 먼저 시선이 가도록 전경/크기/대비 우선순위를 더 명시하라.\",\n    \"telegram 프롬프트에는 6개 카드의 정렬 기준을 '신뢰도와 강도 우선'으로 못 박아, 단순 균등 배열이 아니라 판단용 순서가 보이도록 강화하라.\",\n    \"세 프롬프트 모두 'no text, numbers' 금지는 유지하되, UI glyph까지 포함해 카드 내부의 미세 아이콘도 글자처럼 보이지 않도록 더 단순한 기호 체계를 제한하라.\",\n    \"추상 표현을 줄이고 'front-facing cards', 'fixed grid', 'consistent spacing', 'priority first' 같은 조형 지시를 더 늘려 생성 안정성을 높여라.\"\n  ]\n}"
+            },
+            {
+              "key": "metadata",
+              "label": "메타데이터",
+              "fileName": "metadata.json",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/metadata.json",
+              "content": "{\n  \"package_id\": \"2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a\",\n  \"output_type\": \"final\",\n  \"generated_at\": \"2026-05-18T16:37:15.349746\",\n  \"title\": \"Finance Signal Radar 리포트 이미지 테스트 전략\",\n  \"source_summary\": \"Finance Signal Radar 리포트의 6개 신호를 바탕으로 이미지 제작까지 테스트하려는 요청이다. LG에너지솔루션, 네이버, 카카오, KB금융, SK하이닉스, 삼성전자 모두 T+5 기준 하락 예측이 잡혔고, 최근 1개월 변동률과 신뢰도, 강도가 함께 제시됐다. 참고 링크는 없다.\",\n  \"input_type\": \"memo\",\n  \"target_persona\": \"금융 데이터 자동화, 시장 신호 대시보드, 리포트 이미지화에 관심 있는 실무형 학습자와 1인 운영자\",\n  \"revision_count\": 1,\n  \"target_channels\": [\n    \"blog\",\n    \"linkedin\",\n    \"telegram\"\n  ],\n  \"agent_architecture\": {\n    \"mode\": \"multi_agent\",\n    \"agents\": [\n      \"InputParserAgent\",\n      \"ContentStrategyAgent\",\n      \"InsightAgent\",\n      \"BlogWriterAgent\",\n      \"LinkedInWriterAgent\",\n      \"TelegramNewsletterWriterAgent\",\n      \"SelfReflectionAgent\",\n      \"RevisionAgent\",\n      \"VisualStrategyAgent\",\n      \"ImagePromptAgent\",\n      \"ImageGeneratorAgent\",\n      \"VisualQualityAgent\",\n      \"PublishAgent\"\n    ]\n  },\n  \"quality_score\": 92,\n  \"quality_passed\": true,\n  \"channel_scores\": {\n    \"blog\": 94,\n    \"linkedin\": 90,\n    \"telegram\": 91\n  },\n  \"channel_processing_status\": {\n    \"blog\": \"generated\",\n    \"linkedin\": \"generated\",\n    \"telegram\": \"generated\",\n    \"visuals\": \"generated\"\n  },\n  \"visual_assets_status\": \"generated\",\n  \"visual_assets\": {\n    \"blog\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/blog.png\",\n      \"relative_path\": \"visuals/blog.png\",\n      \"prompt\": \"A clean financial report dashboard with a structured workflow feel, showing a transformation from raw market signals into standardized comparison cards. Multiple stock cards arranged in a balanced grid or layered panel layout, each card containing abstract data blocks, subtle downward trend indicators, small risk bars, and consistent visual hierarchy that suggests a radar-style risk scanner. Calm, analytical, trustworthy mood, practical fintech interface design, elegant spacing, soft neutral palette with restrained blue, gray, and muted amber accents, crisp lighting, high clarity, modern enterprise dashboard aesthetic, information architecture made visible, no people, no devices in hand, no clutter, no dramatic effects. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1536x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    },\n    \"linkedin\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/linkedin.png\",\n      \"relative_path\": \"visuals/linkedin.png\",\n      \"prompt\": \"A compact finance signal comparison dashboard designed for quick scanning in a social feed. Several stock risk cards in a clean front-facing layout, with one or two priority cards slightly emphasized in the foreground, showing abstract downward trend cues, simple risk blocks, and subtle hierarchy that instantly communicates comparable downside risk and priority sorting. Minimal, sharp, professional, analytical tone, balanced composition, muted blue-gray palette with controlled contrast, modern data visualization style, no excessive depth, no dramatic red alerts, no cyberpunk neon, no abstract background noise, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    },\n    \"telegram\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/telegram.png\",\n      \"relative_path\": \"visuals/telegram.png\",\n      \"prompt\": \"A simple mobile-friendly summary image showing six neatly arranged stock cards on one screen, all indicating downward market signals with subtle differences in confidence and strength through card order, spacing, and restrained color contrast. Clean, balanced square layout, easy to read at a glance, practical risk-scan aesthetic, calm and trustworthy fintech dashboard feel, soft gray and blue palette with muted accent differences only, crisp edges, minimal visual noise, no complex charts, no dramatic alarm styling, no 3D overload, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    }\n  },\n  \"visual_quality\": {\n    \"score\": 94,\n    \"passed\": true,\n    \"problems\": [\n      \"세 채널 모두 핵심 메시지와 이미지 콘셉트가 잘 맞는다. 카드형 대시보드, 우선순위 비교, 위험도 시각화가 텍스트 주장과 일치한다.\",\n      \"비율 측면에서 blog 1536x1024, linkedin/telegram 1024x1024로 채널 목적에 대체로 적합하다. 특히 LinkedIn과 Telegram의 정사각형 비율은 피드/메신저 환경에 무난하다.\",\n      \"프롬프트에 텍스트, 숫자, 로고, 워터마크 금지 지시가 명시되어 있어 통제는 잘 되어 있다.\",\n      \"후츠릿 톤인 실용적이고 분석적인 금융 자동화 분위기와 잘 맞으며, stock 사진처럼 보일 위험도 낮다.\",\n      \"다만 blog와 linkedin 프롬프트의 'abstract data blocks', 'simple risk blocks'가 다소 추상적이라 실제 생성 결과가 카드 UI보다 장식적 대시보드로 흐를 가능성이 있다.\",\n      \"telegram 프롬프트는 명확하지만 6개 종목의 '비교 순서'를 더 강하게 규정하지 않아, 결과물이 균등 배열만 되고 우선순위가 약해질 수 있다.\"\n    ],\n    \"recommendations\": [\n      \"blog 프롬프트에서 카드의 정보 구조를 더 구체화하라. 예: 상단 종목명 자리, 중단 수치 블록 자리, 하단 위험 막대 자리처럼 레이아웃 고정 지시를 넣어라.\",\n      \"linkedin 프롬프트는 'one or two priority cards' 외에 첫 번째 카드가 가장 먼저 시선이 가도록 전경/크기/대비 우선순위를 더 명시하라.\",\n      \"telegram 프롬프트에는 6개 카드의 정렬 기준을 '신뢰도와 강도 우선'으로 못 박아, 단순 균등 배열이 아니라 판단용 순서가 보이도록 강화하라.\",\n      \"세 프롬프트 모두 'no text, numbers' 금지는 유지하되, UI glyph까지 포함해 카드 내부의 미세 아이콘도 글자처럼 보이지 않도록 더 단순한 기호 체계를 제한하라.\",\n      \"추상 표현을 줄이고 'front-facing cards', 'fixed grid', 'consistent spacing', 'priority first' 같은 조형 지시를 더 늘려 생성 안정성을 높여라.\"\n    ]\n  },\n  \"channel_publish_status\": {\n    \"blog\": \"external_publish_disabled\",\n    \"linkedin\": \"blocked_until_blog_url\",\n    \"telegram\": \"published\"\n  },\n  \"published_urls\": {\n    \"blog\": \"\",\n    \"linkedin\": \"\",\n    \"telegram\": \"https://t.me/reset9800/97\"\n  },\n  \"external_api_status\": \"not_connected\",\n  \"processing_mode\": \"sequential_tistory_first_with_telegram_dispatch\",\n  \"output_paths\": {\n    \"draft\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a\",\n    \"final\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a\"\n  }\n}"
+            },
+            {
+              "key": "approval-status",
+              "label": "승인 상태",
+              "fileName": "approval-status.json",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/approval-status.json",
+              "content": "{\n  \"quality_score\": 92,\n  \"quality_passed\": true,\n  \"public_content_require_approval\": false,\n  \"channels\": {\n    \"blog\": \"auto_dispatch_to_telegram\",\n    \"linkedin\": \"auto_dispatch_to_telegram\",\n    \"telegram\": \"auto_publish_to_telegram\"\n  }\n}"
+            }
+          ]
+        }
+      ]
     },
     "review": {
       "title": "검토 대기",
@@ -43,24 +461,234 @@
     "published": {
       "title": "배포 완료",
       "description": "오늘 최종본 중 하나 이상의 채널에 published URL 또는 published 상태가 있는 패키지",
-      "records": []
+      "records": [
+        {
+          "id": "2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a",
+          "scope": "final",
+          "title": "Finance Signal Radar 리포트 이미지 테스트 전략",
+          "generatedAt": "2026-05-18T16:37:15.349746",
+          "inputType": "memo",
+          "sourceSummary": "Finance Signal Radar 리포트의 6개 신호를 바탕으로 이미지 제작까지 테스트하려는 요청이다. LG에너지솔루션, 네이버, 카카오, KB금융, SK하이닉스, 삼성전자 모두 T+5 기준 하락 예측이 잡혔고, 최근 1개월 변동률과 신뢰도, 강도가 함께 제시됐다. 참고 링크는 없다.",
+          "targetPersona": "금융 데이터 자동화, 시장 신호 대시보드, 리포트 이미지화에 관심 있는 실무형 학습자와 1인 운영자",
+          "qualityScore": 92,
+          "qualityPassed": true,
+          "revisionCount": 1,
+          "channelProcessingStatus": {
+            "blog": "generated",
+            "linkedin": "generated",
+            "telegram": "generated",
+            "visuals": "generated"
+          },
+          "channelPublishStatus": {
+            "blog": "external_publish_disabled",
+            "linkedin": "blocked_until_blog_url",
+            "telegram": "published"
+          },
+          "publishedUrls": {
+            "blog": "",
+            "linkedin": "",
+            "telegram": "https://t.me/reset9800/97"
+          },
+          "visualAssetsStatus": "generated",
+          "visualAssets": {
+            "blog": {
+              "status": "generated",
+              "path": "/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/blog.png",
+              "relative_path": "visuals/blog.png",
+              "prompt": "A clean financial report dashboard with a structured workflow feel, showing a transformation from raw market signals into standardized comparison cards. Multiple stock cards arranged in a balanced grid or layered panel layout, each card containing abstract data blocks, subtle downward trend indicators, small risk bars, and consistent visual hierarchy that suggests a radar-style risk scanner. Calm, analytical, trustworthy mood, practical fintech interface design, elegant spacing, soft neutral palette with restrained blue, gray, and muted amber accents, crisp lighting, high clarity, modern enterprise dashboard aesthetic, information architecture made visible, no people, no devices in hand, no clutter, no dramatic effects. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.",
+              "size": "1536x1024",
+              "quality": "medium",
+              "provider": "openai_images",
+              "model": "gpt-image-1"
+            },
+            "linkedin": {
+              "status": "generated",
+              "path": "/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/linkedin.png",
+              "relative_path": "visuals/linkedin.png",
+              "prompt": "A compact finance signal comparison dashboard designed for quick scanning in a social feed. Several stock risk cards in a clean front-facing layout, with one or two priority cards slightly emphasized in the foreground, showing abstract downward trend cues, simple risk blocks, and subtle hierarchy that instantly communicates comparable downside risk and priority sorting. Minimal, sharp, professional, analytical tone, balanced composition, muted blue-gray palette with controlled contrast, modern data visualization style, no excessive depth, no dramatic red alerts, no cyberpunk neon, no abstract background noise, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.",
+              "size": "1024x1024",
+              "quality": "medium",
+              "provider": "openai_images",
+              "model": "gpt-image-1"
+            },
+            "telegram": {
+              "status": "generated",
+              "path": "/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/telegram.png",
+              "relative_path": "visuals/telegram.png",
+              "prompt": "A simple mobile-friendly summary image showing six neatly arranged stock cards on one screen, all indicating downward market signals with subtle differences in confidence and strength through card order, spacing, and restrained color contrast. Clean, balanced square layout, easy to read at a glance, practical risk-scan aesthetic, calm and trustworthy fintech dashboard feel, soft gray and blue palette with muted accent differences only, crisp edges, minimal visual noise, no complex charts, no dramatic alarm styling, no 3D overload, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.",
+              "size": "1024x1024",
+              "quality": "medium",
+              "provider": "openai_images",
+              "model": "gpt-image-1"
+            }
+          },
+          "visualPreviewUrls": {
+            "blog": {
+              "url": "/generated/broadcasting/final/2026-05-18-finance-signal-radar-%EB%A6%AC%ED%8F%AC%ED%8A%B8-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%A0%84%EB%9E%B5-f5ce456a/visuals/blog.png",
+              "status": "generated",
+              "size": "1536x1024",
+              "quality": "medium",
+              "provider": "openai_images",
+              "model": "gpt-image-1"
+            },
+            "linkedin": {
+              "url": "/generated/broadcasting/final/2026-05-18-finance-signal-radar-%EB%A6%AC%ED%8F%AC%ED%8A%B8-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%A0%84%EB%9E%B5-f5ce456a/visuals/linkedin.png",
+              "status": "generated",
+              "size": "1024x1024",
+              "quality": "medium",
+              "provider": "openai_images",
+              "model": "gpt-image-1"
+            },
+            "telegram": {
+              "url": "/generated/broadcasting/final/2026-05-18-finance-signal-radar-%EB%A6%AC%ED%8F%AC%ED%8A%B8-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%A0%84%EB%9E%B5-f5ce456a/visuals/telegram.png",
+              "status": "generated",
+              "size": "1024x1024",
+              "quality": "medium",
+              "provider": "openai_images",
+              "model": "gpt-image-1"
+            }
+          },
+          "visualQuality": {
+            "score": 94,
+            "passed": true,
+            "problems": [
+              "세 채널 모두 핵심 메시지와 이미지 콘셉트가 잘 맞는다. 카드형 대시보드, 우선순위 비교, 위험도 시각화가 텍스트 주장과 일치한다.",
+              "비율 측면에서 blog 1536x1024, linkedin/telegram 1024x1024로 채널 목적에 대체로 적합하다. 특히 LinkedIn과 Telegram의 정사각형 비율은 피드/메신저 환경에 무난하다.",
+              "프롬프트에 텍스트, 숫자, 로고, 워터마크 금지 지시가 명시되어 있어 통제는 잘 되어 있다.",
+              "후츠릿 톤인 실용적이고 분석적인 금융 자동화 분위기와 잘 맞으며, stock 사진처럼 보일 위험도 낮다.",
+              "다만 blog와 linkedin 프롬프트의 'abstract data blocks', 'simple risk blocks'가 다소 추상적이라 실제 생성 결과가 카드 UI보다 장식적 대시보드로 흐를 가능성이 있다.",
+              "telegram 프롬프트는 명확하지만 6개 종목의 '비교 순서'를 더 강하게 규정하지 않아, 결과물이 균등 배열만 되고 우선순위가 약해질 수 있다."
+            ],
+            "recommendations": [
+              "blog 프롬프트에서 카드의 정보 구조를 더 구체화하라. 예: 상단 종목명 자리, 중단 수치 블록 자리, 하단 위험 막대 자리처럼 레이아웃 고정 지시를 넣어라.",
+              "linkedin 프롬프트는 'one or two priority cards' 외에 첫 번째 카드가 가장 먼저 시선이 가도록 전경/크기/대비 우선순위를 더 명시하라.",
+              "telegram 프롬프트에는 6개 카드의 정렬 기준을 '신뢰도와 강도 우선'으로 못 박아, 단순 균등 배열이 아니라 판단용 순서가 보이도록 강화하라.",
+              "세 프롬프트 모두 'no text, numbers' 금지는 유지하되, UI glyph까지 포함해 카드 내부의 미세 아이콘도 글자처럼 보이지 않도록 더 단순한 기호 체계를 제한하라.",
+              "추상 표현을 줄이고 'front-facing cards', 'fixed grid', 'consistent spacing', 'priority first' 같은 조형 지시를 더 늘려 생성 안정성을 높여라."
+            ]
+          },
+          "externalApiStatus": "not_connected",
+          "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a",
+          "statusReason": "자동 공개 게시 설정이 꺼져 있다.",
+          "packageStatus": "blocked",
+          "previews": {
+            "blog": "# Finance Signal Radar 리포트를 이미지로 바꾸는 이유\n\n뉴스와 가격 데이터를 붙여 놓는 것만으로는 운영이 되지 않는다. 지금처럼 6개 종목이 모두 하락 신호를 보일 때는 텍스트 요약보다 한눈에 비교되는 이미지 구조가 더 중요하다. 핵심은 예측을 맞히는 데만 있지 않다. 어떤 종목을 먼저 봐야 하는지, 무엇을 위험 신호로 읽어야 하는지를 빠르게 결정하게 만드는 데 있다.\n\n## ✅ 결론부터 말하면\n\n이 리포트는 텍스트 리포트로 끝내기보다 카드형 이미지로 렌더링해야 한다. 이유는 간단하다. 뉴스 개수, 최근 1개월 변화율, 예측 변화율, 신뢰도, 강도가 한 화면에 함께 있어야 신호의 우선순위가 보이기 때문이다. 숫자를 많이 넣는다고 더 정확해지는 것은 아니다. 비교 가능한 형태로 묶어야 실무에서 쓸 수 있다.\n\n## 텍스트 리포트가 분산시키는 정보\n\n현재 신호는 전부 하락 예측이지만, 종목마다 해석 무게가 다르다. 예를 들어 LG에너지솔루션은 신뢰도 82%, 예측 변화율 -12.82%로 강한 하락 신호가 보인다. 반면 삼성전자는 신뢰도 71%, 강도 3으로 같은 하락 예측이라도 우선순위가 다르다. \n\n문제는 이런 차이가 텍스트에서는 쉽게 흐려진다는 점이다. 사람은 긴 목록을 읽을 때 절대값보다 첫인상에 끌린다. 그래서 “모두 하락”이라는 결론만 남고, 실제로는 더 먼저 봐야 할 종목이 사라진다. 🔍\n\n## 이미지로 바꿀 때의 설계 기준\n\n이미지는 예쁘게 만드는 작업이 아니라 읽는 비용을 줄이는 작업이다. 카드형 레이아웃을 쓸 때는 다음 순서를 고정하는 편이 좋다.\n\n1. 신뢰도와 강도를 먼저 본다\n2. 그다음 예측 변화율을 본다\n3. 마지막에 뉴스 개수와 최근 1개월 변화율을 본다\n\n이 순서가 중요한 이유는 예측 변화율이 크다고 해서 반드시 믿을 수 있는 신호는 아니기 때문이다. SK하이닉스는 최근 1개월 변화율이 110.05%로 매우 크지만, 신뢰도는 71%, 강도는 4다. 삼성전자는 최근 1개월 변화율이 50.91%지만 강도는 3이다. 같은 하락 신호라도 읽어야 하는 우선순위가 다르다. 📌\n\n## 카드형 레이아웃 설계 원칙\n\n카드 하나에는 같은 위치에 같은 정보를 넣어야 한다. 그래야 종목끼리 비교가 된다. 추천 구조는 다음과 같다.\n\n- 상단: 종목명, 신뢰도, 강도\n- 중단: 뉴스 개수, 최근 1개월 변화율\n- 하단: 예측 변화율\n\n예를 들면 이런 식이다.\n\n- LG에너지솔루션 / 신뢰도 82% / 강도 5\n- 뉴스 7건 / 최근 1개월 +2.38% / 예측 -12.82%\n\n이 구조의 장점은 단순하다. 숫자가 많아도 위치가 고정되면 눈이 자동으로 비교한다. 반대로 위치가 흔들리면 매번 다시 읽어야 한다. 실무에서는 이 읽는 비용이 생각보다 크다.\n\n## 이미지 제작까지 분리해야 하는 이유\n\n자동화에서는 리포트 생성과 이미지 렌더링을 한 번에 묶지 않는 편이 안전하다. 원본 JSON을 먼저 만들고, 그다음 카드형 이미지로 렌더링하는 2단계 파이프라인이 맞다. 이렇게 나누면 이미지가 깨져도 데이터는 살아남는다.\n\n권장 산출물은 세 가지다.\n\n- 원본 JSON\n- 텍스트 요약본\n- PNG 이미지\n\n이렇게 저장해야 실패 복구가 된다. 이미지가 잘리지 않았는지, 숫자 라운딩이 일관적인지, 카드 간 대비가 충분한지는 렌더링 단계에서 따로 검수해야 한다. ⚠️\n\n## 이번 데이터에서 읽히는 운영 포인트\n\n이번 리포트는 전 종목 하락 신호다. 이런 경우에는 “매수/매도 판단”보다 “위험 신호 우선순위 정렬”이 더 맞다. 실무적으로는 다음 순서가 유효하다.\n\n- 먼저 LG에너지솔루션처럼 신뢰도와 강도가 높은 카드부터 본다\n- 그다음 네이버, 카카오처럼 뉴스와 예측 변화가 함께 움직인 종목을 본다\n- 마지막에 삼성전자처럼 신호는 있으나 강도가 낮은 카드를 본다\n\n이 판단 기준이 없으면 이미지가 있어도 오독이 생긴다. 반대로 기준이 있으면 이미지 한 장이 단순 요약이 아니라 운영 자산이 된다.\n\n## 마무리\n\n이 리포트의 핵심은 맞히는 예측이 아니라 비교 가능한 위험 시각화다. AI가 숫자를 만드는 단계보다 중요한 것은 그 숫자를 사람이 빠르게 읽고 검증할 수 있게 만드는 구조다. 따라서 다음 테스트는 예측 정확도보다 카드 순서, 정보 배치, 우선순위 판독 시간을 먼저 봐야 한다. 도구 사용량보다 시스템을 설계하고 검증하는 능력에서 차이가 난다.",
+            "linkedin": "# 뉴스가 많아도 신호는 강하지 않을 수 있습니다 📉\n\n데이터가 실무에 쓰이려면 숫자를 더하는 것보다, 먼저 비교되게 만들어야 합니다.\n\n이번 Finance Signal Radar는 6개 종목 모두 하락 예측이 잡혔습니다. 하지만 실무에서 더 중요한 건 ‘전부 하락’이 아니라 무엇을 먼저 봐야 하느냐입니다. LG에너지솔루션은 신뢰도 82%로 가장 높고, SK하이닉스는 최근 1개월 +110.05%인데 예측은 -2.13%입니다. 같은 하락 신호라도 우선순위는 다릅니다.\n\n판단 기준은 단순합니다. 예측 변화율만 보지 말고, 신뢰도와 강도를 먼저 보셔야 합니다. 그다음에 뉴스 개수와 가격 반응을 붙여야 실무 판단이 흔들리지 않습니다.\n\n중요한 건 예측을 맞히는 것이 아니라, 카드형 레이아웃으로 위험도를 정렬해 3초 안에 오독 없이 읽히게 만드는 것입니다. 텍스트 리포트와 이미지 리포트는 분리해야 하고, 렌더링이 깨져도 원본 수치는 반드시 남아 있어야 합니다.\n\nAI가 숫자를 만드는 단계보다, 숫자를 비교하고 검증하게 만드는 구조가 더 중요합니다. 이 구조를 실제 화면으로 어떻게 설계했는지는 블로그 전문 [블로그 링크]에서 확인하실 수 있습니다. 🔎",
+            "telegram": "## 🚀 6개 종목이 모두 하락일 때는, 예측보다 우선순위부터 보셔야 합니다\n\n이번 Finance Signal Radar는 6개 종목 모두 하락 예측이 잡혔습니다. 이런 경우 실무에서 먼저 봐야 하는 건 “전부 하락”이라는 결론이 아니라, 어떤 종목을 먼저 확인해야 하는지입니다.\n\nLG에너지솔루션은 신뢰도 82%에 예측 하락폭이 -12.82%로 가장 강했고, 삼성전자는 신뢰도 71%에 강도 3으로 같은 하락 신호라도 무게가 달랐습니다. 뉴스 개수, 최근 1개월 변동, 예측 변화율, 신뢰도, 강도가 함께 있으면 텍스트 요약만으로는 판단이 쉽게 분산됩니다.\n\n그래서 이번 테스트는 원본 리포트로 끝내지 말고, 카드형 이미지로 바꿔서 우선 확인 종목이 바로 보이게 만드는 쪽이 맞습니다. 이미지 한 장에서 위험도 순서가 읽혀야 현업에서 쓸 수 있습니다. 📌\n\n- ✅ 원본 JSON 생성과 카드형 이미지 렌더링은 분리해서 보셔야 합니다\n- ✅ 카드 순서는 예측 변화율보다 신뢰도와 강도를 먼저 반영해 정렬해 보셔야 합니다\n- ⚠️ 뉴스 개수·1개월 변화율·예측 변화율·신뢰도는 같은 위치에 고정해 비교 가능하게 만드셔야 합니다\n\n이번 데이터는 “맞추는 예측”보다 “위험도를 읽는 시각화”에 더 적합합니다. 우선 확인 종목이 3초 안에 보이면 운영 가치가 생기고, 카드가 복잡해져 오독이 늘면 모델이 좋아도 현업에서는 쓰기 어렵습니다."
+          },
+          "documents": [
+            {
+              "key": "blog",
+              "label": "Blog 원고",
+              "fileName": "blog.md",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/blog.md",
+              "content": "# Finance Signal Radar 리포트를 이미지로 바꾸는 이유\n\n뉴스와 가격 데이터를 붙여 놓는 것만으로는 운영이 되지 않는다. 지금처럼 6개 종목이 모두 하락 신호를 보일 때는 텍스트 요약보다 한눈에 비교되는 이미지 구조가 더 중요하다. 핵심은 예측을 맞히는 데만 있지 않다. 어떤 종목을 먼저 봐야 하는지, 무엇을 위험 신호로 읽어야 하는지를 빠르게 결정하게 만드는 데 있다.\n\n## ✅ 결론부터 말하면\n\n이 리포트는 텍스트 리포트로 끝내기보다 카드형 이미지로 렌더링해야 한다. 이유는 간단하다. 뉴스 개수, 최근 1개월 변화율, 예측 변화율, 신뢰도, 강도가 한 화면에 함께 있어야 신호의 우선순위가 보이기 때문이다. 숫자를 많이 넣는다고 더 정확해지는 것은 아니다. 비교 가능한 형태로 묶어야 실무에서 쓸 수 있다.\n\n## 텍스트 리포트가 분산시키는 정보\n\n현재 신호는 전부 하락 예측이지만, 종목마다 해석 무게가 다르다. 예를 들어 LG에너지솔루션은 신뢰도 82%, 예측 변화율 -12.82%로 강한 하락 신호가 보인다. 반면 삼성전자는 신뢰도 71%, 강도 3으로 같은 하락 예측이라도 우선순위가 다르다. \n\n문제는 이런 차이가 텍스트에서는 쉽게 흐려진다는 점이다. 사람은 긴 목록을 읽을 때 절대값보다 첫인상에 끌린다. 그래서 “모두 하락”이라는 결론만 남고, 실제로는 더 먼저 봐야 할 종목이 사라진다. 🔍\n\n## 이미지로 바꿀 때의 설계 기준\n\n이미지는 예쁘게 만드는 작업이 아니라 읽는 비용을 줄이는 작업이다. 카드형 레이아웃을 쓸 때는 다음 순서를 고정하는 편이 좋다.\n\n1. 신뢰도와 강도를 먼저 본다\n2. 그다음 예측 변화율을 본다\n3. 마지막에 뉴스 개수와 최근 1개월 변화율을 본다\n\n이 순서가 중요한 이유는 예측 변화율이 크다고 해서 반드시 믿을 수 있는 신호는 아니기 때문이다. SK하이닉스는 최근 1개월 변화율이 110.05%로 매우 크지만, 신뢰도는 71%, 강도는 4다. 삼성전자는 최근 1개월 변화율이 50.91%지만 강도는 3이다. 같은 하락 신호라도 읽어야 하는 우선순위가 다르다. 📌\n\n## 카드형 레이아웃 설계 원칙\n\n카드 하나에는 같은 위치에 같은 정보를 넣어야 한다. 그래야 종목끼리 비교가 된다. 추천 구조는 다음과 같다.\n\n- 상단: 종목명, 신뢰도, 강도\n- 중단: 뉴스 개수, 최근 1개월 변화율\n- 하단: 예측 변화율\n\n예를 들면 이런 식이다.\n\n- LG에너지솔루션 / 신뢰도 82% / 강도 5\n- 뉴스 7건 / 최근 1개월 +2.38% / 예측 -12.82%\n\n이 구조의 장점은 단순하다. 숫자가 많아도 위치가 고정되면 눈이 자동으로 비교한다. 반대로 위치가 흔들리면 매번 다시 읽어야 한다. 실무에서는 이 읽는 비용이 생각보다 크다.\n\n## 이미지 제작까지 분리해야 하는 이유\n\n자동화에서는 리포트 생성과 이미지 렌더링을 한 번에 묶지 않는 편이 안전하다. 원본 JSON을 먼저 만들고, 그다음 카드형 이미지로 렌더링하는 2단계 파이프라인이 맞다. 이렇게 나누면 이미지가 깨져도 데이터는 살아남는다.\n\n권장 산출물은 세 가지다.\n\n- 원본 JSON\n- 텍스트 요약본\n- PNG 이미지\n\n이렇게 저장해야 실패 복구가 된다. 이미지가 잘리지 않았는지, 숫자 라운딩이 일관적인지, 카드 간 대비가 충분한지는 렌더링 단계에서 따로 검수해야 한다. ⚠️\n\n## 이번 데이터에서 읽히는 운영 포인트\n\n이번 리포트는 전 종목 하락 신호다. 이런 경우에는 “매수/매도 판단”보다 “위험 신호 우선순위 정렬”이 더 맞다. 실무적으로는 다음 순서가 유효하다.\n\n- 먼저 LG에너지솔루션처럼 신뢰도와 강도가 높은 카드부터 본다\n- 그다음 네이버, 카카오처럼 뉴스와 예측 변화가 함께 움직인 종목을 본다\n- 마지막에 삼성전자처럼 신호는 있으나 강도가 낮은 카드를 본다\n\n이 판단 기준이 없으면 이미지가 있어도 오독이 생긴다. 반대로 기준이 있으면 이미지 한 장이 단순 요약이 아니라 운영 자산이 된다.\n\n## 마무리\n\n이 리포트의 핵심은 맞히는 예측이 아니라 비교 가능한 위험 시각화다. AI가 숫자를 만드는 단계보다 중요한 것은 그 숫자를 사람이 빠르게 읽고 검증할 수 있게 만드는 구조다. 따라서 다음 테스트는 예측 정확도보다 카드 순서, 정보 배치, 우선순위 판독 시간을 먼저 봐야 한다. 도구 사용량보다 시스템을 설계하고 검증하는 능력에서 차이가 난다."
+            },
+            {
+              "key": "linkedin",
+              "label": "LinkedIn 원고",
+              "fileName": "linkedin.md",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/linkedin.md",
+              "content": "# 뉴스가 많아도 신호는 강하지 않을 수 있습니다 📉\n\n데이터가 실무에 쓰이려면 숫자를 더하는 것보다, 먼저 비교되게 만들어야 합니다.\n\n이번 Finance Signal Radar는 6개 종목 모두 하락 예측이 잡혔습니다. 하지만 실무에서 더 중요한 건 ‘전부 하락’이 아니라 무엇을 먼저 봐야 하느냐입니다. LG에너지솔루션은 신뢰도 82%로 가장 높고, SK하이닉스는 최근 1개월 +110.05%인데 예측은 -2.13%입니다. 같은 하락 신호라도 우선순위는 다릅니다.\n\n판단 기준은 단순합니다. 예측 변화율만 보지 말고, 신뢰도와 강도를 먼저 보셔야 합니다. 그다음에 뉴스 개수와 가격 반응을 붙여야 실무 판단이 흔들리지 않습니다.\n\n중요한 건 예측을 맞히는 것이 아니라, 카드형 레이아웃으로 위험도를 정렬해 3초 안에 오독 없이 읽히게 만드는 것입니다. 텍스트 리포트와 이미지 리포트는 분리해야 하고, 렌더링이 깨져도 원본 수치는 반드시 남아 있어야 합니다.\n\nAI가 숫자를 만드는 단계보다, 숫자를 비교하고 검증하게 만드는 구조가 더 중요합니다. 이 구조를 실제 화면으로 어떻게 설계했는지는 블로그 전문 [블로그 링크]에서 확인하실 수 있습니다. 🔎"
+            },
+            {
+              "key": "telegram",
+              "label": "Telegram 뉴스레터",
+              "fileName": "telegram.md",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/telegram.md",
+              "content": "## 🚀 6개 종목이 모두 하락일 때는, 예측보다 우선순위부터 보셔야 합니다\n\n이번 Finance Signal Radar는 6개 종목 모두 하락 예측이 잡혔습니다. 이런 경우 실무에서 먼저 봐야 하는 건 “전부 하락”이라는 결론이 아니라, 어떤 종목을 먼저 확인해야 하는지입니다.\n\nLG에너지솔루션은 신뢰도 82%에 예측 하락폭이 -12.82%로 가장 강했고, 삼성전자는 신뢰도 71%에 강도 3으로 같은 하락 신호라도 무게가 달랐습니다. 뉴스 개수, 최근 1개월 변동, 예측 변화율, 신뢰도, 강도가 함께 있으면 텍스트 요약만으로는 판단이 쉽게 분산됩니다.\n\n그래서 이번 테스트는 원본 리포트로 끝내지 말고, 카드형 이미지로 바꿔서 우선 확인 종목이 바로 보이게 만드는 쪽이 맞습니다. 이미지 한 장에서 위험도 순서가 읽혀야 현업에서 쓸 수 있습니다. 📌\n\n- ✅ 원본 JSON 생성과 카드형 이미지 렌더링은 분리해서 보셔야 합니다\n- ✅ 카드 순서는 예측 변화율보다 신뢰도와 강도를 먼저 반영해 정렬해 보셔야 합니다\n- ⚠️ 뉴스 개수·1개월 변화율·예측 변화율·신뢰도는 같은 위치에 고정해 비교 가능하게 만드셔야 합니다\n\n이번 데이터는 “맞추는 예측”보다 “위험도를 읽는 시각화”에 더 적합합니다. 우선 확인 종목이 3초 안에 보이면 운영 가치가 생기고, 카드가 복잡해져 오독이 늘면 모델이 좋아도 현업에서는 쓰기 어렵습니다."
+            },
+            {
+              "key": "strategy",
+              "label": "전략 문서",
+              "fileName": "strategy.md",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/strategy.md",
+              "content": "# Strategy\n\n- 핵심 메시지: 뉴스와 가격 데이터를 결합한 신호는 단순 알림이 아니라, 한눈에 위험도를 읽는 시각화 자산으로 만들어야 한다.\n- 타깃 독자: 금융 데이터 자동화, 시장 신호 대시보드, 리포트 이미지화에 관심 있는 실무형 학습자와 1인 운영자\n- 주장: 이 리포트는 텍스트 요약으로 끝낼 것이 아니라, 종목별 하락 신호를 비교 가능한 이미지로 바꾸는 테스트에 최적화된 입력이다.\n\n## Platform Directions\n\n- Blog: 기술 구현형으로 간다. 리포트를 이미지로 바꾸는 워크플로우, 시각화 기준, 카드형 레이아웃 설계, 종목별 점수와 예측치 배치 원칙을 다룬다. 핵심은 예측 정확도 자체보다 신호를 읽기 쉬운 형태로 운영하는 구조다.\n- LinkedIn: 시장 신호를 '데이터 요약'이 아니라 '판단 가능한 시각적 구조'로 바꿔야 한다는 관점으로 압축한다. AI가 숫자를 만드는 단계보다, 숫자를 비교하고 검증하게 만드는 설계가 중요하다는 메시지를 전면에 둔다.\n- Telegram: 짧게 핵심만 전달한다. 이번 리포트에서 6개 종목 모두 하락 예측이 잡혔고, 신뢰도와 강도가 함께 제시된 만큼 이미지 한 장으로 요약하는 테스트를 해보는 흐름이라는 점을 강조한다. 실행 항목은 카드형 이미지 시안 생성과 종목별 위험도 정렬 확인 정도로 짧게 잡는다."
+            },
+            {
+              "key": "insight",
+              "label": "인사이트 문서",
+              "fileName": "insight.md",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/insight.md",
+              "content": "# Insight\n\n이 리포트의 핵심은 ‘맞추는 예측’이 아니라 ‘비교 가능한 위험 시각화’로 바꾸는 데 있다. 지금 데이터는 종목별 뉴스 개수, 최근 변동, 예측 변화율, 신뢰도, 강도가 함께 붙어 있어서 텍스트로 읽으면 신호가 분산된다. 실무 관점에서는 이걸 그대로 요약하는 것이 아니라, 위험도 순서와 확신 수준을 한 화면에서 읽히는 카드 구조로 바꿔야 한다. 특히 예측 하락이 전 종목에 걸쳐 나오더라도, 강도와 신뢰도 차이가 있으므로 ‘모두 하락’이라는 단일 결론보다 어떤 종목을 먼저 볼지 결정하게 만드는 운영 구조가 중요하다. AI 자동화 측면에서는 리포트 생성과 이미지 렌더링을 분리해야 하고, 개발툴 측면에서는 수치 계산과 레이아웃 규칙을 코드로 고정해야 한다. 검증은 예측 정확도만 보지 말고, 이미지 한 장에서 오독이 줄었는지, 우선순위가 빨리 잡히는지로 판단해야 한다. 실패 복구는 이미지 생성이 깨져도 원본 텍스트 리포트는 유지되도록 두 단계 파이프라인으로 설계하는 것이 맞다.\n\n## Practical Points\n\n- 텍스트 리포트와 이미지 리포트를 한 작업으로 묶지 말고, 원본 JSON 생성 -> 카드형 렌더링의 2단계로 분리한다.\n- 카드 순서는 예측 변화율보다 신뢰도와 강도를 먼저 반영해 정렬 규칙을 고정한다.\n- 종목별 비교가 목적이면 절대값보다 상대 순위와 색상 체계를 우선 설계한다.\n- 이미지에서는 뉴스 개수, 최근 1개월 변화율, 예측 변화율, 신뢰도를 한 카드 안에 같은 위치에 배치해 읽는 비용을 줄인다.\n- 강도가 낮아도 신뢰도가 높으면 상단 노출 후보가 될 수 있으므로 단일 점수로 뭉개지 말고 분리 지표를 유지한다.\n- 검증 기준은 예측 적중률뿐 아니라, 사람이 3초 안에 위험도를 읽을 수 있는지로 둔다.\n- 렌더링 실패 대비를 위해 텍스트 요약본, 테이블 HTML, 이미지 PNG를 각각 독립 산출물로 저장한다.\n- 자동 배포 전에는 이미지가 실제로 잘리는지, 카드 간 대비가 충분한지, 숫자 라운딩이 일관적인지 확인하는 시각 검수 단계를 둔다.\n\n## Examples\n\n- 예시 1: 상단에는 신뢰도 82%의 LG에너지솔루션을 두고, 그 아래로 뉴스 15건인 KB금융과 뉴스 14건인 삼성전자를 배치해 ‘우선 확인 종목’ 구조를 만든다.\n- 예시 2: 카드 하나에 '뉴스 11건 / 최근 1개월 +110.05% / 예측 -2.13% / 신뢰도 71%'처럼 넣고, 예측 하락폭보다 신뢰도와 변동 이력을 같이 보여준다.\n- 예시 3: 이미지 버전과 텍스트 버전을 동시에 생성해, Telegram에는 이미지 한 장과 핵심 2줄만 보내고, 블로그나 내부 로그에는 전체 수치 테이블을 남긴다.\n- 예시 4: 하락 신호 6개가 모두 잡혔을 때는 ‘매수/매도 판단’보다 ‘위험 신호 우선순위 정렬’로 메시지를 바꿔 오독을 줄인다.\n\n## Cautions\n\n- 예측이 전 종목 하락으로 나왔다고 해서 실제 매매 신호로 바로 쓰면 안 된다. 신뢰도와 강도 차이를 검증 없이 동일하게 취급하면 위험하다.\n- 뉴스 개수가 많다고 신호 품질이 높다고 단정하면 안 된다. 뉴스 양은 맥락일 뿐이고, 가격 반응과 결합했을 때만 의미가 있다.\n- 이미지 중심 운영에서는 숫자 과밀이 가장 큰 실패 요인이다. 한 카드에 지표를 너무 많이 넣으면 비교성이 떨어진다.\n- 색상만으로 위험도를 표현하면 색각 문제와 모바일 가독성 이슈가 생긴다. 색상은 보조고, 숫자와 순서가 기준이어야 한다.\n- 이미지 생성 오류를 본 리포트 오류로 착각하지 않도록, 렌더링 실패와 데이터 생성 실패를 로그 단계에서 분리해야 한다.\n- 예측 변화율이 큰 종목과 신뢰도가 높은 종목이 다를 수 있으므로 단일 랭킹만 운영하면 판단이 왜곡된다."
+            },
+            {
+              "key": "reflection",
+              "label": "평가 문서",
+              "fileName": "reflection.md",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/reflection.md",
+              "content": "# Reflection\n\n- 총점: 92\n- 통과 여부: True\n- 배포 상태: 자동 발송 가능\n\n## Channel Scores\n\n- blog: 94\n- linkedin: 90\n- telegram: 91\n\n## Strengths\n\n- 블로그가 문어체 평서형 반말로 작성되어 있고, 소제목 구조도 स्पष्ट해서 하드 게이트를 충족한다.\n- 후츠릿 관점에서 '예측'보다 '비교 가능한 위험 시각화'와 운영 구조를 강조해 관점이 선명하다.\n- 실무 적용성 측면에서 원본 JSON -> 카드형 렌더링의 2단계 파이프라인, 정렬 기준, 검수 포인트가 구체적이다.\n- LinkedIn에 [블로그 링크] 자리표시자가 있어 유입 장치가 명확하다.\n- Telegram이 고정 라벨 없이 Markdown 제목과 핵심 메시지를 유지하고 있어 플랫폼 적합성이 좋다.\n- 과도한 이모지 사용이 없고, 스캔성 보조 수준에서만 사용해 가독성이 무너지지 않는다.\n\n## Problems\n\n- 블로그 첫 문단과 일부 문장들이 다소 선언형이라, 초반 훅에서 바로 실무 문제를 더 강하게 찌르면 후킹력이 더 좋아진다.\n- LinkedIn은 메시지가 좋지만 문단이 다소 길어 모바일 스캔성은 더 개선될 여지가 있다.\n- Telegram은 실행 항목이 유효하지만, 마지막 한 줄에 CTA가 조금 더 또렷하면 전환력이 높아진다.\n- 블로그와 Telegram 모두 예시가 충분하나, 실제 화면 구성에 대한 한 줄 설명이 더 있으면 구체성이 더 올라간다.\n\n## Revision Instructions\n\n- 블로그 도입부를 '모두 하락인데 왜 텍스트로 읽으면 위험 순서가 안 보이는가'처럼 문제 제기형으로 더 압축하라.\n- LinkedIn은 3문단 이내로 줄이고, 각 문단의 첫 문장을 더 짧게 만들어 모바일 스캔성을 높여라.\n- Telegram 마지막 문장에 '카드형 이미지 시안 생성 → 우선순위 정렬 확인' 같은 직접 CTA를 한 번 더 넣어라.\n- 블로그에 카드 예시를 1개만 더 추가해, 실제 레이아웃 상의 정보 배치를 더 선명하게 보여줘라.\n- 이미지 기준 문장을 추가할 때는 숫자와 순서를 유지하고, 추상적인 표현은 최소화하라."
+            },
+            {
+              "key": "publish-plan",
+              "label": "배포 계획",
+              "fileName": "publish-plan.json",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/publish-plan.json",
+              "content": "{\n  \"agent\": \"PublishAgent\",\n  \"quality_score\": 92,\n  \"quality_passed\": true,\n  \"quality_ready_for_publish\": true,\n  \"external_api_status\": \"not_connected\",\n  \"processing_mode\": \"sequential_tistory_first_with_telegram_dispatch\",\n  \"executed_at\": \"2026-05-18T16:38:13.542793\",\n  \"publish_strategy\": {\n    \"mode\": \"sequential\",\n    \"order\": [\n      \"blog\",\n      \"linkedin\",\n      \"telegram\"\n    ],\n    \"dependencies\": {\n      \"blog\": [],\n      \"linkedin\": [\n        \"blog.url\"\n      ],\n      \"telegram\": []\n    },\n    \"reason\": \"LinkedIn 원고는 티스토리 실제 발행 URL이 필요하므로 블로그를 먼저 발행한다.\"\n  },\n  \"channels\": {\n    \"blog\": {\n      \"status\": \"external_publish_disabled\",\n      \"provider\": \"tistory_playwright\",\n      \"url\": \"\",\n      \"reason\": \"자동 공개 게시 설정이 꺼져 있다.\",\n      \"details\": {}\n    },\n    \"linkedin\": {\n      \"status\": \"blocked_until_blog_url\",\n      \"provider\": \"linkedin_posts_api\",\n      \"url\": \"\",\n      \"reason\": \"티스토리 실제 발행 URL이 없어 LinkedIn 공개 게시를 중단한다.\",\n      \"details\": {}\n    },\n    \"telegram\": {\n      \"status\": \"published\",\n      \"provider\": \"telegram_chat\",\n      \"url\": \"https://t.me/reset9800/97\",\n      \"reason\": \"Telegram 뉴스레터 채팅방에 발송됐다.\",\n      \"details\": {}\n    }\n  }\n}"
+            },
+            {
+              "key": "visual-strategy",
+              "label": "이미지 전략",
+              "fileName": "visual-strategy.json",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visual-strategy.json",
+              "content": "{\n  \"visual_concept\": \"차트와 카드가 결합된 금융 리포트 대시보드형 시각화. 여러 종목의 하락 신호를 한 화면에서 비교 가능한 정보 카드로 정리한, 실무형 리스크 스캐너 느낌\",\n  \"mood\": \"차분하고 분석적이며 신뢰감 있는 분위기\",\n  \"subject\": \"여러 종목이 나열된 카드형 리포트 화면, 각 카드에는 종목별 위험도 차이를 암시하는 정돈된 숫자 블록과 하락 방향을 보여주는 간결한 시각 요소\",\n  \"metaphor\": \"흩어진 뉴스와 가격 신호를 한 번에 읽게 해주는 레이더 스캔 화면\",\n  \"avoid\": [\n    \"사이버펑크풍 과장된 네온\",\n    \"의미 없는 추상 배경\",\n    \"이미지 안의 텍스트, 숫자, 로고\",\n    \"저품질 stock 사진 느낌\",\n    \"과도한 3D 렌더링\",\n    \"복잡한 그래프가 난무하는 혼란스러운 구성\",\n    \"공포감을 과장한 붉은 경보 연출\",\n    \"종목별 비교가 어려운 단일 상징 이미지\"\n  ],\n  \"channels\": {\n    \"blog\": \"블로그 대표 이미지는 기술 구현형이므로, 상단에 리포트 입력에서 이미지 카드로 변환되는 흐름을 암시하는 구조도 느낌의 대시보드. 좌우 또는 상하로 정리된 카드 묶음, 정렬된 패널, 표준화된 레이아웃이 핵심이며 전체적으로 정보 설계와 자동화 워크플로우가 보이게 만든다.\",\n    \"linkedin\": \"LinkedIn 피드 이미지는 한눈에 메시지가 읽히는 압축형. 여러 카드 중 우선 확인해야 할 카드가 앞에 보이는 구성으로, '비교 가능한 위험도'와 '우선순위 정렬'이 시각적으로 즉시 느껴지게 한다. 디테일보다는 깔끔한 인포메이션 계층이 중요하다.\",\n    \"telegram\": \"Telegram 뉴스레터 이미지는 가장 단순하고 빠르게 읽히는 요약형. 6개 종목이 한 장에 정돈되어 있고, 모두 하락 신호라는 점과 신뢰도·강도 차이가 존재한다는 사실이 카드 배열과 색 대비로만 드러나게 설계한다. 모바일에서 잘리지 않는 세로형 또는 균형 잡힌 정사각형 구성이 적합하다.\"\n  }\n}"
+            },
+            {
+              "key": "image-prompts",
+              "label": "이미지 프롬프트",
+              "fileName": "image-prompts.json",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/image-prompts.json",
+              "content": "{\n  \"prompts\": {\n    \"blog\": {\n      \"purpose\": \"blog_hero\",\n      \"size\": \"1536x1024\",\n      \"quality\": \"medium\",\n      \"prompt\": \"A clean financial report dashboard with a structured workflow feel, showing a transformation from raw market signals into standardized comparison cards. Multiple stock cards arranged in a balanced grid or layered panel layout, each card containing abstract data blocks, subtle downward trend indicators, small risk bars, and consistent visual hierarchy that suggests a radar-style risk scanner. Calm, analytical, trustworthy mood, practical fintech interface design, elegant spacing, soft neutral palette with restrained blue, gray, and muted amber accents, crisp lighting, high clarity, modern enterprise dashboard aesthetic, information architecture made visible, no people, no devices in hand, no clutter, no dramatic effects. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\"\n    },\n    \"linkedin\": {\n      \"purpose\": \"linkedin_feed\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"prompt\": \"A compact finance signal comparison dashboard designed for quick scanning in a social feed. Several stock risk cards in a clean front-facing layout, with one or two priority cards slightly emphasized in the foreground, showing abstract downward trend cues, simple risk blocks, and subtle hierarchy that instantly communicates comparable downside risk and priority sorting. Minimal, sharp, professional, analytical tone, balanced composition, muted blue-gray palette with controlled contrast, modern data visualization style, no excessive depth, no dramatic red alerts, no cyberpunk neon, no abstract background noise, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\"\n    },\n    \"telegram\": {\n      \"purpose\": \"telegram_newsletter\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"prompt\": \"A simple mobile-friendly summary image showing six neatly arranged stock cards on one screen, all indicating downward market signals with subtle differences in confidence and strength through card order, spacing, and restrained color contrast. Clean, balanced square layout, easy to read at a glance, practical risk-scan aesthetic, calm and trustworthy fintech dashboard feel, soft gray and blue palette with muted accent differences only, crisp edges, minimal visual noise, no complex charts, no dramatic alarm styling, no 3D overload, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\"\n    }\n  }\n}"
+            },
+            {
+              "key": "visual-assets",
+              "label": "이미지 산출물",
+              "fileName": "visual-assets.json",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visual-assets.json",
+              "content": "{\n  \"status\": \"generated\",\n  \"assets\": {\n    \"blog\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/blog.png\",\n      \"relative_path\": \"visuals/blog.png\",\n      \"prompt\": \"A clean financial report dashboard with a structured workflow feel, showing a transformation from raw market signals into standardized comparison cards. Multiple stock cards arranged in a balanced grid or layered panel layout, each card containing abstract data blocks, subtle downward trend indicators, small risk bars, and consistent visual hierarchy that suggests a radar-style risk scanner. Calm, analytical, trustworthy mood, practical fintech interface design, elegant spacing, soft neutral palette with restrained blue, gray, and muted amber accents, crisp lighting, high clarity, modern enterprise dashboard aesthetic, information architecture made visible, no people, no devices in hand, no clutter, no dramatic effects. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1536x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    },\n    \"linkedin\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/linkedin.png\",\n      \"relative_path\": \"visuals/linkedin.png\",\n      \"prompt\": \"A compact finance signal comparison dashboard designed for quick scanning in a social feed. Several stock risk cards in a clean front-facing layout, with one or two priority cards slightly emphasized in the foreground, showing abstract downward trend cues, simple risk blocks, and subtle hierarchy that instantly communicates comparable downside risk and priority sorting. Minimal, sharp, professional, analytical tone, balanced composition, muted blue-gray palette with controlled contrast, modern data visualization style, no excessive depth, no dramatic red alerts, no cyberpunk neon, no abstract background noise, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    },\n    \"telegram\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/telegram.png\",\n      \"relative_path\": \"visuals/telegram.png\",\n      \"prompt\": \"A simple mobile-friendly summary image showing six neatly arranged stock cards on one screen, all indicating downward market signals with subtle differences in confidence and strength through card order, spacing, and restrained color contrast. Clean, balanced square layout, easy to read at a glance, practical risk-scan aesthetic, calm and trustworthy fintech dashboard feel, soft gray and blue palette with muted accent differences only, crisp edges, minimal visual noise, no complex charts, no dramatic alarm styling, no 3D overload, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    }\n  },\n  \"failures\": {}\n}"
+            },
+            {
+              "key": "visual-quality",
+              "label": "이미지 평가",
+              "fileName": "visual-quality.json",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visual-quality.json",
+              "content": "{\n  \"score\": 94,\n  \"passed\": true,\n  \"problems\": [\n    \"세 채널 모두 핵심 메시지와 이미지 콘셉트가 잘 맞는다. 카드형 대시보드, 우선순위 비교, 위험도 시각화가 텍스트 주장과 일치한다.\",\n    \"비율 측면에서 blog 1536x1024, linkedin/telegram 1024x1024로 채널 목적에 대체로 적합하다. 특히 LinkedIn과 Telegram의 정사각형 비율은 피드/메신저 환경에 무난하다.\",\n    \"프롬프트에 텍스트, 숫자, 로고, 워터마크 금지 지시가 명시되어 있어 통제는 잘 되어 있다.\",\n    \"후츠릿 톤인 실용적이고 분석적인 금융 자동화 분위기와 잘 맞으며, stock 사진처럼 보일 위험도 낮다.\",\n    \"다만 blog와 linkedin 프롬프트의 'abstract data blocks', 'simple risk blocks'가 다소 추상적이라 실제 생성 결과가 카드 UI보다 장식적 대시보드로 흐를 가능성이 있다.\",\n    \"telegram 프롬프트는 명확하지만 6개 종목의 '비교 순서'를 더 강하게 규정하지 않아, 결과물이 균등 배열만 되고 우선순위가 약해질 수 있다.\"\n  ],\n  \"recommendations\": [\n    \"blog 프롬프트에서 카드의 정보 구조를 더 구체화하라. 예: 상단 종목명 자리, 중단 수치 블록 자리, 하단 위험 막대 자리처럼 레이아웃 고정 지시를 넣어라.\",\n    \"linkedin 프롬프트는 'one or two priority cards' 외에 첫 번째 카드가 가장 먼저 시선이 가도록 전경/크기/대비 우선순위를 더 명시하라.\",\n    \"telegram 프롬프트에는 6개 카드의 정렬 기준을 '신뢰도와 강도 우선'으로 못 박아, 단순 균등 배열이 아니라 판단용 순서가 보이도록 강화하라.\",\n    \"세 프롬프트 모두 'no text, numbers' 금지는 유지하되, UI glyph까지 포함해 카드 내부의 미세 아이콘도 글자처럼 보이지 않도록 더 단순한 기호 체계를 제한하라.\",\n    \"추상 표현을 줄이고 'front-facing cards', 'fixed grid', 'consistent spacing', 'priority first' 같은 조형 지시를 더 늘려 생성 안정성을 높여라.\"\n  ]\n}"
+            },
+            {
+              "key": "metadata",
+              "label": "메타데이터",
+              "fileName": "metadata.json",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/metadata.json",
+              "content": "{\n  \"package_id\": \"2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a\",\n  \"output_type\": \"final\",\n  \"generated_at\": \"2026-05-18T16:37:15.349746\",\n  \"title\": \"Finance Signal Radar 리포트 이미지 테스트 전략\",\n  \"source_summary\": \"Finance Signal Radar 리포트의 6개 신호를 바탕으로 이미지 제작까지 테스트하려는 요청이다. LG에너지솔루션, 네이버, 카카오, KB금융, SK하이닉스, 삼성전자 모두 T+5 기준 하락 예측이 잡혔고, 최근 1개월 변동률과 신뢰도, 강도가 함께 제시됐다. 참고 링크는 없다.\",\n  \"input_type\": \"memo\",\n  \"target_persona\": \"금융 데이터 자동화, 시장 신호 대시보드, 리포트 이미지화에 관심 있는 실무형 학습자와 1인 운영자\",\n  \"revision_count\": 1,\n  \"target_channels\": [\n    \"blog\",\n    \"linkedin\",\n    \"telegram\"\n  ],\n  \"agent_architecture\": {\n    \"mode\": \"multi_agent\",\n    \"agents\": [\n      \"InputParserAgent\",\n      \"ContentStrategyAgent\",\n      \"InsightAgent\",\n      \"BlogWriterAgent\",\n      \"LinkedInWriterAgent\",\n      \"TelegramNewsletterWriterAgent\",\n      \"SelfReflectionAgent\",\n      \"RevisionAgent\",\n      \"VisualStrategyAgent\",\n      \"ImagePromptAgent\",\n      \"ImageGeneratorAgent\",\n      \"VisualQualityAgent\",\n      \"PublishAgent\"\n    ]\n  },\n  \"quality_score\": 92,\n  \"quality_passed\": true,\n  \"channel_scores\": {\n    \"blog\": 94,\n    \"linkedin\": 90,\n    \"telegram\": 91\n  },\n  \"channel_processing_status\": {\n    \"blog\": \"generated\",\n    \"linkedin\": \"generated\",\n    \"telegram\": \"generated\",\n    \"visuals\": \"generated\"\n  },\n  \"visual_assets_status\": \"generated\",\n  \"visual_assets\": {\n    \"blog\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/blog.png\",\n      \"relative_path\": \"visuals/blog.png\",\n      \"prompt\": \"A clean financial report dashboard with a structured workflow feel, showing a transformation from raw market signals into standardized comparison cards. Multiple stock cards arranged in a balanced grid or layered panel layout, each card containing abstract data blocks, subtle downward trend indicators, small risk bars, and consistent visual hierarchy that suggests a radar-style risk scanner. Calm, analytical, trustworthy mood, practical fintech interface design, elegant spacing, soft neutral palette with restrained blue, gray, and muted amber accents, crisp lighting, high clarity, modern enterprise dashboard aesthetic, information architecture made visible, no people, no devices in hand, no clutter, no dramatic effects. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1536x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    },\n    \"linkedin\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/linkedin.png\",\n      \"relative_path\": \"visuals/linkedin.png\",\n      \"prompt\": \"A compact finance signal comparison dashboard designed for quick scanning in a social feed. Several stock risk cards in a clean front-facing layout, with one or two priority cards slightly emphasized in the foreground, showing abstract downward trend cues, simple risk blocks, and subtle hierarchy that instantly communicates comparable downside risk and priority sorting. Minimal, sharp, professional, analytical tone, balanced composition, muted blue-gray palette with controlled contrast, modern data visualization style, no excessive depth, no dramatic red alerts, no cyberpunk neon, no abstract background noise, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    },\n    \"telegram\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/telegram.png\",\n      \"relative_path\": \"visuals/telegram.png\",\n      \"prompt\": \"A simple mobile-friendly summary image showing six neatly arranged stock cards on one screen, all indicating downward market signals with subtle differences in confidence and strength through card order, spacing, and restrained color contrast. Clean, balanced square layout, easy to read at a glance, practical risk-scan aesthetic, calm and trustworthy fintech dashboard feel, soft gray and blue palette with muted accent differences only, crisp edges, minimal visual noise, no complex charts, no dramatic alarm styling, no 3D overload, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    }\n  },\n  \"visual_quality\": {\n    \"score\": 94,\n    \"passed\": true,\n    \"problems\": [\n      \"세 채널 모두 핵심 메시지와 이미지 콘셉트가 잘 맞는다. 카드형 대시보드, 우선순위 비교, 위험도 시각화가 텍스트 주장과 일치한다.\",\n      \"비율 측면에서 blog 1536x1024, linkedin/telegram 1024x1024로 채널 목적에 대체로 적합하다. 특히 LinkedIn과 Telegram의 정사각형 비율은 피드/메신저 환경에 무난하다.\",\n      \"프롬프트에 텍스트, 숫자, 로고, 워터마크 금지 지시가 명시되어 있어 통제는 잘 되어 있다.\",\n      \"후츠릿 톤인 실용적이고 분석적인 금융 자동화 분위기와 잘 맞으며, stock 사진처럼 보일 위험도 낮다.\",\n      \"다만 blog와 linkedin 프롬프트의 'abstract data blocks', 'simple risk blocks'가 다소 추상적이라 실제 생성 결과가 카드 UI보다 장식적 대시보드로 흐를 가능성이 있다.\",\n      \"telegram 프롬프트는 명확하지만 6개 종목의 '비교 순서'를 더 강하게 규정하지 않아, 결과물이 균등 배열만 되고 우선순위가 약해질 수 있다.\"\n    ],\n    \"recommendations\": [\n      \"blog 프롬프트에서 카드의 정보 구조를 더 구체화하라. 예: 상단 종목명 자리, 중단 수치 블록 자리, 하단 위험 막대 자리처럼 레이아웃 고정 지시를 넣어라.\",\n      \"linkedin 프롬프트는 'one or two priority cards' 외에 첫 번째 카드가 가장 먼저 시선이 가도록 전경/크기/대비 우선순위를 더 명시하라.\",\n      \"telegram 프롬프트에는 6개 카드의 정렬 기준을 '신뢰도와 강도 우선'으로 못 박아, 단순 균등 배열이 아니라 판단용 순서가 보이도록 강화하라.\",\n      \"세 프롬프트 모두 'no text, numbers' 금지는 유지하되, UI glyph까지 포함해 카드 내부의 미세 아이콘도 글자처럼 보이지 않도록 더 단순한 기호 체계를 제한하라.\",\n      \"추상 표현을 줄이고 'front-facing cards', 'fixed grid', 'consistent spacing', 'priority first' 같은 조형 지시를 더 늘려 생성 안정성을 높여라.\"\n    ]\n  },\n  \"channel_publish_status\": {\n    \"blog\": \"external_publish_disabled\",\n    \"linkedin\": \"blocked_until_blog_url\",\n    \"telegram\": \"published\"\n  },\n  \"published_urls\": {\n    \"blog\": \"\",\n    \"linkedin\": \"\",\n    \"telegram\": \"https://t.me/reset9800/97\"\n  },\n  \"external_api_status\": \"not_connected\",\n  \"processing_mode\": \"sequential_tistory_first_with_telegram_dispatch\",\n  \"output_paths\": {\n    \"draft\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a\",\n    \"final\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a\"\n  }\n}"
+            },
+            {
+              "key": "approval-status",
+              "label": "승인 상태",
+              "fileName": "approval-status.json",
+              "path": "outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/approval-status.json",
+              "content": "{\n  \"quality_score\": 92,\n  \"quality_passed\": true,\n  \"public_content_require_approval\": false,\n  \"channels\": {\n    \"blog\": \"auto_dispatch_to_telegram\",\n    \"linkedin\": \"auto_dispatch_to_telegram\",\n    \"telegram\": \"auto_publish_to_telegram\"\n  }\n}"
+            }
+          ]
+        }
+      ]
     }
   },
   "latestPackage": {
-    "id": "2026-05-17-ai의-미래와-실무자의-역할-재정의-4ae8680b",
+    "id": "2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a",
     "scope": "drafts",
-    "title": "AI의 미래와 실무자의 역할 재정의",
-    "generatedAt": "2026-05-17T19:13:22.720700",
+    "title": "Finance Signal Radar 리포트 이미지 테스트 전략",
+    "generatedAt": "2026-05-18T16:37:15.349746",
     "inputType": "memo",
-    "sourceSummary": "사용자 입력은 'AI의 미래'라는 매우 넓은 주제이며, 참고 링크는 없다. 따라서 후츠릿의 AI 시대 커리어 관점과 시스템 설계 관점을 중심으로, AI가 무엇을 할지보다 인간이 무엇을 설계하고 검증해야 하는지에 초점을 맞추는 전략이 적합하다.",
-    "targetPersona": "AI 시대에 자신의 역할 변화가 궁금한 실무자, 개발자, 1인 창업자, 생산성 향상과 자동화에 관심 있는 사람",
-    "qualityScore": 93,
+    "sourceSummary": "Finance Signal Radar 리포트의 6개 신호를 바탕으로 이미지 제작까지 테스트하려는 요청이다. LG에너지솔루션, 네이버, 카카오, KB금융, SK하이닉스, 삼성전자 모두 T+5 기준 하락 예측이 잡혔고, 최근 1개월 변동률과 신뢰도, 강도가 함께 제시됐다. 참고 링크는 없다.",
+    "targetPersona": "금융 데이터 자동화, 시장 신호 대시보드, 리포트 이미지화에 관심 있는 실무형 학습자와 1인 운영자",
+    "qualityScore": 92,
     "qualityPassed": true,
     "revisionCount": 1,
     "channelProcessingStatus": {
       "blog": "generated",
       "linkedin": "generated",
-      "telegram": "generated"
+      "telegram": "generated",
+      "visuals": "generated"
     },
     "channelPublishStatus": {
       "blog": "external_publish_disabled",
@@ -70,20 +698,188 @@
     "publishedUrls": {
       "blog": "",
       "linkedin": "",
-      "telegram": "https://t.me/reset9800/64"
+      "telegram": "https://t.me/reset9800/97"
     },
-    "visualAssetsStatus": "",
-    "visualAssets": {},
-    "visualQuality": {},
+    "visualAssetsStatus": "generated",
+    "visualAssets": {
+      "blog": {
+        "status": "generated",
+        "path": "/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/blog.png",
+        "relative_path": "visuals/blog.png",
+        "prompt": "A clean financial report dashboard with a structured workflow feel, showing a transformation from raw market signals into standardized comparison cards. Multiple stock cards arranged in a balanced grid or layered panel layout, each card containing abstract data blocks, subtle downward trend indicators, small risk bars, and consistent visual hierarchy that suggests a radar-style risk scanner. Calm, analytical, trustworthy mood, practical fintech interface design, elegant spacing, soft neutral palette with restrained blue, gray, and muted amber accents, crisp lighting, high clarity, modern enterprise dashboard aesthetic, information architecture made visible, no people, no devices in hand, no clutter, no dramatic effects. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.",
+        "size": "1536x1024",
+        "quality": "medium",
+        "provider": "openai_images",
+        "model": "gpt-image-1"
+      },
+      "linkedin": {
+        "status": "generated",
+        "path": "/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/linkedin.png",
+        "relative_path": "visuals/linkedin.png",
+        "prompt": "A compact finance signal comparison dashboard designed for quick scanning in a social feed. Several stock risk cards in a clean front-facing layout, with one or two priority cards slightly emphasized in the foreground, showing abstract downward trend cues, simple risk blocks, and subtle hierarchy that instantly communicates comparable downside risk and priority sorting. Minimal, sharp, professional, analytical tone, balanced composition, muted blue-gray palette with controlled contrast, modern data visualization style, no excessive depth, no dramatic red alerts, no cyberpunk neon, no abstract background noise, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.",
+        "size": "1024x1024",
+        "quality": "medium",
+        "provider": "openai_images",
+        "model": "gpt-image-1"
+      },
+      "telegram": {
+        "status": "generated",
+        "path": "/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/telegram.png",
+        "relative_path": "visuals/telegram.png",
+        "prompt": "A simple mobile-friendly summary image showing six neatly arranged stock cards on one screen, all indicating downward market signals with subtle differences in confidence and strength through card order, spacing, and restrained color contrast. Clean, balanced square layout, easy to read at a glance, practical risk-scan aesthetic, calm and trustworthy fintech dashboard feel, soft gray and blue palette with muted accent differences only, crisp edges, minimal visual noise, no complex charts, no dramatic alarm styling, no 3D overload, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.",
+        "size": "1024x1024",
+        "quality": "medium",
+        "provider": "openai_images",
+        "model": "gpt-image-1"
+      }
+    },
+    "visualPreviewUrls": {
+      "blog": {
+        "url": "/generated/broadcasting/drafts/2026-05-18-finance-signal-radar-%EB%A6%AC%ED%8F%AC%ED%8A%B8-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%A0%84%EB%9E%B5-f5ce456a/visuals/blog.png",
+        "status": "generated",
+        "size": "1536x1024",
+        "quality": "medium",
+        "provider": "openai_images",
+        "model": "gpt-image-1"
+      },
+      "linkedin": {
+        "url": "/generated/broadcasting/drafts/2026-05-18-finance-signal-radar-%EB%A6%AC%ED%8F%AC%ED%8A%B8-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%A0%84%EB%9E%B5-f5ce456a/visuals/linkedin.png",
+        "status": "generated",
+        "size": "1024x1024",
+        "quality": "medium",
+        "provider": "openai_images",
+        "model": "gpt-image-1"
+      },
+      "telegram": {
+        "url": "/generated/broadcasting/drafts/2026-05-18-finance-signal-radar-%EB%A6%AC%ED%8F%AC%ED%8A%B8-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%A0%84%EB%9E%B5-f5ce456a/visuals/telegram.png",
+        "status": "generated",
+        "size": "1024x1024",
+        "quality": "medium",
+        "provider": "openai_images",
+        "model": "gpt-image-1"
+      }
+    },
+    "visualQuality": {
+      "score": 94,
+      "passed": true,
+      "problems": [
+        "세 채널 모두 핵심 메시지와 이미지 콘셉트가 잘 맞는다. 카드형 대시보드, 우선순위 비교, 위험도 시각화가 텍스트 주장과 일치한다.",
+        "비율 측면에서 blog 1536x1024, linkedin/telegram 1024x1024로 채널 목적에 대체로 적합하다. 특히 LinkedIn과 Telegram의 정사각형 비율은 피드/메신저 환경에 무난하다.",
+        "프롬프트에 텍스트, 숫자, 로고, 워터마크 금지 지시가 명시되어 있어 통제는 잘 되어 있다.",
+        "후츠릿 톤인 실용적이고 분석적인 금융 자동화 분위기와 잘 맞으며, stock 사진처럼 보일 위험도 낮다.",
+        "다만 blog와 linkedin 프롬프트의 'abstract data blocks', 'simple risk blocks'가 다소 추상적이라 실제 생성 결과가 카드 UI보다 장식적 대시보드로 흐를 가능성이 있다.",
+        "telegram 프롬프트는 명확하지만 6개 종목의 '비교 순서'를 더 강하게 규정하지 않아, 결과물이 균등 배열만 되고 우선순위가 약해질 수 있다."
+      ],
+      "recommendations": [
+        "blog 프롬프트에서 카드의 정보 구조를 더 구체화하라. 예: 상단 종목명 자리, 중단 수치 블록 자리, 하단 위험 막대 자리처럼 레이아웃 고정 지시를 넣어라.",
+        "linkedin 프롬프트는 'one or two priority cards' 외에 첫 번째 카드가 가장 먼저 시선이 가도록 전경/크기/대비 우선순위를 더 명시하라.",
+        "telegram 프롬프트에는 6개 카드의 정렬 기준을 '신뢰도와 강도 우선'으로 못 박아, 단순 균등 배열이 아니라 판단용 순서가 보이도록 강화하라.",
+        "세 프롬프트 모두 'no text, numbers' 금지는 유지하되, UI glyph까지 포함해 카드 내부의 미세 아이콘도 글자처럼 보이지 않도록 더 단순한 기호 체계를 제한하라.",
+        "추상 표현을 줄이고 'front-facing cards', 'fixed grid', 'consistent spacing', 'priority first' 같은 조형 지시를 더 늘려 생성 안정성을 높여라."
+      ]
+    },
     "externalApiStatus": "not_connected",
-    "path": "outputs/broadcasting/drafts/2026-05-17-ai의-미래와-실무자의-역할-재정의-4ae8680b",
+    "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a",
     "statusReason": "자동 공개 게시 설정이 꺼져 있다.",
     "packageStatus": "blocked",
     "previews": {
-      "blog": "# AI의 미래는 더 똑똑한 모델이 아니라 운영 구조다\n\nAI의 미래를 모델 성능 경쟁으로만 보면 실무 판단을 놓치기 쉽다. 실제로 중요한 변화는 AI가 답을 잘하는가가 아니라, AI가 반복해서 올바르게 일하도록 누가 환경과 규칙을 설계하느냐로 이동하고 있다.\n\n## AI 활용과 AI 의존은 다르다\n\n많은 사람이 AI를 쓸수록 생산성이 올라간다고 생각한다. 하지만 활용과 의존은 전혀 다른 상태다. 활용은 AI가 초안을 만들고 사람은 판단을 맡는 구조다. 의존은 AI가 만든 결과를 검증 없이 받아쓰는 상태다. 둘은 겉으로는 비슷해 보여도 운영 리스크가 완전히 다르다.\n\nAI의 미래에서 실무자가 먼저 구분해야 할 것은 질문을 잘하는 사람이 되는 일보다, AI가 어디까지 책임지고 어디서 멈춰야 하는지 정하는 일이다. 이 기준이 없으면 속도는 빨라져도 오류도 같이 쌓인다.\n\n## 컨텍스트 엔지니어링이 먼저다\n\nAI 도입에서 가장 먼저 봐야 할 것은 모델 이름이 아니다. 입력 컨텍스트, 실행 범위, 검증 기준이다. 같은 모델이라도 무엇을 넣고, 어디까지 허용하고, 무엇으로 검증하느냐에 따라 결과는 크게 달라진다.\n\n🔍 프롬프트는 대화의 기술이고, 컨텍스트는 판단 재료를 설계하는 일이다. 많은 실무자가 프롬프트 문장만 다듬지만, 실제 성능 차이는 데이터 연결 방식, 문서 구조, 승인 단계, 로그 설계에서 난다.\n\n예를 들어 콘텐츠 자동 배포를 만든다면 초안 생성은 AI가 맡고, 최종 발행은 사람 승인 후에만 진행되도록 해야 한다. 고객 응답 자동화라면 금액, 계약, 정책 문장은 규칙 기반 검증을 통과해야만 전송되게 해야 한다. 이처럼 AI 성능보다 중요한 것은 AI가 일할 환경이다.\n\n## 하네스 엔지니어링이 실전이다\n\n하네스 엔지니어링은 AI를 묶는 주변 구조를 설계하는 일이다. 입력을 어떻게 만들고, 출력을 어떻게 검증하고, 실패하면 어떻게 멈추고, 다시 어떻게 복구할지 정하는 구조다.\n\n⚠️ 멋진 데모보다 중요한 것은 실패했을 때 사고를 막는 장치다. 자동화는 성공 케이스로 평가하면 안 된다. 실패 케이스를 기준으로 설계해야 한다. 중복 실행 방지, 롤백, 로그 추적, 재시도 전략이 먼저 들어가야 운영이 안정된다.\n\n이 지점에서 실무자의 역할은 결과를 받아보는 사람이 아니라, 결과가 재현되도록 시스템을 짜는 사람으로 바뀐다.\n\n## 에이전트 오케스트레이션이 역할을 바꾼다\n\n에이전트가 실행을 맡기 시작하면 사람의 역할은 생성자가 아니라 오케스트레이터가 된다. 작업을 분해하고, 권한을 나누고, 예외를 처리하고, 중간에 사람이 개입할 지점을 정해야 한다.\n\n에이전트는 혼자 잘하는 존재가 아니다. 잘 정의된 임무와 제한된 권한 안에서만 안정적으로 움직인다. 따라서 앞으로의 경쟁력은 더 좋은 AI를 고르는 능력이 아니라, 여러 AI와 자동화 도구를 하나의 운영 루프로 묶는 능력이다.\n\n## 실무자가 가져야 할 판단 기준\n\nAI의 미래를 이야기할 때 가장 먼저 물어야 할 질문은 이것이다.\n\n1. 이 시스템은 사람이 검증할 수 있는가\n2. 실패했을 때 멈추고 되돌릴 수 있는가\n3. 반복 실행해도 같은 수준의 결과가 나오는가\n4. AI가 책임질 범위와 사람이 책임질 범위가 나뉘어 있는가\n\n이 질문에 답이 없으면 그건 AI 활용이 아니라 AI 의존이다. 반대로 답이 분명하면, 작은 모델을 써도 충분히 강한 시스템이 된다.\n\n결론은 단순하다. AI를 잘 쓰는 사람은 질문을 잘하는 사람이 아니라 운영 구조를 만드는 사람이다.",
-      "linkedin": "AI의 미래, 모델보다 운영 구조입니다\n\n같은 AI를 써도 어떤 팀은 자동화가 굴러가고, 어떤 팀은 오히려 사고만 늘어납니다. 차이는 답변 품질이 아니라 AI가 반복해서 올바르게 일하도록 환경과 검증 구조를 설계했는지에 있습니다.\n\n이제 사람에게 남는 일은 생성이 아니라 오케스트레이션입니다. 입력 컨텍스트를 정하고, 실행 범위를 나누고, 실패하면 멈추고 되돌리는 장치를 만드는 일이 더 중요해집니다.\n\n✅ 판단 기준은 간단합니다. AI를 쓰는지보다, AI의 결과를 검증 가능한 운영 루프로 묶었는지 보셔야 합니다.\n\n앞으로 차이는 도구 사용량이 아니라 시스템을 설계하고 검증하는 능력에서 날 것입니다. 블로그 전문 [블로그 링크]",
-      "telegram": "## 🚀 AI의 미래는 모델보다 운영 구조에 있습니다\n\nAI의 미래를 더 좋은 모델 경쟁으로만 보시면 실무 판단이 흐려집니다. 실제로 중요한 변화는 AI가 답을 잘하느냐보다, AI가 반복해서 올바르게 일하도록 환경, 컨텍스트, 검증 절차를 누가 설계하느냐로 이동하고 있습니다.\n\n이제 실무자의 역할은 질문을 잘하는 사람이 아니라, AI가 일할 수 있는 구조를 만드는 사람에 가깝습니다. 같은 모델을 써도 결과가 갈리는 이유는 프롬프트보다 입력 데이터, 승인 단계, 실패 복구 방식에서 더 크게 나기 때문입니다.\n\n- ✅ AI를 넣기 전에 입력 범위와 검증 기준부터 정리해 보셔야 합니다.\n- ⚠️ 자동화는 성공 케이스보다 실패했을 때 멈추는 장치를 먼저 점검하셔야 합니다.\n\n오늘은 현재 쓰고 계신 AI 업무 흐름에 검증 장치가 있는지 한 번만 점검해 보셔도 좋습니다. AI를 잘 쓰는 사람은 답변을 받는 사람이 아니라, AI가 반복해서 올바르게 일하도록 시스템을 설계하고 검증하는 사람입니다."
-    }
+      "blog": "# Finance Signal Radar 리포트를 이미지로 바꾸는 이유\n\n뉴스와 가격 데이터를 붙여 놓는 것만으로는 운영이 되지 않는다. 지금처럼 6개 종목이 모두 하락 신호를 보일 때는 텍스트 요약보다 한눈에 비교되는 이미지 구조가 더 중요하다. 핵심은 예측을 맞히는 데만 있지 않다. 어떤 종목을 먼저 봐야 하는지, 무엇을 위험 신호로 읽어야 하는지를 빠르게 결정하게 만드는 데 있다.\n\n## ✅ 결론부터 말하면\n\n이 리포트는 텍스트 리포트로 끝내기보다 카드형 이미지로 렌더링해야 한다. 이유는 간단하다. 뉴스 개수, 최근 1개월 변화율, 예측 변화율, 신뢰도, 강도가 한 화면에 함께 있어야 신호의 우선순위가 보이기 때문이다. 숫자를 많이 넣는다고 더 정확해지는 것은 아니다. 비교 가능한 형태로 묶어야 실무에서 쓸 수 있다.\n\n## 텍스트 리포트가 분산시키는 정보\n\n현재 신호는 전부 하락 예측이지만, 종목마다 해석 무게가 다르다. 예를 들어 LG에너지솔루션은 신뢰도 82%, 예측 변화율 -12.82%로 강한 하락 신호가 보인다. 반면 삼성전자는 신뢰도 71%, 강도 3으로 같은 하락 예측이라도 우선순위가 다르다. \n\n문제는 이런 차이가 텍스트에서는 쉽게 흐려진다는 점이다. 사람은 긴 목록을 읽을 때 절대값보다 첫인상에 끌린다. 그래서 “모두 하락”이라는 결론만 남고, 실제로는 더 먼저 봐야 할 종목이 사라진다. 🔍\n\n## 이미지로 바꿀 때의 설계 기준\n\n이미지는 예쁘게 만드는 작업이 아니라 읽는 비용을 줄이는 작업이다. 카드형 레이아웃을 쓸 때는 다음 순서를 고정하는 편이 좋다.\n\n1. 신뢰도와 강도를 먼저 본다\n2. 그다음 예측 변화율을 본다\n3. 마지막에 뉴스 개수와 최근 1개월 변화율을 본다\n\n이 순서가 중요한 이유는 예측 변화율이 크다고 해서 반드시 믿을 수 있는 신호는 아니기 때문이다. SK하이닉스는 최근 1개월 변화율이 110.05%로 매우 크지만, 신뢰도는 71%, 강도는 4다. 삼성전자는 최근 1개월 변화율이 50.91%지만 강도는 3이다. 같은 하락 신호라도 읽어야 하는 우선순위가 다르다. 📌\n\n## 카드형 레이아웃 설계 원칙\n\n카드 하나에는 같은 위치에 같은 정보를 넣어야 한다. 그래야 종목끼리 비교가 된다. 추천 구조는 다음과 같다.\n\n- 상단: 종목명, 신뢰도, 강도\n- 중단: 뉴스 개수, 최근 1개월 변화율\n- 하단: 예측 변화율\n\n예를 들면 이런 식이다.\n\n- LG에너지솔루션 / 신뢰도 82% / 강도 5\n- 뉴스 7건 / 최근 1개월 +2.38% / 예측 -12.82%\n\n이 구조의 장점은 단순하다. 숫자가 많아도 위치가 고정되면 눈이 자동으로 비교한다. 반대로 위치가 흔들리면 매번 다시 읽어야 한다. 실무에서는 이 읽는 비용이 생각보다 크다.\n\n## 이미지 제작까지 분리해야 하는 이유\n\n자동화에서는 리포트 생성과 이미지 렌더링을 한 번에 묶지 않는 편이 안전하다. 원본 JSON을 먼저 만들고, 그다음 카드형 이미지로 렌더링하는 2단계 파이프라인이 맞다. 이렇게 나누면 이미지가 깨져도 데이터는 살아남는다.\n\n권장 산출물은 세 가지다.\n\n- 원본 JSON\n- 텍스트 요약본\n- PNG 이미지\n\n이렇게 저장해야 실패 복구가 된다. 이미지가 잘리지 않았는지, 숫자 라운딩이 일관적인지, 카드 간 대비가 충분한지는 렌더링 단계에서 따로 검수해야 한다. ⚠️\n\n## 이번 데이터에서 읽히는 운영 포인트\n\n이번 리포트는 전 종목 하락 신호다. 이런 경우에는 “매수/매도 판단”보다 “위험 신호 우선순위 정렬”이 더 맞다. 실무적으로는 다음 순서가 유효하다.\n\n- 먼저 LG에너지솔루션처럼 신뢰도와 강도가 높은 카드부터 본다\n- 그다음 네이버, 카카오처럼 뉴스와 예측 변화가 함께 움직인 종목을 본다\n- 마지막에 삼성전자처럼 신호는 있으나 강도가 낮은 카드를 본다\n\n이 판단 기준이 없으면 이미지가 있어도 오독이 생긴다. 반대로 기준이 있으면 이미지 한 장이 단순 요약이 아니라 운영 자산이 된다.\n\n## 마무리\n\n이 리포트의 핵심은 맞히는 예측이 아니라 비교 가능한 위험 시각화다. AI가 숫자를 만드는 단계보다 중요한 것은 그 숫자를 사람이 빠르게 읽고 검증할 수 있게 만드는 구조다. 따라서 다음 테스트는 예측 정확도보다 카드 순서, 정보 배치, 우선순위 판독 시간을 먼저 봐야 한다. 도구 사용량보다 시스템을 설계하고 검증하는 능력에서 차이가 난다.",
+      "linkedin": "# 뉴스가 많아도 신호는 강하지 않을 수 있습니다 📉\n\n데이터가 실무에 쓰이려면 숫자를 더하는 것보다, 먼저 비교되게 만들어야 합니다.\n\n이번 Finance Signal Radar는 6개 종목 모두 하락 예측이 잡혔습니다. 하지만 실무에서 더 중요한 건 ‘전부 하락’이 아니라 무엇을 먼저 봐야 하느냐입니다. LG에너지솔루션은 신뢰도 82%로 가장 높고, SK하이닉스는 최근 1개월 +110.05%인데 예측은 -2.13%입니다. 같은 하락 신호라도 우선순위는 다릅니다.\n\n판단 기준은 단순합니다. 예측 변화율만 보지 말고, 신뢰도와 강도를 먼저 보셔야 합니다. 그다음에 뉴스 개수와 가격 반응을 붙여야 실무 판단이 흔들리지 않습니다.\n\n중요한 건 예측을 맞히는 것이 아니라, 카드형 레이아웃으로 위험도를 정렬해 3초 안에 오독 없이 읽히게 만드는 것입니다. 텍스트 리포트와 이미지 리포트는 분리해야 하고, 렌더링이 깨져도 원본 수치는 반드시 남아 있어야 합니다.\n\nAI가 숫자를 만드는 단계보다, 숫자를 비교하고 검증하게 만드는 구조가 더 중요합니다. 이 구조를 실제 화면으로 어떻게 설계했는지는 블로그 전문 [블로그 링크]에서 확인하실 수 있습니다. 🔎",
+      "telegram": "## 🚀 6개 종목이 모두 하락일 때는, 예측보다 우선순위부터 보셔야 합니다\n\n이번 Finance Signal Radar는 6개 종목 모두 하락 예측이 잡혔습니다. 이런 경우 실무에서 먼저 봐야 하는 건 “전부 하락”이라는 결론이 아니라, 어떤 종목을 먼저 확인해야 하는지입니다.\n\nLG에너지솔루션은 신뢰도 82%에 예측 하락폭이 -12.82%로 가장 강했고, 삼성전자는 신뢰도 71%에 강도 3으로 같은 하락 신호라도 무게가 달랐습니다. 뉴스 개수, 최근 1개월 변동, 예측 변화율, 신뢰도, 강도가 함께 있으면 텍스트 요약만으로는 판단이 쉽게 분산됩니다.\n\n그래서 이번 테스트는 원본 리포트로 끝내지 말고, 카드형 이미지로 바꿔서 우선 확인 종목이 바로 보이게 만드는 쪽이 맞습니다. 이미지 한 장에서 위험도 순서가 읽혀야 현업에서 쓸 수 있습니다. 📌\n\n- ✅ 원본 JSON 생성과 카드형 이미지 렌더링은 분리해서 보셔야 합니다\n- ✅ 카드 순서는 예측 변화율보다 신뢰도와 강도를 먼저 반영해 정렬해 보셔야 합니다\n- ⚠️ 뉴스 개수·1개월 변화율·예측 변화율·신뢰도는 같은 위치에 고정해 비교 가능하게 만드셔야 합니다\n\n이번 데이터는 “맞추는 예측”보다 “위험도를 읽는 시각화”에 더 적합합니다. 우선 확인 종목이 3초 안에 보이면 운영 가치가 생기고, 카드가 복잡해져 오독이 늘면 모델이 좋아도 현업에서는 쓰기 어렵습니다."
+    },
+    "documents": [
+      {
+        "key": "blog",
+        "label": "Blog 원고",
+        "fileName": "blog.md",
+        "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/blog.md",
+        "content": "# Finance Signal Radar 리포트를 이미지로 바꾸는 이유\n\n뉴스와 가격 데이터를 붙여 놓는 것만으로는 운영이 되지 않는다. 지금처럼 6개 종목이 모두 하락 신호를 보일 때는 텍스트 요약보다 한눈에 비교되는 이미지 구조가 더 중요하다. 핵심은 예측을 맞히는 데만 있지 않다. 어떤 종목을 먼저 봐야 하는지, 무엇을 위험 신호로 읽어야 하는지를 빠르게 결정하게 만드는 데 있다.\n\n## ✅ 결론부터 말하면\n\n이 리포트는 텍스트 리포트로 끝내기보다 카드형 이미지로 렌더링해야 한다. 이유는 간단하다. 뉴스 개수, 최근 1개월 변화율, 예측 변화율, 신뢰도, 강도가 한 화면에 함께 있어야 신호의 우선순위가 보이기 때문이다. 숫자를 많이 넣는다고 더 정확해지는 것은 아니다. 비교 가능한 형태로 묶어야 실무에서 쓸 수 있다.\n\n## 텍스트 리포트가 분산시키는 정보\n\n현재 신호는 전부 하락 예측이지만, 종목마다 해석 무게가 다르다. 예를 들어 LG에너지솔루션은 신뢰도 82%, 예측 변화율 -12.82%로 강한 하락 신호가 보인다. 반면 삼성전자는 신뢰도 71%, 강도 3으로 같은 하락 예측이라도 우선순위가 다르다. \n\n문제는 이런 차이가 텍스트에서는 쉽게 흐려진다는 점이다. 사람은 긴 목록을 읽을 때 절대값보다 첫인상에 끌린다. 그래서 “모두 하락”이라는 결론만 남고, 실제로는 더 먼저 봐야 할 종목이 사라진다. 🔍\n\n## 이미지로 바꿀 때의 설계 기준\n\n이미지는 예쁘게 만드는 작업이 아니라 읽는 비용을 줄이는 작업이다. 카드형 레이아웃을 쓸 때는 다음 순서를 고정하는 편이 좋다.\n\n1. 신뢰도와 강도를 먼저 본다\n2. 그다음 예측 변화율을 본다\n3. 마지막에 뉴스 개수와 최근 1개월 변화율을 본다\n\n이 순서가 중요한 이유는 예측 변화율이 크다고 해서 반드시 믿을 수 있는 신호는 아니기 때문이다. SK하이닉스는 최근 1개월 변화율이 110.05%로 매우 크지만, 신뢰도는 71%, 강도는 4다. 삼성전자는 최근 1개월 변화율이 50.91%지만 강도는 3이다. 같은 하락 신호라도 읽어야 하는 우선순위가 다르다. 📌\n\n## 카드형 레이아웃 설계 원칙\n\n카드 하나에는 같은 위치에 같은 정보를 넣어야 한다. 그래야 종목끼리 비교가 된다. 추천 구조는 다음과 같다.\n\n- 상단: 종목명, 신뢰도, 강도\n- 중단: 뉴스 개수, 최근 1개월 변화율\n- 하단: 예측 변화율\n\n예를 들면 이런 식이다.\n\n- LG에너지솔루션 / 신뢰도 82% / 강도 5\n- 뉴스 7건 / 최근 1개월 +2.38% / 예측 -12.82%\n\n이 구조의 장점은 단순하다. 숫자가 많아도 위치가 고정되면 눈이 자동으로 비교한다. 반대로 위치가 흔들리면 매번 다시 읽어야 한다. 실무에서는 이 읽는 비용이 생각보다 크다.\n\n## 이미지 제작까지 분리해야 하는 이유\n\n자동화에서는 리포트 생성과 이미지 렌더링을 한 번에 묶지 않는 편이 안전하다. 원본 JSON을 먼저 만들고, 그다음 카드형 이미지로 렌더링하는 2단계 파이프라인이 맞다. 이렇게 나누면 이미지가 깨져도 데이터는 살아남는다.\n\n권장 산출물은 세 가지다.\n\n- 원본 JSON\n- 텍스트 요약본\n- PNG 이미지\n\n이렇게 저장해야 실패 복구가 된다. 이미지가 잘리지 않았는지, 숫자 라운딩이 일관적인지, 카드 간 대비가 충분한지는 렌더링 단계에서 따로 검수해야 한다. ⚠️\n\n## 이번 데이터에서 읽히는 운영 포인트\n\n이번 리포트는 전 종목 하락 신호다. 이런 경우에는 “매수/매도 판단”보다 “위험 신호 우선순위 정렬”이 더 맞다. 실무적으로는 다음 순서가 유효하다.\n\n- 먼저 LG에너지솔루션처럼 신뢰도와 강도가 높은 카드부터 본다\n- 그다음 네이버, 카카오처럼 뉴스와 예측 변화가 함께 움직인 종목을 본다\n- 마지막에 삼성전자처럼 신호는 있으나 강도가 낮은 카드를 본다\n\n이 판단 기준이 없으면 이미지가 있어도 오독이 생긴다. 반대로 기준이 있으면 이미지 한 장이 단순 요약이 아니라 운영 자산이 된다.\n\n## 마무리\n\n이 리포트의 핵심은 맞히는 예측이 아니라 비교 가능한 위험 시각화다. AI가 숫자를 만드는 단계보다 중요한 것은 그 숫자를 사람이 빠르게 읽고 검증할 수 있게 만드는 구조다. 따라서 다음 테스트는 예측 정확도보다 카드 순서, 정보 배치, 우선순위 판독 시간을 먼저 봐야 한다. 도구 사용량보다 시스템을 설계하고 검증하는 능력에서 차이가 난다."
+      },
+      {
+        "key": "linkedin",
+        "label": "LinkedIn 원고",
+        "fileName": "linkedin.md",
+        "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/linkedin.md",
+        "content": "# 뉴스가 많아도 신호는 강하지 않을 수 있습니다 📉\n\n데이터가 실무에 쓰이려면 숫자를 더하는 것보다, 먼저 비교되게 만들어야 합니다.\n\n이번 Finance Signal Radar는 6개 종목 모두 하락 예측이 잡혔습니다. 하지만 실무에서 더 중요한 건 ‘전부 하락’이 아니라 무엇을 먼저 봐야 하느냐입니다. LG에너지솔루션은 신뢰도 82%로 가장 높고, SK하이닉스는 최근 1개월 +110.05%인데 예측은 -2.13%입니다. 같은 하락 신호라도 우선순위는 다릅니다.\n\n판단 기준은 단순합니다. 예측 변화율만 보지 말고, 신뢰도와 강도를 먼저 보셔야 합니다. 그다음에 뉴스 개수와 가격 반응을 붙여야 실무 판단이 흔들리지 않습니다.\n\n중요한 건 예측을 맞히는 것이 아니라, 카드형 레이아웃으로 위험도를 정렬해 3초 안에 오독 없이 읽히게 만드는 것입니다. 텍스트 리포트와 이미지 리포트는 분리해야 하고, 렌더링이 깨져도 원본 수치는 반드시 남아 있어야 합니다.\n\nAI가 숫자를 만드는 단계보다, 숫자를 비교하고 검증하게 만드는 구조가 더 중요합니다. 이 구조를 실제 화면으로 어떻게 설계했는지는 블로그 전문 [블로그 링크]에서 확인하실 수 있습니다. 🔎"
+      },
+      {
+        "key": "telegram",
+        "label": "Telegram 뉴스레터",
+        "fileName": "telegram.md",
+        "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/telegram.md",
+        "content": "## 🚀 6개 종목이 모두 하락일 때는, 예측보다 우선순위부터 보셔야 합니다\n\n이번 Finance Signal Radar는 6개 종목 모두 하락 예측이 잡혔습니다. 이런 경우 실무에서 먼저 봐야 하는 건 “전부 하락”이라는 결론이 아니라, 어떤 종목을 먼저 확인해야 하는지입니다.\n\nLG에너지솔루션은 신뢰도 82%에 예측 하락폭이 -12.82%로 가장 강했고, 삼성전자는 신뢰도 71%에 강도 3으로 같은 하락 신호라도 무게가 달랐습니다. 뉴스 개수, 최근 1개월 변동, 예측 변화율, 신뢰도, 강도가 함께 있으면 텍스트 요약만으로는 판단이 쉽게 분산됩니다.\n\n그래서 이번 테스트는 원본 리포트로 끝내지 말고, 카드형 이미지로 바꿔서 우선 확인 종목이 바로 보이게 만드는 쪽이 맞습니다. 이미지 한 장에서 위험도 순서가 읽혀야 현업에서 쓸 수 있습니다. 📌\n\n- ✅ 원본 JSON 생성과 카드형 이미지 렌더링은 분리해서 보셔야 합니다\n- ✅ 카드 순서는 예측 변화율보다 신뢰도와 강도를 먼저 반영해 정렬해 보셔야 합니다\n- ⚠️ 뉴스 개수·1개월 변화율·예측 변화율·신뢰도는 같은 위치에 고정해 비교 가능하게 만드셔야 합니다\n\n이번 데이터는 “맞추는 예측”보다 “위험도를 읽는 시각화”에 더 적합합니다. 우선 확인 종목이 3초 안에 보이면 운영 가치가 생기고, 카드가 복잡해져 오독이 늘면 모델이 좋아도 현업에서는 쓰기 어렵습니다."
+      },
+      {
+        "key": "strategy",
+        "label": "전략 문서",
+        "fileName": "strategy.md",
+        "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/strategy.md",
+        "content": "# Strategy\n\n- 핵심 메시지: 뉴스와 가격 데이터를 결합한 신호는 단순 알림이 아니라, 한눈에 위험도를 읽는 시각화 자산으로 만들어야 한다.\n- 타깃 독자: 금융 데이터 자동화, 시장 신호 대시보드, 리포트 이미지화에 관심 있는 실무형 학습자와 1인 운영자\n- 주장: 이 리포트는 텍스트 요약으로 끝낼 것이 아니라, 종목별 하락 신호를 비교 가능한 이미지로 바꾸는 테스트에 최적화된 입력이다.\n\n## Platform Directions\n\n- Blog: 기술 구현형으로 간다. 리포트를 이미지로 바꾸는 워크플로우, 시각화 기준, 카드형 레이아웃 설계, 종목별 점수와 예측치 배치 원칙을 다룬다. 핵심은 예측 정확도 자체보다 신호를 읽기 쉬운 형태로 운영하는 구조다.\n- LinkedIn: 시장 신호를 '데이터 요약'이 아니라 '판단 가능한 시각적 구조'로 바꿔야 한다는 관점으로 압축한다. AI가 숫자를 만드는 단계보다, 숫자를 비교하고 검증하게 만드는 설계가 중요하다는 메시지를 전면에 둔다.\n- Telegram: 짧게 핵심만 전달한다. 이번 리포트에서 6개 종목 모두 하락 예측이 잡혔고, 신뢰도와 강도가 함께 제시된 만큼 이미지 한 장으로 요약하는 테스트를 해보는 흐름이라는 점을 강조한다. 실행 항목은 카드형 이미지 시안 생성과 종목별 위험도 정렬 확인 정도로 짧게 잡는다."
+      },
+      {
+        "key": "insight",
+        "label": "인사이트 문서",
+        "fileName": "insight.md",
+        "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/insight.md",
+        "content": "# Insight\n\n이 리포트의 핵심은 ‘맞추는 예측’이 아니라 ‘비교 가능한 위험 시각화’로 바꾸는 데 있다. 지금 데이터는 종목별 뉴스 개수, 최근 변동, 예측 변화율, 신뢰도, 강도가 함께 붙어 있어서 텍스트로 읽으면 신호가 분산된다. 실무 관점에서는 이걸 그대로 요약하는 것이 아니라, 위험도 순서와 확신 수준을 한 화면에서 읽히는 카드 구조로 바꿔야 한다. 특히 예측 하락이 전 종목에 걸쳐 나오더라도, 강도와 신뢰도 차이가 있으므로 ‘모두 하락’이라는 단일 결론보다 어떤 종목을 먼저 볼지 결정하게 만드는 운영 구조가 중요하다. AI 자동화 측면에서는 리포트 생성과 이미지 렌더링을 분리해야 하고, 개발툴 측면에서는 수치 계산과 레이아웃 규칙을 코드로 고정해야 한다. 검증은 예측 정확도만 보지 말고, 이미지 한 장에서 오독이 줄었는지, 우선순위가 빨리 잡히는지로 판단해야 한다. 실패 복구는 이미지 생성이 깨져도 원본 텍스트 리포트는 유지되도록 두 단계 파이프라인으로 설계하는 것이 맞다.\n\n## Practical Points\n\n- 텍스트 리포트와 이미지 리포트를 한 작업으로 묶지 말고, 원본 JSON 생성 -> 카드형 렌더링의 2단계로 분리한다.\n- 카드 순서는 예측 변화율보다 신뢰도와 강도를 먼저 반영해 정렬 규칙을 고정한다.\n- 종목별 비교가 목적이면 절대값보다 상대 순위와 색상 체계를 우선 설계한다.\n- 이미지에서는 뉴스 개수, 최근 1개월 변화율, 예측 변화율, 신뢰도를 한 카드 안에 같은 위치에 배치해 읽는 비용을 줄인다.\n- 강도가 낮아도 신뢰도가 높으면 상단 노출 후보가 될 수 있으므로 단일 점수로 뭉개지 말고 분리 지표를 유지한다.\n- 검증 기준은 예측 적중률뿐 아니라, 사람이 3초 안에 위험도를 읽을 수 있는지로 둔다.\n- 렌더링 실패 대비를 위해 텍스트 요약본, 테이블 HTML, 이미지 PNG를 각각 독립 산출물로 저장한다.\n- 자동 배포 전에는 이미지가 실제로 잘리는지, 카드 간 대비가 충분한지, 숫자 라운딩이 일관적인지 확인하는 시각 검수 단계를 둔다.\n\n## Examples\n\n- 예시 1: 상단에는 신뢰도 82%의 LG에너지솔루션을 두고, 그 아래로 뉴스 15건인 KB금융과 뉴스 14건인 삼성전자를 배치해 ‘우선 확인 종목’ 구조를 만든다.\n- 예시 2: 카드 하나에 '뉴스 11건 / 최근 1개월 +110.05% / 예측 -2.13% / 신뢰도 71%'처럼 넣고, 예측 하락폭보다 신뢰도와 변동 이력을 같이 보여준다.\n- 예시 3: 이미지 버전과 텍스트 버전을 동시에 생성해, Telegram에는 이미지 한 장과 핵심 2줄만 보내고, 블로그나 내부 로그에는 전체 수치 테이블을 남긴다.\n- 예시 4: 하락 신호 6개가 모두 잡혔을 때는 ‘매수/매도 판단’보다 ‘위험 신호 우선순위 정렬’로 메시지를 바꿔 오독을 줄인다.\n\n## Cautions\n\n- 예측이 전 종목 하락으로 나왔다고 해서 실제 매매 신호로 바로 쓰면 안 된다. 신뢰도와 강도 차이를 검증 없이 동일하게 취급하면 위험하다.\n- 뉴스 개수가 많다고 신호 품질이 높다고 단정하면 안 된다. 뉴스 양은 맥락일 뿐이고, 가격 반응과 결합했을 때만 의미가 있다.\n- 이미지 중심 운영에서는 숫자 과밀이 가장 큰 실패 요인이다. 한 카드에 지표를 너무 많이 넣으면 비교성이 떨어진다.\n- 색상만으로 위험도를 표현하면 색각 문제와 모바일 가독성 이슈가 생긴다. 색상은 보조고, 숫자와 순서가 기준이어야 한다.\n- 이미지 생성 오류를 본 리포트 오류로 착각하지 않도록, 렌더링 실패와 데이터 생성 실패를 로그 단계에서 분리해야 한다.\n- 예측 변화율이 큰 종목과 신뢰도가 높은 종목이 다를 수 있으므로 단일 랭킹만 운영하면 판단이 왜곡된다."
+      },
+      {
+        "key": "reflection",
+        "label": "평가 문서",
+        "fileName": "reflection.md",
+        "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/reflection.md",
+        "content": "# Reflection\n\n- 총점: 92\n- 통과 여부: True\n- 배포 상태: 자동 발송 가능\n\n## Channel Scores\n\n- blog: 94\n- linkedin: 90\n- telegram: 91\n\n## Strengths\n\n- 블로그가 문어체 평서형 반말로 작성되어 있고, 소제목 구조도 स्पष्ट해서 하드 게이트를 충족한다.\n- 후츠릿 관점에서 '예측'보다 '비교 가능한 위험 시각화'와 운영 구조를 강조해 관점이 선명하다.\n- 실무 적용성 측면에서 원본 JSON -> 카드형 렌더링의 2단계 파이프라인, 정렬 기준, 검수 포인트가 구체적이다.\n- LinkedIn에 [블로그 링크] 자리표시자가 있어 유입 장치가 명확하다.\n- Telegram이 고정 라벨 없이 Markdown 제목과 핵심 메시지를 유지하고 있어 플랫폼 적합성이 좋다.\n- 과도한 이모지 사용이 없고, 스캔성 보조 수준에서만 사용해 가독성이 무너지지 않는다.\n\n## Problems\n\n- 블로그 첫 문단과 일부 문장들이 다소 선언형이라, 초반 훅에서 바로 실무 문제를 더 강하게 찌르면 후킹력이 더 좋아진다.\n- LinkedIn은 메시지가 좋지만 문단이 다소 길어 모바일 스캔성은 더 개선될 여지가 있다.\n- Telegram은 실행 항목이 유효하지만, 마지막 한 줄에 CTA가 조금 더 또렷하면 전환력이 높아진다.\n- 블로그와 Telegram 모두 예시가 충분하나, 실제 화면 구성에 대한 한 줄 설명이 더 있으면 구체성이 더 올라간다.\n\n## Revision Instructions\n\n- 블로그 도입부를 '모두 하락인데 왜 텍스트로 읽으면 위험 순서가 안 보이는가'처럼 문제 제기형으로 더 압축하라.\n- LinkedIn은 3문단 이내로 줄이고, 각 문단의 첫 문장을 더 짧게 만들어 모바일 스캔성을 높여라.\n- Telegram 마지막 문장에 '카드형 이미지 시안 생성 → 우선순위 정렬 확인' 같은 직접 CTA를 한 번 더 넣어라.\n- 블로그에 카드 예시를 1개만 더 추가해, 실제 레이아웃 상의 정보 배치를 더 선명하게 보여줘라.\n- 이미지 기준 문장을 추가할 때는 숫자와 순서를 유지하고, 추상적인 표현은 최소화하라."
+      },
+      {
+        "key": "publish-plan",
+        "label": "배포 계획",
+        "fileName": "publish-plan.json",
+        "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/publish-plan.json",
+        "content": "{\n  \"agent\": \"PublishAgent\",\n  \"quality_score\": 92,\n  \"quality_passed\": true,\n  \"quality_ready_for_publish\": true,\n  \"external_api_status\": \"not_connected\",\n  \"processing_mode\": \"sequential_tistory_first_with_telegram_dispatch\",\n  \"executed_at\": \"2026-05-18T16:38:13.542793\",\n  \"publish_strategy\": {\n    \"mode\": \"sequential\",\n    \"order\": [\n      \"blog\",\n      \"linkedin\",\n      \"telegram\"\n    ],\n    \"dependencies\": {\n      \"blog\": [],\n      \"linkedin\": [\n        \"blog.url\"\n      ],\n      \"telegram\": []\n    },\n    \"reason\": \"LinkedIn 원고는 티스토리 실제 발행 URL이 필요하므로 블로그를 먼저 발행한다.\"\n  },\n  \"channels\": {\n    \"blog\": {\n      \"status\": \"external_publish_disabled\",\n      \"provider\": \"tistory_playwright\",\n      \"url\": \"\",\n      \"reason\": \"자동 공개 게시 설정이 꺼져 있다.\",\n      \"details\": {}\n    },\n    \"linkedin\": {\n      \"status\": \"blocked_until_blog_url\",\n      \"provider\": \"linkedin_posts_api\",\n      \"url\": \"\",\n      \"reason\": \"티스토리 실제 발행 URL이 없어 LinkedIn 공개 게시를 중단한다.\",\n      \"details\": {}\n    },\n    \"telegram\": {\n      \"status\": \"published\",\n      \"provider\": \"telegram_chat\",\n      \"url\": \"https://t.me/reset9800/97\",\n      \"reason\": \"Telegram 뉴스레터 채팅방에 발송됐다.\",\n      \"details\": {}\n    }\n  }\n}"
+      },
+      {
+        "key": "visual-strategy",
+        "label": "이미지 전략",
+        "fileName": "visual-strategy.json",
+        "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visual-strategy.json",
+        "content": "{\n  \"visual_concept\": \"차트와 카드가 결합된 금융 리포트 대시보드형 시각화. 여러 종목의 하락 신호를 한 화면에서 비교 가능한 정보 카드로 정리한, 실무형 리스크 스캐너 느낌\",\n  \"mood\": \"차분하고 분석적이며 신뢰감 있는 분위기\",\n  \"subject\": \"여러 종목이 나열된 카드형 리포트 화면, 각 카드에는 종목별 위험도 차이를 암시하는 정돈된 숫자 블록과 하락 방향을 보여주는 간결한 시각 요소\",\n  \"metaphor\": \"흩어진 뉴스와 가격 신호를 한 번에 읽게 해주는 레이더 스캔 화면\",\n  \"avoid\": [\n    \"사이버펑크풍 과장된 네온\",\n    \"의미 없는 추상 배경\",\n    \"이미지 안의 텍스트, 숫자, 로고\",\n    \"저품질 stock 사진 느낌\",\n    \"과도한 3D 렌더링\",\n    \"복잡한 그래프가 난무하는 혼란스러운 구성\",\n    \"공포감을 과장한 붉은 경보 연출\",\n    \"종목별 비교가 어려운 단일 상징 이미지\"\n  ],\n  \"channels\": {\n    \"blog\": \"블로그 대표 이미지는 기술 구현형이므로, 상단에 리포트 입력에서 이미지 카드로 변환되는 흐름을 암시하는 구조도 느낌의 대시보드. 좌우 또는 상하로 정리된 카드 묶음, 정렬된 패널, 표준화된 레이아웃이 핵심이며 전체적으로 정보 설계와 자동화 워크플로우가 보이게 만든다.\",\n    \"linkedin\": \"LinkedIn 피드 이미지는 한눈에 메시지가 읽히는 압축형. 여러 카드 중 우선 확인해야 할 카드가 앞에 보이는 구성으로, '비교 가능한 위험도'와 '우선순위 정렬'이 시각적으로 즉시 느껴지게 한다. 디테일보다는 깔끔한 인포메이션 계층이 중요하다.\",\n    \"telegram\": \"Telegram 뉴스레터 이미지는 가장 단순하고 빠르게 읽히는 요약형. 6개 종목이 한 장에 정돈되어 있고, 모두 하락 신호라는 점과 신뢰도·강도 차이가 존재한다는 사실이 카드 배열과 색 대비로만 드러나게 설계한다. 모바일에서 잘리지 않는 세로형 또는 균형 잡힌 정사각형 구성이 적합하다.\"\n  }\n}"
+      },
+      {
+        "key": "image-prompts",
+        "label": "이미지 프롬프트",
+        "fileName": "image-prompts.json",
+        "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/image-prompts.json",
+        "content": "{\n  \"prompts\": {\n    \"blog\": {\n      \"purpose\": \"blog_hero\",\n      \"size\": \"1536x1024\",\n      \"quality\": \"medium\",\n      \"prompt\": \"A clean financial report dashboard with a structured workflow feel, showing a transformation from raw market signals into standardized comparison cards. Multiple stock cards arranged in a balanced grid or layered panel layout, each card containing abstract data blocks, subtle downward trend indicators, small risk bars, and consistent visual hierarchy that suggests a radar-style risk scanner. Calm, analytical, trustworthy mood, practical fintech interface design, elegant spacing, soft neutral palette with restrained blue, gray, and muted amber accents, crisp lighting, high clarity, modern enterprise dashboard aesthetic, information architecture made visible, no people, no devices in hand, no clutter, no dramatic effects. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\"\n    },\n    \"linkedin\": {\n      \"purpose\": \"linkedin_feed\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"prompt\": \"A compact finance signal comparison dashboard designed for quick scanning in a social feed. Several stock risk cards in a clean front-facing layout, with one or two priority cards slightly emphasized in the foreground, showing abstract downward trend cues, simple risk blocks, and subtle hierarchy that instantly communicates comparable downside risk and priority sorting. Minimal, sharp, professional, analytical tone, balanced composition, muted blue-gray palette with controlled contrast, modern data visualization style, no excessive depth, no dramatic red alerts, no cyberpunk neon, no abstract background noise, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\"\n    },\n    \"telegram\": {\n      \"purpose\": \"telegram_newsletter\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"prompt\": \"A simple mobile-friendly summary image showing six neatly arranged stock cards on one screen, all indicating downward market signals with subtle differences in confidence and strength through card order, spacing, and restrained color contrast. Clean, balanced square layout, easy to read at a glance, practical risk-scan aesthetic, calm and trustworthy fintech dashboard feel, soft gray and blue palette with muted accent differences only, crisp edges, minimal visual noise, no complex charts, no dramatic alarm styling, no 3D overload, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\"\n    }\n  }\n}"
+      },
+      {
+        "key": "visual-assets",
+        "label": "이미지 산출물",
+        "fileName": "visual-assets.json",
+        "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visual-assets.json",
+        "content": "{\n  \"status\": \"generated\",\n  \"assets\": {\n    \"blog\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/blog.png\",\n      \"relative_path\": \"visuals/blog.png\",\n      \"prompt\": \"A clean financial report dashboard with a structured workflow feel, showing a transformation from raw market signals into standardized comparison cards. Multiple stock cards arranged in a balanced grid or layered panel layout, each card containing abstract data blocks, subtle downward trend indicators, small risk bars, and consistent visual hierarchy that suggests a radar-style risk scanner. Calm, analytical, trustworthy mood, practical fintech interface design, elegant spacing, soft neutral palette with restrained blue, gray, and muted amber accents, crisp lighting, high clarity, modern enterprise dashboard aesthetic, information architecture made visible, no people, no devices in hand, no clutter, no dramatic effects. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1536x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    },\n    \"linkedin\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/linkedin.png\",\n      \"relative_path\": \"visuals/linkedin.png\",\n      \"prompt\": \"A compact finance signal comparison dashboard designed for quick scanning in a social feed. Several stock risk cards in a clean front-facing layout, with one or two priority cards slightly emphasized in the foreground, showing abstract downward trend cues, simple risk blocks, and subtle hierarchy that instantly communicates comparable downside risk and priority sorting. Minimal, sharp, professional, analytical tone, balanced composition, muted blue-gray palette with controlled contrast, modern data visualization style, no excessive depth, no dramatic red alerts, no cyberpunk neon, no abstract background noise, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    },\n    \"telegram\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/telegram.png\",\n      \"relative_path\": \"visuals/telegram.png\",\n      \"prompt\": \"A simple mobile-friendly summary image showing six neatly arranged stock cards on one screen, all indicating downward market signals with subtle differences in confidence and strength through card order, spacing, and restrained color contrast. Clean, balanced square layout, easy to read at a glance, practical risk-scan aesthetic, calm and trustworthy fintech dashboard feel, soft gray and blue palette with muted accent differences only, crisp edges, minimal visual noise, no complex charts, no dramatic alarm styling, no 3D overload, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    }\n  },\n  \"failures\": {}\n}"
+      },
+      {
+        "key": "visual-quality",
+        "label": "이미지 평가",
+        "fileName": "visual-quality.json",
+        "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visual-quality.json",
+        "content": "{\n  \"score\": 94,\n  \"passed\": true,\n  \"problems\": [\n    \"세 채널 모두 핵심 메시지와 이미지 콘셉트가 잘 맞는다. 카드형 대시보드, 우선순위 비교, 위험도 시각화가 텍스트 주장과 일치한다.\",\n    \"비율 측면에서 blog 1536x1024, linkedin/telegram 1024x1024로 채널 목적에 대체로 적합하다. 특히 LinkedIn과 Telegram의 정사각형 비율은 피드/메신저 환경에 무난하다.\",\n    \"프롬프트에 텍스트, 숫자, 로고, 워터마크 금지 지시가 명시되어 있어 통제는 잘 되어 있다.\",\n    \"후츠릿 톤인 실용적이고 분석적인 금융 자동화 분위기와 잘 맞으며, stock 사진처럼 보일 위험도 낮다.\",\n    \"다만 blog와 linkedin 프롬프트의 'abstract data blocks', 'simple risk blocks'가 다소 추상적이라 실제 생성 결과가 카드 UI보다 장식적 대시보드로 흐를 가능성이 있다.\",\n    \"telegram 프롬프트는 명확하지만 6개 종목의 '비교 순서'를 더 강하게 규정하지 않아, 결과물이 균등 배열만 되고 우선순위가 약해질 수 있다.\"\n  ],\n  \"recommendations\": [\n    \"blog 프롬프트에서 카드의 정보 구조를 더 구체화하라. 예: 상단 종목명 자리, 중단 수치 블록 자리, 하단 위험 막대 자리처럼 레이아웃 고정 지시를 넣어라.\",\n    \"linkedin 프롬프트는 'one or two priority cards' 외에 첫 번째 카드가 가장 먼저 시선이 가도록 전경/크기/대비 우선순위를 더 명시하라.\",\n    \"telegram 프롬프트에는 6개 카드의 정렬 기준을 '신뢰도와 강도 우선'으로 못 박아, 단순 균등 배열이 아니라 판단용 순서가 보이도록 강화하라.\",\n    \"세 프롬프트 모두 'no text, numbers' 금지는 유지하되, UI glyph까지 포함해 카드 내부의 미세 아이콘도 글자처럼 보이지 않도록 더 단순한 기호 체계를 제한하라.\",\n    \"추상 표현을 줄이고 'front-facing cards', 'fixed grid', 'consistent spacing', 'priority first' 같은 조형 지시를 더 늘려 생성 안정성을 높여라.\"\n  ]\n}"
+      },
+      {
+        "key": "metadata",
+        "label": "메타데이터",
+        "fileName": "metadata.json",
+        "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/metadata.json",
+        "content": "{\n  \"package_id\": \"2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a\",\n  \"output_type\": \"draft\",\n  \"generated_at\": \"2026-05-18T16:37:15.349746\",\n  \"title\": \"Finance Signal Radar 리포트 이미지 테스트 전략\",\n  \"source_summary\": \"Finance Signal Radar 리포트의 6개 신호를 바탕으로 이미지 제작까지 테스트하려는 요청이다. LG에너지솔루션, 네이버, 카카오, KB금융, SK하이닉스, 삼성전자 모두 T+5 기준 하락 예측이 잡혔고, 최근 1개월 변동률과 신뢰도, 강도가 함께 제시됐다. 참고 링크는 없다.\",\n  \"input_type\": \"memo\",\n  \"target_persona\": \"금융 데이터 자동화, 시장 신호 대시보드, 리포트 이미지화에 관심 있는 실무형 학습자와 1인 운영자\",\n  \"revision_count\": 1,\n  \"target_channels\": [\n    \"blog\",\n    \"linkedin\",\n    \"telegram\"\n  ],\n  \"agent_architecture\": {\n    \"mode\": \"multi_agent\",\n    \"agents\": [\n      \"InputParserAgent\",\n      \"ContentStrategyAgent\",\n      \"InsightAgent\",\n      \"BlogWriterAgent\",\n      \"LinkedInWriterAgent\",\n      \"TelegramNewsletterWriterAgent\",\n      \"SelfReflectionAgent\",\n      \"RevisionAgent\",\n      \"VisualStrategyAgent\",\n      \"ImagePromptAgent\",\n      \"ImageGeneratorAgent\",\n      \"VisualQualityAgent\",\n      \"PublishAgent\"\n    ]\n  },\n  \"quality_score\": 92,\n  \"quality_passed\": true,\n  \"channel_scores\": {\n    \"blog\": 94,\n    \"linkedin\": 90,\n    \"telegram\": 91\n  },\n  \"channel_processing_status\": {\n    \"blog\": \"generated\",\n    \"linkedin\": \"generated\",\n    \"telegram\": \"generated\",\n    \"visuals\": \"generated\"\n  },\n  \"visual_assets_status\": \"generated\",\n  \"visual_assets\": {\n    \"blog\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/blog.png\",\n      \"relative_path\": \"visuals/blog.png\",\n      \"prompt\": \"A clean financial report dashboard with a structured workflow feel, showing a transformation from raw market signals into standardized comparison cards. Multiple stock cards arranged in a balanced grid or layered panel layout, each card containing abstract data blocks, subtle downward trend indicators, small risk bars, and consistent visual hierarchy that suggests a radar-style risk scanner. Calm, analytical, trustworthy mood, practical fintech interface design, elegant spacing, soft neutral palette with restrained blue, gray, and muted amber accents, crisp lighting, high clarity, modern enterprise dashboard aesthetic, information architecture made visible, no people, no devices in hand, no clutter, no dramatic effects. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1536x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    },\n    \"linkedin\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/linkedin.png\",\n      \"relative_path\": \"visuals/linkedin.png\",\n      \"prompt\": \"A compact finance signal comparison dashboard designed for quick scanning in a social feed. Several stock risk cards in a clean front-facing layout, with one or two priority cards slightly emphasized in the foreground, showing abstract downward trend cues, simple risk blocks, and subtle hierarchy that instantly communicates comparable downside risk and priority sorting. Minimal, sharp, professional, analytical tone, balanced composition, muted blue-gray palette with controlled contrast, modern data visualization style, no excessive depth, no dramatic red alerts, no cyberpunk neon, no abstract background noise, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    },\n    \"telegram\": {\n      \"status\": \"generated\",\n      \"path\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/visuals/telegram.png\",\n      \"relative_path\": \"visuals/telegram.png\",\n      \"prompt\": \"A simple mobile-friendly summary image showing six neatly arranged stock cards on one screen, all indicating downward market signals with subtle differences in confidence and strength through card order, spacing, and restrained color contrast. Clean, balanced square layout, easy to read at a glance, practical risk-scan aesthetic, calm and trustworthy fintech dashboard feel, soft gray and blue palette with muted accent differences only, crisp edges, minimal visual noise, no complex charts, no dramatic alarm styling, no 3D overload, no people. Do not include any text, letters, numbers, labels, captions, watermarks, logos, or UI glyphs.\",\n      \"size\": \"1024x1024\",\n      \"quality\": \"medium\",\n      \"provider\": \"openai_images\",\n      \"model\": \"gpt-image-1\"\n    }\n  },\n  \"visual_quality\": {\n    \"score\": 94,\n    \"passed\": true,\n    \"problems\": [\n      \"세 채널 모두 핵심 메시지와 이미지 콘셉트가 잘 맞는다. 카드형 대시보드, 우선순위 비교, 위험도 시각화가 텍스트 주장과 일치한다.\",\n      \"비율 측면에서 blog 1536x1024, linkedin/telegram 1024x1024로 채널 목적에 대체로 적합하다. 특히 LinkedIn과 Telegram의 정사각형 비율은 피드/메신저 환경에 무난하다.\",\n      \"프롬프트에 텍스트, 숫자, 로고, 워터마크 금지 지시가 명시되어 있어 통제는 잘 되어 있다.\",\n      \"후츠릿 톤인 실용적이고 분석적인 금융 자동화 분위기와 잘 맞으며, stock 사진처럼 보일 위험도 낮다.\",\n      \"다만 blog와 linkedin 프롬프트의 'abstract data blocks', 'simple risk blocks'가 다소 추상적이라 실제 생성 결과가 카드 UI보다 장식적 대시보드로 흐를 가능성이 있다.\",\n      \"telegram 프롬프트는 명확하지만 6개 종목의 '비교 순서'를 더 강하게 규정하지 않아, 결과물이 균등 배열만 되고 우선순위가 약해질 수 있다.\"\n    ],\n    \"recommendations\": [\n      \"blog 프롬프트에서 카드의 정보 구조를 더 구체화하라. 예: 상단 종목명 자리, 중단 수치 블록 자리, 하단 위험 막대 자리처럼 레이아웃 고정 지시를 넣어라.\",\n      \"linkedin 프롬프트는 'one or two priority cards' 외에 첫 번째 카드가 가장 먼저 시선이 가도록 전경/크기/대비 우선순위를 더 명시하라.\",\n      \"telegram 프롬프트에는 6개 카드의 정렬 기준을 '신뢰도와 강도 우선'으로 못 박아, 단순 균등 배열이 아니라 판단용 순서가 보이도록 강화하라.\",\n      \"세 프롬프트 모두 'no text, numbers' 금지는 유지하되, UI glyph까지 포함해 카드 내부의 미세 아이콘도 글자처럼 보이지 않도록 더 단순한 기호 체계를 제한하라.\",\n      \"추상 표현을 줄이고 'front-facing cards', 'fixed grid', 'consistent spacing', 'priority first' 같은 조형 지시를 더 늘려 생성 안정성을 높여라.\"\n    ]\n  },\n  \"channel_publish_status\": {\n    \"blog\": \"external_publish_disabled\",\n    \"linkedin\": \"blocked_until_blog_url\",\n    \"telegram\": \"published\"\n  },\n  \"published_urls\": {\n    \"blog\": \"\",\n    \"linkedin\": \"\",\n    \"telegram\": \"https://t.me/reset9800/97\"\n  },\n  \"external_api_status\": \"not_connected\",\n  \"processing_mode\": \"sequential_tistory_first_with_telegram_dispatch\",\n  \"output_paths\": {\n    \"draft\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a\",\n    \"final\": \"/home/reset980/chutzrit-ai-office/outputs/broadcasting/final/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a\"\n  }\n}"
+      },
+      {
+        "key": "approval-status",
+        "label": "승인 상태",
+        "fileName": "approval-status.json",
+        "path": "outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a/approval-status.json",
+        "content": "{\n  \"quality_score\": 92,\n  \"quality_passed\": true,\n  \"public_content_require_approval\": false,\n  \"channels\": {\n    \"blog\": \"auto_dispatch_to_telegram\",\n    \"linkedin\": \"auto_dispatch_to_telegram\",\n    \"telegram\": \"auto_publish_to_telegram\"\n  }\n}"
+      }
+    ]
   },
   "derivedAgents": {
     "input-parser": {
@@ -91,104 +887,104 @@
       "statusSource": "실시간 운영 상태",
       "currentTask": "작업 완료. 다음 Telegram 입력을 기다린다.",
       "nextTask": "새 입력이 들어오면 자동으로 파이프라인을 시작한다.",
-      "updatedAt": "2026-05-17T19:13:30",
-      "recentOutput": "## 🧾 Input Parser 완료 입력 유형 메모 감지한 링크 0개 링크 메타데이터 해당 없음 입력 미리보기 Ai의 미래"
+      "updatedAt": "2026-05-18T16:38:18",
+      "recentOutput": "## 🧾 Input Parser 완료 입력 유형 메모 감지한 링크 0개 링크 메타데이터 해당 없음 입력 미리보기 다음 내용으로 이미지 제작까지 테스트 해봐 # Finance Signal Radar 리포트 생성시각: 2026. 5. 18. 오후 4:18:29 ## 요약 총 6개 신호를 분석했습니다. ## 신호 목록 1. LG에너지솔루션: 실제 뉴스 7건과 T+5 예측 하락 - 요약: LG..."
     },
     "content-strategy": {
       "status": "IDLE",
       "statusSource": "실시간 운영 상태",
       "currentTask": "작업 완료. 다음 Telegram 입력을 기다린다.",
       "nextTask": "새 입력이 들어오면 자동으로 파이프라인을 시작한다.",
-      "updatedAt": "2026-05-17T19:13:30",
-      "recentOutput": "## 🧭 Content Strategy Agent 완료 핵심 메시지 AI의 미래는 더 똑똑한 모델 경쟁만으로 결정되지 않는다. 실무자는 AI가 제대로 일하도록 환경, 컨텍스트, 검증 구조를 설계하는 쪽으로 역할이 이동한다. 타깃 독자 AI 시대에 자신의 역할 변화가 궁금한 실무자, 개발자, 1인 창업자, 생산성 향상과 자동화에 관심 있는 사람 글의 주장 AI의 미래에서 중요한 경쟁력은..."
+      "updatedAt": "2026-05-18T16:38:18",
+      "recentOutput": "## 🧭 Content Strategy Agent 완료 핵심 메시지 뉴스와 가격 데이터를 결합한 신호는 단순 알림이 아니라, 한눈에 위험도를 읽는 시각화 자산으로 만들어야 한다. 타깃 독자 금융 데이터 자동화, 시장 신호 대시보드, 리포트 이미지화에 관심 있는 실무형 학습자와 1인 운영자 글의 주장 이 리포트는 텍스트 요약으로 끝낼 것이 아니라, 종목별 하락 신호를 비교 가능한 이미지로..."
     },
     "insight": {
       "status": "IDLE",
       "statusSource": "실시간 운영 상태",
       "currentTask": "작업 완료. 다음 Telegram 입력을 기다린다.",
       "nextTask": "새 입력이 들어오면 자동으로 파이프라인을 시작한다.",
-      "updatedAt": "2026-05-17T19:13:30",
-      "recentOutput": "## 💡 Insight Agent 완료 관점 AI의 미래를 모델 성능 경쟁으로만 보면 실무 판단을 놓치게 된다. 실제로 중요한 변화는 AI가 답을 잘하는가가 아니라, AI가 반복해서 올바르게 일하도록 환경, 컨텍스트, 검증 절차, 실패 복구 구조를 누가 설계하느냐로 이동하고 있다. 즉 앞으로의 차이는 더 똑똑한 AI를 고르는 능력이 아니라, AI를 운영 가능한 시스템으로 만드는 능력에서..."
+      "updatedAt": "2026-05-18T16:38:18",
+      "recentOutput": "## 💡 Insight Agent 완료 관점 이 리포트의 핵심은 ‘맞추는 예측’이 아니라 ‘비교 가능한 위험 시각화’로 바꾸는 데 있다. 지금 데이터는 종목별 뉴스 개수, 최근 변동, 예측 변화율, 신뢰도, 강도가 함께 붙어 있어서 텍스트로 읽으면 신호가 분산된다. 실무 관점에서는 이걸 그대로 요약하는 것이 아니라, 위험도 순서와 확신 수준을 한 화면에서 읽히는 카드 구조로 바꿔야 한다..."
     },
     "blog-writer": {
       "status": "IDLE",
       "statusSource": "실시간 운영 상태",
       "currentTask": "작업 완료. 다음 Telegram 입력을 기다린다.",
       "nextTask": "새 입력이 들어오면 자동으로 파이프라인을 시작한다.",
-      "updatedAt": "2026-05-17T19:13:30",
-      "recentOutput": "## ✍️ Platform Writer Agents 완료 - 블로그 1707자 / 첫 줄 # AI의 미래는 더 똑똑한 모델이 아니라 운영 구조다 - LinkedIn 353자 / 첫 줄 AI의 미래, 모델보다 운영 구조입니다 - Telegram 뉴스레터 442자 / 첫 줄 ## 🚀 AI의 미래는 모델이 아니라 운영 구조입니다"
+      "updatedAt": "2026-05-18T16:38:18",
+      "recentOutput": "## ✍️ Platform Writer Agents 완료 - 블로그 2133자 / 첫 줄 # Finance Signal Radar 리포트를 이미지로 바꾸는 이유 - LinkedIn 554자 / 첫 줄 뉴스가 많다고 신호가 강한 것은 아닙니다. 데이터가 진짜 실무에 쓰이려면, 숫자를 더하는 것보다 한눈에 비교되게 만들어야 합니다. - Telegram 뉴스레터 679자 / 첫 줄 ## 🚀..."
     },
     "linkedin-writer": {
       "status": "IDLE",
       "statusSource": "실시간 운영 상태",
       "currentTask": "작업 완료. 다음 Telegram 입력을 기다린다.",
       "nextTask": "새 입력이 들어오면 자동으로 파이프라인을 시작한다.",
-      "updatedAt": "2026-05-17T19:13:30",
-      "recentOutput": "## ✍️ Platform Writer Agents 완료 - 블로그 1707자 / 첫 줄 # AI의 미래는 더 똑똑한 모델이 아니라 운영 구조다 - LinkedIn 353자 / 첫 줄 AI의 미래, 모델보다 운영 구조입니다 - Telegram 뉴스레터 442자 / 첫 줄 ## 🚀 AI의 미래는 모델이 아니라 운영 구조입니다"
+      "updatedAt": "2026-05-18T16:38:18",
+      "recentOutput": "## ✍️ Platform Writer Agents 완료 - 블로그 2133자 / 첫 줄 # Finance Signal Radar 리포트를 이미지로 바꾸는 이유 - LinkedIn 554자 / 첫 줄 뉴스가 많다고 신호가 강한 것은 아닙니다. 데이터가 진짜 실무에 쓰이려면, 숫자를 더하는 것보다 한눈에 비교되게 만들어야 합니다. - Telegram 뉴스레터 679자 / 첫 줄 ## 🚀..."
     },
     "telegram-newsletter": {
       "status": "IDLE",
       "statusSource": "실시간 운영 상태",
-      "currentTask": "휴식 중이다. 다음 입력이 들어오면 자동으로 재개한다.",
-      "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
-      "updatedAt": "2026-05-17T19:13:22.720700",
-      "recentOutput": "Telegram 뉴스레터 상태: published"
+      "currentTask": "작업 완료. 다음 Telegram 입력을 기다린다.",
+      "nextTask": "새 입력이 들어오면 자동으로 파이프라인을 시작한다.",
+      "updatedAt": "2026-05-18T16:38:18",
+      "recentOutput": "## ✍️ Platform Writer Agents 완료 - 블로그 2133자 / 첫 줄 # Finance Signal Radar 리포트를 이미지로 바꾸는 이유 - LinkedIn 554자 / 첫 줄 뉴스가 많다고 신호가 강한 것은 아닙니다. 데이터가 진짜 실무에 쓰이려면, 숫자를 더하는 것보다 한눈에 비교되게 만들어야 합니다. - Telegram 뉴스레터 679자 / 첫 줄 ## 🚀..."
     },
     "self-reflection": {
       "status": "IDLE",
       "statusSource": "실시간 운영 상태",
       "currentTask": "작업 완료. 다음 Telegram 입력을 기다린다.",
       "nextTask": "새 입력이 들어오면 자동으로 파이프라인을 시작한다.",
-      "updatedAt": "2026-05-17T19:13:30",
-      "recentOutput": "## ✅ Final Quality Gate 통과 최종 점수 93 수정 루프 1/3회 Publish Agent가 발송과 외부 배포 상태를 정리합니다."
+      "updatedAt": "2026-05-18T16:38:18",
+      "recentOutput": "## ✅ Final Quality Gate 통과 최종 점수 92 수정 루프 1/3회 Publish Agent가 발송과 외부 배포 상태를 정리합니다."
     },
     "revision": {
       "status": "IDLE",
       "statusSource": "실시간 운영 상태",
       "currentTask": "작업 완료. 다음 Telegram 입력을 기다린다.",
       "nextTask": "새 입력이 들어오면 자동으로 파이프라인을 시작한다.",
-      "updatedAt": "2026-05-17T19:13:30",
-      "recentOutput": "## 🛠️ Revision Agent 1/3회차 완료 제목 AI의 미래와 실무자의 역할 재정의 - Telegram 첫 줄 ## 🚀 AI의 미래는 모델보다 운영 구조에 있습니다"
+      "updatedAt": "2026-05-18T16:38:18",
+      "recentOutput": "## 🛠️ Revision Agent 1/3회차 완료 제목 Finance Signal Radar 리포트 이미지 테스트 전략 - LinkedIn 첫 줄 # 뉴스가 많아도 신호는 강하지 않을 수 있습니다 📉 - Telegram 첫 줄 ## 🚀 6개 종목이 모두 하락일 때는, 예측보다 우선순위부터 보셔야 합니다"
     },
     "visual-strategy": {
       "status": "IDLE",
       "statusSource": "실시간 운영 상태",
-      "currentTask": "휴식 중이다. 다음 입력이 들어오면 자동으로 재개한다.",
-      "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
-      "updatedAt": "2026-05-17T19:13:22.720700",
-      "recentOutput": "이미지 콘셉트 상태: 기록 없음"
+      "currentTask": "작업 완료. 다음 Telegram 입력을 기다린다.",
+      "nextTask": "새 입력이 들어오면 자동으로 파이프라인을 시작한다.",
+      "updatedAt": "2026-05-18T16:38:18",
+      "recentOutput": "## 🎨 Visual Strategy Agent 완료 콘셉트 차트와 카드가 결합된 금융 리포트 대시보드형 시각화. 여러 종목의 하락 신호를 한 화면에서 비교 가능한 정보 카드로 정리한, 실무형 리스크 스캐너 느낌 분위기 차분하고 분석적이며 신뢰감 있는 분위기 주요 장면 여러 종목이 나열된 카드형 리포트 화면, 각 카드에는 종목별 위험도 차이를 암시하는 정돈된 숫자 블록과 하락 방향을 보..."
     },
     "image-prompt": {
       "status": "IDLE",
       "statusSource": "실시간 운영 상태",
-      "currentTask": "휴식 중이다. 다음 입력이 들어오면 자동으로 재개한다.",
-      "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
-      "updatedAt": "2026-05-17T19:13:22.720700",
-      "recentOutput": "이미지 프롬프트 상태: 기록 없음"
+      "currentTask": "작업 완료. 다음 Telegram 입력을 기다린다.",
+      "nextTask": "새 입력이 들어오면 자동으로 파이프라인을 시작한다.",
+      "updatedAt": "2026-05-18T16:38:18",
+      "recentOutput": "## 🖼️ Image Prompt Agent 완료 - 블로그 1536x1024 / A clean financial report dashboard with a structured workflow feel, showing a transformation from raw market signals... - LinkedIn 1024x1024 / A compact finance signal com..."
     },
     "image-generator": {
       "status": "IDLE",
       "statusSource": "실시간 운영 상태",
-      "currentTask": "휴식 중이다. 다음 입력이 들어오면 자동으로 재개한다.",
-      "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
-      "updatedAt": "2026-05-17T19:13:22.720700",
-      "recentOutput": "이미지 생성 상태: 기록 없음"
+      "currentTask": "작업 완료. 다음 Telegram 입력을 기다린다.",
+      "nextTask": "새 입력이 들어오면 자동으로 파이프라인을 시작한다.",
+      "updatedAt": "2026-05-18T16:38:18",
+      "recentOutput": "🖼️ Visual Quality Agent가 이미지 적합성을 점검합니다."
     },
     "visual-quality": {
       "status": "IDLE",
       "statusSource": "실시간 운영 상태",
-      "currentTask": "휴식 중이다. 다음 입력이 들어오면 자동으로 재개한다.",
-      "nextTask": "새 broadcasting 입력이 들어오면 파이프라인을 다시 실행한다.",
-      "updatedAt": "2026-05-17T19:13:22.720700",
-      "recentOutput": "이미지 품질 기록 없음"
+      "currentTask": "작업 완료. 다음 Telegram 입력을 기다린다.",
+      "nextTask": "새 입력이 들어오면 자동으로 파이프라인을 시작한다.",
+      "updatedAt": "2026-05-18T16:38:18",
+      "recentOutput": "## 🖼️ Visual Quality Agent 완료 이미지 점수 94 생성 이미지 3개"
     },
     "publish": {
       "status": "IDLE",
       "statusSource": "실시간 운영 상태",
       "currentTask": "작업 완료. 다음 Telegram 입력을 기다린다.",
       "nextTask": "새 입력이 들어오면 자동으로 파이프라인을 시작한다.",
-      "updatedAt": "2026-05-17T19:13:30",
-      "recentOutput": "최근 산출물 /home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-17-ai의-미래와-실무자의-역할-재정의-4ae8680b"
+      "updatedAt": "2026-05-18T16:38:18",
+      "recentOutput": "최근 산출물 /home/reset980/chutzrit-ai-office/outputs/broadcasting/drafts/2026-05-18-finance-signal-radar-리포트-이미지-테스트-전략-f5ce456a"
     }
   }
 }

@@ -41,6 +41,7 @@ outputs/broadcasting/logs/*
 outputs/broadcasting/session/
 outputs/broadcasting/screenshots/
 outputs/broadcasting/traces/
+apps/office-dashboard/public/generated/
 
 # Generated education outputs and private lecture sources
 outputs/education/slides/*

@@ -76,6 +76,17 @@ export type BroadcastingRecord = {
   publishedUrls: Record<string, string>;
   visualAssetsStatus?: string;
   visualAssets?: Record<string, { status?: string; path?: string; relative_path?: string }>;
+  visualPreviewUrls?: Record<
+    string,
+    {
+      url: string;
+      status?: string;
+      size?: string;
+      quality?: string;
+      provider?: string;
+      model?: string;
+    }
+  >;
   visualQuality?: { score?: number; passed?: boolean };
   externalApiStatus: string;
   path: string;
@@ -86,6 +97,13 @@ export type BroadcastingRecord = {
     linkedin: string;
     telegram: string;
   };
+  documents?: Array<{
+    key: string;
+    label: string;
+    fileName: string;
+    path: string;
+    content: string;
+  }>;
 };
 
 export type MetricDetail = {

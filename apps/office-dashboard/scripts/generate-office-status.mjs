@@ -7,6 +7,7 @@ const repoRoot = path.resolve(appDir, "../..");
 const broadcastingRoot = path.join(repoRoot, "outputs/broadcasting");
 const generatedDir = path.join(appDir, "src/data/generated");
 const generatedPath = path.join(generatedDir, "officeStatus.json");
+const publicGeneratedRoot = path.join(appDir, "public/generated/broadcasting");
 const currentStatusPath = path.join(broadcastingRoot, "logs/current-status.json");
 
 const today = new Intl.DateTimeFormat("en-CA", {
@@ -42,6 +43,15 @@ async function readJson(filePath) {
 
 async function readText(filePath) {
   return fs.readFile(filePath, "utf8").catch(() => "");
+}
+
+async function fileExists(filePath) {
+  try {
+    const stat = await fs.stat(filePath);
+    return stat.isFile();
+  } catch {
+    return false;
+  }
 }
 
 async function dirExists(dirPath) {
@@ -89,6 +99,10 @@ function sanitizeDisplayText(value) {
     .replaceAll("discord", "telegram");
 }
 
+function toPublicUrl(relativePath) {
+  return `/${relativePath.split(path.sep).map(encodeURIComponent).join("/")}`;
+}
+
 function getPackageStatus(record) {
   if (record.externalApiStatus === "failed") return "failed";
   if (Object.values(record.channelPublishStatus || {}).includes("failed")) return "failed";
@@ -108,6 +122,79 @@ function getFirstContentLine(markdown) {
     .find((line) => line && !line.startsWith("#")) || "";
 }
 
+async function copyVisualPreviews(scope, packageId, packageDir, visualAssets) {
+  const assets = visualAssets?.assets || {};
+  const previews = {};
+
+  for (const [channel, asset] of Object.entries(assets)) {
+    if (!asset || typeof asset !== "object") continue;
+
+    const sourcePath = asset.path
+      ? path.resolve(String(asset.path))
+      : path.join(packageDir, String(asset.relative_path || ""));
+    if (!(await fileExists(sourcePath))) continue;
+
+    const extension = path.extname(sourcePath) || ".png";
+    const publicRelativePath = path.join(
+      "generated",
+      "broadcasting",
+      scope,
+      packageId,
+      "visuals",
+      `${channel}${extension}`
+    );
+    const targetPath = path.join(appDir, "public", publicRelativePath);
+    await fs.mkdir(path.dirname(targetPath), { recursive: true });
+    await fs.copyFile(sourcePath, targetPath);
+
+    previews[channel] = {
+      url: toPublicUrl(publicRelativePath),
+      status: asset.status || "",
+      size: asset.size || "",
+      quality: asset.quality || "",
+      provider: asset.provider || "",
+      model: asset.model || ""
+    };
+  }
+
+  return previews;
+}
+
+async function readPackageDocuments(packageDir) {
+  const documentSpecs = [
+    ["blog", "Blog 원고", "blog.md"],
+    ["linkedin", "LinkedIn 원고", "linkedin.md"],
+    ["telegram", "Telegram 뉴스레터", "telegram.md"],
+    ["strategy", "전략 문서", "strategy.md"],
+    ["insight", "인사이트 문서", "insight.md"],
+    ["reflection", "평가 문서", "reflection.md"],
+    ["publish-plan", "배포 계획", "publish-plan.json"],
+    ["visual-strategy", "이미지 전략", "visual-strategy.json"],
+    ["image-prompts", "이미지 프롬프트", "image-prompts.json"],
+    ["visual-assets", "이미지 산출물", "visual-assets.json"],
+    ["visual-quality", "이미지 평가", "visual-quality.json"],
+    ["metadata", "메타데이터", "metadata.json"],
+    ["approval-status", "승인 상태", "approval-status.json"]
+  ];
+  const documents = [];
+
+  for (const [key, label, fileName] of documentSpecs) {
+    const filePath = path.join(packageDir, fileName);
+    const content = await readText(filePath);
+    if (!content.trim()) continue;
+
+    documents.push({
+      key,
+      label,
+      fileName,
+      path: path.relative(repoRoot, filePath),
+      content: compactPreview(sanitizeDisplayText(content), 20000)
+    });
+  }
+
+  return documents;
+}
+
 async function readPackage(scope, packageDir) {
   const metadata = await readJson(path.join(packageDir, "metadata.json"));
   if (!metadata) return null;
@@ -123,6 +210,13 @@ async function readPackage(scope, packageDir) {
     (await readText(path.join(packageDir, "discord.md")));
 
   const packageId = metadata.package_id || path.basename(packageDir);
+  const visualPreviewUrls = await copyVisualPreviews(
+    scope,
+    packageId,
+    packageDir,
+    metadata.visual_assets ? { assets: metadata.visual_assets } : visualAssets
+  );
+  const documents = await readPackageDocuments(packageDir);
   const channelPublishStatus = normalizeNewsletterChannels(
     metadata.channel_publish_status ||
       Object.fromEntries(
@@ -164,6 +258,7 @@ async function readPackage(scope, packageDir) {
     publishedUrls,
     visualAssetsStatus: metadata.visual_assets_status || visualAssets?.status || "",
     visualAssets: metadata.visual_assets || visualAssets?.assets || {},
+    visualPreviewUrls,
     visualQuality: metadata.visual_quality || visualQuality || {},
     externalApiStatus: metadata.external_api_status || publishPlan?.external_api_status || "",
     path: path.relative(repoRoot, packageDir),
@@ -177,13 +272,13 @@ async function readPackage(scope, packageDir) {
       blog: compactPreview(blogMarkdown),
       linkedin: compactPreview(linkedinMarkdown),
       telegram: compactPreview(telegramMarkdown)
-    }
+    },
+    documents
   };
 }
 
-function compactPreview(value) {
+function compactPreview(value, limit = 14000) {
   const text = String(value || "").trim();
-  const limit = 14000;
   if (text.length <= limit) return text;
   return `${text.slice(0, limit).trim()}\n\n...`;
 }
@@ -492,6 +587,9 @@ function deriveAgents({ latest, currentStatus, todayDrafts, reviewQueue, publish
     return result;
   }, {});
 }
+
+await fs.rm(publicGeneratedRoot, { recursive: true, force: true });
+await fs.mkdir(publicGeneratedRoot, { recursive: true });
 
 const currentStatus = await readJson(currentStatusPath);
 const draftRecords = await loadRecords("drafts");
