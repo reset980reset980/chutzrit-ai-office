@@ -1,5 +1,5 @@
 import { ExternalLink, Eye, FileText, FolderOpen, Image, X } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { BroadcastingRecord, MetricDetail, MetricKey, OfficeDataSource } from "../types";
 
 type MetricDetailPanelProps = {
@@ -92,14 +92,46 @@ function PublicationDocumentViewer({
   onDocumentKeyChange: (key: string) => void;
 }) {
   const activeDocuments = getDocuments(record);
+  const viewerRef = useRef<HTMLDivElement | null>(null);
   const activeDocument =
     documentKey === integratedDocumentKey
       ? null
       : activeDocuments.find((document) => document.key === documentKey) ?? activeDocuments[0];
   const isIntegratedDocument = documentKey === integratedDocumentKey || !documentKey;
 
+  useEffect(() => {
+    const viewer = viewerRef.current;
+    if (!viewer) return;
+
+    const revealItems = Array.from(viewer.querySelectorAll<HTMLElement>("[data-reveal]"));
+    revealItems.forEach((item) => item.classList.remove("is-visible"));
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+          }
+        });
+      },
+      {
+        root: viewer.querySelector(".publication-preview") ?? null,
+        rootMargin: "0px 0px -8% 0px",
+        threshold: 0.14,
+      },
+    );
+
+    revealItems.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, [documentKey, record.id]);
+
   return (
-    <div className="publication-document-viewer">
+    <div className="publication-document-viewer" ref={viewerRef}>
       <div className="content-preview-panel__document-tabs" role="tablist" aria-label="배포 문서">
         <button
           className={
@@ -134,7 +166,7 @@ function PublicationDocumentViewer({
       <div className="publication-document-viewer__content">
         {isIntegratedDocument ? (
           <article className="publication-preview" aria-label="이미지 포함 통합 배포 문서">
-            <header className="publication-preview__cover">
+            <header className="publication-preview__cover scroll-reveal" data-reveal>
               <div className="publication-preview__seal" aria-hidden="true">
                 AI
               </div>
@@ -167,11 +199,16 @@ function PublicationDocumentViewer({
                 )}
               </div>
             </header>
-            {previewChannels.map((channel) => {
+            {previewChannels.map((channel, index) => {
               const visual = getVisualForChannel(record, channel.key);
               const draft = getPreviewText(record, channel.key);
               return (
-                <section className="publication-section" key={channel.key}>
+                <section
+                  className="publication-section scroll-reveal"
+                  data-reveal
+                  key={channel.key}
+                  style={{ transitionDelay: `${Math.min(index * 80, 180)}ms` }}
+                >
                   <div className="publication-section__heading">
                     <div>
                       <span>{channel.key.toUpperCase()}</span>

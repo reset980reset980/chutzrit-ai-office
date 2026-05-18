@@ -1655,12 +1655,30 @@ button {
   gap: 18px;
   max-height: 520px;
   overflow: auto;
+  scroll-behavior: smooth;
   padding: 18px;
   border: 1px solid rgba(231, 215, 181, 0.16);
   border-radius: 18px;
   background:
     radial-gradient(circle at 10% 0%, rgba(239, 212, 153, 0.1), transparent 35%),
     linear-gradient(180deg, rgba(13, 24, 23, 0.96), rgba(5, 10, 12, 0.98));
+}
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(28px) scale(0.985);
+  filter: blur(8px);
+  transition:
+    opacity 560ms ease,
+    transform 620ms cubic-bezier(0.2, 0.82, 0.18, 1),
+    filter 620ms ease;
+  will-change: opacity, transform, filter;
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
 }
 
 .publication-preview__cover {
@@ -1789,6 +1807,16 @@ button {
   background:
     linear-gradient(180deg, rgba(240, 231, 204, 0.055), rgba(255, 255, 255, 0.018)),
     rgba(8, 16, 18, 0.76);
+}
+
+.publication-section::before {
+  content: "";
+  display: block;
+  width: 38px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #efd499, rgba(143, 244, 210, 0.35));
+  opacity: 0.82;
 }
 
 .publication-section__heading {
@@ -2718,5 +2746,11 @@ button {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.001ms !important;
+  }
+
+  .scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
   }
 }
