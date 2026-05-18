@@ -74,6 +74,14 @@ function getVisualForChannel(record: BroadcastingRecord, channel: PreviewChannel
   return record.visualPreviewUrls?.[channel];
 }
 
+function getStatusEntries(record: BroadcastingRecord) {
+  return Object.entries(record.channelPublishStatus || {});
+}
+
+function getReportScore(record: BroadcastingRecord) {
+  return record.qualityScore == null ? "기록 없음" : `${record.qualityScore}점`;
+}
+
 function PublicationDocumentViewer({
   record,
   documentKey,
@@ -126,14 +134,38 @@ function PublicationDocumentViewer({
       <div className="publication-document-viewer__content">
         {isIntegratedDocument ? (
           <article className="publication-preview" aria-label="이미지 포함 통합 배포 문서">
-            <header className="publication-preview__header">
-              <span>통합 배포 문서</span>
+            <header className="publication-preview__cover">
+              <div className="publication-preview__seal" aria-hidden="true">
+                AI
+              </div>
+              <span className="publication-preview__kicker">통합 배포 문서</span>
               <h4>{record.title}</h4>
-              <p>
-                품질 {record.qualityScore == null ? "기록 없음" : `${record.qualityScore}점`} ·
-                이미지 {record.visualAssetsStatus || "기록 없음"} · 배포{" "}
-                {getChannelSummary(record.channelPublishStatus)}
-              </p>
+              <p>{record.sourceSummary || "원본 입력과 채널별 원고를 통합한 배포 미리보기입니다."}</p>
+              <div className="publication-preview__status-grid" aria-label="보고서 상태">
+                <div>
+                  <span>품질</span>
+                  <strong>{getReportScore(record)}</strong>
+                </div>
+                <div>
+                  <span>이미지</span>
+                  <strong>{record.visualAssetsStatus || "기록 없음"}</strong>
+                </div>
+                <div>
+                  <span>수정</span>
+                  <strong>{record.revisionCount}회</strong>
+                </div>
+              </div>
+              <div className="publication-preview__chips" aria-label="채널 배포 상태">
+                {getStatusEntries(record).length === 0 ? (
+                  <span>채널 상태 기록 없음</span>
+                ) : (
+                  getStatusEntries(record).map(([channel, status]) => (
+                    <span key={channel}>
+                      {channel} · {status}
+                    </span>
+                  ))
+                )}
+              </div>
             </header>
             {previewChannels.map((channel) => {
               const visual = getVisualForChannel(record, channel.key);
@@ -141,8 +173,11 @@ function PublicationDocumentViewer({
               return (
                 <section className="publication-section" key={channel.key}>
                   <div className="publication-section__heading">
-                    <strong>{getChannelLabel(channel.key)}</strong>
-                    <span>{record.channelPublishStatus[channel.key] || "draft"}</span>
+                    <div>
+                      <span>{channel.key.toUpperCase()}</span>
+                      <strong>{getChannelLabel(channel.key)}</strong>
+                    </div>
+                    <mark>{record.channelPublishStatus[channel.key] || "draft"}</mark>
                   </div>
                   {visual ? (
                     <figure className="publication-section__visual">
@@ -150,7 +185,8 @@ function PublicationDocumentViewer({
                         <img alt={`${getChannelLabel(channel.key)} 대표 이미지`} src={visual.url} />
                       </a>
                       <figcaption>
-                        {visual.size || "size unknown"} · {visual.quality || "quality unknown"}
+                        <span>{visual.size || "size unknown"}</span>
+                        <span>{visual.quality || "quality unknown"}</span>
                       </figcaption>
                     </figure>
                   ) : (
@@ -158,7 +194,10 @@ function PublicationDocumentViewer({
                       {getChannelLabel(channel.key)} 대표 이미지가 아직 없다.
                     </div>
                   )}
-                  <div className="publication-section__body">{draft}</div>
+                  <div className="publication-section__body">
+                    <span className="publication-section__body-label">작성 원고</span>
+                    {draft}
+                  </div>
                 </section>
               );
             })}
@@ -379,6 +418,7 @@ export function MetricDetailPanel({
               ) : (
                 getVisualEntries(previewRecord).map(([channel, visual]) => (
                   <figure className="visual-preview-card" key={channel}>
+                    <span className="visual-preview-card__badge">{channel}</span>
                     <a href={visual.url} rel="noreferrer" target="_blank">
                       <img alt={`${channel} 대표 이미지`} src={visual.url} />
                     </a>
