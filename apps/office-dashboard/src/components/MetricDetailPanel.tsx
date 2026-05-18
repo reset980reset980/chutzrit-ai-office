@@ -121,8 +121,8 @@ function PublicationDocumentViewer({
       },
       {
         root: viewer.querySelector(".publication-preview") ?? null,
-        rootMargin: "0px 0px -8% 0px",
-        threshold: 0.14,
+        rootMargin: "0px 0px -18% 0px",
+        threshold: 0.08,
       },
     );
 

@@ -1665,13 +1665,13 @@ button {
 }
 
 .scroll-reveal {
-  opacity: 0;
-  transform: translateY(28px) scale(0.985);
-  filter: blur(8px);
+  opacity: 0.18;
+  transform: translateY(54px) scale(0.975);
+  filter: blur(12px);
   transition:
-    opacity 560ms ease,
-    transform 620ms cubic-bezier(0.2, 0.82, 0.18, 1),
-    filter 620ms ease;
+    opacity 900ms ease,
+    transform 980ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 980ms ease;
   will-change: opacity, transform, filter;
 }
 
@@ -1807,6 +1807,34 @@ button {
   background:
     linear-gradient(180deg, rgba(240, 231, 204, 0.055), rgba(255, 255, 255, 0.018)),
     rgba(8, 16, 18, 0.76);
+}
+
+.publication-section__heading,
+.publication-section__visual,
+.publication-section__body {
+  opacity: 0.22;
+  transform: translateY(18px);
+  transition:
+    opacity 620ms ease,
+    transform 720ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.publication-section.is-visible .publication-section__heading {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 140ms;
+}
+
+.publication-section.is-visible .publication-section__visual {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 260ms;
+}
+
+.publication-section.is-visible .publication-section__body {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 420ms;
 }
 
 .publication-section::before {
